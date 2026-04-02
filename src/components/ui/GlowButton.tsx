@@ -18,17 +18,18 @@ export function GlowButton({
 }: GlowButtonProps) {
   return (
     <motion.a
-      whileHover={{ scale: 1.02, y: -3 }}
-      whileTap={{ scale: 0.98 }}
-      transition={{ duration: 0.24, ease: 'easeOut' }}
+      whileHover={{ y: -2 }}
+      whileTap={{ scale: 0.985 }}
+      transition={{ duration: 0.22, ease: 'easeOut' }}
       className={[
-        'inline-flex items-center justify-center rounded-full border border-accent/30 bg-[linear-gradient(180deg,#ff8b3d_0%,#ff6a00_100%)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-black shadow-glow transition duration-300',
-        'hover:border-accent/50 hover:shadow-[0_0_0_1px_rgba(255,106,0,0.2),0_22px_60px_rgba(255,106,0,0.24)]',
+        'inline-flex items-center justify-center rounded-full border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] px-6 py-3 text-sm font-semibold tracking-[0.01em] text-white shadow-panel transition duration-300',
+        'hover:border-accent/28 hover:bg-[linear-gradient(180deg,rgba(255,255,255,0.1),rgba(255,255,255,0.04))] hover:shadow-glow',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-surface',
         className,
       ].join(' ')}
       {...props}
     >
+      <span className="mr-3 h-2 w-2 rounded-full bg-accent shadow-[0_0_12px_rgba(255,106,0,0.8)]" />
       {children}
     </motion.a>
   );

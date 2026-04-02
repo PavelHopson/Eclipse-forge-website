@@ -6,20 +6,23 @@ module.exports = {
       colors: {
         surface: '#0A0A0A',
         panel: '#121212',
+        void: '#050505',
+        chrome: '#D7DCE3',
         accent: '#FF6A00',
         ember: '#FF8A3D',
         steel: '#94A3B8',
         frost: '#76C7FF',
       },
       fontFamily: {
-        display: ['"Space Grotesk"', 'sans-serif'],
+        display: ['"IBM Plex Sans Condensed"', 'sans-serif'],
         body: ['"Manrope"', 'sans-serif'],
       },
       boxShadow: {
-        glow: '0 0 0 1px rgba(255, 106, 0, 0.18), 0 24px 80px rgba(255, 106, 0, 0.14)',
-        soft: '0 18px 60px rgba(0, 0, 0, 0.35)',
-        panel: '0 32px 90px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255,255,255,0.04)',
-        frost: '0 0 0 1px rgba(118, 199, 255, 0.14), 0 22px 70px rgba(118, 199, 255, 0.08)',
+        glow: '0 0 0 1px rgba(255, 106, 0, 0.12), 0 16px 54px rgba(255, 106, 0, 0.1)',
+        soft: '0 18px 54px rgba(0, 0, 0, 0.32)',
+        panel: '0 30px 90px rgba(0, 0, 0, 0.48), inset 0 1px 0 rgba(255,255,255,0.035)',
+        frost: '0 0 0 1px rgba(118, 199, 255, 0.12), 0 18px 52px rgba(118, 199, 255, 0.07)',
+        monolith: '0 40px 110px rgba(0, 0, 0, 0.56), inset 0 1px 0 rgba(255,255,255,0.045)',
       },
       backgroundImage: {
         grid: 'linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px)',

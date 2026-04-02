@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -16,10 +16,16 @@
   --surface-0: #050505;
   --surface-1: #0a0a0a;
   --surface-2: #121212;
-  --line-soft: rgba(255, 255, 255, 0.08);
-  --text-soft: rgba(255, 255, 255, 0.68);
-  --glow-accent: 0 0 0 1px rgba(255, 106, 0, 0.16), 0 24px 80px rgba(255, 106, 0, 0.12);
-  --glow-frost: 0 0 0 1px rgba(118, 199, 255, 0.14), 0 24px 80px rgba(118, 199, 255, 0.08);
+  --line-soft: rgba(255, 255, 255, 0.07);
+  --line-hard: rgba(255, 255, 255, 0.12);
+  --text-strong: rgba(255, 255, 255, 0.92);
+  --text-soft: rgba(255, 255, 255, 0.66);
+  --text-meta: rgba(255, 255, 255, 0.42);
+  --glow-accent: 0 0 0 1px rgba(255, 106, 0, 0.12), 0 18px 58px rgba(255, 106, 0, 0.1);
+  --glow-frost: 0 0 0 1px rgba(118, 199, 255, 0.12), 0 18px 58px rgba(118, 199, 255, 0.07);
+  --display-tight: -0.045em;
+  --display-leading: 0.9;
+  --body-leading: 1.7;
 }
 
 * {
@@ -36,11 +42,13 @@ body {
   margin: 0;
   min-width: 320px;
   background:
-    radial-gradient(circle at top, rgba(255, 106, 0, 0.1), transparent 25%),
-    radial-gradient(circle at 85% 12%, rgba(118, 199, 255, 0.05), transparent 18%),
-    linear-gradient(180deg, #060606 0%, #0a0a0a 35%, #090909 100%);
+    radial-gradient(circle at 50% -6%, rgba(255, 255, 255, 0.05), transparent 18%),
+    radial-gradient(circle at 80% 8%, rgba(118, 199, 255, 0.05), transparent 16%),
+    radial-gradient(circle at 12% 22%, rgba(255, 106, 0, 0.045), transparent 14%),
+    linear-gradient(180deg, #050505 0%, #090909 34%, #080808 70%, #050505 100%);
   color: #ffffff;
   letter-spacing: -0.01em;
+  font-feature-settings: 'ss01' 1, 'cv01' 1, 'cv11' 1;
 }
 
 a {
@@ -77,9 +85,80 @@ a {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11), transparent 34%, transparent 72%, rgba(255, 255, 255, 0.04));
-  opacity: 0.55;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.075), transparent 36%, transparent 72%, rgba(255, 255, 255, 0.025));
+  opacity: 0.48;
   pointer-events: none;
+}
+
+.monolith-surface {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012) 26%, rgba(5, 5, 5, 0.92) 100%),
+    linear-gradient(135deg, rgba(118, 199, 255, 0.018), transparent 32%, rgba(255, 106, 0, 0.03));
+  box-shadow: 0 40px 110px rgba(0, 0, 0, 0.56), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.monolith-surface::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 18%);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.section-shell {
+  position: relative;
+}
+
+.section-shell::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: min(42vw, 360px);
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.16), rgba(255,255,255,0));
+  opacity: 0.42;
+}
+
+.eclipse-core {
+  position: relative;
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle, rgba(255,255,255,0.08) 0, rgba(255,255,255,0.02) 18%, rgba(0,0,0,0) 48%),
+    radial-gradient(circle, rgba(255,106,0,0.34) 0, rgba(255,106,0,0.08) 26%, rgba(0,0,0,0) 54%);
+}
+
+.eclipse-core::before {
+  content: '';
+  position: absolute;
+  inset: 17%;
+  border-radius: 9999px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.type-display {
+  font-family: 'IBM Plex Sans Condensed', sans-serif;
+  letter-spacing: var(--display-tight);
+  line-height: var(--display-leading);
+}
+
+.type-heading {
+  font-family: 'IBM Plex Sans Condensed', sans-serif;
+  letter-spacing: -0.04em;
+  line-height: 0.94;
+}
+
+.type-body {
+  font-family: 'Manrope', sans-serif;
+  line-height: var(--body-leading);
 }
 
 @media (max-width: 640px) {
