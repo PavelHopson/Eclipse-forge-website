@@ -1,0 +1,45 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#060606"/>
+  <rect width="1200" height="630" fill="url(#paint0_radial)"/>
+  <rect width="1200" height="630" fill="url(#paint1_radial)"/>
+  <g opacity="0.28">
+    <path d="M0 94H1200" stroke="white" stroke-opacity="0.12"/>
+    <path d="M0 188H1200" stroke="white" stroke-opacity="0.08"/>
+    <path d="M0 282H1200" stroke="white" stroke-opacity="0.08"/>
+    <path d="M0 376H1200" stroke="white" stroke-opacity="0.08"/>
+    <path d="M0 470H1200" stroke="white" stroke-opacity="0.08"/>
+    <path d="M0 564H1200" stroke="white" stroke-opacity="0.08"/>
+    <path d="M120 0V630" stroke="white" stroke-opacity="0.08"/>
+    <path d="M240 0V630" stroke="white" stroke-opacity="0.08"/>
+    <path d="M360 0V630" stroke="white" stroke-opacity="0.08"/>
+    <path d="M480 0V630" stroke="white" stroke-opacity="0.08"/>
+    <path d="M600 0V630" stroke="white" stroke-opacity="0.08"/>
+    <path d="M720 0V630" stroke="white" stroke-opacity="0.08"/>
+    <path d="M840 0V630" stroke="white" stroke-opacity="0.08"/>
+    <path d="M960 0V630" stroke="white" stroke-opacity="0.08"/>
+    <path d="M1080 0V630" stroke="white" stroke-opacity="0.08"/>
+  </g>
+  <circle cx="868" cy="228" r="162" fill="url(#paint2_radial)"/>
+  <circle cx="868" cy="228" r="72" fill="#080808"/>
+  <circle cx="868" cy="228" r="89" stroke="white" stroke-opacity="0.08"/>
+  <circle cx="868" cy="228" r="134" stroke="#76C7FF" stroke-opacity="0.14"/>
+  <text x="108" y="182" fill="white" fill-opacity="0.46" font-family="Space Grotesk, sans-serif" font-size="24" letter-spacing="0.42em">ECLIPSE FORGE</text>
+  <text x="108" y="300" fill="white" font-family="Space Grotesk, sans-serif" font-size="72" font-weight="700" letter-spacing="-0.06em">КУЗНИЦА</text>
+  <text x="108" y="376" fill="white" font-family="Space Grotesk, sans-serif" font-size="72" font-weight="700" letter-spacing="-0.06em">IT-РЕШЕНИЙ</text>
+  <text x="108" y="450" fill="white" fill-opacity="0.64" font-family="Manrope, sans-serif" font-size="28">Сайты, SaaS и автоматизация, которые усиливают прибыль бизнеса.</text>
+  <defs>
+    <radialGradient id="paint0_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(600 0) rotate(90) scale(520 1000)">
+      <stop stop-color="#111111"/>
+      <stop offset="1" stop-color="#060606"/>
+    </radialGradient>
+    <radialGradient id="paint1_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(972 92) rotate(131.161) scale(302.944 347.312)">
+      <stop stop-color="#76C7FF" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#76C7FF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="paint2_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(868 228) rotate(90) scale(162)">
+      <stop stop-color="#FF8B3D"/>
+      <stop offset="0.42" stop-color="#FF6A00" stop-opacity="0.36"/>
+      <stop offset="1" stop-color="#FF6A00" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>
