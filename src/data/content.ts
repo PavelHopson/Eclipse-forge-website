@@ -78,3 +78,32 @@ export const metrics = [
   { value: '3 формата', label: 'сайты, SaaS, автоматизация' },
   { value: '0 шума', label: 'только решения с бизнес-эффектом' },
 ];
+
+export const contactDetails = {
+  email: 'hello@replace-this.dev',
+  telegramHandle: '@replace_this',
+  telegramUrl: 'https://t.me/replace_this',
+  responseTime: 'Ответ в течение 24 часов',
+  cityTimezone: 'Калининград / UTC+2',
+} as const;
+
+export const telegramChannel = {
+  username: '@eclipseforge_channel',
+  url: 'https://t.me/eclipseforge_channel',
+  label: 'Telegram канал',
+  description: 'Следите за проектами, разработкой и реальными кейсами Eclipse Forge',
+} as const;
+
+export const contactFlow = {
+  primaryCta: 'Написать в Telegram',
+  secondaryCta: 'Написать на email',
+  panelTitle: 'Свяжитесь с нами напрямую.',
+  panelDescription:
+    'Пока сайт переносится с Netlify, основной канал связи — Telegram. Если удобнее, можно написать на email.',
+  telegramPrompt: 'Что прислать в первом сообщении',
+  telegramChecklist: [
+    'Что нужно сделать',
+    'Какой результат нужен',
+    'Бюджет и сроки, если они уже понятны',
+  ],
+} as const;
