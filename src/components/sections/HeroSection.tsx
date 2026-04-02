@@ -55,14 +55,14 @@ export function HeroSection() {
 
           <motion.h1
             variants={revealUp}
-            className="type-display max-w-[10.4ch] text-balance text-[clamp(2.8rem,10vw,6.8rem)] font-semibold text-white"
+            className="type-display max-w-[11.4ch] text-balance text-[clamp(2.55rem,8.2vw,5.9rem)] font-medium text-white"
           >
             Куем IT-продукты, которые увеличивают прибыль бизнеса
           </motion.h1>
 
           <motion.p
             variants={revealUp}
-            className="type-body mt-6 max-w-[34rem] text-[0.98rem] text-white/58 sm:mt-8 sm:text-[1.02rem] lg:text-[1.05rem]"
+            className="type-body mt-5 text-[0.98rem] text-white/60 sm:mt-7 sm:text-[1.01rem] lg:text-[1.04rem]"
           >
             Проектируем и разрабатываем сайты, SaaS и автоматизацию — от идеи
             до запуска. Без декоративной разработки. Только решения, которые
@@ -71,7 +71,7 @@ export function HeroSection() {
 
           <motion.div
             variants={revealUp}
-            className="mt-8 flex flex-col gap-4 sm:mt-10 sm:flex-row sm:items-center sm:gap-5"
+            className="mt-7 flex flex-col gap-4 sm:mt-9 sm:flex-row sm:items-center sm:gap-5"
           >
             <GlowButton href="#contact" className="w-full justify-center sm:w-auto">
               Запустить проект

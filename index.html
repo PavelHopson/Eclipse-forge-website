@@ -37,6 +37,23 @@
   </head>
   <body>
     <div id="root"></div>
+    <form
+      name="eclipse-forge-lead"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      hidden
+    >
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="contact" />
+      <input type="text" name="projectType" />
+      <textarea name="brief"></textarea>
+      <input type="text" name="budget" />
+      <input type="text" name="deadline" />
+      <input type="text" name="subject" />
+      <input type="text" name="bot-field" />
+    </form>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
