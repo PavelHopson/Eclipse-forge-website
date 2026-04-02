@@ -46,8 +46,7 @@ export function CtaSection() {
               Расскажите о задаче. Мы вернёмся с понятным следующим шагом.
             </h2>
             <p className="type-body mt-4 text-[0.98rem] text-white/56 sm:mt-5 sm:text-[1rem]">
-              Пока сайт переносится на новый хостинг, основной канал связи —
-              Telegram. Email остаётся как запасной путь.
+              Основной канал связи — Telegram. Отвечаем быстро, обычно в течение нескольких часов.
             </p>
 
             <div className="mt-8 grid gap-3 sm:mt-9 sm:max-w-[28rem]">
@@ -168,7 +167,7 @@ export function CtaSection() {
                   Status
                 </p>
                 <p className="mt-3 text-sm leading-6 text-white/54">
-                  Форма временно не является основным каналом, пока сайт переносится с Netlify. Для быстрого ответа используйте Telegram.
+                  Для быстрого ответа используйте Telegram. Email оставили как запасной способ связи.
                 </p>
               </div>
             </div>

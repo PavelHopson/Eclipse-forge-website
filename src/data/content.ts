@@ -80,16 +80,17 @@ export const metrics = [
 ];
 
 export const contactDetails = {
-  email: 'hello@replace-this.dev',
-  telegramHandle: '@replace_this',
-  telegramUrl: 'https://t.me/replace_this',
-  responseTime: 'Ответ в течение 24 часов',
+  email: 'hello@eclipseforge.dev',
+  telegramHandle: '@EclipseForgeEngine',
+  telegramUrl:
+    'https://t.me/EclipseForgeEngine?text=%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82,%20%D1%85%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82',
+  responseTime: 'Отвечаем быстро, обычно в течение нескольких часов',
   cityTimezone: 'Калининград / UTC+2',
 } as const;
 
 export const telegramChannel = {
-  username: '@eclipseforge_channel',
-  url: 'https://t.me/eclipseforge_channel',
+  username: '@EclipseForgeEngine',
+  url: 'https://t.me/EclipseForgeEngine',
   label: 'Telegram канал',
   description: 'Следите за проектами, разработкой и реальными кейсами Eclipse Forge',
 } as const;
@@ -99,11 +100,11 @@ export const contactFlow = {
   secondaryCta: 'Написать на email',
   panelTitle: 'Свяжитесь с нами напрямую.',
   panelDescription:
-    'Пока сайт переносится с Netlify, основной канал связи — Telegram. Если удобнее, можно написать на email.',
+    'Основной канал связи — Telegram. Если удобнее, можно написать на email.',
   telegramPrompt: 'Что прислать в первом сообщении',
   telegramChecklist: [
     'Что нужно сделать',
-    'Какой результат нужен',
-    'Бюджет и сроки, если они уже понятны',
+    'Какой результат хотите получить',
+    'Сроки и бюджет, если они уже есть',
   ],
 } as const;
