@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,7 +6,7 @@
 
 :root {
   color-scheme: dark;
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Onest', sans-serif;
   background: #0a0a0a;
   color: #ffffff;
   text-rendering: optimizeLegibility;
@@ -23,11 +23,11 @@
   --text-meta: rgba(255, 255, 255, 0.42);
   --glow-accent: 0 0 0 1px rgba(255, 106, 0, 0.12), 0 18px 58px rgba(255, 106, 0, 0.1);
   --glow-frost: 0 0 0 1px rgba(118, 199, 255, 0.12), 0 18px 58px rgba(118, 199, 255, 0.07);
-  --display-tight: -0.028em;
-  --display-leading: 0.95;
-  --heading-tight: -0.026em;
-  --heading-leading: 1;
-  --body-leading: 1.68;
+  --display-tight: -0.05em;
+  --display-leading: 0.92;
+  --heading-tight: -0.034em;
+  --heading-leading: 0.98;
+  --body-leading: 1.72;
   --body-measure: 62ch;
 }
 
@@ -45,13 +45,13 @@ body {
   margin: 0;
   min-width: 320px;
   background:
-    radial-gradient(circle at 50% -6%, rgba(255, 255, 255, 0.05), transparent 18%),
-    radial-gradient(circle at 80% 8%, rgba(118, 199, 255, 0.05), transparent 16%),
-    radial-gradient(circle at 12% 22%, rgba(255, 106, 0, 0.045), transparent 14%),
-    linear-gradient(180deg, #050505 0%, #090909 34%, #080808 70%, #050505 100%);
+    radial-gradient(circle at 18% 10%, rgba(255, 106, 0, 0.14), transparent 18%),
+    radial-gradient(circle at 78% 18%, rgba(255, 122, 56, 0.1), transparent 16%),
+    radial-gradient(circle at 50% 84%, rgba(255, 106, 0, 0.06), transparent 22%),
+    linear-gradient(180deg, #040404 0%, #070707 36%, #090909 100%);
   color: #ffffff;
-  letter-spacing: -0.01em;
-  font-feature-settings: 'ss01' 1, 'cv01' 1, 'cv11' 1;
+  letter-spacing: -0.012em;
+  font-feature-settings: 'ss01' 1, 'cv01' 1, 'cv11' 1, 'liga' 1;
 }
 
 a {
@@ -79,6 +79,13 @@ a {
   mix-blend-mode: soft-light;
 }
 
+.grid-overlay {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
 .panel-sheen {
   position: relative;
 }
@@ -96,11 +103,11 @@ a {
 .monolith-surface {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.09);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012) 26%, rgba(5, 5, 5, 0.92) 100%),
-    linear-gradient(135deg, rgba(118, 199, 255, 0.018), transparent 32%, rgba(255, 106, 0, 0.03));
-  box-shadow: 0 40px 110px rgba(0, 0, 0, 0.56), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.016) 18%, rgba(8, 8, 10, 0.96) 100%),
+    linear-gradient(135deg, rgba(255, 146, 84, 0.032), transparent 36%, rgba(255, 106, 0, 0.04));
+  box-shadow: 0 38px 110px rgba(0, 0, 0, 0.58), inset 0 1px 0 rgba(255, 255, 255, 0.045);
 }
 
 .monolith-surface::before {
@@ -108,7 +115,7 @@ a {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 18%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 20%);
   opacity: 0.8;
   pointer-events: none;
 }
@@ -148,19 +155,19 @@ a {
 }
 
 .type-display {
-  font-family: 'IBM Plex Sans Condensed', sans-serif;
+  font-family: 'Onest', sans-serif;
   letter-spacing: var(--display-tight);
   line-height: var(--display-leading);
 }
 
 .type-heading {
-  font-family: 'IBM Plex Sans Condensed', sans-serif;
+  font-family: 'Onest', sans-serif;
   letter-spacing: var(--heading-tight);
   line-height: var(--heading-leading);
 }
 
 .type-body {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Onest', sans-serif;
   line-height: var(--body-leading);
   max-width: var(--body-measure);
 }

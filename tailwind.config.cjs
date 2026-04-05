@@ -14,8 +14,8 @@ module.exports = {
         frost: '#76C7FF',
       },
       fontFamily: {
-        display: ['"IBM Plex Sans Condensed"', 'sans-serif'],
-        body: ['"Manrope"', 'sans-serif'],
+        display: ['"Onest"', 'sans-serif'],
+        body: ['"Onest"', 'sans-serif'],
       },
       boxShadow: {
         glow: '0 0 0 1px rgba(255, 106, 0, 0.12), 0 16px 54px rgba(255, 106, 0, 0.1)',

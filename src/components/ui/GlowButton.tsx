@@ -23,8 +23,8 @@ type ButtonGlowButtonProps = BaseProps &
 type GlowButtonProps = AnchorGlowButtonProps | ButtonGlowButtonProps;
 
 const buttonClassName = [
-  'inline-flex items-center justify-center rounded-full border border-white/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] px-6 py-3 text-sm font-semibold tracking-[0.01em] text-white shadow-panel transition duration-300',
-  'hover:border-accent/28 hover:bg-[linear-gradient(180deg,rgba(255,255,255,0.1),rgba(255,255,255,0.04))] hover:shadow-glow',
+  'inline-flex items-center justify-center rounded-full border border-orange-400/35 bg-white/[0.05] px-6 py-3 text-sm font-medium tracking-[0.01em] text-white shadow-[0_0_30px_rgba(249,115,22,0.12)] transition duration-300',
+  'hover:border-orange-300/60 hover:bg-white/[0.09] hover:shadow-[0_0_34px_rgba(249,115,22,0.18)]',
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-surface',
   'disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:border-white/12 disabled:hover:bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] disabled:hover:shadow-panel',
 ].join(' ');
