@@ -50,7 +50,7 @@ export function HeroSection() {
 
       {/* Spline 3D Scene */}
       {SPLINE_SCENE_URL && (
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 opacity-40">
           <Suspense fallback={null}>
             <Spline
               scene={SPLINE_SCENE_URL}
@@ -58,25 +58,25 @@ export function HeroSection() {
               style={{ width: '100%', height: '100%' }}
             />
           </Suspense>
-          {/* Black hole vignette overlay — radial dark edges, center glow */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background: 'radial-gradient(ellipse 50% 50% at 50% 50%, transparent 20%, rgba(10,10,10,0.6) 55%, rgba(10,10,10,0.95) 80%)',
-            }}
-          />
-          {/* Subtle orange accretion disk glow */}
-          <div
-            className="absolute inset-0 pointer-events-none mix-blend-screen opacity-15"
-            style={{
-              background: 'radial-gradient(ellipse 40% 35% at 50% 48%, rgba(255,106,0,0.4) 0%, transparent 70%)',
-            }}
-          />
         </div>
       )}
+      {/* Left-side dark gradient — keeps text readable */}
+      <div
+        className="absolute inset-0 z-[1] pointer-events-none"
+        style={{
+          background: 'linear-gradient(to right, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.85) 35%, rgba(10,10,10,0.4) 60%, transparent 100%)',
+        }}
+      />
+      {/* Top + bottom fade */}
+      <div
+        className="absolute inset-0 z-[1] pointer-events-none"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(10,10,10,0.7) 0%, transparent 25%, transparent 75%, rgba(10,10,10,1) 100%)',
+        }}
+      />
 
       {/* Content */}
-      <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 py-32 lg:py-40 w-full">
+      <div className="relative z-[5] mx-auto max-w-7xl px-5 sm:px-8 py-32 lg:py-40 w-full">
         <motion.div
           variants={stagger}
           initial="hidden"
