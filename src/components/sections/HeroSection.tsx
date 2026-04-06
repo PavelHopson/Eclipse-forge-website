@@ -15,13 +15,10 @@ const Spline = lazy(() => import('@splinetool/react-spline'));
 // ║  3. Export → Web Content → Viewer                 ║
 // ║  4. Paste the prod.spline.design URL below        ║
 // ╚═══════════════════════════════════════════════════╝
-// Чтобы получить рабочий URL:
-// 1. Открой сцену в Spline Editor (app.spline.design)
-// 2. Нажми Export (стрелка вверху справа)
-// 3. Выбери "Public URL" или "Code Export"
-// 4. Скопируй ссылку вида: https://prod.spline.design/XXXXX/scene.splinecode
-// ⚠️ my.spline.design ссылки НЕ работают для embed — только prod.spline.design
-const SPLINE_SCENE_URL = '';
+// Distorting Typography — hero background
+const SPLINE_SCENE_URL = 'https://prod.spline.design/shDvNscrvyG2F44o/scene.splinecode';
+// Boxes Hover — available for other sections:
+// https://prod.spline.design/FCcTPhNPOIAc2FlI/scene.splinecode
 
 const stats = [
   { value: '8+', label: 'проектов' },
