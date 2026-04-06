@@ -8,11 +8,9 @@ import { ServicesSection } from '../components/sections/ServicesSection';
 
 export function App() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-surface text-white">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_8%,rgba(255,111,0,0.2),transparent_18%),radial-gradient(circle_at_78%_22%,rgba(255,94,0,0.12),transparent_16%),radial-gradient(circle_at_52%_82%,rgba(255,120,0,0.08),transparent_22%),linear-gradient(180deg,#030303_0%,#060606_32%,#090909_100%)]" />
-      <div className="grid-overlay pointer-events-none absolute inset-0 opacity-[0.06]" />
-      <div className="noise-overlay pointer-events-none absolute inset-0 opacity-[0.12]" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[420px] bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_58%)]" />
+    <div className="relative min-h-screen bg-[#050505] text-white">
+      {/* Subtle noise */}
+      <div className="noise-overlay pointer-events-none fixed inset-0 opacity-[0.08]" />
 
       <SiteHeader />
 
@@ -24,6 +22,17 @@ export function App() {
         <ProcessSection />
         <CtaSection />
       </main>
+
+      {/* Footer */}
+      <footer className="relative z-10 border-t border-white/[0.04] px-5 sm:px-8 py-12">
+        <div className="mx-auto max-w-7xl flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div className="flex items-center gap-3">
+            <span className="h-2 w-2 rounded-full bg-accent/60" />
+            <span className="text-[11px] uppercase tracking-[0.3em] text-white/30">Eclipse Forge</span>
+          </div>
+          <p className="text-[11px] text-white/15 tracking-wide">© 2024 Eclipse Forge. Калининград.</p>
+        </div>
+      </footer>
     </div>
   );
 }

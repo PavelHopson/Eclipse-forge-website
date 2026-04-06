@@ -7,133 +7,118 @@ import {
 import { revealUp, stagger, viewport } from '../../lib/animation';
 import { GlowButton } from '../ui/GlowButton';
 
-const quickContacts = [
-  {
-    label: 'Email',
-    value: contactDetails.email,
-    href: `mailto:${contactDetails.email}`,
-  },
-  {
-    label: 'Telegram',
-    value: contactDetails.telegramHandle,
-    href: contactDetails.telegramUrl,
-  },
-] as const;
-
 export function CtaSection() {
   return (
     <motion.section
       id="contact"
-      className="px-4 py-20 sm:px-6 lg:px-10 lg:py-24"
+      className="section-shell px-4 py-20 sm:px-6 lg:px-10 lg:py-28"
       variants={stagger}
       initial="hidden"
       whileInView="visible"
       viewport={viewport}
     >
-      <div className="mx-auto max-w-7xl rounded-[2.5rem] border border-orange-400/15 bg-[radial-gradient(circle_at_20%_10%,rgba(249,115,22,0.12),transparent_22%),linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] p-8 sm:p-10 lg:p-12">
-        <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
-          <motion.div variants={revealUp}>
-            <p className="type-meta text-white/35">Contact</p>
-            <h2 className="type-display mt-4 max-w-3xl text-[clamp(2.2rem,5vw,4.5rem)] font-semibold leading-[0.95] text-white">
-              Если у вас есть задача, где рост упирается в систему — давайте разберём её.
-            </h2>
-            <p className="type-body mt-5 max-w-2xl text-base leading-7 text-white/68">
-              Основной канал связи — Telegram. Коротко опишите задачу,
-              желаемый результат и сроки, если они уже понятны.
-            </p>
+      <div className="mx-auto max-w-7xl">
+        {/* Heading */}
+        <motion.div variants={revealUp} className="max-w-3xl mb-12">
+          <p className="type-meta text-white/25 mb-5">Контакт</p>
+          <h2 className="type-display text-[clamp(2rem,4.5vw,3.8rem)] font-semibold leading-[0.96] text-white/90 mb-6">
+            Есть задача, где рост
+            <br />
+            упирается в систему?
+          </h2>
+          <p className="text-[0.95rem] leading-[1.8] text-white/35 max-w-xl">
+            Коротко опишите задачу, желаемый результат и сроки.
+            Основной канал связи — Telegram.
+          </p>
+        </motion.div>
+
+        {/* CTA + Info grid */}
+        <div className="grid gap-px bg-white/[0.04] lg:grid-cols-3">
+          {/* Primary CTA */}
+          <motion.div
+            variants={revealUp}
+            className="bg-[#060606] p-8 sm:p-10 flex flex-col justify-between"
+          >
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.35em] text-accent/40 mb-4">Написать</p>
+              <GlowButton
+                href={contactDetails.telegramUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="px-7 py-4"
+              >
+                {contactFlow.primaryCta}
+              </GlowButton>
+            </div>
+
+            <div className="mt-10 space-y-3">
+              {contactFlow.telegramChecklist.map((item) => (
+                <div key={item} className="flex items-start gap-3">
+                  <span className="mt-2 h-1 w-1 rounded-full bg-accent/50" />
+                  <p className="text-[13px] leading-relaxed text-white/30">{item}</p>
+                </div>
+              ))}
+            </div>
           </motion.div>
 
-          <motion.div variants={revealUp}>
-            <GlowButton
+          {/* Contacts */}
+          <motion.div
+            variants={revealUp}
+            className="bg-[#060606] p-8 sm:p-10 space-y-6"
+          >
+            <p className="text-[10px] uppercase tracking-[0.35em] text-white/20 mb-2">Контакты</p>
+
+            <a
+              href={`mailto:${contactDetails.email}`}
+              className="block border border-white/[0.06] p-5 hover:border-white/10 transition-colors group"
+            >
+              <p className="text-[10px] uppercase tracking-[0.3em] text-white/20 mb-2">Email</p>
+              <p className="text-sm text-white/60 group-hover:text-white/80 transition-colors">{contactDetails.email}</p>
+            </a>
+
+            <a
               href={contactDetails.telegramUrl}
               target="_blank"
               rel="noreferrer"
-              className="px-7 py-4 shadow-[0_0_30px_rgba(249,115,22,0.15)]"
+              className="block border border-white/[0.06] p-5 hover:border-accent/20 transition-colors group"
             >
-              {contactFlow.primaryCta}
-            </GlowButton>
-          </motion.div>
-        </div>
-
-        <div className="mt-8 grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
-          <motion.div
-            variants={revealUp}
-            className="rounded-[1.9rem] border border-white/10 bg-black/20 p-6"
-          >
-            <p className="text-[0.62rem] uppercase tracking-[0.32em] text-white/30">
-              Direct contact
-            </p>
-            <p className="type-heading mt-3 text-[1.55rem] font-medium text-white">
-              {contactFlow.panelTitle}
-            </p>
-            <p className="type-body mt-3 text-sm leading-7 text-white/62">
-              {contactFlow.panelDescription}
-            </p>
-
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              {quickContacts.map((contact) => (
-                <a
-                  key={contact.label}
-                  href={contact.href}
-                  target={contact.href.startsWith('https') ? '_blank' : undefined}
-                  rel={contact.href.startsWith('https') ? 'noreferrer' : undefined}
-                  className="rounded-[1.25rem] border border-white/10 bg-white/[0.03] px-4 py-4 transition hover:border-white/20"
-                >
-                  <p className="text-[0.58rem] uppercase tracking-[0.28em] text-white/30">
-                    {contact.label}
-                  </p>
-                  <p className="mt-2 text-sm text-white/82">{contact.value}</p>
-                </a>
-              ))}
-            </div>
-
-            <div className="mt-6 rounded-[1.25rem] border border-white/10 bg-white/[0.03] px-4 py-4">
-              <p className="text-[0.58rem] uppercase tracking-[0.28em] text-white/30">
-                {contactFlow.telegramPrompt}
-              </p>
-              <div className="mt-4 space-y-3">
-                {contactFlow.telegramChecklist.map((item) => (
-                  <div key={item} className="flex items-start gap-3">
-                    <span className="mt-2 h-1.5 w-1.5 rounded-full bg-orange-400 shadow-[0_0_10px_rgba(251,146,60,0.7)]" />
-                    <p className="text-sm leading-6 text-white/66">{item}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div variants={revealUp} className="grid gap-4">
-            <a
-              href={telegramChannel.url}
-              target="_blank"
-              rel="noreferrer"
-              className="group rounded-[1.9rem] border border-white/10 bg-gradient-to-b from-white/[0.04] to-white/[0.02] p-6 transition hover:border-orange-400/30 hover:shadow-[0_0_40px_rgba(249,115,22,0.08)]"
-            >
-              <div className="flex items-center justify-between gap-4">
-                <p className="text-[0.62rem] uppercase tracking-[0.3em] text-white/30">
-                  {telegramChannel.label}
-                </p>
-                <span className="inline-flex items-center gap-2 text-[0.58rem] uppercase tracking-[0.22em] text-orange-200">
-                  <span className="h-2 w-2 rounded-full bg-orange-400 shadow-[0_0_10px_rgba(251,146,60,0.7)]" />
-                  Live
-                </span>
-              </div>
-              <p className="mt-4 text-xl font-medium text-white">{telegramChannel.username}</p>
-              <p className="mt-3 text-sm leading-6 text-white/66">
-                {telegramChannel.description}
-              </p>
-              <span className="mt-5 inline-flex items-center gap-3 text-sm text-white/72 transition group-hover:text-white">
-                Перейти в Telegram
-                <span className="h-px w-8 bg-white/18 transition group-hover:bg-orange-300/50" />
-              </span>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-white/20 mb-2">Telegram</p>
+              <p className="text-sm text-white/60 group-hover:text-accent/70 transition-colors">{contactDetails.telegramHandle}</p>
             </a>
 
-            <div className="rounded-[1.9rem] border border-white/10 bg-black/20 p-6">
-              <p className="text-[0.62rem] uppercase tracking-[0.3em] text-white/30">
-                Response window
-              </p>
-              <p className="mt-4 text-lg font-medium text-white">{contactDetails.responseTime}</p>
-              <p className="mt-2 text-sm text-white/48">{contactDetails.cityTimezone}</p>
+            <div className="border border-white/[0.06] p-5">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-white/20 mb-2">Ответ</p>
+              <p className="text-sm text-white/50">{contactDetails.responseTime}</p>
+              <p className="text-xs text-white/20 mt-1">{contactDetails.cityTimezone}</p>
+            </div>
+          </motion.div>
+
+          {/* Telegram Channel */}
+          <motion.div
+            variants={revealUp}
+            className="bg-[#060606] p-8 sm:p-10 flex flex-col justify-between"
+          >
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.35em] text-white/20 mb-6">Канал</p>
+              <a
+                href={telegramChannel.url}
+                target="_blank"
+                rel="noreferrer"
+                className="group"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="h-2 w-2 rounded-full bg-accent/60 shadow-[0_0_10px_rgba(255,106,0,0.5)]" />
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-accent/50">Live</span>
+                </div>
+                <p className="text-xl font-medium text-white/80 group-hover:text-accent transition-colors mb-3">{telegramChannel.username}</p>
+                <p className="text-[13px] leading-relaxed text-white/30 mb-6">
+                  {telegramChannel.description}
+                </p>
+                <span className="inline-flex items-center gap-3 text-sm text-white/40 group-hover:text-white/60 transition-colors">
+                  Перейти
+                  <span className="h-px w-8 bg-white/10 group-hover:bg-accent/40 transition-colors" />
+                </span>
+              </a>
             </div>
           </motion.div>
         </div>
