@@ -1,43 +1,47 @@
 import { motion } from 'framer-motion';
 import { processSteps } from '../../data/content';
 import { revealUp, stagger, viewport } from '../../lib/animation';
-import { SectionHeading } from '../ui/SectionHeading';
 
 export function ProcessSection() {
   return (
     <motion.section
       id="process"
-      className="section-shell px-4 py-20 sm:px-6 lg:px-10 lg:py-28"
+      className="section-shell py-32 sm:py-40"
       variants={stagger}
       initial="hidden"
       whileInView="visible"
       viewport={viewport}
     >
-      <div className="mx-auto max-w-7xl">
-        <motion.div variants={revealUp} className="max-w-2xl mb-14">
-          <SectionHeading
-            eyebrow="Процесс"
-            title="От задачи к системе — без хаоса и лишнего шума."
-          />
-        </motion.div>
+      <div className="mx-auto max-w-[1200px] px-6 sm:px-8">
+        <motion.p variants={revealUp} className="type-meta text-accent/40 mb-8">
+          Процесс
+        </motion.p>
+        <motion.h2 variants={revealUp} className="type-display text-section text-gradient max-w-lg mb-20">
+          От задачи к системе.
+        </motion.h2>
 
-        <div className="grid gap-px bg-white/[0.04] sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px">
           {processSteps.map((step) => (
-            <motion.article
+            <motion.div
               key={step.index}
               variants={revealUp}
-              className="group bg-[#060606] p-8 hover:bg-white/[0.02] transition-colors duration-500 relative"
+              className="group relative bg-[#030303] p-8 sm:p-10 border-l border-white/[0.03] first:border-l-0"
             >
-              <span className="text-3xl font-semibold text-accent/15 group-hover:text-accent/30 transition-colors duration-500 block mb-6">
+              {/* Step number */}
+              <span className="font-display text-5xl font-extralight text-white/[0.04] group-hover:text-accent/10 transition-colors duration-700 block mb-8">
                 {step.index}
               </span>
-              <h3 className="text-base sm:text-lg font-medium text-white/80 tracking-tight mb-3">
+
+              <h3 className="font-display text-base font-medium text-white/70 tracking-tight mb-4 group-hover:text-white/90 transition-colors duration-400">
                 {step.title}
               </h3>
-              <p className="text-[0.85rem] leading-[1.7] text-white/30">
+              <p className="type-body text-[13px] text-white/20 group-hover:text-white/30 transition-colors duration-400">
                 {step.text}
               </p>
-            </motion.article>
+
+              {/* Bottom accent line on hover */}
+              <div className="absolute bottom-0 left-0 w-0 h-px bg-accent/30 group-hover:w-full transition-all duration-700" />
+            </motion.div>
           ))}
         </div>
       </div>

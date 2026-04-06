@@ -4,25 +4,40 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        surface: '#050505',
-        panel: '#0a0a0a',
-        void: '#030303',
+        surface: '#030303',
+        panel: '#080808',
+        void: '#010101',
         accent: '#FF6A00',
         ember: '#FF8A3D',
-        steel: '#94A3B8',
         frost: '#76C7FF',
       },
       fontFamily: {
-        display: ['"Space Grotesk"', 'sans-serif'],
-        body: ['"Inter"', 'sans-serif'],
+        display: ['"Outfit"', 'sans-serif'],
+        body: ['"DM Sans"', 'sans-serif'],
       },
-      boxShadow: {
-        glow: '0 0 0 1px rgba(255, 106, 0, 0.1), 0 20px 60px rgba(255, 106, 0, 0.08)',
-        soft: '0 20px 60px rgba(0, 0, 0, 0.4)',
-        panel: '0 30px 90px rgba(0, 0, 0, 0.5)',
+      fontSize: {
+        'hero': 'clamp(3rem, 8vw, 6.5rem)',
+        'section': 'clamp(2rem, 4vw, 3.6rem)',
       },
       transitionDuration: {
         '400': '400ms',
+        '600': '600ms',
+      },
+      animation: {
+        'float': 'float 20s ease-in-out infinite',
+        'float-slow': 'float 30s ease-in-out infinite',
+        'pulse-soft': 'pulseSoft 3s ease-in-out infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translate(0, 0)' },
+          '33%': { transform: 'translate(30px, -20px)' },
+          '66%': { transform: 'translate(-20px, 15px)' },
+        },
+        pulseSoft: {
+          '0%, 100%': { opacity: '0.4' },
+          '50%': { opacity: '0.8' },
+        },
       },
     },
   },

@@ -55,7 +55,7 @@ export function SiteHeader() {
         >
           <a href="#hero" className="flex min-w-0 items-center gap-3" onClick={closeMenu}>
             <span className="h-3 w-3 shrink-0 rounded-full bg-accent shadow-[0_0_20px_rgba(249,115,22,0.9)]" />
-            <span className="truncate text-[0.7rem] font-medium uppercase tracking-[0.35em] text-white/85 sm:text-[0.78rem]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+            <span className="truncate text-[0.72rem] font-medium uppercase tracking-[0.3em] text-white/80 sm:text-[0.78rem] font-display">
               Eclipse Forge
             </span>
           </a>
