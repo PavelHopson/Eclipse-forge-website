@@ -1,104 +1,148 @@
 import { motion } from 'framer-motion';
 import { contactDetails, metrics } from '../../data/content';
-import { revealUp, stagger } from '../../lib/animation';
 import { GlowButton } from '../ui/GlowButton';
+
+const wordReveal = {
+  hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: { duration: 0.7, delay: 0.3 + i * 0.08, ease: [0.16, 1, 0.3, 1] },
+  }),
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (delay: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] },
+  }),
+};
+
+const headingWords = [
+  { text: 'Мы', accent: false },
+  { text: 'проектируем', accent: false },
+  { text: 'системы', accent: true },
+  { text: ',', accent: false, dim: true },
+  { text: 'а', accent: false, dim: true },
+  { text: 'не', accent: false, dim: true },
+  { text: 'сайты.', accent: false, dim: true },
+];
 
 export function HeroSection() {
   return (
-    <section
-      id="hero"
-      className="relative overflow-hidden min-h-screen flex items-center"
-    >
-      {/* Animated gradient mesh */}
+    <section id="hero" className="relative overflow-hidden min-h-screen flex items-center">
+      {/* Gradient mesh */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[10%] left-[15%] w-[600px] h-[600px] rounded-full bg-accent/[0.12] blur-[150px]" />
-        <div className="absolute bottom-[15%] right-[10%] w-[500px] h-[500px] rounded-full bg-orange-700/[0.08] blur-[120px]" />
-        <div className="absolute top-[50%] left-[55%] w-[300px] h-[300px] rounded-full bg-frost/[0.03] blur-[100px]" />
+        <motion.div
+          animate={{ x: [0, 30, 0], y: [0, -20, 0] }}
+          transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute top-[8%] left-[12%] w-[600px] h-[600px] rounded-full bg-accent/[0.08] blur-[180px]"
+        />
+        <motion.div
+          animate={{ x: [0, -20, 0], y: [0, 30, 0] }}
+          transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute bottom-[10%] right-[8%] w-[500px] h-[500px] rounded-full bg-orange-800/[0.06] blur-[150px]"
+        />
+        <div className="absolute top-[45%] left-[50%] w-[250px] h-[250px] rounded-full bg-frost/[0.02] blur-[100px]" />
       </div>
 
-      {/* Subtle grid */}
-      <div className="grid-overlay absolute inset-0 opacity-[0.03] pointer-events-none" />
+      {/* Grid */}
+      <div className="grid-overlay absolute inset-0 opacity-[0.025] pointer-events-none" />
 
       {/* Content */}
-      <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 py-36 lg:py-44 w-full">
+      <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 py-40 lg:py-48 w-full">
+        {/* Badge */}
         <motion.div
-          variants={stagger}
+          custom={0}
+          variants={fadeUp}
           initial="hidden"
           animate="visible"
+          className="mb-10 inline-flex items-center gap-3 border border-accent/10 bg-accent/[0.04] px-5 py-2.5 rounded-full"
         >
-          {/* Badge */}
-          <motion.div
-            variants={revealUp}
-            className="mb-8 inline-flex items-center gap-3 rounded-full border border-accent/15 bg-accent/[0.05] px-5 py-2.5"
-          >
-            <span className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_12px_rgba(255,106,0,0.9)]" />
-            <span className="text-[0.6rem] uppercase tracking-[0.4em] text-accent/60 font-medium">
-              Product Engineering Studio
-            </span>
-          </motion.div>
+          <span className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_10px_rgba(255,106,0,0.8)]" />
+          <span className="text-[0.58rem] uppercase tracking-[0.45em] text-accent/50 font-medium">
+            Product Engineering Studio
+          </span>
+        </motion.div>
 
-          {/* Heading */}
-          <motion.h1
-            variants={revealUp}
-            className="type-display max-w-4xl text-[clamp(2.6rem,6.5vw,5.2rem)] font-semibold leading-[0.93] tracking-tight"
-          >
-            <span className="text-white/95">Мы проектируем</span>
-            <br />
-            <span className="text-accent">системы</span>
-            <span className="text-white/30">,</span>
-            <br className="sm:hidden" />
-            <span className="text-white/30"> а не сайты.</span>
-          </motion.h1>
-
-          {/* Subtitle */}
-          <motion.p
-            variants={revealUp}
-            className="mt-8 max-w-lg text-[0.95rem] sm:text-[1.05rem] leading-[1.8] text-white/40"
-          >
-            От AI-автоматизации до SaaS-платформ —
-            создаём цифровые продукты, которые увеличивают прибыль
-            и превращают хаос в управляемый рост.
-          </motion.p>
-
-          {/* CTAs */}
-          <motion.div
-            variants={revealUp}
-            className="mt-10 flex flex-col gap-3 sm:flex-row sm:gap-4"
-          >
-            <GlowButton
-              href={contactDetails.telegramUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="justify-center px-8 py-4"
+        {/* Heading — word by word reveal with blur */}
+        <h1 className="type-display max-w-5xl text-[clamp(2.4rem,6vw,5rem)] leading-[1.0] mb-10">
+          {headingWords.map((word, i) => (
+            <motion.span
+              key={i}
+              custom={i}
+              variants={wordReveal}
+              initial="hidden"
+              animate="visible"
+              className={`inline-block mr-[0.25em] ${
+                word.accent ? 'text-accent' : word.dim ? 'text-white/25' : 'text-white/90'
+              }`}
             >
-              Обсудить проект
-            </GlowButton>
-            <a
-              href="#cases"
-              className="group inline-flex items-center justify-center gap-2 rounded-full border border-white/[0.07] px-8 py-4 text-sm font-medium text-white/40 transition-all duration-300 hover:border-white/12 hover:text-white/60"
-            >
-              Смотреть кейсы
-              <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
-            </a>
-          </motion.div>
+              {word.text}
+            </motion.span>
+          ))}
+        </h1>
 
-          {/* Metrics */}
-          <motion.div
-            variants={revealUp}
-            className="mt-20 flex gap-10 sm:gap-16 border-t border-white/[0.05] pt-8"
+        {/* Subtitle */}
+        <motion.p
+          custom={1.1}
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          className="type-body max-w-lg text-[0.95rem] sm:text-base text-white/35 mb-12"
+        >
+          От AI-автоматизации до SaaS-платформ —
+          создаём цифровые продукты, которые превращают
+          хаос в управляемый рост.
+        </motion.p>
+
+        {/* CTAs */}
+        <motion.div
+          custom={1.4}
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-col gap-3 sm:flex-row sm:gap-4 mb-20"
+        >
+          <GlowButton
+            href={contactDetails.telegramUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="justify-center px-8 py-4"
           >
-            {metrics.map((m) => (
-              <div key={m.label}>
-                <p className="text-xl sm:text-2xl font-semibold text-white/80 tracking-tight">{m.value}</p>
-                <p className="mt-1.5 text-[10px] uppercase tracking-[0.25em] text-white/20">{m.label}</p>
-              </div>
-            ))}
-          </motion.div>
+            Обсудить проект
+          </GlowButton>
+          <a
+            href="#cases"
+            className="group inline-flex items-center justify-center gap-2 rounded-full border border-white/[0.06] px-8 py-4 text-sm text-white/30 transition-all duration-400 hover:border-white/10 hover:text-white/50"
+          >
+            Смотреть кейсы
+            <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
+          </a>
+        </motion.div>
+
+        {/* Metrics */}
+        <motion.div
+          custom={1.7}
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          className="flex gap-12 sm:gap-16 border-t border-white/[0.04] pt-8"
+        >
+          {metrics.map((m) => (
+            <div key={m.label}>
+              <p className="type-heading text-xl sm:text-2xl text-white/75">{m.value}</p>
+              <p className="mt-1 text-[10px] uppercase tracking-[0.3em] text-white/15 font-medium">{m.label}</p>
+            </div>
+          ))}
         </motion.div>
       </div>
 
       {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#060606] to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#050505] to-transparent pointer-events-none" />
     </section>
   );
 }
