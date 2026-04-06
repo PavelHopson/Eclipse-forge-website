@@ -20,14 +20,6 @@ export const projects: Project[] = [
     repoUrl: 'https://github.com/PavelHopson/Eclipse-PremiumRent',
   },
   {
-    title: 'Star CRM',
-    tag: 'SaaS / CRM',
-    description: 'Полноценная CRM-система для WB/Ozon селлеров: AI-автоответы на отзывы, юнит-экономика, парсер карточек, self-healing система, аналитика по воронке.',
-    tech: ['React', 'TypeScript', 'Laravel', 'PostgreSQL', 'AI/GPT'],
-    result: '+41% скорость обработки заявок',
-    repoUrl: 'https://github.com/PavelHopson/Star-CRM-pro',
-  },
-  {
     title: 'CryptoPulse',
     tag: 'Финтех / AI',
     description: 'Финансовый терминал нового поколения: AI-аналитика, реальные котировки криптовалют, симулятор трейдинга, парсер новостей. Cyberpunk 2077 дизайн.',
