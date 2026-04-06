@@ -15,7 +15,7 @@ const Spline = lazy(() => import('@splinetool/react-spline'));
 // ║  3. Export → Web Content → Viewer                 ║
 // ║  4. Paste the prod.spline.design URL below        ║
 // ╚═══════════════════════════════════════════════════╝
-const SPLINE_SCENE_URL = ''; // e.g. 'https://prod.spline.design/XXXXX/scene.splinecode'
+const SPLINE_SCENE_URL = 'https://prod.spline.design/j4rgeD0C4KxF8YJc9HjXuPnE/scene.splinecode';
 
 const stats = [
   { value: '8+', label: 'проектов' },
@@ -45,7 +45,7 @@ export function HeroSection() {
         <div className="absolute top-[40%] right-[30%] w-[200px] h-[200px] rounded-full bg-frost/5 blur-[80px]" />
       </div>
 
-      {/* Spline 3D Scene (if URL is set) */}
+      {/* Spline 3D Scene */}
       {SPLINE_SCENE_URL && (
         <div className="absolute inset-0 z-0">
           <Suspense fallback={null}>
@@ -55,6 +55,20 @@ export function HeroSection() {
               style={{ width: '100%', height: '100%' }}
             />
           </Suspense>
+          {/* Black hole vignette overlay — radial dark edges, center glow */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: 'radial-gradient(ellipse 50% 50% at 50% 50%, transparent 20%, rgba(10,10,10,0.6) 55%, rgba(10,10,10,0.95) 80%)',
+            }}
+          />
+          {/* Subtle orange accretion disk glow */}
+          <div
+            className="absolute inset-0 pointer-events-none mix-blend-screen opacity-15"
+            style={{
+              background: 'radial-gradient(ellipse 40% 35% at 50% 48%, rgba(255,106,0,0.4) 0%, transparent 70%)',
+            }}
+          />
         </div>
       )}
 
