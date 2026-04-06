@@ -3,19 +3,19 @@ import { revealUp, stagger, viewport } from '../../lib/animation';
 
 export function AboutSection() {
   return (
-    <motion.section id="about" className="section-shell py-32 sm:py-40" variants={stagger} initial="hidden" whileInView="visible" viewport={viewport}>
-      <div className="mx-auto max-w-[1200px] px-6 sm:px-8">
-        <motion.p variants={revealUp} className="type-meta text-accent-theme mb-8" style={{ color: 'var(--accent-text)', opacity: 0.5 }}>О компании</motion.p>
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
-          <motion.h2 variants={revealUp} className="type-display text-section text-gradient max-w-lg">
+    <motion.section id="about" className="section-shell py-20 sm:py-24 lg:py-28" variants={stagger} initial="hidden" whileInView="visible" viewport={viewport}>
+      <div className="mx-auto max-w-[1400px] px-6 sm:px-8 lg:px-12">
+        <motion.p variants={revealUp} className="type-meta mb-6" style={{ color: 'var(--accent-text)', opacity: 0.6 }}>О компании</motion.p>
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16">
+          <motion.h2 variants={revealUp} className="type-display text-[clamp(2rem,4vw,3.8rem)] text-gradient max-w-lg">
             Идея → система, которая работает как актив.
           </motion.h2>
-          <motion.div variants={revealUp} className="space-y-6 lg:pt-4">
-            <p className="type-body text-[15px] text-secondary">
+          <motion.div variants={revealUp} className="space-y-5">
+            <p className="type-body text-base sm:text-[17px] text-secondary">
               Мы не делаем «ещё один сайт». Мы проектируем цифровые продукты,
               автоматизацию и сервисы, которые сокращают хаос и усиливают продажи.
             </p>
-            <p className="type-body text-[15px] text-secondary">
+            <p className="type-body text-base sm:text-[17px] text-secondary">
               Код, дизайн и архитектура работают в одной связке. Результат
               запускается быстро и закладывает основу для масштабирования.
             </p>

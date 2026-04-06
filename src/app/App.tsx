@@ -13,13 +13,7 @@ export function App() {
 
   return (
     <div className="relative min-h-screen bg-theme transition-colors duration-400">
-      {/* Scroll progress */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-px z-50 origin-left"
-        style={{ scaleX, background: 'var(--accent)' }}
-      />
-
-      {/* Noise */}
+      <motion.div className="fixed top-0 left-0 right-0 h-px z-50 origin-left" style={{ scaleX, background: 'var(--accent)' }} />
       <div className="noise-overlay pointer-events-none fixed inset-0" />
 
       <SiteHeader />
@@ -33,14 +27,13 @@ export function App() {
         <CtaSection />
       </main>
 
-      {/* Footer */}
-      <footer className="relative z-10 border-t px-5 sm:px-8 py-14" style={{ borderColor: 'var(--line)' }}>
-        <div className="mx-auto max-w-[1200px] flex flex-col sm:flex-row justify-between items-center gap-6">
+      <footer className="relative z-10 border-t px-6 sm:px-8 lg:px-12 py-10" style={{ borderColor: 'var(--line)' }}>
+        <div className="mx-auto max-w-[1400px] flex flex-col sm:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-3">
             <span className="h-2 w-2 rounded-full" style={{ background: 'var(--accent)', opacity: 0.5 }} />
             <span className="type-meta text-tertiary">Eclipse Forge</span>
           </div>
-          <div className="flex items-center gap-8 text-[10px] tracking-[0.3em] uppercase text-quaternary">
+          <div className="flex items-center gap-6 text-[10px] tracking-[0.2em] uppercase text-quaternary">
             <span>Калининград</span>
             <span className="h-3 w-px" style={{ background: 'var(--line)' }} />
             <span>© 2024</span>

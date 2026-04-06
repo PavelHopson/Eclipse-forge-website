@@ -5,11 +5,11 @@ import { revealUp, revealScale, stagger, staggerFast, viewport } from '../../lib
 
 export function CasesSection() {
   return (
-    <section id="cases" className="section-shell py-28 sm:py-36">
-      <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
+    <section id="cases" className="section-shell py-20 sm:py-24 lg:py-28">
+      <div className="mx-auto max-w-[1400px] px-6 sm:px-8 lg:px-12">
         <motion.div variants={revealUp} initial="hidden" whileInView="visible" viewport={viewport}>
           <SectionHeading eyebrow="Портфолио" title="Реальные проекты, которые работают." />
-          <p className="mt-5 max-w-xl text-secondary type-body text-[0.9rem]">
+          <p className="mt-5 max-w-xl text-secondary type-body text-base sm:text-[17px]">
             Каждый проект — рабочая система с измеримым результатом.
           </p>
         </motion.div>
@@ -19,7 +19,7 @@ export function CasesSection() {
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-px"
+          className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-px"
           style={{ background: 'var(--line)' }}
         >
           {projects.map((project, i) => (
