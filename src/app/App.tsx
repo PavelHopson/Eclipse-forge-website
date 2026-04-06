@@ -12,15 +12,15 @@ export function App() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   return (
-    <div className="relative min-h-screen bg-[#050505] text-white">
+    <div className="relative min-h-screen bg-theme transition-colors duration-400">
       {/* Scroll progress */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-px bg-accent z-50 origin-left"
-        style={{ scaleX }}
+        className="fixed top-0 left-0 right-0 h-px z-50 origin-left"
+        style={{ scaleX, background: 'var(--accent)' }}
       />
 
       {/* Noise */}
-      <div className="noise-overlay pointer-events-none fixed inset-0 opacity-[0.06]" />
+      <div className="noise-overlay pointer-events-none fixed inset-0" />
 
       <SiteHeader />
 
@@ -34,15 +34,15 @@ export function App() {
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-white/[0.03] px-5 sm:px-8 py-14">
-        <div className="mx-auto max-w-7xl flex flex-col sm:flex-row justify-between items-center gap-6">
+      <footer className="relative z-10 border-t px-5 sm:px-8 py-14" style={{ borderColor: 'var(--line)' }}>
+        <div className="mx-auto max-w-[1200px] flex flex-col sm:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-3">
-            <span className="h-2 w-2 rounded-full bg-accent/50" />
-            <span className="type-meta text-white/25">Eclipse Forge</span>
+            <span className="h-2 w-2 rounded-full" style={{ background: 'var(--accent)', opacity: 0.5 }} />
+            <span className="type-meta text-tertiary">Eclipse Forge</span>
           </div>
-          <div className="flex items-center gap-8 text-[10px] text-white/10 tracking-[0.3em] uppercase">
+          <div className="flex items-center gap-8 text-[10px] tracking-[0.3em] uppercase text-quaternary">
             <span>Калининград</span>
-            <span className="h-3 w-px bg-white/[0.06]" />
+            <span className="h-3 w-px" style={{ background: 'var(--line)' }} />
             <span>© 2024</span>
           </div>
         </div>
