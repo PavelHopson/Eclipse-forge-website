@@ -1,0 +1,10 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Single-page fallback. The current site uses anchor navigation,
+# but this keeps Netlify ready if client-side routes are added later.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
