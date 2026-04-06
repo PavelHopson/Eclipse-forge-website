@@ -14,7 +14,7 @@ export function ProcessSection() {
           {processSteps.map((step) => (
             <motion.div key={step.index} variants={revealUp}
               className="group relative p-6 sm:p-8 border-l first:border-l-0 transition-colors duration-500"
-              style={{ borderColor: 'var(--line)', background: 'var(--bg)' }}>
+              style={{ borderColor: 'var(--line)', background: 'var(--bg-alt)' }}>
               <span className="font-display text-4xl lg:text-5xl font-extralight text-quaternary group-hover:text-accent-theme transition-colors duration-700 block mb-5" style={{ opacity: 0.4 }}>
                 {step.index}
               </span>

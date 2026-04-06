@@ -26,7 +26,7 @@ export function CasesSection() {
             <motion.div
               key={project.title}
               variants={revealScale}
-              className={`group p-7 sm:p-9 bg-theme hover:bg-card transition-all duration-500 relative ${i === 0 ? 'md:col-span-2' : ''}`}
+              className={`group p-7 sm:p-9 bg-alt hover:bg-card transition-all duration-500 relative ${i === 0 ? 'md:col-span-2' : ''}`}
             >
               <div className="flex items-center gap-3 mb-5">
                 <span className="text-[9px] uppercase tracking-[0.35em] font-medium px-3 py-1.5 rounded-full" style={{ color: 'var(--accent-text)', background: 'var(--accent-soft)' }}>

@@ -12,22 +12,47 @@ export function App() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   return (
-    <div className="relative min-h-screen bg-theme transition-colors duration-400">
+    <div className="relative min-h-screen bg-theme">
+      {/* Scroll progress */}
       <motion.div className="fixed top-0 left-0 right-0 h-px z-50 origin-left" style={{ scaleX, background: 'var(--accent)' }} />
-      <div className="noise-overlay pointer-events-none fixed inset-0" />
+
+      {/* Global noise */}
+      <div className="noise-overlay pointer-events-none fixed inset-0 z-20" />
+
+      {/* Global ambient blobs — very subtle, behind everything */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-[10%] left-[10%] w-[700px] h-[700px] rounded-full blur-[250px] animate-float" style={{ background: 'var(--section-glow-1)' }} />
+        <div className="absolute top-[50%] right-[5%] w-[500px] h-[500px] rounded-full blur-[200px] animate-float-slow" style={{ background: 'var(--section-glow-2)' }} />
+        <div className="absolute bottom-[10%] left-[30%] w-[400px] h-[400px] rounded-full blur-[200px]" style={{ background: 'var(--section-glow-frost)' }} />
+      </div>
 
       <SiteHeader />
 
       <main className="relative z-10">
         <HeroSection />
+
+        {/* About — default bg */}
         <AboutSection />
-        <CasesSection />
+
+        {/* Cases — alt bg for contrast */}
+        <div className="section-alt">
+          <CasesSection />
+        </div>
+
+        {/* Services — default bg */}
         <ServicesSection />
-        <ProcessSection />
+
+        {/* Process — alt bg */}
+        <div className="section-alt">
+          <ProcessSection />
+        </div>
+
+        {/* CTA — default bg with accent glow */}
         <CtaSection />
       </main>
 
-      <footer className="relative z-10 border-t px-6 sm:px-8 lg:px-12 py-10" style={{ borderColor: 'var(--line)' }}>
+      {/* Footer */}
+      <footer className="relative z-10 border-t px-6 sm:px-8 lg:px-12 py-10 bg-alt" style={{ borderColor: 'var(--line)' }}>
         <div className="mx-auto max-w-[1400px] flex flex-col sm:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-3">
             <span className="h-2 w-2 rounded-full" style={{ background: 'var(--accent)', opacity: 0.5 }} />
