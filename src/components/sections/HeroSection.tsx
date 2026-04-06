@@ -16,7 +16,7 @@ const Spline = lazy(() => import('@splinetool/react-spline'));
 // ║  4. Paste the prod.spline.design URL below        ║
 // ╚═══════════════════════════════════════════════════╝
 // Distorting Typography — hero background
-const SPLINE_SCENE_URL = 'https://prod.spline.design/FCcTPhNPOIAc2FlI/scene.splinecode';
+const SPLINE_SCENE_URL = '';
 // Boxes Hover — available for other sections:
 // https://prod.spline.design/FCcTPhNPOIAc2FlI/scene.splinecode
 
