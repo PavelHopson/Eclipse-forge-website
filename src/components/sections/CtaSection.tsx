@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
-import { contactDetails } from '../../data/content';
+import { contactDetails, contactFlow } from '../../data/content';
 import { revealUp, viewport } from '../../lib/animation';
 
 type Mode = 'eclipse' | 'signal';
@@ -265,7 +265,7 @@ export function CtaSection() {
 
                   <div className="flex flex-col sm:flex-row gap-3 justify-center">
                     <a
-                      href={`${contactDetails.telegramUrl}&text=${encodeURIComponent(answers.filter(a => a).join('\n'))}`}
+                      href={`${contactDetails.telegramDmUrl}?text=${encodeURIComponent(answers.filter(a => a).join('\n'))}`}
                       target="_blank"
                       rel="noreferrer"
                       className="inline-flex items-center justify-center gap-3 rounded-full px-8 py-4 text-[13px] font-display font-medium btn-sweep transition-all duration-500"
@@ -293,17 +293,19 @@ export function CtaSection() {
         </motion.div>
 
         {/* Contact cards */}
-        <motion.div variants={revealUp} className="mt-14 grid sm:grid-cols-3 gap-px" style={{ background: line }}>
+        <motion.div variants={revealUp} className="mt-14 grid grid-cols-2 sm:grid-cols-5 gap-px" style={{ background: line }}>
           {[
+            { label: 'Связь', value: contactDetails.telegramDm, href: contactDetails.telegramDmUrl, highlight: true },
+            { label: 'Канал', value: contactDetails.telegramChannel, href: contactDetails.telegramChannelUrl, highlight: false },
             { label: 'Email', value: contactDetails.email, href: `mailto:${contactDetails.email}`, highlight: false },
-            { label: 'Telegram', value: contactDetails.telegramHandle, href: contactDetails.telegramUrl, highlight: true },
-            { label: 'Канал', value: '@EclipseForgeEngine', href: 'https://t.me/EclipseForgeEngine', highlight: false },
+            { label: 'GitHub', value: contactDetails.githubHandle, href: contactDetails.githubUrl, highlight: false },
+            { label: 'Время', value: contactDetails.cityTimezone, href: undefined, highlight: false },
           ].map((c) => (
-            <a key={c.label} href={c.href} target={c.href.startsWith('http') ? '_blank' : undefined} rel={c.href.startsWith('http') ? 'noreferrer' : undefined}
-              className="p-6 sm:p-8 transition-all duration-400"
+            <a key={c.label} href={c.href || '#'} target={c.href?.startsWith('http') ? '_blank' : undefined} rel={c.href?.startsWith('http') ? 'noreferrer' : undefined}
+              className="p-5 sm:p-6 transition-all duration-400 hover:bg-white/[0.015]"
               style={{ background: bg, color: c.highlight ? accent : text2 }}>
-              <p className="type-meta mb-3" style={{ color: text3 }}>{c.label}</p>
-              <p className="font-display text-[15px] sm:text-base">{c.value}</p>
+              <p className="type-meta mb-2" style={{ color: text3 }}>{c.label}</p>
+              <p className="font-display text-[13px] sm:text-[14px] truncate">{c.value}</p>
             </a>
           ))}
         </motion.div>

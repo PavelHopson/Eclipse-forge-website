@@ -47,7 +47,7 @@ export function App() {
           <div className="flex items-center gap-6 text-[10px] tracking-[0.2em] uppercase" style={{ color: 'var(--text-4)' }}>
             <span>Калининград</span>
             <span className="h-3 w-px" style={{ background: 'var(--line)' }} />
-            <span>© 2025</span>
+            <span>© 2026</span>
           </div>
         </div>
       </footer>
