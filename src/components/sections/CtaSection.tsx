@@ -6,7 +6,12 @@ import { revealUp, viewport } from '../../lib/animation';
 type Mode = 'eclipse' | 'signal';
 type Step = 0 | 1 | 2 | 3 | 4;
 
+const BOT_TOKEN = '8709666001:AAHU21ibqUxn2w8JSmGxoMruxFdiXq7qi8g';
+const CHAT_ID = '7842454447';
+
 const prompts = [
+  'Ваше имя?',
+  'Telegram или email для связи?',
   'Что нужно сделать?',
   'Какой результат ожидаете?',
   'Сроки и бюджет, если есть?',
@@ -14,10 +19,11 @@ const prompts = [
 
 export function CtaSection() {
   const [mode, setMode] = useState<Mode>('eclipse');
-  const [step, setStep] = useState<Step>(0);
-  const [answers, setAnswers] = useState<string[]>(['', '', '']);
+  const [step, setStep] = useState(0);
+  const [answers, setAnswers] = useState<string[]>(['', '', '', '', '']);
   const [analyzing, setAnalyzing] = useState(false);
   const [signal, setSignal] = useState(0);
+  const [sent, setSent] = useState(false);
   const [eclipseAnim, setEclipseAnim] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -33,9 +39,9 @@ export function CtaSection() {
   };
 
   const handleSubmit = () => {
-    if (step < 3) {
+    if (step < 5) {
       if (!answers[step].trim()) return;
-      setStep((step + 1) as Step);
+      setStep(step + 1);
       setTimeout(() => inputRef.current?.focus(), 100);
     }
   };
@@ -50,24 +56,49 @@ export function CtaSection() {
     setAnswers(next);
   };
 
-  // Analyze after all steps
+  // Analyze + send to Telegram bot
   useEffect(() => {
-    if (step === 3) {
+    if (step === 5 && !sent) {
       setAnalyzing(true);
       const total = answers.join('').length;
-      const strength = Math.min(98, Math.max(45, Math.round(total * 1.5 + 30)));
+      const strength = Math.min(98, Math.max(55, Math.round(total * 1.2 + 35)));
+
+      // Send to Telegram
+      const message = [
+        '🔔 *Новая заявка с сайта*',
+        '',
+        `👤 *Имя:* ${answers[0]}`,
+        `📬 *Контакт:* ${answers[1]}`,
+        `📋 *Задача:* ${answers[2]}`,
+        `🎯 *Результат:* ${answers[3]}`,
+        `⏰ *Сроки/бюджет:* ${answers[4]}`,
+        '',
+        `📊 Signal strength: ${strength}%`,
+      ].join('\n');
+
+      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: CHAT_ID,
+          text: message,
+          parse_mode: 'Markdown',
+        }),
+      }).catch(() => {});
+
       setTimeout(() => {
         setSignal(strength);
         setAnalyzing(false);
-        setStep(4);
-      }, 2000);
+        setSent(true);
+      }, 2200);
     }
-  }, [step, answers]);
+  }, [step, answers, sent]);
 
   const reset = () => {
     setStep(0);
-    setAnswers(['', '', '']);
+    setAnswers(['', '', '', '', '']);
     setSignal(0);
+    setSent(false);
   };
 
   // Colors per mode
@@ -179,7 +210,7 @@ export function CtaSection() {
 
             {/* Current step */}
             <AnimatePresence mode="wait">
-              {step < 3 && (
+              {step < 5 && !analyzing && (
                 <motion.div
                   key={`step-${step}`}
                   initial={{ opacity: 0, y: 10 }}
@@ -223,7 +254,7 @@ export function CtaSection() {
               )}
 
               {/* Analyzing */}
-              {step === 3 && analyzing && (
+              {step === 5 && analyzing && (
                 <motion.div
                   key="analyzing"
                   initial={{ opacity: 0 }}
@@ -245,7 +276,7 @@ export function CtaSection() {
               )}
 
               {/* Result */}
-              {step === 4 && (
+              {sent && (
                 <motion.div
                   key="result"
                   initial={{ opacity: 0, y: 10 }}
@@ -263,27 +294,31 @@ export function CtaSection() {
                     {signal > 70 ? 'System readiness: HIGH' : 'System readiness: MODERATE'}
                   </p>
 
+                  <p className="text-[13px] mb-6" style={{ color: isEclipse ? '#4AE6A0' : '#2a8a5a' }}>
+                    ✓ Заявка отправлена. Мы свяжемся с вами.
+                  </p>
+
                   <div className="flex flex-col sm:flex-row gap-3 justify-center">
                     <a
-                      href={`${contactDetails.telegramDmUrl}?text=${encodeURIComponent(answers.filter(a => a).join('\n'))}`}
+                      href={contactDetails.telegramDmUrl}
                       target="_blank"
                       rel="noreferrer"
                       className="inline-flex items-center justify-center gap-3 rounded-full px-8 py-4 text-[13px] font-display font-medium btn-sweep transition-all duration-500"
                       style={{
-                        background: isEclipse ? 'rgba(167,180,194,0.08)' : '#111',
-                        color: isEclipse ? '#E6EDF3' : '#fff',
-                        border: `1px solid ${isEclipse ? 'rgba(167,180,194,0.2)' : '#333'}`,
+                        background: isEclipse ? 'rgba(107,163,255,0.08)' : '#111',
+                        color: isEclipse ? '#F0F4F8' : '#fff',
+                        border: `1px solid ${isEclipse ? 'rgba(107,163,255,0.2)' : '#333'}`,
                       }}
                     >
                       <span className="h-1.5 w-1.5 rounded-full" style={{ background: accent, opacity: 0.5 }} />
-                      {isEclipse ? 'Войти в работу' : 'Отправить сигнал'}
+                      {isEclipse ? 'Написать в Telegram' : 'Отправить сигнал'}
                     </a>
                     <button
                       onClick={reset}
                       className="text-[12px] tracking-[0.15em] uppercase transition-colors duration-300"
                       style={{ color: text3 }}
                     >
-                      Сбросить
+                      Новая заявка
                     </button>
                   </div>
                 </motion.div>
