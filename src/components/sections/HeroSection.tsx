@@ -92,7 +92,7 @@ export function HeroSection() {
         {/* CTA */}
         <motion.div custom={1.3} variants={fadeIn} initial="hidden" animate="visible"
           className="flex flex-col gap-3 sm:flex-row sm:gap-4 justify-center">
-          <GlowButton href={contactDetails.telegramUrl} target="_blank" rel="noreferrer" className="justify-center px-9 py-4 text-[14px]">
+          <GlowButton href="#contact" className="justify-center px-9 py-4 text-[14px]">
             Запустить систему
           </GlowButton>
           <a href="#cases"
