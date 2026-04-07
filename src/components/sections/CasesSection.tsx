@@ -20,12 +20,16 @@ export function CasesSection() {
             <motion.div key={project.title} variants={revealScale}
               whileHover={{ y: -4 }}
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className={`group p-6 sm:p-8 card-hover relative border border-transparent ${i === 0 ? 'md:col-span-2' : ''}`}
-              style={{ background: 'var(--bg)' }}>
+              className={`group p-6 sm:p-8 card-hover relative border-l-2 ${i === 0 ? 'md:col-span-2' : ''}`}
+              style={{ background: 'var(--bg)', borderLeftColor: 'var(--accent-dim)' }}>
 
-              <div className="flex items-center gap-3 mb-5">
+              {/* Number + tag */}
+              <div className="flex items-center gap-4 mb-5">
+                <span className="font-display text-2xl sm:text-3xl font-extralight" style={{ color: 'var(--text-4)' }}>
+                  #{String(i + 1).padStart(2, '0')}
+                </span>
                 <span className="text-[9px] uppercase tracking-[0.35em] font-medium px-3 py-1.5 rounded-full border"
-                  style={{ color: 'var(--accent)', borderColor: 'var(--line)', background: 'var(--accent-soft)' }}>
+                  style={{ color: 'var(--accent)', borderColor: 'var(--accent-dim)', background: 'var(--accent-soft)', borderWidth: '1px' }}>
                   {project.tag}
                 </span>
                 {project.liveUrl && (

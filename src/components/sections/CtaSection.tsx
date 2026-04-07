@@ -77,7 +77,7 @@ export function CtaSection() {
   const text2 = isEclipse ? '#9DA7B3' : '#555555';
   const text3 = isEclipse ? '#5C6670' : '#999999';
   const line = isEclipse ? '#1C232B' : 'rgba(0,0,0,0.08)';
-  const accent = isEclipse ? '#A7B4C2' : '#111111';
+  const accent = isEclipse ? '#6BA3FF' : '#111111';
   const inputBg = isEclipse ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)';
 
   return (

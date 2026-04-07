@@ -5,13 +5,15 @@ module.exports = {
     extend: {
       colors: {
         surface: '#05070A',
-        panel: '#0B0F14',
-        card: '#11161C',
+        panel: '#080C12',
+        card: '#0D1218',
         void: '#020304',
-        accent: '#A7B4C2',
-        glow: '#DCE6F2',
-        muted: '#9DA7B3',
-        border: '#1C232B',
+        accent: '#6BA3FF',
+        'accent-dim': '#4A7FD4',
+        glow: '#9DC4FF',
+        muted: '#B0BEC9',
+        border: '#1A2230',
+        live: '#4AE6A0',
       },
       fontFamily: {
         display: ['"Outfit"', 'sans-serif'],
@@ -25,7 +27,6 @@ module.exports = {
         'float': 'float 25s ease-in-out infinite',
         'float-slow': 'float 35s ease-in-out infinite',
         'pulse-soft': 'pulseSoft 4s ease-in-out infinite',
-        'eclipse-glow': 'eclipseGlow 6s ease-in-out infinite',
       },
       keyframes: {
         float: {
@@ -36,10 +37,6 @@ module.exports = {
         pulseSoft: {
           '0%, 100%': { opacity: '0.3' },
           '50%': { opacity: '0.7' },
-        },
-        eclipseGlow: {
-          '0%, 100%': { boxShadow: '0 0 60px rgba(220,230,242,0.06)' },
-          '50%': { boxShadow: '0 0 90px rgba(220,230,242,0.12)' },
         },
       },
     },
