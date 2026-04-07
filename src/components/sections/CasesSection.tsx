@@ -7,7 +7,7 @@ export function CasesSection() {
   return (
     <section id="cases" className="section-shell py-20 sm:py-24 lg:py-28">
       <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
-        <motion.div variants={revealUp} initial="hidden" whileInView="visible" viewport={viewport}>
+        <motion.div variants={revealUp} initial="hidden" whileInView="visible" viewport={viewport} className="animated-divider">
           <SectionHeading eyebrow="Портфолио" title="Системы, которые работают." />
           <p className="mt-5 max-w-xl type-body text-[15px] sm:text-base" style={{ color: 'var(--text-3)' }}>
             Каждый проект — рабочая система с измеримым результатом.
@@ -18,7 +18,9 @@ export function CasesSection() {
           className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-px" style={{ background: 'var(--line)' }}>
           {projects.map((project, i) => (
             <motion.div key={project.title} variants={revealScale}
-              className={`group p-6 sm:p-8 transition-all duration-500 relative hover:bg-white/[0.015] ${i === 0 ? 'md:col-span-2' : ''}`}
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className={`group p-6 sm:p-8 card-hover relative border border-transparent ${i === 0 ? 'md:col-span-2' : ''}`}
               style={{ background: 'var(--bg)' }}>
 
               <div className="flex items-center gap-3 mb-5">
