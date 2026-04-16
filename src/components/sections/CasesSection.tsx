@@ -46,10 +46,14 @@ function ProjectCard({ project, index, featured = false, isLastOdd = false }: { 
   return (
     <motion.article
       variants={revealScale}
-      whileHover={{ y: -4 }}
+      whileHover={{ y: -3, borderColor: 'rgba(107,163,255,0.2)' }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      className={`group relative border-l-2 p-6 sm:p-8 ${spanFull ? 'md:col-span-2 lg:col-span-2 xl:col-span-3' : ''}`}
-      style={{ background: 'var(--bg)', borderLeftColor: 'var(--accent-dim)' }}
+      className={`group relative rounded-xl border p-6 sm:p-8 ${spanFull ? 'md:col-span-2' : ''}`}
+      style={{
+        background: 'linear-gradient(135deg, var(--bg-card) 0%, var(--bg) 100%)',
+        borderColor: 'var(--line)',
+        boxShadow: '0 2px 20px rgba(0,0,0,0.2)',
+      }}
     >
       <div className="mb-5 flex flex-wrap items-center gap-3 sm:gap-4">
         <span className="font-display text-2xl font-extralight sm:text-3xl" style={{ color: 'var(--text-4)' }}>
@@ -87,7 +91,7 @@ function ProjectCard({ project, index, featured = false, isLastOdd = false }: { 
         {project.title}
       </h3>
 
-      <p className="type-body mb-5 max-w-2xl text-[13px] sm:text-[14px]" style={{ color: 'var(--text-3)' }}>
+      <p className="type-body mb-5 max-w-2xl text-[14px] leading-relaxed sm:text-[15px]" style={{ color: 'var(--text-2)' }}>
         {project.description}
       </p>
 
@@ -223,8 +227,7 @@ export function CasesSection() {
             initial="hidden"
             whileInView="visible"
             viewport={viewport}
-            className="mt-6 grid grid-cols-1 gap-px md:grid-cols-2"
-            style={{ background: 'var(--line)' }}
+            className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2"
           >
             {featuredProjects.map((project, index) => (
               <ProjectCard
@@ -275,8 +278,7 @@ export function CasesSection() {
               initial="hidden"
               whileInView="visible"
               viewport={viewport}
-              className="mt-6 grid grid-cols-1 gap-px lg:grid-cols-2 xl:grid-cols-3"
-              style={{ background: 'var(--line)' }}
+              className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2"
             >
               {collection.projects.map((project, index) => (
                 <ProjectCard
