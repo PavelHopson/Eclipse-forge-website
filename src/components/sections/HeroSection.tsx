@@ -49,33 +49,33 @@ export function HeroSection() {
         <motion.div custom={0} variants={fadeIn} initial="hidden" animate="visible" className="mb-8">
           <div className="inline-flex items-center gap-3 border border-border/60 px-5 py-2.5 rounded-full bg-white/[0.02]">
             <span className="h-1.5 w-1.5 rounded-full bg-accent/50 animate-pulse-soft" />
-            <span className="type-meta" style={{ color: 'var(--text-3)' }}>Pavel Hopson</span>
+            <span className="type-meta" style={{ color: 'var(--text-3)' }}>Eclipse Forge</span>
           </div>
         </motion.div>
 
         {/* Headline */}
         <div className="mb-8 inline-block">
           <h1 className="type-display text-hero">
-            {['I', 'build'].map((w, i) => (
+            {['Строю'].map((w, i) => (
               <motion.span key={i} custom={i} variants={wordReveal} initial="hidden" animate="visible"
                 className="inline-block mr-[0.22em]"
-                style={{ color: i === 1 ? 'var(--text-1)' : 'var(--text-2)' }}>
+                style={{ color: 'var(--text-2)' }}>
                 {w}
               </motion.span>
             ))}
             <br />
-            {['AI', 'systems'].map((w, i) => (
-              <motion.span key={i+2} custom={i+2} variants={wordReveal} initial="hidden" animate="visible"
+            {['AI-системы,'].map((w, i) => (
+              <motion.span key={i+1} custom={i+1} variants={wordReveal} initial="hidden" animate="visible"
                 className="inline-block mr-[0.22em] text-gradient-accent">
                 {w}
               </motion.span>
             ))}
           </h1>
           <h1 className="type-display text-hero mt-1">
-            {['that', 'actually', 'ship.'].map((w, i) => (
-              <motion.span key={i+4} custom={i+4} variants={wordReveal} initial="hidden" animate="visible"
+            {['которые', 'работают.'].map((w, i) => (
+              <motion.span key={i+2} custom={i+2} variants={wordReveal} initial="hidden" animate="visible"
                 className="inline-block mr-[0.22em]"
-                style={{ color: i === 2 ? 'var(--text-1)' : 'var(--text-4)' }}>
+                style={{ color: i === 1 ? 'var(--text-1)' : 'var(--text-4)' }}>
                 {w}
               </motion.span>
             ))}
@@ -85,20 +85,20 @@ export function HeroSection() {
         {/* Subtitle */}
         <motion.p custom={1.0} variants={fadeIn} initial="hidden" animate="visible"
           className="type-body max-w-lg mx-auto text-[15px] sm:text-base mb-10" style={{ color: 'var(--text-3)' }}>
-          Rust infrastructure, TypeScript multiplatform apps, Python backends.
-          538 tests across 6 projects. Every commit tested, every PR green.
+          Rust-инфраструктура, мультиплатформенные TypeScript-приложения, Python-бэкенды.
+          958 тестов в 7 проектах. Каждый коммит проверен, каждый PR зелёный.
         </motion.p>
 
         {/* CTA */}
         <motion.div custom={1.3} variants={fadeIn} initial="hidden" animate="visible"
           className="flex flex-col gap-3 sm:flex-row sm:gap-4 justify-center">
           <GlowButton href="#contact" className="justify-center px-9 py-4 text-[14px]">
-            Get in Touch
+            Написать
           </GlowButton>
           <a href="#cases"
             className="group inline-flex items-center justify-center gap-3 rounded-full border border-border px-9 py-4 text-[14px] font-display transition-all duration-500 hover:border-accent/20 hover:bg-white/[0.02]"
             style={{ color: 'var(--text-3)' }}>
-            View Projects
+            Портфолио
             <span className="w-4 h-px bg-border group-hover:w-8 group-hover:bg-accent/30 transition-all duration-500" />
           </a>
         </motion.div>

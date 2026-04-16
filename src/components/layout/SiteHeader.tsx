@@ -39,7 +39,7 @@ export function SiteHeader() {
           <a href="#hero" className="flex min-w-0 items-center gap-3" onClick={closeMenu}>
             <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: 'var(--accent)', boxShadow: '0 0 12px rgba(167,180,194,0.3)' }} />
             <span className="truncate text-[0.72rem] font-medium uppercase tracking-[0.3em] font-display" style={{ color: 'var(--text-2)' }}>
-              Pavel Hopson
+              Eclipse Forge
             </span>
           </a>
 
