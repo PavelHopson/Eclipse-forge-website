@@ -42,7 +42,7 @@ export function App() {
         <div className="mx-auto max-w-[1400px] flex flex-col sm:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-3">
             <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'var(--accent)', opacity: 0.3 }} />
-            <span className="type-meta" style={{ color: 'var(--text-3)' }}>Eclipse Forge</span>
+            <span className="type-meta" style={{ color: 'var(--text-3)' }}>Pavel Hopson</span>
           </div>
           <div className="flex items-center gap-6 text-[10px] tracking-[0.2em] uppercase" style={{ color: 'var(--text-4)' }}>
             <span>Калининград</span>
