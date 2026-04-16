@@ -261,11 +261,11 @@ export const metrics = [
 ];
 
 export const contactDetails = {
-  email: 'man773608@gmail.com',
+  email: 'hopsintoxin@mail.ru',
   telegramDm: '@EclipseHopson',
   telegramDmUrl: 'https://t.me/EclipseHopson',
-  telegramChannel: '',
-  telegramChannelUrl: '',
+  telegramChannel: '@EclipseForgeEngine',
+  telegramChannelUrl: 'https://t.me/EclipseForgeEngine',
   githubUrl: 'https://github.com/PavelHopson',
   githubHandle: 'PavelHopson',
   instagramUrl: 'https://instagram.com/PavelHopson',
