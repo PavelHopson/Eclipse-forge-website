@@ -28,7 +28,7 @@ export const featuredProjects: Project[] = [
     description: 'Персональная ОС дисциплины: квесты, фокус-режим, тренировки, AI-коуч, 31 достижение, система давления. 128 тестов (unit + e2e Playwright). App.tsx декомпозирован с 978 до 419 строк. 5 AI-провайдеров включая NVIDIA NIM. Web + Electron (Win/Mac/Linux) + Capacitor (iOS/Android).',
     tech: ['React 19', 'TypeScript', 'Electron', 'Capacitor', 'Zustand', 'Vitest', 'Playwright', 'NVIDIA NIM'],
     result: '128 тестов, -57% App.tsx, 5 AI-провайдеров, мультиплатформа',
-    liveUrl: 'https://pavelhopson.github.io/Eclipse-Valhalla/',
+    liveUrl: 'https://eclipse-valhalla.pages.dev',
     repoUrl: 'https://github.com/PavelHopson/Eclipse-Valhalla',
   },
   {
@@ -93,6 +93,7 @@ export const portfolioCollections: ProjectCollection[] = [
         description: 'Локальная AI-платформа: Чат, Арена, RAG, Code Review, Копирайтер, Сканер безопасности, Image Studio. 8 AI-провайдеров включая NVIDIA NIM. 41 тест.',
         tech: ['React 19', 'TypeScript', 'Ollama', 'Gemini', 'NVIDIA NIM', 'RAG', 'Vitest'],
         result: '8 провайдеров, 7 модулей, 41 тест',
+        liveUrl: 'https://eclipse-ai-hub.pages.dev',
         repoUrl: 'https://github.com/PavelHopson/eclipse-ai-hub',
       },
       {
@@ -112,6 +113,7 @@ export const portfolioCollections: ProjectCollection[] = [
         description: 'Desktop AI-помощник для собеседований на Tauri 2 (Rust). Gemini Live API в реальном времени: аудио-анализ, OCR экрана, горячие клавиши.',
         tech: ['React 18', 'Tauri 2', 'Rust', 'Gemini Live', 'Web Audio API'],
         result: 'Tauri desktop + Gemini Live стриминг',
+        liveUrl: 'https://interviewforge-3pf.pages.dev',
         repoUrl: 'https://github.com/PavelHopson/InterviewForge',
       },
       {
@@ -169,7 +171,7 @@ export const portfolioCollections: ProjectCollection[] = [
         description: 'Полностековый менеджер задач с JWT-авторизацией, ролями, пагинацией, сортировкой. PostgreSQL в Docker.',
         tech: ['React 18', 'Express 5', 'Prisma', 'PostgreSQL', 'Docker'],
         result: 'Auth + роли + Prisma + Docker deploy',
-        liveUrl: 'https://task-manager-copy-production.up.railway.app/',
+        liveUrl: 'https://task-manager-eclipse.pages.dev',
         repoUrl: 'https://github.com/PavelHopson/task-manager',
       },
       {
@@ -179,6 +181,7 @@ export const portfolioCollections: ProjectCollection[] = [
         description: 'Self-hosted загрузчик видео/аудио с SSE-прогрессом, TTL-очисткой и Docker. Поддержка 1000+ сайтов.',
         tech: ['React 19', 'FastAPI', 'yt-dlp', 'Docker', 'SSE'],
         result: 'Self-hosted медиа-загрузчик с Docker',
+        liveUrl: 'https://eclipse-media.pages.dev',
         repoUrl: 'https://github.com/PavelHopson/eclipse-media',
       },
     ],
