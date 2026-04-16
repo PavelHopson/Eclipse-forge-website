@@ -1,29 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ═══════════════ ECLIPSE DESIGN SYSTEM v3 ═══════════════ */
+/* ═══════════════ ECLIPSE DESIGN SYSTEM v4 — PREMIUM ═══════════════ */
 
 :root {
   --bg: #05070A;
   --bg-alt: #080C12;
   --bg-card: #0C1117;
   --bg-card-hover: #111820;
+  --bg-elevated: #0F1419;
   --text-1: #F2F5F9;
   --text-2: #C4CED8;
   --text-3: #94A3B8;
   --text-4: #4A5568;
   --line: #1C2536;
+  --line-subtle: #141C28;
   --accent: #6BA3FF;
   --accent-dim: #4A7FD4;
   --accent-glow: #9DC4FF;
   --accent-soft: rgba(107, 163, 255, 0.08);
+  --accent-warm: #F5A623;
+  --accent-warm-dim: #D4901E;
+  --accent-warm-glow: #FFD080;
+  --accent-warm-soft: rgba(245, 166, 35, 0.08);
   --glow: rgba(157, 196, 255, 0.06);
   --glow-strong: rgba(157, 196, 255, 0.12);
   --live: #4AE6A0;
-  --noise-opacity: 0.03;
+  --noise-opacity: 0.025;
   color-scheme: dark;
 }
 
@@ -43,11 +49,12 @@ body {
   letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 a { color: inherit; text-decoration: none; }
 button, a { -webkit-tap-highlight-color: transparent; }
-::selection { background: rgba(107, 163, 255, 0.2); color: var(--text-1); }
+::selection { background: rgba(107, 163, 255, 0.25); color: var(--text-1); }
 #root { isolation: isolate; }
 
 /* ═══════════════ TYPOGRAPHY ═══════════════ */
@@ -56,16 +63,16 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .type-display {
   font-family: 'Outfit', sans-serif;
-  font-weight: 500;
-  letter-spacing: -0.04em;
-  line-height: 0.95;
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 0.92;
 }
 
 .type-heading {
   font-family: 'Outfit', sans-serif;
-  font-weight: 400;
-  letter-spacing: -0.025em;
-  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
 }
 
 .type-body {
@@ -76,8 +83,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .type-meta {
   font-family: 'Inter', 'DM Sans', sans-serif;
-  font-size: 0.7rem;
-  letter-spacing: 0.16em;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   font-weight: 500;
 }
@@ -87,7 +94,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 /* ═══════════════ GRADIENTS ═══════════════ */
 
 .text-gradient {
-  background: linear-gradient(135deg, #F0F4F8, #8BA3BE);
+  background: linear-gradient(135deg, #F0F4F8 10%, #8BA3BE 90%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -100,6 +107,38 @@ button, a { -webkit-tap-highlight-color: transparent; }
   background-clip: text;
 }
 
+.text-gradient-warm {
+  background: linear-gradient(135deg, #FFD080, #F5A623, #D4901E);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-hero {
+  background: linear-gradient(135deg, #FFFFFF 0%, #C4CED8 40%, #6BA3FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ═══════════════ ANIMATED GRADIENT MESH ═══════════════ */
+
+@keyframes meshShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gradient-mesh {
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(107,163,255,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(245,166,35,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 80%, rgba(107,163,255,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 40% 30%, rgba(157,196,255,0.06) 0%, transparent 60%);
+  background-size: 200% 200%;
+  animation: meshShift 15s ease-in-out infinite;
+}
+
 /* ═══════════════ ECLIPSE RING ═══════════════ */
 
 @keyframes eclipseRotate {
@@ -108,8 +147,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 
 @keyframes eclipsePulse {
-  0%, 100% { opacity: 0.4; filter: blur(40px); }
-  50% { opacity: 0.7; filter: blur(50px); }
+  0%, 100% { opacity: 0.3; filter: blur(40px); }
+  50% { opacity: 0.6; filter: blur(50px); }
 }
 
 .eclipse-ring {
@@ -117,11 +156,11 @@ button, a { -webkit-tap-highlight-color: transparent; }
   width: 500px;
   height: 500px;
   border-radius: 50%;
-  border: 1px solid rgba(107,163,255,0.08);
+  border: 1px solid rgba(107,163,255,0.06);
   box-shadow:
-    0 0 80px rgba(107,163,255,0.06),
-    0 0 160px rgba(107,163,255,0.03),
-    inset 0 0 80px rgba(107,163,255,0.04);
+    0 0 80px rgba(107,163,255,0.05),
+    0 0 160px rgba(107,163,255,0.02),
+    inset 0 0 80px rgba(107,163,255,0.03);
   animation: eclipseRotate 60s linear infinite;
 }
 
@@ -130,8 +169,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
   position: absolute;
   inset: 20%;
   border-radius: 50%;
-  border: 1px solid rgba(107,163,255,0.06);
-  box-shadow: 0 0 40px rgba(107,163,255,0.04);
+  border: 1px solid rgba(107,163,255,0.05);
+  box-shadow: 0 0 40px rgba(107,163,255,0.03);
 }
 
 .eclipse-ring::after {
@@ -139,7 +178,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   position: absolute;
   inset: -30%;
   border-radius: 50%;
-  border: 1px solid rgba(107,163,255,0.03);
+  border: 1px solid rgba(107,163,255,0.02);
 }
 
 .eclipse-core {
@@ -147,7 +186,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   width: 200px;
   height: 200px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(107,163,255,0.12) 0%, rgba(107,163,255,0.03) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(107,163,255,0.1) 0%, rgba(107,163,255,0.02) 40%, transparent 70%);
   animation: eclipsePulse 5s ease-in-out infinite;
 }
 
@@ -176,13 +215,13 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .fog-layer::before {
   top: -10%; left: -5%;
   width: 60%; height: 50%;
-  background: rgba(107,163,255,0.015);
+  background: rgba(107,163,255,0.012);
   animation: fogDrift 30s ease-in-out infinite;
 }
 .fog-layer::after {
   bottom: -15%; right: -10%;
   width: 50%; height: 45%;
-  background: rgba(107,163,255,0.01);
+  background: rgba(107,163,255,0.008);
   animation: fogDrift 40s ease-in-out infinite reverse;
 }
 
@@ -195,7 +234,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   position: fixed;
   width: 300px; height: 300px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(107,163,255,0.04), transparent 70%);
+  background: radial-gradient(circle, rgba(107,163,255,0.03), transparent 70%);
   filter: blur(60px);
   pointer-events: none;
   z-index: 1;
@@ -215,7 +254,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .glow-line {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(107,163,255,0.1), transparent);
+  background: linear-gradient(90deg, transparent, rgba(107,163,255,0.08), transparent);
 }
 
 /* ═══════════════ CARD EFFECTS ═══════════════ */
@@ -229,6 +268,24 @@ button, a { -webkit-tap-highlight-color: transparent; }
   transform: translateY(-4px);
   box-shadow: 0 0 40px rgba(107,163,255,0.04), 0 20px 40px rgba(0,0,0,0.25);
   border-color: rgba(107,163,255,0.12) !important;
+}
+
+/* Gradient border glow */
+.gradient-border-glow {
+  position: relative;
+}
+.gradient-border-glow::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(107,163,255,0.15), transparent 40%, transparent 60%, rgba(245,166,35,0.1));
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: -1;
+}
+.gradient-border-glow:hover::before {
+  opacity: 1;
 }
 
 /* Animated divider */
@@ -258,12 +315,65 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 .btn-sweep:hover::after { left: 100%; }
 
+/* ═══════════════ MAGNETIC BUTTON ═══════════════ */
+
+.magnetic-wrap {
+  display: inline-flex;
+  position: relative;
+}
+
+/* ═══════════════ TEXT SCRAMBLE ═══════════════ */
+
+@keyframes glitch-1 {
+  0%, 100% { clip-path: inset(0 0 90% 0); }
+  25% { clip-path: inset(40% 0 40% 0); }
+  50% { clip-path: inset(80% 0 0% 0); }
+  75% { clip-path: inset(10% 0 70% 0); }
+}
+
+/* ═══════════════ COUNTER RING ═══════════════ */
+
+.counter-ring {
+  transform: rotate(-90deg);
+}
+
+.counter-ring circle {
+  fill: none;
+  stroke-linecap: round;
+}
+
+/* ═══════════════ BENTO GRID ═══════════════ */
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ═══════════════ 3D CARD TILT ═══════════════ */
+
+.perspective-container {
+  perspective: 1000px;
+}
+
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
 /* ═══════════════ RESPONSIVE ═══════════════ */
 
 @media (max-width: 640px) {
-  .noise-overlay { opacity: 0.02; }
-  .eclipse-ring { width: 300px; height: 300px; }
-  .eclipse-core { width: 120px; height: 120px; }
+  .noise-overlay { opacity: 0.015; }
+  .eclipse-ring { width: 280px; height: 280px; }
+  .eclipse-core { width: 100px; height: 100px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

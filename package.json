@@ -12,6 +12,7 @@
     "@splinetool/react-spline": "^4.1.0",
     "@splinetool/runtime": "^1.12.74",
     "framer-motion": "^12.9.2",
+    "gsap": "^3.15.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },

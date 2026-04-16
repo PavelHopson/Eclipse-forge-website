@@ -14,6 +14,8 @@ module.exports = {
         muted: '#B0BEC9',
         border: '#1A2230',
         live: '#4AE6A0',
+        'accent-warm': '#F5A623',
+        'accent-warm-dim': '#D4901E',
       },
       fontFamily: {
         display: ['"Outfit"', 'sans-serif'],
