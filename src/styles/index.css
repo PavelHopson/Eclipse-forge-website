@@ -368,6 +368,40 @@ button, a { -webkit-tap-highlight-color: transparent; }
   will-change: transform;
 }
 
+/* ═══════════════ ECLIPSE SILHOUETTE SYSTEM ═══════════════ */
+
+@keyframes coronaPulse {
+  0%, 100% { filter: blur(0px); opacity: 0.8; }
+  50% { filter: blur(2px); opacity: 1; }
+}
+
+@keyframes diamondRing {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+/* Eclipse shadow halo for cards */
+.eclipse-halo {
+  position: relative;
+}
+.eclipse-halo::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 120%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(107,163,255,0.03) 0%, transparent 60%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.eclipse-halo:hover::after {
+  opacity: 1;
+}
+
 /* ═══════════════ RESPONSIVE ═══════════════ */
 
 @media (max-width: 640px) {

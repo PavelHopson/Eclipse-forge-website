@@ -9,6 +9,7 @@ import { MetricsSection } from '../components/sections/MetricsSection';
 import { ProcessSection } from '../components/sections/ProcessSection';
 import { ServicesSection } from '../components/sections/ServicesSection';
 import { CursorLight } from '../components/ui/CursorLight';
+import { EclipseDivider, EclipseSilhouette, ParticleField } from '../components/ui/EclipseVisuals';
 
 export function App() {
   const { scrollYProgress } = useScroll();
@@ -29,21 +30,31 @@ export function App() {
       {/* Cursor-reactive light (desktop only) */}
       <CursorLight />
 
+      {/* Global particle field — subtle stars */}
+      <ParticleField count={30} className="z-[1] opacity-50" />
+
       <SiteHeader />
 
       <main className="relative z-10">
         <HeroSection />
+        <EclipseDivider />
         <AboutSection />
         <CasesSection />
+        <EclipseDivider />
         <ServicesSection />
         <ProcessSection />
+        <EclipseDivider />
         <MetricsSection />
         <CtaSection />
       </main>
 
       {/* Premium footer */}
-      <footer className="relative z-10 border-t px-5 sm:px-8 lg:px-12 py-12 lg:py-16" style={{ borderColor: 'var(--line)' }}>
-        <div className="mx-auto max-w-[1400px]">
+      <footer className="relative z-10 border-t px-5 sm:px-8 lg:px-12 py-12 lg:py-16 overflow-hidden" style={{ borderColor: 'var(--line)' }}>
+        {/* Footer eclipse silhouette */}
+        <div className="absolute -bottom-16 right-[10%] opacity-15 hidden lg:block">
+          <EclipseSilhouette size={180} coronaColor="rgba(245,166,35,0.12)" animate={false} />
+        </div>
+        <div className="mx-auto max-w-[1400px] relative">
           <div className="grid sm:grid-cols-[1fr_auto_auto] gap-8 items-start">
             {/* Brand */}
             <div>

@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
 import { contactDetails } from '../../data/content';
 import { revealUp, viewport } from '../../lib/animation';
+import { EclipseSilhouette, ParticleField, OrbitalRing } from '../ui/EclipseVisuals';
 
 type Step = 0 | 1 | 2 | 3 | 4;
 
@@ -78,6 +79,19 @@ export function CtaSection() {
       <div className="absolute inset-0" style={{
         background: 'radial-gradient(ellipse at 30% 20%, rgba(107,163,255,0.08) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(245,166,35,0.05) 0%, transparent 50%), var(--bg)',
       }} />
+
+      {/* Eclipse silhouette — large, faded */}
+      <div className="absolute top-[10%] right-[-10%] opacity-20 hidden lg:block">
+        <EclipseSilhouette size={500} coronaColor="rgba(245,166,35,0.12)" coronaSpread={60} />
+      </div>
+
+      {/* Orbital decoration */}
+      <div className="absolute bottom-[20%] left-[-5%] opacity-15 hidden lg:block">
+        <OrbitalRing size={300} dotCount={3} duration={35} color="var(--accent)" />
+      </div>
+
+      {/* Particles */}
+      <ParticleField count={15} />
 
       {/* Grid lines */}
       <div className="absolute inset-0 pointer-events-none">

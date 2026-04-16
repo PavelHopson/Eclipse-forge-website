@@ -2,6 +2,7 @@ import { motion, useInView, useMotionValue, useSpring } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { metrics } from '../../data/content';
 import { revealUp, stagger, viewport } from '../../lib/animation';
+import { ConstellationField, SolarCorona, EclipseSilhouette } from '../ui/EclipseVisuals';
 
 /* ── Animated counter hook ── */
 function useAnimatedCounter(target: number, duration: number = 2, inView: boolean) {
@@ -80,10 +81,23 @@ export function MetricsSection() {
     <motion.section ref={ref} className="section-shell py-24 sm:py-32 lg:py-40 relative overflow-hidden"
       variants={stagger} initial="hidden" whileInView="visible" viewport={viewport}>
 
+      {/* Background constellation */}
+      <ConstellationField />
+
+      {/* Solar corona behind the metrics */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-40">
+        <SolarCorona size={500} rays={32} color="rgba(107,163,255,0.04)" />
+      </div>
+
       {/* Background glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full blur-[200px]"
           style={{ background: 'radial-gradient(ellipse, rgba(107,163,255,0.04) 0%, transparent 70%)' }} />
+      </div>
+
+      {/* Small eclipse silhouette */}
+      <div className="absolute top-8 right-8 hidden lg:block opacity-25">
+        <EclipseSilhouette size={80} coronaColor="rgba(245,166,35,0.15)" />
       </div>
 
       <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12 relative">

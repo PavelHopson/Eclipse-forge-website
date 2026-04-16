@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { revealUp, stagger, viewport } from '../../lib/animation';
+import { EclipsePhases, MiniEclipse } from '../ui/EclipseVisuals';
 
 const stackItems = [
   { label: 'Rust', detail: '22K строк' },
@@ -83,6 +84,18 @@ export function AboutSection() {
             </div>
           </motion.div>
         </div>
+
+        {/* Eclipse phases decoration */}
+        <motion.div variants={revealUp} className="mt-16 lg:mt-20">
+          <EclipsePhases />
+          <p className="text-center mt-4 text-[10px] tracking-[0.3em] uppercase" style={{ color: 'var(--text-4)' }}>
+            от идеи → к полному затмению конкурентов
+          </p>
+        </motion.div>
+
+        {/* Decorative mini eclipses */}
+        <MiniEclipse size={18} className="absolute top-12 right-12 hidden lg:block opacity-40" />
+        <MiniEclipse size={14} className="absolute bottom-20 left-8 hidden lg:block opacity-30" color="var(--accent-warm)" />
       </div>
     </motion.section>
   );

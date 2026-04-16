@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { metrics } from '../../data/content';
+import { EclipseSilhouette, OrbitalRing, ParticleField } from '../ui/EclipseVisuals';
 import { GlowButton } from '../ui/GlowButton';
 import { MagneticButton } from '../ui/MagneticButton';
 
@@ -70,17 +71,27 @@ export function HeroSection() {
 
   return (
     <section ref={ref} id="hero" className="relative overflow-hidden min-h-screen flex items-end pb-16 sm:pb-24 lg:items-center lg:pb-0">
-      {/* Eclipse ring — right side visual anchor */}
+      {/* Eclipse silhouette — right side visual anchor */}
       <motion.div
-        className="absolute top-1/2 right-[-8%] lg:right-[5%] -translate-y-1/2 pointer-events-none"
+        className="absolute top-1/2 right-[-8%] lg:right-[8%] -translate-y-1/2 pointer-events-none"
         style={{ scale: ringScale, opacity: ringOpacity, y: visualY }}
       >
-        <div className="eclipse-ring" />
-        <div className="eclipse-core absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+        <EclipseSilhouette size={420} coronaSpread={50} coronaColor="rgba(107,163,255,0.2)" />
+        {/* Orbital ring around the eclipse */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <OrbitalRing size={520} dotCount={4} duration={30} color="var(--accent)" />
+        </div>
+        {/* Second outer orbit */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <OrbitalRing size={620} dotCount={2} duration={50} color="var(--accent-warm)" />
+        </div>
       </motion.div>
 
       {/* Gradient mesh background */}
       <div className="absolute inset-0 gradient-mesh pointer-events-none opacity-60" />
+
+      {/* Floating particles */}
+      <ParticleField count={25} />
 
       {/* Grid lines — subtle structure */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">

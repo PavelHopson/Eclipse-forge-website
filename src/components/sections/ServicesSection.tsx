@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { services } from '../../data/content';
 import { revealUp, stagger, viewport } from '../../lib/animation';
+import { EclipseSilhouette, MiniEclipse } from '../ui/EclipseVisuals';
 
 const serviceIcons = [
   // AI brain
@@ -22,8 +23,15 @@ const serviceIcons = [
 
 export function ServicesSection() {
   return (
-    <motion.section id="services" className="section-shell py-24 sm:py-32 lg:py-40" variants={stagger} initial="hidden" whileInView="visible" viewport={viewport}>
-      <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
+    <motion.section id="services" className="section-shell py-24 sm:py-32 lg:py-40 relative overflow-hidden" variants={stagger} initial="hidden" whileInView="visible" viewport={viewport}>
+      {/* Background eclipse silhouette */}
+      <div className="absolute -top-20 -left-20 opacity-30 hidden lg:block">
+        <EclipseSilhouette size={300} coronaColor="rgba(245,166,35,0.1)" animate={false} />
+      </div>
+      <MiniEclipse size={20} className="absolute top-16 right-20 hidden lg:block opacity-30" />
+      <MiniEclipse size={16} className="absolute bottom-24 right-[40%] hidden lg:block opacity-20" color="var(--accent-warm)" />
+
+      <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12 relative">
         <motion.p variants={revealUp} className="type-meta mb-6" style={{ color: 'var(--accent)' }}>Экспертиза</motion.p>
         <motion.h2 variants={revealUp} className="type-display max-w-xl mb-16 lg:mb-20" style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}>
           <span className="text-gradient">Технология как инструмент</span>
