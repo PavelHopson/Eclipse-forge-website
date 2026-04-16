@@ -33,20 +33,22 @@ const statusStyles: Record<ProjectStatus, { color: string; borderColor: string; 
 
 const portfolioAnchors = [
   { href: '#featured-cases', label: 'Флагман', count: featuredProjects.length },
-  { href: '#case-library', label: 'Библиотека', count: portfolioCollections[0]?.projects.length ?? 0 },
-  { href: '#engineering-tools', label: 'Инжиниринг', count: portfolioCollections[1]?.projects.length ?? 0 },
-  { href: '#labs-knowledge', label: 'Labs', count: portfolioCollections[2]?.projects.length ?? 0 },
+  { href: '#ai-products', label: 'AI-продукты', count: portfolioCollections[0]?.projects.length ?? 0 },
+  { href: '#web-fullstack', label: 'Веб и Fullstack', count: portfolioCollections[1]?.projects.length ?? 0 },
+  { href: '#engineering-tools', label: 'Инструменты', count: portfolioCollections[2]?.projects.length ?? 0 },
 ];
 
-function ProjectCard({ project, index, featured = false }: { project: Project; index: number; featured?: boolean }) {
+function ProjectCard({ project, index, featured = false, isLastOdd = false }: { project: Project; index: number; featured?: boolean; isLastOdd?: boolean }) {
   const statusStyle = statusStyles[project.status];
+
+  const spanFull = (featured && index === 0) || isLastOdd;
 
   return (
     <motion.article
       variants={revealScale}
       whileHover={{ y: -4 }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      className={`group relative border-l-2 p-6 sm:p-8 ${featured && index === 0 ? 'lg:col-span-2' : ''}`}
+      className={`group relative border-l-2 p-6 sm:p-8 ${spanFull ? 'md:col-span-2 lg:col-span-2 xl:col-span-3' : ''}`}
       style={{ background: 'var(--bg)', borderLeftColor: 'var(--accent-dim)' }}
     >
       <div className="mb-5 flex flex-wrap items-center gap-3 sm:gap-4">
@@ -204,10 +206,10 @@ export function CasesSection() {
           >
             <div className="max-w-3xl">
               <p className="type-meta mb-4" style={{ color: 'var(--text-3)' }}>
-                Featured
+                Флагманские проекты
               </p>
               <h3 className="type-heading text-2xl sm:text-3xl" style={{ color: 'var(--text-1)' }}>
-                12 кейсов, которые лучше всего показывают глубину студии
+                {featuredProjects.length} проектов, которые лучше всего показывают глубину и масштаб
               </h3>
             </div>
 
@@ -225,7 +227,13 @@ export function CasesSection() {
             style={{ background: 'var(--line)' }}
           >
             {featuredProjects.map((project, index) => (
-              <ProjectCard key={project.title} project={project} index={index} featured />
+              <ProjectCard
+                key={project.title}
+                project={project}
+                index={index}
+                featured
+                isLastOdd={index === featuredProjects.length - 1 && featuredProjects.length % 2 !== 0}
+              />
             ))}
           </motion.div>
         </div>
@@ -271,7 +279,12 @@ export function CasesSection() {
               style={{ background: 'var(--line)' }}
             >
               {collection.projects.map((project, index) => (
-                <ProjectCard key={project.title} project={project} index={index} />
+                <ProjectCard
+                  key={project.title}
+                  project={project}
+                  index={index}
+                  isLastOdd={index === collection.projects.length - 1 && collection.projects.length % 2 !== 0}
+                />
               ))}
             </motion.div>
           </div>
