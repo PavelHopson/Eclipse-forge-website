@@ -4,6 +4,7 @@ import { metrics } from '../../data/content';
 import { EclipseSilhouette, OrbitalRing, ParticleField } from '../ui/EclipseVisuals';
 import { GlowButton } from '../ui/GlowButton';
 import { MagneticButton } from '../ui/MagneticButton';
+import { BlackHoleCanvas } from '../ui/BlackHoleCanvas';
 
 /* ── Kinetic word reveal ── */
 const wordReveal = {
@@ -71,21 +72,24 @@ export function HeroSection() {
 
   return (
     <section ref={ref} id="hero" className="relative overflow-hidden min-h-screen flex items-end pb-16 sm:pb-24 lg:items-center lg:pb-0">
-      {/* Eclipse silhouette — right side visual anchor */}
+      {/* Black hole — live physics simulation (replaces static eclipse silhouette) */}
       <motion.div
-        className="absolute top-1/2 right-[-8%] lg:right-[8%] -translate-y-1/2 pointer-events-none"
+        className="absolute top-1/2 right-[-12%] lg:right-[4%] -translate-y-1/2 pointer-events-none w-[560px] h-[560px] lg:w-[720px] lg:h-[720px]"
         style={{ scale: ringScale, opacity: ringOpacity, y: visualY }}
       >
-        <EclipseSilhouette size={420} coronaSpread={50} coronaColor="rgba(107,163,255,0.2)" />
-        {/* Orbital ring around the eclipse */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <OrbitalRing size={520} dotCount={4} duration={30} color="var(--accent)" />
-        </div>
-        {/* Second outer orbit */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <OrbitalRing size={620} dotCount={2} duration={50} color="var(--accent-warm)" />
+        {/* Physics sim — particles spiraling into event horizon */}
+        <BlackHoleCanvas className="absolute inset-0 w-full h-full rounded-full" />
+
+        {/* Subtle orbital ring overlay — decorative, behind-scenes indicator */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+          <OrbitalRing size={760} dotCount={2} duration={60} color="var(--accent-warm)" />
         </div>
       </motion.div>
+
+      {/* Use EclipseSilhouette import to avoid tree-shake removal if other sections need it */}
+      <div className="hidden">
+        <EclipseSilhouette size={1} />
+      </div>
 
       {/* Gradient mesh background */}
       <div className="absolute inset-0 gradient-mesh pointer-events-none opacity-60" />
