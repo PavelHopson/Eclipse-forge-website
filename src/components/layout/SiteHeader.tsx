@@ -2,6 +2,7 @@ import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScro
 import { useState } from 'react';
 import { GlowButton } from '../ui/GlowButton';
 import { ThemeToggle } from '../ui/ThemeToggle';
+import { useTheme } from '../../lib/theme';
 
 const navItems = [
   { label: 'О нас', href: '#about' },
@@ -16,9 +17,22 @@ export function SiteHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
   const reduceMotion = useReducedMotion();
   const { scrollY } = useScroll();
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
 
   useMotionValueEvent(scrollY, 'change', (latest) => setIsScrolled(latest > 20));
   const closeMenu = () => setIsMenuOpen(false);
+
+  // Theme-aware header backgrounds — scrolled state uses translucent theme bg,
+  // idle state is near-transparent. Avoid hardcoded dark rgba that clashed
+  // with the cream light-mode background.
+  const bgScrolled = isLight ? 'rgba(245, 242, 235, 0.9)' : 'rgba(5, 7, 10, 0.88)';
+  const bgIdle     = isLight ? 'rgba(255, 255, 255, 0.55)' : 'rgba(255, 255, 255, 0.02)';
+  const borderScrolled = isLight ? 'rgba(7, 7, 10, 0.08)' : '#1C232B';
+  const borderIdle     = isLight ? 'rgba(7, 7, 10, 0.04)' : '#1C232B40';
+  const shadowScrolled = isLight
+    ? '0 6px 24px rgba(7, 7, 10, 0.06), 0 2px 8px rgba(7, 7, 10, 0.04)'
+    : '0 0 40px rgba(0, 0, 0, 0.3)';
 
   return (
     <>
@@ -30,12 +44,12 @@ export function SiteHeader() {
       >
         <motion.div
           animate={isScrolled
-            ? { backgroundColor: 'rgba(5,7,10,0.88)', borderColor: '#1C232B', backdropFilter: 'blur(20px)' }
-            : { backgroundColor: 'rgba(255,255,255,0.02)', borderColor: '#1C232B40', backdropFilter: 'blur(8px)' }
+            ? { backgroundColor: bgScrolled, borderColor: borderScrolled, backdropFilter: 'blur(20px)' }
+            : { backgroundColor: bgIdle, borderColor: borderIdle, backdropFilter: 'blur(8px)' }
           }
           transition={{ duration: 0.3 }}
           className="mx-auto flex max-w-[1400px] items-center justify-between rounded-full border px-5 py-3"
-          style={{ boxShadow: isScrolled ? '0 0 40px rgba(0,0,0,0.3)' : 'none' }}
+          style={{ boxShadow: isScrolled ? shadowScrolled : 'none' }}
         >
           <a href="#hero" className="flex min-w-0 items-center gap-3" onClick={closeMenu}>
             <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: 'var(--accent)', boxShadow: '0 0 12px rgba(167,180,194,0.3)' }} />
@@ -75,7 +89,7 @@ export function SiteHeader() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.18 }}
             className="fixed inset-0 z-30 px-4 pb-6 pt-24 backdrop-blur-md md:hidden"
-            style={{ background: 'rgba(5,7,10,0.7)' }}>
+            style={{ background: isLight ? 'rgba(245, 242, 235, 0.85)' : 'rgba(5,7,10,0.7)' }}>
             <motion.div initial={{ opacity: 0, y: -14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.24, ease: 'easeOut' }}
               className="mx-auto max-w-[1400px] rounded-2xl border p-5"
