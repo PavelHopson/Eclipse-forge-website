@@ -10,7 +10,7 @@ export function ProcessSection() {
   const progressWidth = useTransform(scrollYProgress, [0.2, 0.7], ['0%', '100%']);
 
   return (
-    <motion.section ref={ref} id="process" className="section-shell py-24 sm:py-32 lg:py-40 relative overflow-hidden" variants={stagger} initial="hidden" whileInView="visible" viewport={viewport}>
+    <motion.section ref={ref} id="process" className="section-shell py-16 sm:py-24 lg:py-40 relative overflow-hidden" variants={stagger} initial="hidden" whileInView="visible" viewport={viewport}>
       {/* Decorative orbital ring */}
       <div className="absolute -bottom-16 -right-16 opacity-20 hidden lg:block">
         <OrbitalRing size={280} dotCount={3} duration={25} color="var(--accent)" />
@@ -18,7 +18,7 @@ export function ProcessSection() {
       <MiniEclipse size={22} className="absolute top-20 right-16 hidden lg:block opacity-30" />
 
       <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12 relative">
-        <div className="grid lg:grid-cols-[1fr_2fr] gap-12 lg:gap-20">
+        <div className="grid lg:grid-cols-[1fr_2fr] gap-8 sm:gap-10 lg:gap-20">
           {/* LEFT — Sticky heading */}
           <div className="lg:sticky lg:top-32 lg:self-start">
             <motion.p variants={revealUp} className="type-meta mb-6" style={{ color: 'var(--accent)' }}>Процесс</motion.p>

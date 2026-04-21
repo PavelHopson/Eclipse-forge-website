@@ -807,6 +807,96 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .eclipse-core { width: 100px; height: 100px; }
 }
 
+/* ═══════════════ MOBILE ADAPTATION ═══════════════ */
+
+/* iOS safe-area padding — avoid notch overlap */
+@supports (padding: env(safe-area-inset-top)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+  header[class*='sticky'] {
+    padding-top: calc(1rem + env(safe-area-inset-top));
+  }
+}
+
+/* Mobile: reduce hero top padding on very small screens */
+@media (max-width: 480px) {
+  html { scroll-padding-top: 4rem; }
+
+  /* Tighten large typography on narrow viewports */
+  .type-display {
+    letter-spacing: -0.035em;
+  }
+
+  /* Process sticky heading — convert to non-sticky on mobile */
+  section#process .lg\\:sticky {
+    position: relative !important;
+    top: auto !important;
+  }
+
+  /* Eclipse dividers take less vertical room */
+  section#about .relative.flex.items-center.justify-center.py-8,
+  section .relative.flex.items-center.justify-center.py-8 {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  /* Marquee track slows down on mobile (less visual noise) */
+  .marquee-track {
+    animation-duration: 60s !important;
+  }
+
+  /* Cards on very small screens — tighter padding */
+  .card-brutal,
+  article[class*='rounded-2xl'] > div[class*='p-6'] {
+    padding: 1.25rem;
+  }
+
+  /* Bigger tap targets for buttons on mobile */
+  button, a[class*='rounded-full'] {
+    min-height: 44px;
+  }
+
+  /* Hero headline max width control */
+  #hero h1 {
+    max-width: 100%;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+}
+
+/* Tablet (640-1024px): intermediate breakpoint fine-tunes */
+@media (min-width: 640px) and (max-width: 1024px) {
+  /* BlackHoleCanvas — softer presence, doesn't steal attention from text */
+  #hero > .absolute[class*='pointer-events-none'] {
+    opacity: 0.5;
+  }
+
+  /* Hero: reduce top padding since no desktop split-screen */
+  #hero > div > div {
+    min-height: 70vh;
+  }
+}
+
+/* Tighter landscape phone adjustments */
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 500px) {
+  section[id] {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+  #hero {
+    min-height: 100vh;
+  }
+}
+
+/* Mobile menu scroll lock protection */
+@media (max-width: 767px) {
+  body:has(.fixed.inset-0.z-30[class*='md:hidden']) {
+    overflow: hidden;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {

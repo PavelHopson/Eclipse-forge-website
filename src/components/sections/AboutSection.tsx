@@ -16,12 +16,12 @@ export function AboutSection() {
   const lineWidth = useTransform(scrollYProgress, [0.1, 0.5], ['0%', '100%']);
 
   return (
-    <motion.section ref={ref} id="about" className="section-shell py-24 sm:py-32 lg:py-40" variants={stagger} initial="hidden" whileInView="visible" viewport={viewport}>
+    <motion.section ref={ref} id="about" className="section-shell py-16 sm:py-24 lg:py-40" variants={stagger} initial="hidden" whileInView="visible" viewport={viewport}>
       <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
         {/* Animated accent line */}
         <motion.div className="h-px mb-12 origin-left" style={{ width: lineWidth, background: 'linear-gradient(90deg, var(--accent), var(--accent-warm), transparent)' }} />
 
-        <div className="grid lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-24">
+        <div className="grid lg:grid-cols-[1.2fr_1fr] gap-10 sm:gap-12 lg:gap-24">
           {/* LEFT — Statement */}
           <div>
             <motion.p variants={revealUp} className="type-meta mb-6" style={{ color: 'var(--accent)' }}>

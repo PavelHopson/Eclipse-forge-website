@@ -160,7 +160,7 @@ function ProjectCard({ project, index, featured = false, isLastOdd = false }: { 
 
 export function CasesSection() {
   return (
-    <section id="cases" className="section-shell py-24 sm:py-32 lg:py-40">
+    <section id="cases" className="section-shell py-16 sm:py-24 lg:py-40">
       <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
         <motion.div variants={revealUp} initial="hidden" whileInView="visible" viewport={viewport} className="animated-divider">
           <SectionHeading eyebrow="Портфолио" title="Флагманские кейсы и вся экосистема." />

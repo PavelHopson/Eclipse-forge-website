@@ -23,7 +23,7 @@ const serviceIcons = [
 
 export function ServicesSection() {
   return (
-    <motion.section id="services" className="section-shell py-24 sm:py-32 lg:py-40 relative overflow-hidden" variants={stagger} initial="hidden" whileInView="visible" viewport={viewport}>
+    <motion.section id="services" className="section-shell py-16 sm:py-24 lg:py-40 relative overflow-hidden" variants={stagger} initial="hidden" whileInView="visible" viewport={viewport}>
       {/* Background eclipse silhouette */}
       <div className="absolute -top-20 -left-20 opacity-30 hidden lg:block">
         <EclipseSilhouette size={300} coronaColor="rgba(245,166,35,0.1)" animate={false} />

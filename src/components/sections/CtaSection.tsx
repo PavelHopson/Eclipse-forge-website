@@ -99,7 +99,7 @@ export function CtaSection() {
         <div className="absolute top-0 left-[75%] w-px h-full hidden lg:block" style={{ background: 'linear-gradient(to bottom, transparent, var(--line-subtle) 30%, var(--line-subtle) 70%, transparent)' }} />
       </div>
 
-      <div className="relative z-10 w-full mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12 py-20 sm:py-28 lg:py-32">
+      <div className="relative z-10 w-full mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12 py-16 sm:py-24 lg:py-32">
         {/* Header */}
         <motion.div variants={revealUp} className="text-center mb-14">
           <p className="type-meta mb-5" style={{ color: 'var(--accent)' }}>Контакт</p>
@@ -112,7 +112,7 @@ export function CtaSection() {
         </motion.div>
 
         {/* Two-column: Telegram CTA + Terminal form */}
-        <div className="grid lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-12 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-12 max-w-5xl mx-auto">
 
           {/* LEFT — Direct Telegram CTA */}
           <motion.div variants={revealUp} className="flex flex-col gap-6">
@@ -207,7 +207,7 @@ export function CtaSection() {
                       <input ref={inputRef} type="text" value={answers[step]}
                         onChange={(e) => updateAnswer(e.target.value)} onKeyDown={handleKeyDown}
                         placeholder="Введите ответ..." autoFocus
-                        className="flex-1 px-4 py-3 rounded-xl text-[14px] outline-none border transition-colors duration-300 focus:border-[var(--accent-dim)]"
+                        className="flex-1 px-4 py-3 rounded-xl text-[14px] outline-none border transition-colors duration-300 focus:border-[var(--accent-dim)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-opacity-30"
                         style={{ background: 'var(--input-bg)', color: 'var(--text-1)', borderColor: 'var(--line)', caretColor: 'var(--accent)' }} />
                       <button onClick={handleSubmit}
                         className="px-5 py-3 rounded-xl text-[12px] uppercase tracking-[0.15em] font-display font-medium transition-all duration-300 hover:bg-[var(--accent-soft)]"

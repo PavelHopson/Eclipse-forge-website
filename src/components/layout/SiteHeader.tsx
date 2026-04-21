@@ -64,8 +64,14 @@ export function SiteHeader() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
-            <ThemeToggle />
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Theme toggle: icon-only on mobile, full on desktop */}
+            <div className="sm:hidden">
+              <ThemeToggle compact />
+            </div>
+            <div className="hidden sm:block">
+              <ThemeToggle />
+            </div>
             <div className="hidden sm:block">
               <GlowButton href="#contact" className="px-5 py-2.5 text-[0.78rem]">Войти в работу</GlowButton>
             </div>

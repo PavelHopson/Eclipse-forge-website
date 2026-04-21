@@ -78,7 +78,7 @@ export function MetricsSection() {
   const inView = useInView(ref, { once: true, amount: 0.3 });
 
   return (
-    <motion.section ref={ref} className="section-shell py-24 sm:py-32 lg:py-40 relative overflow-hidden"
+    <motion.section ref={ref} className="section-shell py-16 sm:py-24 lg:py-40 relative overflow-hidden"
       variants={stagger} initial="hidden" whileInView="visible" viewport={viewport}>
 
       {/* Background constellation */}
@@ -109,7 +109,7 @@ export function MetricsSection() {
           <span style={{ color: 'var(--text-4)' }}>говорят сами.</span>
         </motion.h2>
 
-        <div className="grid sm:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {metrics.map((m, i) => {
             const config = metricConfigs[i];
             const counterRef = useAnimatedCounter(config.numericValue, 2.5, inView);

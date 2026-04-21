@@ -72,16 +72,20 @@ export function HeroSection() {
 
   return (
     <section ref={ref} id="hero" className="relative overflow-hidden min-h-screen flex items-end pb-16 sm:pb-24 lg:items-center lg:pb-0">
-      {/* Black hole — live physics simulation (replaces static eclipse silhouette) */}
+      {/* Black hole — live physics simulation. On mobile: centered behind content with low opacity (acts as ambient bg). On desktop: anchored to right. */}
       <motion.div
-        className="absolute top-1/2 right-[-12%] lg:right-[4%] -translate-y-1/2 pointer-events-none w-[560px] h-[560px] lg:w-[720px] lg:h-[720px]"
+        className="absolute top-1/2 left-1/2 lg:left-auto -translate-x-1/2 lg:translate-x-0 lg:right-[4%] -translate-y-1/2 pointer-events-none
+                   w-[min(90vw,360px)] h-[min(90vw,360px)]
+                   sm:w-[min(80vw,500px)] sm:h-[min(80vw,500px)]
+                   lg:w-[min(50vw,720px)] lg:h-[min(50vw,720px)]
+                   opacity-40 sm:opacity-60 lg:opacity-100"
         style={{ scale: ringScale, opacity: ringOpacity, y: visualY }}
       >
         {/* Physics sim — particles spiraling into event horizon */}
         <BlackHoleCanvas className="absolute inset-0 w-full h-full rounded-full" />
 
-        {/* Subtle orbital ring overlay — decorative, behind-scenes indicator */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+        {/* Subtle orbital ring overlay — decorative */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden lg:block">
           <OrbitalRing size={760} dotCount={2} duration={60} color="var(--accent-warm)" />
         </div>
       </motion.div>
@@ -111,8 +115,8 @@ export function HeroSection() {
       </div>
 
       {/* Split-screen content: text LEFT, visual RIGHT */}
-      <motion.div className="relative z-10 w-full max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 pt-32 lg:pt-0" style={{ y: textY }}>
-        <div className="grid lg:grid-cols-[1fr_0.8fr] gap-12 lg:gap-8 items-center min-h-[80vh]">
+      <motion.div className="relative z-10 w-full max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 pt-20 sm:pt-28 lg:pt-0" style={{ y: textY }}>
+        <div className="grid lg:grid-cols-[1fr_0.8fr] gap-8 sm:gap-10 lg:gap-8 items-center min-h-[80vh]">
 
           {/* LEFT — Text */}
           <div className="relative">
@@ -195,6 +199,36 @@ export function HeroSection() {
                 Портфолио
                 <span className="w-5 h-px transition-all duration-500 group-hover:w-10" style={{ background: 'var(--accent-warm)' }} />
               </a>
+            </motion.div>
+
+            {/* Mobile/tablet metric chips — visible on <lg, replace the lg-only floating cards */}
+            <motion.div custom={1.8} variants={fadeIn} initial="hidden" animate="visible"
+              className="mt-10 flex flex-wrap gap-2 lg:hidden">
+              {metrics.map((m) => (
+                <div
+                  key={m.label}
+                  className="inline-flex items-baseline gap-2 border rounded-lg px-3 py-2 backdrop-blur-sm"
+                  style={{ borderColor: 'var(--line)', background: 'var(--hero-stat-bg)' }}
+                >
+                  <span className="font-display text-lg font-semibold leading-none" style={{ color: 'var(--text-1)' }}>
+                    {m.value}
+                  </span>
+                  <span className="text-[10px] tracking-[0.12em] uppercase leading-none" style={{ color: 'var(--text-4)' }}>
+                    {m.label}
+                  </span>
+                </div>
+              ))}
+              <div className="inline-flex items-center gap-2 px-3 py-2">
+                <motion.div
+                  className="h-1.5 w-1.5 rounded-full"
+                  style={{ background: 'var(--live)' }}
+                  animate={{ opacity: [0.4, 1, 0.4] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
+                <span className="text-[10px] tracking-[0.15em] uppercase" style={{ color: 'var(--text-4)' }}>
+                  Открыт к проектам
+                </span>
+              </div>
             </motion.div>
           </div>
 
