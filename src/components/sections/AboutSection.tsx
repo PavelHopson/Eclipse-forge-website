@@ -58,7 +58,7 @@ export function AboutSection() {
                 transition={{ duration: 0.6, delay: 0.15 * i, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ x: 8, borderColor: 'rgba(107,163,255,0.2)' }}
                 className="group flex items-center justify-between border rounded-xl px-6 py-5 transition-colors duration-400"
-                style={{ borderColor: 'var(--line)', background: 'rgba(12,17,23,0.4)' }}
+                style={{ borderColor: 'var(--line)', background: 'var(--surface-1)' }}
               >
                 <div className="flex items-center gap-4">
                   <span className="font-display text-[11px] font-light" style={{ color: 'var(--text-4)' }}>

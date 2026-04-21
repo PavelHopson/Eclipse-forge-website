@@ -8,7 +8,7 @@ const statusStyles: Record<ProjectStatus, { color: string; borderColor: string; 
   Live: { color: '#6EC8A0', borderColor: 'rgba(110,200,160,0.2)', background: 'rgba(110,200,160,0.08)' },
   Beta: { color: 'var(--accent)', borderColor: 'var(--accent-dim)', background: 'var(--accent-soft)' },
   Prototype: { color: '#D6AE72', borderColor: 'rgba(214,174,114,0.2)', background: 'rgba(214,174,114,0.08)' },
-  Concept: { color: 'var(--text-3)', borderColor: 'var(--line)', background: 'rgba(255,255,255,0.02)' },
+  Concept: { color: 'var(--text-3)', borderColor: 'var(--line)', background: 'var(--surface-2)' },
   Reference: { color: '#9DB6CF', borderColor: 'rgba(157,182,207,0.2)', background: 'rgba(157,182,207,0.08)' },
 };
 
@@ -172,7 +172,7 @@ export function CasesSection() {
 
         <motion.div variants={revealUp} initial="hidden" whileInView="visible" viewport={viewport} className="mt-8 flex flex-wrap items-center gap-2.5">
           <span className="rounded-full border px-4 py-2 text-[10px] uppercase tracking-[0.24em]"
-            style={{ color: 'var(--text-2)', borderColor: 'var(--line)', background: 'rgba(255,255,255,0.02)' }}>
+            style={{ color: 'var(--text-2)', borderColor: 'var(--line)', background: 'var(--surface-2)' }}>
             {allProjects.length} проектов
           </span>
           {portfolioAnchors.map((anchor) => (
@@ -221,7 +221,7 @@ export function CasesSection() {
                   <p className="mt-4 max-w-2xl text-[14px] leading-relaxed sm:text-[15px]" style={{ color: 'var(--text-3)' }}>{collection.description}</p>
                 </div>
                 <div className="inline-flex self-start rounded-full border px-4 py-2 text-[10px] uppercase tracking-[0.24em]"
-                  style={{ color: 'var(--text-2)', borderColor: 'var(--line)', background: 'rgba(255,255,255,0.02)' }}>
+                  style={{ color: 'var(--text-2)', borderColor: 'var(--line)', background: 'var(--surface-2)' }}>
                   {collection.projects.length} проектов
                 </div>
               </div>

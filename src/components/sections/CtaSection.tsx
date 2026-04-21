@@ -150,7 +150,7 @@ export function CtaSection() {
               ].map((c) => (
                 <a key={c.label} href={c.href} target="_blank" rel="noreferrer"
                   className="group border rounded-xl p-4 transition-all duration-400 hover:border-[rgba(107,163,255,0.15)]"
-                  style={{ borderColor: 'var(--line)', background: 'rgba(12,17,23,0.4)' }}>
+                  style={{ borderColor: 'var(--line)', background: 'var(--surface-1)' }}>
                   <p className="text-[10px] tracking-[0.2em] uppercase mb-2" style={{ color: 'var(--text-4)' }}>{c.label}</p>
                   <p className="font-display text-[13px] truncate group-hover:text-[var(--accent)] transition-colors duration-300" style={{ color: 'var(--text-2)' }}>{c.value}</p>
                 </a>
@@ -208,7 +208,7 @@ export function CtaSection() {
                         onChange={(e) => updateAnswer(e.target.value)} onKeyDown={handleKeyDown}
                         placeholder="Введите ответ..." autoFocus
                         className="flex-1 px-4 py-3 rounded-xl text-[14px] outline-none border transition-colors duration-300 focus:border-[var(--accent-dim)]"
-                        style={{ background: 'rgba(255,255,255,0.03)', color: 'var(--text-1)', borderColor: 'var(--line)', caretColor: 'var(--accent)' }} />
+                        style={{ background: 'var(--input-bg)', color: 'var(--text-1)', borderColor: 'var(--line)', caretColor: 'var(--accent)' }} />
                       <button onClick={handleSubmit}
                         className="px-5 py-3 rounded-xl text-[12px] uppercase tracking-[0.15em] font-display font-medium transition-all duration-300 hover:bg-[var(--accent-soft)]"
                         style={{ background: 'rgba(107,163,255,0.06)', color: 'var(--accent)', border: '1px solid var(--line)' }}>

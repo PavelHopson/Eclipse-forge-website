@@ -212,7 +212,7 @@ export function HeroSection() {
                 className="border rounded-2xl px-6 py-5 backdrop-blur-sm"
                 style={{
                   borderColor: 'var(--line)',
-                  background: 'rgba(12,17,23,0.6)',
+                  background: 'var(--hero-stat-bg)',
                   marginRight: i === 1 ? '2rem' : i === 2 ? '4rem' : '0',
                 }}
               >

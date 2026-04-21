@@ -1,6 +1,7 @@
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll } from 'framer-motion';
 import { useState } from 'react';
 import { GlowButton } from '../ui/GlowButton';
+import { ThemeToggle } from '../ui/ThemeToggle';
 
 const navItems = [
   { label: 'О нас', href: '#about' },
@@ -50,6 +51,7 @@ export function SiteHeader() {
           </nav>
 
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <div className="hidden sm:block">
               <GlowButton href="#contact" className="px-5 py-2.5 text-[0.78rem]">Войти в работу</GlowButton>
             </div>

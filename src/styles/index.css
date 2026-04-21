@@ -6,7 +6,9 @@
 
 /* ═══════════════ ECLIPSE DESIGN SYSTEM v4 — PREMIUM ═══════════════ */
 
-:root {
+/* Default: dark palette values kept on :root for pre-hydration + safety */
+:root,
+[data-theme='dark'] {
   --bg: #05070A;
   --bg-alt: #080C12;
   --bg-card: #0C1117;
@@ -30,7 +32,55 @@
   --glow-strong: rgba(157, 196, 255, 0.12);
   --live: #4AE6A0;
   --noise-opacity: 0.025;
+  --surface-1: rgba(12, 17, 23, 0.4);
+  --surface-2: rgba(255, 255, 255, 0.02);
+  --input-bg: rgba(255, 255, 255, 0.03);
+  --hero-stat-bg: rgba(12, 17, 23, 0.6);
   color-scheme: dark;
+}
+
+/* Light theme — editorial, clean, high-contrast */
+[data-theme='light'] {
+  --bg: #FAFAF7;              /* warm off-white */
+  --bg-alt: #F4F2EC;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F8F6F0;
+  --bg-elevated: #FFFFFF;
+  --text-1: #0A0A0B;          /* near-black for headlines */
+  --text-2: #2A2A2E;
+  --text-3: #5A5A62;
+  --text-4: #8A8A92;
+  --line: #E5E2DA;            /* warm light line */
+  --line-subtle: #EEEBE3;
+  --accent: #2B6EFF;           /* deeper blue — better contrast on white */
+  --accent-dim: #1E4BB8;
+  --accent-glow: #5C92FF;
+  --accent-soft: rgba(43, 110, 255, 0.08);
+  --accent-warm: #D97706;      /* darker amber for readability on white */
+  --accent-warm-dim: #B45309;
+  --accent-warm-glow: #F5A623;
+  --accent-warm-soft: rgba(217, 119, 6, 0.08);
+  --glow: rgba(43, 110, 255, 0.05);
+  --glow-strong: rgba(43, 110, 255, 0.12);
+  --live: #059669;
+  --noise-opacity: 0.015;
+  --surface-1: rgba(244, 242, 236, 0.7);
+  --surface-2: rgba(10, 10, 11, 0.025);
+  --input-bg: rgba(10, 10, 11, 0.03);
+  --hero-stat-bg: rgba(255, 255, 255, 0.85);
+  color-scheme: light;
+}
+
+/* Smooth theme transitions */
+html[data-theme] body,
+html[data-theme] section,
+html[data-theme] header,
+html[data-theme] footer,
+html[data-theme] .card-brutal,
+html[data-theme] [class*='bg-'] {
+  transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s ease,
+              color 0.3s ease;
 }
 
 * { box-sizing: border-box; margin: 0; }
@@ -119,6 +169,66 @@ button, a { -webkit-tap-highlight-color: transparent; }
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* ── Light-theme overrides for gradients (hardcoded colors) ── */
+[data-theme='light'] .text-gradient {
+  background: linear-gradient(135deg, #0A0A0B 10%, #5A5A62 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+[data-theme='light'] .text-gradient-accent {
+  background: linear-gradient(135deg, #5C92FF, #2B6EFF, #1E4BB8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+[data-theme='light'] .text-gradient-warm {
+  background: linear-gradient(135deg, #F5A623, #D97706, #B45309);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+[data-theme='light'] .text-gradient-hero {
+  background: linear-gradient(135deg, #0A0A0B 0%, #2A2A2E 40%, #2B6EFF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Light-theme gradient mesh — softer pastel washes instead of neon glows */
+[data-theme='light'] .gradient-mesh {
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(43,110,255,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(217,119,6,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 80%, rgba(43,110,255,0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 40% 30%, rgba(92,146,255,0.04) 0%, transparent 60%) !important;
+}
+
+/* Noise overlay: lighter blend in light theme */
+[data-theme='light'] .noise-overlay {
+  mix-blend-mode: multiply;
+  opacity: var(--noise-opacity);
+}
+
+/* Fog: subtle light-mode tint */
+[data-theme='light'] .fog-layer::before,
+[data-theme='light'] .fog-layer::after {
+  background: rgba(43, 110, 255, 0.03);
+}
+[data-theme='light'] .flare {
+  background: radial-gradient(circle, rgba(43,110,255,0.04), transparent 70%);
+}
+
+/* Glow line divider between sections in light mode */
+[data-theme='light'] .glow-line {
+  background: linear-gradient(90deg, transparent, rgba(43, 110, 255, 0.25), transparent);
+}
+
+/* Section subtle line */
+[data-theme='light'] .section-shell::before {
+  background: linear-gradient(90deg, transparent, var(--line) 20%, var(--line) 80%, transparent);
 }
 
 /* ═══════════════ ANIMATED GRADIENT MESH ═══════════════ */
