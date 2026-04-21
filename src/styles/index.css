@@ -41,34 +41,63 @@
 
 /* Light theme — editorial, clean, high-contrast */
 [data-theme='light'] {
-  --bg: #FAFAF7;              /* warm off-white */
-  --bg-alt: #F4F2EC;
+  --bg: #F5F2EB;              /* slightly deeper warm beige so cards stand out */
+  --bg-alt: #EDE9E0;
   --bg-card: #FFFFFF;
-  --bg-card-hover: #F8F6F0;
+  --bg-card-hover: #FFFDF8;
   --bg-elevated: #FFFFFF;
-  --text-1: #0A0A0B;          /* near-black for headlines */
-  --text-2: #2A2A2E;
-  --text-3: #5A5A62;
-  --text-4: #8A8A92;
-  --line: #E5E2DA;            /* warm light line */
-  --line-subtle: #EEEBE3;
-  --accent: #2B6EFF;           /* deeper blue — better contrast on white */
-  --accent-dim: #1E4BB8;
-  --accent-glow: #5C92FF;
-  --accent-soft: rgba(43, 110, 255, 0.08);
-  --accent-warm: #D97706;      /* darker amber for readability on white */
-  --accent-warm-dim: #B45309;
-  --accent-warm-glow: #F5A623;
-  --accent-warm-soft: rgba(217, 119, 6, 0.08);
-  --glow: rgba(43, 110, 255, 0.05);
-  --glow-strong: rgba(43, 110, 255, 0.12);
-  --live: #059669;
-  --noise-opacity: 0.015;
-  --surface-1: rgba(244, 242, 236, 0.7);
-  --surface-2: rgba(10, 10, 11, 0.025);
-  --input-bg: rgba(10, 10, 11, 0.03);
-  --hero-stat-bg: rgba(255, 255, 255, 0.85);
+  --text-1: #07070A;          /* near-black for headlines */
+  --text-2: #1F1F24;           /* strong body */
+  --text-3: #3E3E46;           /* darker body/muted — previously too faint on cream */
+  --text-4: #6B6B74;           /* meta labels still readable */
+  --line: #D4D0C6;             /* warm light line — stronger than before */
+  --line-subtle: #E5E1D7;
+  --accent: #1E56E8;           /* deeper blue — better contrast on white */
+  --accent-dim: #1740B2;
+  --accent-glow: #4A7EF0;
+  --accent-soft: rgba(30, 86, 232, 0.08);
+  --accent-warm: #B45309;      /* darker amber for readability on white */
+  --accent-warm-dim: #8C4108;
+  --accent-warm-glow: #D97706;
+  --accent-warm-soft: rgba(180, 83, 9, 0.08);
+  --glow: rgba(30, 86, 232, 0.05);
+  --glow-strong: rgba(30, 86, 232, 0.12);
+  --live: #047857;
+  --noise-opacity: 0.012;
+  --surface-1: rgba(237, 233, 224, 0.65);
+  --surface-2: rgba(7, 7, 10, 0.03);
+  --input-bg: #FFFFFF;
+  --hero-stat-bg: rgba(255, 255, 255, 0.92);
   color-scheme: light;
+}
+
+/* Cards get a proper shadow in light mode to separate from the beige bg */
+[data-theme='light'] .card-hover,
+[data-theme='light'] article[class*='rounded'] {
+  box-shadow: 0 1px 2px rgba(7, 7, 10, 0.04), 0 4px 16px rgba(7, 7, 10, 0.06);
+}
+[data-theme='light'] article[class*='rounded']:hover {
+  box-shadow: 0 2px 4px rgba(7, 7, 10, 0.05), 0 12px 32px rgba(30, 86, 232, 0.08);
+}
+
+/* Stronger borders on cards in light mode */
+[data-theme='light'] [style*="border"][style*="var(--line)"] {
+  border-color: #D4D0C6 !important;
+}
+
+/* Meta labels a touch darker in light mode */
+[data-theme='light'] .type-meta {
+  color: var(--text-3);
+}
+
+/* Process section step numbers — the huge "01 02 03 04" */
+[data-theme='light'] .font-display[class*='font-extralight'] {
+  color: #B8B2A3 !important;
+}
+
+/* Section shell divider visible on light bg */
+[data-theme='light'] .section-shell::before {
+  background: linear-gradient(90deg, transparent, #D4D0C6 20%, #D4D0C6 80%, transparent);
 }
 
 /* Smooth theme transitions */
@@ -191,10 +220,90 @@ button, a { -webkit-tap-highlight-color: transparent; }
   background-clip: text;
 }
 [data-theme='light'] .text-gradient-hero {
-  background: linear-gradient(135deg, #0A0A0B 0%, #2A2A2E 40%, #2B6EFF 100%);
+  background: linear-gradient(135deg, #07070A 0%, #1F1F24 45%, #1E56E8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Big number class (metrics) — needs explicit light override */
+[data-theme='light'] .big-number,
+[data-theme='light'] [class*='font-mega'],
+[data-theme='light'] [class*='text-mega'] {
+  color: #07070A;
+}
+
+/* Step numbers in Process / card indices — the faded decorative "01 02 03"
+ * shouldn't dissappear in light — use a warm beige that's still readable */
+[data-theme='light'] [style*="color: var(--text-4)"] {
+  color: #8A8680 !important;
+}
+
+/* Top ring/orbit in Hero — darken in light mode so it's visible */
+[data-theme='light'] .eclipse-ring,
+[data-theme='light'] .eclipse-ring::before,
+[data-theme='light'] .eclipse-ring::after {
+  border-color: rgba(30, 86, 232, 0.18) !important;
+  box-shadow: 0 0 40px rgba(30, 86, 232, 0.08) !important;
+}
+[data-theme='light'] .eclipse-core {
+  background: radial-gradient(circle, rgba(30, 86, 232, 0.12) 0%, rgba(30, 86, 232, 0.04) 40%, transparent 70%) !important;
+}
+
+/* Grid lines in Hero / sections — visible but subtle on cream */
+[data-theme='light'] [style*="linear-gradient(to bottom, transparent, var(--line-subtle)"] {
+  background: linear-gradient(to bottom, transparent, rgba(30, 86, 232, 0.08) 30%, rgba(30, 86, 232, 0.08) 70%, transparent) !important;
+}
+
+/* Tail/glow line utility */
+[data-theme='light'] .glow-line {
+  background: linear-gradient(90deg, transparent, rgba(30, 86, 232, 0.3), transparent);
+}
+
+/* Marquee / decorative text items */
+[data-theme='light'] .btn-sweep::after {
+  background: linear-gradient(90deg, transparent, rgba(30, 86, 232, 0.08), transparent);
+}
+
+/* Animated divider bar before section headings */
+[data-theme='light'] .animated-divider::before {
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+
+/* GlowButton in light mode — flip to solid accent-bg + white text for contrast */
+[data-theme='light'] a[class*='bg-[#6BA3FF]/[0.06]'],
+[data-theme='light'] button[class*='bg-[#6BA3FF]/[0.06]'] {
+  background: #1E56E8 !important;
+  border-color: #1E56E8 !important;
+  box-shadow: 0 4px 14px rgba(30, 86, 232, 0.2) !important;
+}
+[data-theme='light'] a[class*='bg-[#6BA3FF]/[0.06]']:hover,
+[data-theme='light'] button[class*='bg-[#6BA3FF]/[0.06]']:hover {
+  background: #1740B2 !important;
+  border-color: #1740B2 !important;
+  box-shadow: 0 8px 24px rgba(30, 86, 232, 0.3) !important;
+}
+[data-theme='light'] a[class*='bg-[#6BA3FF]/[0.06]'] span,
+[data-theme='light'] button[class*='bg-[#6BA3FF]/[0.06]'] span {
+  color: #FFFFFF !important;
+}
+[data-theme='light'] a[class*='bg-[#6BA3FF]/[0.06]'] span[class*='bg-[#6BA3FF]/50'],
+[data-theme='light'] button[class*='bg-[#6BA3FF]/[0.06]'] span[class*='bg-[#6BA3FF]/50'] {
+  background: rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Light-mode: subtle paper texture on bg for warmth */
+[data-theme='light'] body {
+  background-image:
+    radial-gradient(ellipse at 20% 10%, rgba(30, 86, 232, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 90%, rgba(180, 83, 9, 0.02) 0%, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* Mobile menu backdrop for light */
+[data-theme='light'] [class*='backdrop-blur-md'][style*='rgba(5,7,10'] {
+  background: rgba(245, 242, 235, 0.85) !important;
 }
 
 /* Light-theme gradient mesh — softer pastel washes instead of neon glows */
