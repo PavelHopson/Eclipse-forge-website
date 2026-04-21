@@ -306,6 +306,184 @@ button, a { -webkit-tap-highlight-color: transparent; }
   background: rgba(245, 242, 235, 0.85) !important;
 }
 
+/* ═══════════════ LIGHT THEME POLISH ═══════════════
+ * Decorative elements (particles, orbits, eclipse silhouettes, auras)
+ * were designed at ~3-15% opacity over a black bg — on cream that's
+ * invisible. Boost opacity + shift to our deeper accent (#1E56E8).
+ */
+
+/* Eclipse silhouettes — strengthen corona + disc details */
+[data-theme='light'] svg circle[fill^="url(#corona"],
+[data-theme='light'] svg circle[filter^="url(#blur"] {
+  opacity: 0.85;
+}
+
+/* SVG strokes originally rgba(107,163,255,*) — make them our deep blue */
+[data-theme='light'] svg [stroke="rgba(107,163,255,0.15)"],
+[data-theme='light'] svg [stroke="rgba(107,163,255,0.08)"],
+[data-theme='light'] svg [stroke="rgba(107,163,255,0.06)"],
+[data-theme='light'] svg [stroke="rgba(107,163,255,0.05)"],
+[data-theme='light'] svg [stroke="rgba(107,163,255,0.03)"],
+[data-theme='light'] svg [stroke="rgba(107,163,255,0.02)"] {
+  stroke: rgba(30, 86, 232, 0.25) !important;
+}
+[data-theme='light'] svg [fill="rgba(107,163,255,0.08)"],
+[data-theme='light'] svg [fill="rgba(107,163,255,0.06)"] {
+  fill: rgba(30, 86, 232, 0.12) !important;
+}
+[data-theme='light'] svg [stroke="rgba(245,166,35,0.4)"],
+[data-theme='light'] svg [stroke="rgba(245,166,35,0.3)"],
+[data-theme='light'] svg [stroke="rgba(245,166,35,0.1)"] {
+  stroke: rgba(180, 83, 9, 0.4) !important;
+}
+
+/* Cursor light glow — subtle blue wash instead of invisible */
+[data-theme='light'] .fixed[style*="rgba(107,163,255,0.04)"] {
+  background: radial-gradient(circle, rgba(30, 86, 232, 0.06) 0%, rgba(180, 83, 9, 0.02) 30%, transparent 60%) !important;
+}
+[data-theme='light'] .fixed[style*="rgba(107,163,255,0.3)"] {
+  background: rgba(30, 86, 232, 0.35) !important;
+  box-shadow: 0 0 20px rgba(30, 86, 232, 0.2) !important;
+}
+
+/* Fog & flare auras — strengthen */
+[data-theme='light'] div[style*="rgba(107,163,255,0.03)"] {
+  background: rgba(30, 86, 232, 0.04) !important;
+}
+[data-theme='light'] div[style*="rgba(107,163,255,0.025)"],
+[data-theme='light'] div[style*="rgba(107,163,255,0.02)"],
+[data-theme='light'] div[style*="rgba(107,163,255,0.015)"] {
+  background: rgba(30, 86, 232, 0.025) !important;
+}
+[data-theme='light'] div[style*="rgba(245,166,35,0.015)"] {
+  background: rgba(180, 83, 9, 0.025) !important;
+}
+
+/* Card hover/detail gradient overlays (Cases section corner-accent lines) */
+[data-theme='light'] div[style*="linear-gradient(90deg, transparent, rgba(107,163,255,0.3)"] {
+  background: linear-gradient(90deg, transparent, rgba(30, 86, 232, 0.5), transparent) !important;
+}
+
+/* Cases card internal gradient wash */
+[data-theme='light'] div[style*="linear-gradient(135deg, rgba(107,163,255,0.06)"] {
+  background: linear-gradient(135deg, rgba(30, 86, 232, 0.04) 0%, transparent 40%, transparent 60%, rgba(180, 83, 9, 0.04) 100%) !important;
+}
+
+/* Badge/pill backgrounds that used rgba(107,163,255,0.04/0.06) */
+[data-theme='light'] div[style*="rgba(107,163,255,0.04)"],
+[data-theme='light'] span[style*="rgba(107,163,255,0.04)"] {
+  background: rgba(30, 86, 232, 0.06) !important;
+}
+[data-theme='light'] [style*="rgba(107,163,255,0.06)"] {
+  background: rgba(30, 86, 232, 0.08) !important;
+}
+[data-theme='light'] [style*="rgba(107,163,255,0.08)"] {
+  background: rgba(30, 86, 232, 0.1) !important;
+}
+
+/* Eclipse ring borders still showed dark-theme opacities */
+[data-theme='light'] div[style*="rgba(107,163,255,0.15)"],
+[data-theme='light'] [class*="hover\\:border-\\[rgba\\(107"] {
+  border-color: rgba(30, 86, 232, 0.25) !important;
+}
+
+/* Metrics SolarCorona — SVG rays */
+[data-theme='light'] svg[width="500"] line[stroke="rgba(107,163,255,0.04)"] {
+  stroke: rgba(30, 86, 232, 0.18) !important;
+}
+
+/* Blurred background auras (huge blurred circles behind sections) */
+[data-theme='light'] div[class*="blur-[200px]"],
+[data-theme='light'] div[class*="blur-[250px]"],
+[data-theme='light'] div[class*="blur-[180px]"] {
+  opacity: 0.6;
+}
+
+/* Service icon box backgrounds were var(--accent-soft) — already adapts,
+ * but the icon stroke color inside needs to be our deeper blue */
+[data-theme='light'] div[style*="var(--accent-soft)"] svg[stroke="currentColor"] {
+  color: #1E56E8;
+}
+
+/* Status dot pulse (ONLINE) */
+[data-theme='light'] span[style*="background: var(--live)"] {
+  box-shadow: 0 0 8px rgba(4, 120, 87, 0.5);
+}
+
+/* Tech tag chips inside project cards — the faint-border chips */
+[data-theme='light'] [class*="border-[var(--line)]"][class*="bg-[var(--bg-card)]"] {
+  border-color: #D4D0C6 !important;
+  background: #F9F7F2 !important;
+}
+
+/* Section-shell gradient line at top of each section — stronger */
+[data-theme='light'] .section-shell::before {
+  height: 1.5px;
+  opacity: 0.8;
+}
+
+/* Scroll progress bar at very top */
+[data-theme='light'] .fixed.top-0[style*="linear-gradient(90deg, var(--accent)"] {
+  opacity: 1;
+}
+
+/* FAB/CTA "decorative" hover glow */
+[data-theme='light'] a[class*="hover:shadow-[0_0_20px_rgba(107,163,255"] {
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+[data-theme='light'] a[class*="hover:shadow-[0_0_20px_rgba(107,163,255"]:hover {
+  box-shadow: 0 0 24px rgba(30, 86, 232, 0.15) !important;
+}
+
+/* ── Particle field dots — make them our deep blue, more visible ── */
+[data-theme='light'] .absolute.rounded-full.pointer-events-none[style*="background: var(--accent)"] {
+  background: #1E56E8 !important;
+  box-shadow: 0 0 4px rgba(30, 86, 232, 0.4);
+}
+
+/* ── Constellation lines (SVG .stroke="var(--accent)") — darken */
+[data-theme='light'] svg line[stroke="var(--accent)"],
+[data-theme='light'] svg circle[fill="var(--accent)"] {
+  stroke: #1E56E8 !important;
+  fill: #1E56E8 !important;
+  opacity: 0.6;
+}
+
+/* Orbital rings — darker strokes */
+[data-theme='light'] svg circle[stroke="var(--accent)"][stroke-dasharray],
+[data-theme='light'] svg circle[stroke="var(--accent-warm)"][stroke-dasharray] {
+  opacity: 0.4;
+}
+[data-theme='light'] svg circle[stroke="var(--accent)"]:not([stroke-dasharray]),
+[data-theme='light'] svg circle[stroke="var(--accent-warm)"]:not([stroke-dasharray]) {
+  opacity: 0.9;
+}
+
+/* Process step numbers — bigger contrast needed */
+[data-theme='light'] span[class*="font-display"][class*="text-5xl"][class*="font-extralight"],
+[data-theme='light'] span[class*="font-display"][class*="text-6xl"][class*="font-extralight"] {
+  color: #A19D90 !important;
+}
+
+/* Hero floating stat cards — darker text */
+[data-theme='light'] [class*="border"][style*="var(--hero-stat-bg)"] span[style*="color: var(--text-1)"] {
+  color: #07070A !important;
+}
+[data-theme='light'] [class*="border"][style*="var(--hero-stat-bg)"] span[style*="color: var(--text-4)"] {
+  color: #6B6B74 !important;
+}
+
+/* Eclipse divider between sections — more visible */
+[data-theme='light'] .relative.flex.items-center.justify-center.py-8 > div[class*="absolute inset-x-0"] {
+  background: linear-gradient(90deg, transparent, #D4D0C6 20%, #D4D0C6 40%, transparent 50%, #D4D0C6 60%, #D4D0C6 80%, transparent) !important;
+}
+
+/* Footer background subtle */
+[data-theme='light'] footer {
+  background: rgba(245, 242, 235, 0.6);
+  border-top-color: #D4D0C6;
+}
+
 /* Light-theme gradient mesh — softer pastel washes instead of neon glows */
 [data-theme='light'] .gradient-mesh {
   background:
