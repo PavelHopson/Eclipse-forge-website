@@ -36,9 +36,9 @@ const heroCopy: Record<
 > = {
   ru: {
     eyebrow: 'Eclipse Forge / AI systems engineering',
-    title: 'Строю AI-системы,',
-    titleAccent: 'которые работают вместо ручной рутины.',
-    description: 'Автоматизация, SaaS и AI-операторы для задач, где ручной процесс уже стал узким местом.',
+    title: 'Строю',
+    titleAccent: 'AI-системы.',
+    description: 'Вместо ручной рутины: автоматизация, SaaS и AI-операторы для задач, где процесс уже стал узким местом.',
     primaryCta: 'Обсудить задачу',
     secondaryCta: 'Смотреть системы',
     channelStatus: 'канал запроса открыт',
@@ -53,9 +53,9 @@ const heroCopy: Record<
   },
   en: {
     eyebrow: 'Eclipse Forge / AI systems engineering',
-    title: 'I build AI systems',
-    titleAccent: 'that replace manual routine.',
-    description: 'Automation, SaaS and AI operators for work where manual process has become the bottleneck.',
+    title: 'I build',
+    titleAccent: 'AI systems.',
+    description: 'Instead of manual routine: automation, SaaS and AI operators for work where process has become the bottleneck.',
     primaryCta: 'Discuss your task',
     secondaryCta: 'Explore systems',
     channelStatus: 'request channel open',
