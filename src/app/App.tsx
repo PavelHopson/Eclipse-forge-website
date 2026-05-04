@@ -5,10 +5,12 @@ import { CasesSection } from '../components/sections/CasesSection';
 import { CtaSection } from '../components/sections/CtaSection';
 import { FounderSection } from '../components/sections/FounderSection';
 import { HeroSection } from '../components/sections/HeroSection';
+import { HowItWorksSection } from '../components/sections/HowItWorksSection';
 import { MetricsSection } from '../components/sections/MetricsSection';
 import { ProcessSection } from '../components/sections/ProcessSection';
 import { ServicesSection } from '../components/sections/ServicesSection';
 import { SystemsEcosystemSection } from '../components/sections/SystemsEcosystemSection';
+import { SystemsNotSitesSection } from '../components/sections/SystemsNotSitesSection';
 import { CursorLight } from '../components/ui/CursorLight';
 import { ConstellationField, EclipseDivider, EclipseSilhouette, ParticleField } from '../components/ui/EclipseVisuals';
 import { contactDetails } from '../data/content';
@@ -55,11 +57,13 @@ export function App() {
 
       <main className="relative z-10">
         <HeroSection />
+        <SystemsNotSitesSection />
         <EclipseDivider />
         <AboutSection />
         <CasesSection />
         <SystemsEcosystemSection />
         <EclipseDivider />
+        <HowItWorksSection />
         <ServicesSection />
         <ProcessSection />
         <EclipseDivider />

@@ -807,9 +807,9 @@ const processStepDefinitions: LocalizedProcessStepDefinition[] = [
 ];
 
 const metricDefinitions: LocalizedMetricDefinition[] = [
-  { value: '958+', label: localized('тестов в флагманских системах', 'tests across flagship systems') },
-  { value: '22K', label: localized('строк Rust в движке извлечения', 'Rust lines in the extraction engine') },
-  { value: '6', label: localized('флагманских систем на сайте', 'flagship systems positioned on this site') },
+  { value: '6', label: localized('production-систем в работе 24/7', 'production systems running 24/7') },
+  { value: '958+', label: localized('автоматических проверок в релизе', 'automated checks per release') },
+  { value: '22K', label: localized('строк Rust в core-движке извлечения', 'Rust lines in core extraction engine') },
 ];
 
 const founderProfileDefinition: LocalizedFounderProfileDefinition = {
@@ -817,12 +817,12 @@ const founderProfileDefinition: LocalizedFounderProfileDefinition = {
   title: localized('Кто стоит за системой', 'Who stands behind the system'),
   summary: localized(
     [
-      'Павел — разработчик и основатель Eclipse Forge. Фокус здесь не на коде ради кода, а на системах, которые умеют наблюдать, принимать решения, автоматизировать и удерживать контроль, когда процесс становится сложным.',
-      'Работа лежит на стыке product UX, internal tooling, дизайна AI-runtime и операционной логики. Интерфейс важен, но настоящая ценность находится в контуре за ним: что система отслеживает, как реагирует и где замыкает цикл.',
+      'Павел Хопсон — основатель Eclipse Forge. Я создаю системы, которые заменяют ручную работу и становятся частью бизнеса. Не интерфейсы, не «сделать сайт» — контуры исполнения, которые работают сами.',
+      'Работа лежит на стыке product UX, AI-runtime и операционной логики. Видимый слой важен, но настоящая ценность — в системе за ним: что она отслеживает, как принимает решения и где замыкает цикл без человека в петле.',
     ],
     [
-      'Pavel is the developer and founder behind Eclipse Forge. The focus is not “code for code’s sake”, but systems that can observe, decide, automate and keep control when a process becomes complex.',
-      'The work sits where product UX, internal tooling, AI runtime design and operational logic meet. The interface matters, but the real value is in the contour behind it: what the system tracks, how it reacts and where it closes the loop.',
+      'Pavel Hopson — founder of Eclipse Forge. I build systems that replace manual work and become part of the business. Not interfaces, not "make me a site" — execution contours that run themselves.',
+      'The work sits where product UX, AI runtime and operational logic meet. The visible layer matters, but the real value is in the system behind it: what it observes, how it decides, and where it closes the loop without a human in it.',
     ],
   ),
   pillars: localized(
@@ -857,28 +857,22 @@ const founderProfileDefinition: LocalizedFounderProfileDefinition = {
 
 const contactPromptDefinitions: LocalizedContactPromptDefinition[] = [
   {
-    label: 'manual_load',
-    prompt: localized('Что вы до сих пор делаете вручную?', 'What are you still doing manually?'),
+    label: 'name',
+    prompt: localized('Как к вам обращаться?', 'Your name'),
+    placeholder: localized('Имя или компания', 'Name or company'),
+  },
+  {
+    label: 'task_description',
+    prompt: localized('Опишите задачу', 'Describe the task'),
     placeholder: localized(
-      'Например: распределяете лиды, проверяете данные, переписываете отчёты, координируете запросы...',
-      'For example: routing leads, checking data, rewriting reports, coordinating requests...',
+      'Что вы делаете вручную, какой результат должна выдавать система, где сейчас теряется время или контроль...',
+      'What you do manually, what the system should produce, where time or control is leaking now...',
     ),
   },
   {
-    label: 'target_state',
-    prompt: localized('Какой результат должна выдавать система?', 'What result should the system produce?'),
-    placeholder: localized(
-      'Например: классифицировать запросы, запускать действия, собирать брифы, отслеживать аномалии...',
-      'For example: classify requests, trigger actions, generate briefs, monitor anomalies...',
-    ),
-  },
-  {
-    label: 'control_gap',
-    prompt: localized('Где сейчас теряется время, деньги или контроль?', 'Where are time, money or control leaking now?'),
-    placeholder: localized(
-      'Например: согласования стопорятся, информация теряется, handoff-ы ломаются, данные приходят слишком поздно...',
-      'For example: approvals stall, information gets lost, handoffs fail, data arrives too late...',
-    ),
+    label: 'contact_channel',
+    prompt: localized('Telegram или email для связи', 'Telegram or email to reach you'),
+    placeholder: localized('@username или you@domain.com', '@username or you@domain.com'),
   },
 ];
 

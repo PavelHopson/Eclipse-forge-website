@@ -36,10 +36,10 @@ type CtaCopy = {
 const ctaCopy: Record<Locale, CtaCopy> = {
   ru: {
     eyebrow: 'Контактная консоль',
-    title: 'Принесите ручной хаос.',
-    titleAccent: 'Уйдите с ясным системным маршрутом.',
+    title: 'Опишите задачу.',
+    titleAccent: 'Разберём и превратим в систему.',
     description:
-      'Заполните консоль своими словами. Этот пакет нужен, чтобы первый разговор стал точным быстро: что вы делаете руками, какой результат должна выдавать система и где сейчас теряется контроль.',
+      'Заполните консоль своими словами. Имя, задача, канал связи — этого достаточно, чтобы первый разговор стал точным быстро. Дальше я предложу маршрут.',
     requestChannel: 'Канал запроса',
     responseWindow: 'Окно ответа',
     responseTime: 'Ответ в течение 24 часов',
@@ -65,10 +65,10 @@ const ctaCopy: Record<Locale, CtaCopy> = {
   },
   en: {
     eyebrow: 'Contact console',
-    title: 'Bring the manual chaos.',
-    titleAccent: 'Leave with a clearer system path.',
+    title: 'Describe the task.',
+    titleAccent: "We'll turn it into a system.",
     description:
-      'Fill the console in your own words. The packet is designed to make the first conversation precise fast: what you do manually, what the system should produce and where control is leaking now.',
+      'Fill the console in your own words. Name, task, contact channel — that is enough to make the first conversation precise. Then I propose the path.',
     requestChannel: 'Request channel',
     responseWindow: 'Response window',
     responseTime: 'Reply within 24 hours',

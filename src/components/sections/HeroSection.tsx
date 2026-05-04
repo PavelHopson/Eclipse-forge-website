@@ -35,14 +35,14 @@ const heroCopy: Record<
   }
 > = {
   ru: {
-    eyebrow: 'Eclipse Forge / системы > интерфейсы',
-    title: 'Строим системы, которые держат',
-    titleAccent: 'контроль в движении.',
+    eyebrow: 'Eclipse Forge / AI systems engineering',
+    title: 'Строю AI-системы,',
+    titleAccent: 'которые работают.',
     description:
-      'Eclipse Forge — это место, где AI-операторы, автоматизация, SaaS-продукты и внутренние платформы проектируются как рабочие системы. Интерфейс здесь только фронтовый слой. Главная работа живёт в маршрутизации, состоянии, решениях и циклах исполнения за ним.',
-    primaryCta: 'Войти в систему',
-    secondaryCta: 'Смотреть кейсы',
-    channelStatus: 'канал сложных задач открыт',
+      'Системы, которые заменяют ручной труд, принимают решения и доводят процессы до результата. Не интерфейс. Система.',
+    primaryCta: 'Обсудить задачу',
+    secondaryCta: 'Смотреть системы',
+    channelStatus: 'канал запроса открыт',
     fallbackTitle: 'слот портрета активен',
     fallbackText: 'Положи `founder-portrait.png` в `public/images/projects`, чтобы заменить fallback-визуал.',
     operatorLabel: 'оператор',
@@ -53,14 +53,14 @@ const heroCopy: Record<
     plateFallback: 'Eclipse Forge',
   },
   en: {
-    eyebrow: 'Eclipse Forge / systems > interfaces',
-    title: 'Build systems that keep',
-    titleAccent: 'control in motion.',
+    eyebrow: 'Eclipse Forge / AI systems engineering',
+    title: 'I build AI systems',
+    titleAccent: 'that run themselves.',
     description:
-      'Eclipse Forge is where AI operators, automation, SaaS products and internal platforms are designed as working systems. The interface is only the front layer. The real work lives in the routing, state, decisions and execution loops behind it.',
-    primaryCta: 'Enter the system',
-    secondaryCta: 'Explore cases',
-    channelStatus: 'complex build channel open',
+      'Systems that replace manual work, make decisions and drive processes to result. Not an interface. A system.',
+    primaryCta: 'Discuss your task',
+    secondaryCta: 'Explore systems',
+    channelStatus: 'request channel open',
     fallbackTitle: 'portrait slot active',
     fallbackText: 'Drop `founder-portrait.png` into `public/images/projects` to replace the fallback visual.',
     operatorLabel: 'operator',

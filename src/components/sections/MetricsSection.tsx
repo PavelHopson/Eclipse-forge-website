@@ -74,19 +74,21 @@ function ProgressRing({ value, max, size = 80, strokeWidth = 3 }: { value: numbe
 }
 
 const metricConfigs = [
+  { numericValue: 6, max: 8, suffix: '', accent: false },
   { numericValue: 958, max: 1000, suffix: '+', accent: true },
   { numericValue: 22, max: 30, suffix: 'K', accent: false },
-  { numericValue: 6, max: 8, suffix: '', accent: false },
 ];
 
-const metricsCopy: Record<Locale, { eyebrow: string; title: string }> = {
+const metricsCopy: Record<Locale, { eyebrow: string; title: string; subtitle: string }> = {
   ru: {
-    eyebrow: 'Метрики',
-    title: 'Числа, которые показывают инженерный вес.',
+    eyebrow: 'Системы, которые работают',
+    title: 'Цифры, за которыми стоит исполнение.',
+    subtitle: '24/7 процессы, проверки в релизе, инженерное ядро. Эти числа не маркетинг — это рабочая телеметрия.',
   },
   en: {
-    eyebrow: 'Metrics',
-    title: 'Numbers that reveal engineering weight.',
+    eyebrow: 'Systems that run',
+    title: 'Numbers backed by execution.',
+    subtitle: '24/7 processes, release checks, engineering core. These are not marketing numbers — they are working telemetry.',
   },
 };
 
@@ -127,9 +129,16 @@ export function MetricsSection() {
         <motion.p variants={revealUp} className="type-meta mb-6 text-center" style={{ color: 'var(--accent)' }}>
           {copy.eyebrow}
         </motion.p>
-        <motion.h2 variants={revealUp} className="type-display mb-16 text-center text-[clamp(1.8rem,3.5vw,3rem)] lg:mb-20">
+        <motion.h2 variants={revealUp} className="type-display mb-6 text-center text-[clamp(1.8rem,3.5vw,3rem)]">
           <span className="text-gradient">{copy.title}</span>
         </motion.h2>
+        <motion.p
+          variants={revealUp}
+          className="mx-auto mb-16 max-w-2xl text-center text-[14px] leading-relaxed sm:text-[15px] lg:mb-20"
+          style={{ color: 'var(--text-3)' }}
+        >
+          {copy.subtitle}
+        </motion.p>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:gap-8">
           {metrics.map((metric, index) => {
