@@ -157,14 +157,16 @@ function EcosystemCard({
                     {demoLabel}
                   </a>
                 ) : null}
-                <a
-                  href={project.repoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="systems-link-secondary inline-flex items-center gap-2 rounded-full border px-5 py-3 text-[12px] font-display transition-all duration-400"
-                >
-                  {githubLabel}
-                </a>
+                {project.repoUrl ? (
+                  <a
+                    href={project.repoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="systems-link-secondary inline-flex items-center gap-2 rounded-full border px-5 py-3 text-[12px] font-display transition-all duration-400"
+                  >
+                    {githubLabel}
+                  </a>
+                ) : null}
               </div>
             </div>
           </div>

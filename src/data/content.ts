@@ -19,7 +19,7 @@ export interface Project {
   tags: string[];
   ecosystemTags?: string[];
   liveUrl?: string;
-  repoUrl: string;
+  repoUrl?: string;
   image?: ImageAsset;
 }
 
@@ -107,7 +107,7 @@ interface LocalizedProjectDefinition {
   tags: Localized<string[]>;
   ecosystemTags?: Localized<string[]>;
   liveUrl?: string;
-  repoUrl: string;
+  repoUrl?: string;
   image?: ImageAsset;
 }
 
@@ -506,7 +506,6 @@ const portfolioCollectionDefinitions: LocalizedProjectCollectionDefinition[] = [
         ),
         tags: localized(['desktop AI', 'OCR', 'live audio'], ['desktop AI', 'OCR', 'live audio']),
         liveUrl: 'https://interviewforge-3pf.pages.dev',
-        repoUrl: 'https://github.com/PavelHopson/InterviewForge',
       },
       {
         title: 'Shotforge',

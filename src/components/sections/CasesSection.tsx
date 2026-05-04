@@ -269,14 +269,16 @@ function ProjectCard({
                       {copy.demoLabel}
                     </a>
                   ) : null}
-                  <a
-                    href={project.repoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border px-5 py-3 text-[12px] font-display transition-all duration-400 case-link-secondary"
-                  >
-                    {copy.githubLabel}
-                  </a>
+                  {project.repoUrl ? (
+                    <a
+                      href={project.repoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full border px-5 py-3 text-[12px] font-display transition-all duration-400 case-link-secondary"
+                    >
+                      {copy.githubLabel}
+                    </a>
+                  ) : null}
                 </div>
               </div>
             </div>
