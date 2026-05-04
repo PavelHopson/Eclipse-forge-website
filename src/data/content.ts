@@ -202,6 +202,11 @@ export const brandAssets = {
     sources: ['/images/projects/eclipse-forge-cover.png'],
     objectPosition: 'center',
   },
+  brandLogo: {
+    alt: 'Eclipse Forge logo',
+    sources: ['/images/projects/logo.png'],
+    objectPosition: 'center',
+  },
   founderAvatar: {
     alt: 'Founder portrait of Pavel Hopson',
     sources: founderSources,

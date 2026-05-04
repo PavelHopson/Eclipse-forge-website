@@ -161,13 +161,13 @@ export function FounderSection() {
             </div>
 
             <div className="grid gap-4 sm:grid-cols-[1.05fr_0.95fr]">
-              <div className="overflow-hidden rounded-[1.7rem] border founder-panel">
+              <div className="flex items-center justify-center overflow-hidden rounded-[1.7rem] border founder-panel" style={{ background: '#000' }}>
                 <AssetImage
-                  alt={brandAssets.heroPlate.alt}
-                  sources={brandAssets.heroPlate.sources}
+                  alt={brandAssets.brandLogo.alt}
+                  sources={brandAssets.brandLogo.sources}
                   loading="lazy"
-                  className="h-full min-h-[180px] w-full object-cover"
-                  style={{ objectPosition: brandAssets.heroPlate.objectPosition }}
+                  className="h-full max-h-[220px] w-full object-contain p-6"
+                  style={{ objectPosition: brandAssets.brandLogo.objectPosition }}
                   fallback={
                     <div className="flex min-h-[180px] items-end bg-[radial-gradient(circle_at_top,rgba(117,140,255,0.16),transparent_58%),linear-gradient(180deg,#0c1117_0%,#07090d_100%)] p-6">
                       <p className="type-meta" style={{ color: 'var(--text-3)' }}>
