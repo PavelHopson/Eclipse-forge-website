@@ -13,17 +13,37 @@ import { SystemsEcosystemSection } from '../components/sections/SystemsEcosystem
 import { SystemsNotSitesSection } from '../components/sections/SystemsNotSitesSection';
 import { CursorLight } from '../components/ui/CursorLight';
 import { ConstellationField, EclipseDivider, EclipseSilhouette, ParticleField } from '../components/ui/EclipseVisuals';
+import { BroadcastIcon, GitHubIcon, InstagramIcon, TelegramIcon } from '../components/ui/SocialIcons';
 import { contactDetails } from '../data/content';
 import { useLocale, type Locale } from '../lib/locale';
 
-const footerCopy: Record<Locale, { description: string; location: string }> = {
+const footerCopy: Record<
+  Locale,
+  {
+    description: string;
+    location: string;
+    socialLabels: { telegram: string; channel: string; github: string; instagram: string };
+  }
+> = {
   ru: {
     description: 'Системы для контроля, автоматизации и AI-исполнения. Для продуктов, которым нужен не только фронтовый слой.',
     location: 'Калининград',
+    socialLabels: {
+      telegram: 'Telegram',
+      channel: 'Канал',
+      github: 'GitHub',
+      instagram: 'Instagram',
+    },
   },
   en: {
     description: 'Systems for control, automation and AI execution. Built for products that need more than a front layer.',
     location: 'Kaliningrad',
+    socialLabels: {
+      telegram: 'Telegram',
+      channel: 'Channel',
+      github: 'GitHub',
+      instagram: 'Instagram',
+    },
   },
 };
 
@@ -32,6 +52,12 @@ export function App() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
   const { locale } = useLocale();
   const copy = footerCopy[locale];
+  const socialLinks = [
+    { label: copy.socialLabels.telegram, href: contactDetails.telegramDmUrl, Icon: TelegramIcon },
+    { label: copy.socialLabels.channel, href: contactDetails.telegramChannelUrl, Icon: BroadcastIcon },
+    { label: copy.socialLabels.github, href: contactDetails.githubUrl, Icon: GitHubIcon },
+    { label: copy.socialLabels.instagram, href: contactDetails.instagramUrl, Icon: InstagramIcon },
+  ];
 
   return (
     <div className="relative min-h-screen" style={{ background: 'var(--bg)', color: 'var(--text-1)' }}>
@@ -92,21 +118,18 @@ export function App() {
             </div>
 
             <div className="flex items-center gap-4">
-              {[
-                { label: 'TG', href: contactDetails.telegramDmUrl },
-                { label: 'CH', href: contactDetails.telegramChannelUrl },
-                { label: 'GH', href: contactDetails.githubUrl },
-                { label: 'IG', href: contactDetails.instagramUrl },
-              ].map((item) => (
+              {socialLinks.map((item) => (
                 <a
                   key={item.label}
                   href={item.href}
                   target="_blank"
                   rel="noreferrer"
+                  aria-label={item.label}
+                  title={item.label}
                   className="flex h-10 w-10 items-center justify-center rounded-full border text-[10px] font-display font-medium uppercase tracking-[0.1em] transition-all duration-400 hover:border-[var(--accent-dim)] hover:text-[var(--accent)] hover:shadow-[0_0_20px_rgba(107,163,255,0.08)]"
                   style={{ borderColor: 'var(--line)', color: 'var(--text-4)' }}
                 >
-                  {item.label}
+                  <item.Icon size={16} />
                 </a>
               ))}
             </div>

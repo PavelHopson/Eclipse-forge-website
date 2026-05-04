@@ -4,6 +4,21 @@ import { contactDetails, useSiteContent } from '../../data/content';
 import { revealUp, stagger, viewport } from '../../lib/animation';
 import { useLocale, type Locale } from '../../lib/locale';
 import { ConstellationField, EclipseSilhouette, OrbitalRing, ParticleField } from '../ui/EclipseVisuals';
+import {
+  ArrowUpRightIcon,
+  BroadcastIcon,
+  GitHubIcon,
+  InstagramIcon,
+  MailIcon,
+  TelegramIcon,
+} from '../ui/SocialIcons';
+
+type FormField = {
+  key: 'name' | 'task' | 'contact';
+  label: string;
+  placeholder: string;
+  multiline?: boolean;
+};
 
 type CtaCopy = {
   eyebrow: string;
@@ -21,7 +36,6 @@ type CtaCopy = {
   signalPacket: string;
   awaitingInput: string;
   readyLabel: string;
-  copiedLabel: string;
   signalCopiedLabel: string;
   emailCardLabel: string;
   channelCardLabel: string;
@@ -31,6 +45,8 @@ type CtaCopy = {
   whyText: string;
   packetHeader: string;
   emptyAnswer: string;
+  telegramLabel: string;
+  fields: FormField[];
 };
 
 const ctaCopy: Record<Locale, CtaCopy> = {
@@ -39,19 +55,18 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     title: 'Опишите задачу.',
     titleAccent: 'Разберём и превратим в систему.',
     description:
-      'Заполните консоль своими словами. Имя, задача, канал связи — этого достаточно, чтобы первый разговор стал точным быстро. Дальше я предложу маршрут.',
+      'Короткий сигнал вместо долгого созвона. Имя, задача и канал связи уже достаточно, чтобы я быстро понял контур и предложил рабочую системную модель.',
     requestChannel: 'Канал запроса',
     responseWindow: 'Окно ответа',
     responseTime: 'Ответ в течение 24 часов',
     cityTimezone: 'Калининград · UTC+2',
     intakeSignal: 'Входящий сигнал',
     intakeStatusLabel: 'статус',
-    consoleLabel: 'eclipse://operator-console',
-    liveIntake: 'live intake',
+    consoleLabel: 'eclipse://intake-console',
+    liveIntake: 'живой intake',
     signalPacket: 'Сигнальный пакет',
-    awaitingInput: 'жду ввода',
-    readyLabel: 'готовности',
-    copiedLabel: 'Сигнал скопирован',
+    awaitingInput: 'жду ввод',
+    readyLabel: 'готово',
     signalCopiedLabel: 'Сигнал скопирован',
     emailCardLabel: 'Email',
     channelCardLabel: 'Канал',
@@ -59,28 +74,42 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     instagramCardLabel: 'Instagram',
     whyTitle: 'Почему так',
     whyText:
-      'Первый бриф — это место, где обычно теряется точность. Эта консоль делает первый сигнал структурированным до того, как начнётся разговор.',
+      'Первый бриф обычно теряет точность в общих словах. Этот контур собирает минимальный, но достаточный сигнал, чтобы разговор сразу пошёл в сторону системы, а не обсуждения экранов.',
     packetHeader: 'Eclipse Forge / Сигнал запроса',
-    emptyAnswer: '...',
+    emptyAnswer: 'не заполнено',
+    telegramLabel: 'Открыть Telegram',
+    fields: [
+      { key: 'name', label: 'Имя', placeholder: 'Как к вам обращаться?' },
+      {
+        key: 'task',
+        label: 'Что нужно превратить в систему?',
+        placeholder: 'Опишите процесс, ручную рутину, узкое место или результат, который хотите получить...',
+        multiline: true,
+      },
+      {
+        key: 'contact',
+        label: 'Telegram или email',
+        placeholder: '@username или email@example.com',
+      },
+    ],
   },
   en: {
     eyebrow: 'Contact console',
     title: 'Describe the task.',
     titleAccent: "We'll turn it into a system.",
     description:
-      'Fill the console in your own words. Name, task, contact channel — that is enough to make the first conversation precise. Then I propose the path.',
+      'A short signal instead of a long intro call. Name, task and contact channel are already enough for me to understand the contour and propose a working system model.',
     requestChannel: 'Request channel',
     responseWindow: 'Response window',
     responseTime: 'Reply within 24 hours',
     cityTimezone: 'Kaliningrad · UTC+2',
     intakeSignal: 'Intake signal',
     intakeStatusLabel: 'status',
-    consoleLabel: 'eclipse://operator-console',
+    consoleLabel: 'eclipse://intake-console',
     liveIntake: 'live intake',
     signalPacket: 'Signal packet',
     awaitingInput: 'awaiting input',
     readyLabel: 'ready',
-    copiedLabel: 'Signal copied',
     signalCopiedLabel: 'Signal copied',
     emailCardLabel: 'Email',
     channelCardLabel: 'Channel',
@@ -88,42 +117,61 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     instagramCardLabel: 'Instagram',
     whyTitle: 'Why this flow',
     whyText:
-      'The first brief is usually where precision is lost. This console makes the initial signal structured before the conversation starts.',
+      'The first brief usually loses precision in general language. This contour captures the smallest useful signal so the conversation starts with a system, not a surface.',
     packetHeader: 'Eclipse Forge / Request Signal',
-    emptyAnswer: '...',
+    emptyAnswer: 'not filled',
+    telegramLabel: 'Open Telegram',
+    fields: [
+      { key: 'name', label: 'Name', placeholder: 'How should I address you?' },
+      {
+        key: 'task',
+        label: 'What needs to become a system?',
+        placeholder: 'Describe the process, manual routine, bottleneck or the result you want to achieve...',
+        multiline: true,
+      },
+      {
+        key: 'contact',
+        label: 'Telegram or email',
+        placeholder: '@username or email@example.com',
+      },
+    ],
   },
+};
+
+type FormState = {
+  name: string;
+  task: string;
+  contact: string;
+};
+
+const emptyForm: FormState = {
+  name: '',
+  task: '',
+  contact: '',
 };
 
 export function CtaSection() {
   const { locale } = useLocale();
   const copy = ctaCopy[locale];
-  const { contactPrompts, contactFlow } = useSiteContent();
+  const { contactFlow } = useSiteContent();
 
-  const [answers, setAnswers] = useState<string[]>(() => contactPrompts.map(() => ''));
+  const [form, setForm] = useState<FormState>(emptyForm);
   const [copied, setCopied] = useState(false);
 
-  const normalizedAnswers = useMemo(() => {
-    if (answers.length === contactPrompts.length) return answers;
-    const next = contactPrompts.map((_, index) => answers[index] ?? '');
-    return next;
-  }, [answers, contactPrompts]);
+  const completion = Math.round((Object.values(form).filter((value) => value.trim().length > 0).length / Object.keys(form).length) * 100);
 
-  const signalPacket = [
-    copy.packetHeader,
-    '',
-    ...contactPrompts.map((item, index) => `${index + 1}. ${item.prompt}\n${normalizedAnswers[index] || copy.emptyAnswer}`),
-  ].join('\n\n');
-
-  const completion = contactPrompts.length
-    ? Math.round((normalizedAnswers.filter((value) => value.trim().length > 0).length / contactPrompts.length) * 100)
-    : 0;
+  const signalPacket = useMemo(() => {
+    return [
+      copy.packetHeader,
+      '',
+      ...copy.fields.map((field, index) => `${index + 1}. ${field.label}\n${form[field.key].trim() || copy.emptyAnswer}`),
+    ].join('\n\n');
+  }, [copy.emptyAnswer, copy.fields, copy.packetHeader, form]);
 
   const emailHref = `mailto:${contactDetails.email}?subject=${encodeURIComponent('Eclipse Forge request')}&body=${encodeURIComponent(signalPacket)}`;
 
-  const handleAnswerChange = (index: number, value: string) => {
-    const next = [...normalizedAnswers];
-    next[index] = value;
-    setAnswers(next);
+  const handleChange = (key: keyof FormState, value: string) => {
+    setForm((current) => ({ ...current, [key]: value }));
   };
 
   const handleCopy = async () => {
@@ -137,7 +185,7 @@ export function CtaSection() {
   };
 
   const handleTelegramOpen = async () => {
-    if (normalizedAnswers.some((item) => item.trim())) {
+    if (Object.values(form).some((item) => item.trim())) {
       await handleCopy();
     }
 
@@ -145,10 +193,10 @@ export function CtaSection() {
   };
 
   const linkCards = [
-    { label: copy.emailCardLabel, value: contactDetails.email, href: emailHref, external: false },
-    { label: copy.channelCardLabel, value: contactDetails.telegramChannel, href: contactDetails.telegramChannelUrl, external: true },
-    { label: copy.githubCardLabel, value: contactDetails.githubHandle, href: contactDetails.githubUrl, external: true },
-    { label: copy.instagramCardLabel, value: contactDetails.instagramHandle, href: contactDetails.instagramUrl, external: true },
+    { label: copy.emailCardLabel, value: contactDetails.email, href: emailHref, external: false, Icon: MailIcon },
+    { label: copy.channelCardLabel, value: contactDetails.telegramChannel, href: contactDetails.telegramChannelUrl, external: true, Icon: BroadcastIcon },
+    { label: copy.githubCardLabel, value: contactDetails.githubHandle, href: contactDetails.githubUrl, external: true, Icon: GitHubIcon },
+    { label: copy.instagramCardLabel, value: contactDetails.instagramHandle, href: contactDetails.instagramUrl, external: true, Icon: InstagramIcon },
   ];
 
   return (
@@ -206,10 +254,16 @@ export function CtaSection() {
                 onClick={handleTelegramOpen}
                 className="mt-6 w-full rounded-[1.7rem] border px-5 py-5 text-left transition-all duration-500 contact-primary-link"
               >
-                <span className="block font-display text-xl tracking-tight" style={{ color: 'var(--text-1)' }}>
-                  Telegram
+                <span className="flex items-center gap-3 font-display text-xl tracking-tight" style={{ color: 'var(--text-1)' }}>
+                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border" style={{ borderColor: 'rgba(107,163,255,0.18)' }}>
+                    <TelegramIcon size={18} />
+                  </span>
+                  {copy.telegramLabel}
+                  <span className="ml-auto inline-flex items-center justify-center rounded-full border p-2" style={{ borderColor: 'rgba(255,255,255,0.08)' }}>
+                    <ArrowUpRightIcon size={14} />
+                  </span>
                 </span>
-                <span className="mt-1 block text-[13px]" style={{ color: 'var(--text-3)' }}>
+                <span className="mt-3 block text-[13px]" style={{ color: 'var(--text-3)' }}>
                   {contactDetails.telegramDm}
                 </span>
               </button>
@@ -223,10 +277,15 @@ export function CtaSection() {
                     rel={item.external ? 'noreferrer' : undefined}
                     className="rounded-2xl border px-4 py-4 transition-all duration-300 contact-link-card"
                   >
-                    <p className="text-[10px] uppercase tracking-[0.22em]" style={{ color: 'var(--text-4)' }}>
-                      {item.label}
-                    </p>
-                    <p className="mt-2 text-sm" style={{ color: 'var(--text-2)' }}>
+                    <div className="flex items-center gap-2">
+                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border" style={{ borderColor: 'rgba(107,163,255,0.14)' }}>
+                        <item.Icon size={15} />
+                      </span>
+                      <p className="text-[10px] uppercase tracking-[0.22em]" style={{ color: 'var(--text-4)' }}>
+                        {item.label}
+                      </p>
+                    </div>
+                    <p className="mt-3 text-sm" style={{ color: 'var(--text-2)' }}>
                       {item.value}
                     </p>
                   </a>
@@ -281,7 +340,7 @@ export function CtaSection() {
               </span>
             </div>
 
-            <div className="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="grid gap-0 lg:grid-cols-[1.08fr_0.92fr]">
               <div className="border-b p-5 sm:p-7 lg:border-b-0 lg:border-r contact-console-body" style={{ borderColor: 'var(--line)' }}>
                 <div className="mb-5 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 contact-chip">
                   <span className="text-[10px] uppercase tracking-[0.22em]" style={{ color: 'var(--text-4)' }}>
@@ -291,24 +350,39 @@ export function CtaSection() {
                 </div>
 
                 <div className="space-y-5">
-                  {contactPrompts.map((item, index) => (
-                    <div key={item.label} className="rounded-[1.5rem] border p-4 sm:p-5 contact-console-card">
+                  {copy.fields.map((field) => (
+                    <div key={field.key} className="rounded-[1.5rem] border p-4 sm:p-5 contact-console-card">
                       <p className="mb-3 text-[11px] uppercase tracking-[0.22em]" style={{ color: 'var(--accent)' }}>
-                        &gt; {item.prompt}
+                        &gt; {field.label}
                       </p>
-                      <textarea
-                        value={normalizedAnswers[index] ?? ''}
-                        onChange={(event) => handleAnswerChange(index, event.target.value)}
-                        rows={4}
-                        placeholder={item.placeholder}
-                        className="min-h-[120px] w-full resize-none rounded-[1.2rem] border px-4 py-4 text-[14px] outline-none transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-opacity-30"
-                        style={{
-                          background: 'var(--input-bg)',
-                          color: 'var(--text-1)',
-                          borderColor: 'var(--line)',
-                          caretColor: 'var(--accent)',
-                        }}
-                      />
+                      {field.multiline ? (
+                        <textarea
+                          value={form[field.key]}
+                          onChange={(event) => handleChange(field.key, event.target.value)}
+                          rows={6}
+                          placeholder={field.placeholder}
+                          className="min-h-[160px] w-full resize-none rounded-[1.2rem] border px-4 py-4 text-[14px] outline-none transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-opacity-30"
+                          style={{
+                            background: 'var(--input-bg)',
+                            color: 'var(--text-1)',
+                            borderColor: 'var(--line)',
+                            caretColor: 'var(--accent)',
+                          }}
+                        />
+                      ) : (
+                        <input
+                          value={form[field.key]}
+                          onChange={(event) => handleChange(field.key, event.target.value)}
+                          placeholder={field.placeholder}
+                          className="w-full rounded-[1.2rem] border px-4 py-4 text-[14px] outline-none transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-opacity-30"
+                          style={{
+                            background: 'var(--input-bg)',
+                            color: 'var(--text-1)',
+                            borderColor: 'var(--line)',
+                            caretColor: 'var(--accent)',
+                          }}
+                        />
+                      )}
                     </div>
                   ))}
                 </div>
@@ -329,7 +403,7 @@ export function CtaSection() {
                     </span>
                   </div>
 
-                  <pre className="max-h-[300px] overflow-auto whitespace-pre-wrap text-[12px] leading-6" style={{ color: 'var(--text-2)' }}>
+                  <pre className="max-h-[320px] overflow-auto whitespace-pre-wrap text-[12px] leading-6" style={{ color: 'var(--text-2)' }}>
                     {signalPacket}
                   </pre>
                 </div>
