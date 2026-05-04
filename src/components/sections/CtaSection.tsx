@@ -25,6 +25,7 @@ type CtaCopy = {
   title: string;
   titleAccent: string;
   description: string;
+  telegramHint: string;
   requestChannel: string;
   responseWindow: string;
   responseTime: string;
@@ -46,6 +47,8 @@ type CtaCopy = {
   packetHeader: string;
   emptyAnswer: string;
   telegramLabel: string;
+  copyPacketLabel: string;
+  otherLinksLabel: string;
   fields: FormField[];
 };
 
@@ -56,6 +59,7 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     titleAccent: 'Разберём и превратим в систему.',
     description:
       'Опишите процесс, который сейчас делается вручную. Этого достаточно, чтобы я понял, где теряется время, деньги или контроль, и предложил системный контур вместо очередного набора экранов.',
+    telegramHint: 'Самый быстрый канал, чтобы запустить разговор по задаче.',
     requestChannel: 'Канал запроса',
     responseWindow: 'Окно ответа',
     responseTime: 'Ответ в течение 24 часов',
@@ -78,6 +82,8 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     packetHeader: 'Eclipse Forge / Сигнал запроса',
     emptyAnswer: 'не заполнено',
     telegramLabel: 'Написать в Telegram',
+    copyPacketLabel: 'Скопировать пакет',
+    otherLinksLabel: 'Другие следы',
     fields: [
       { key: 'name', label: 'Имя', placeholder: 'Как к вам обращаться?' },
       {
@@ -111,6 +117,7 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     titleAccent: "We'll turn it into a system.",
     description:
       'Describe the process that is still done manually. That is enough for me to see where time, money or control is leaking and propose a system instead of another set of screens.',
+    telegramHint: 'The fastest channel to start the conversation around the task.',
     requestChannel: 'Request channel',
     responseWindow: 'Response window',
     responseTime: 'Reply within 24 hours',
@@ -133,6 +140,8 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     packetHeader: 'Eclipse Forge / Request Signal',
     emptyAnswer: 'not filled',
     telegramLabel: 'Message on Telegram',
+    copyPacketLabel: 'Copy packet',
+    otherLinksLabel: 'Other traces',
     fields: [
       { key: 'name', label: 'Name', placeholder: 'How should I address you?' },
       {
@@ -228,6 +237,8 @@ export function CtaSection() {
     { label: copy.githubCardLabel, value: contactDetails.githubHandle, href: contactDetails.githubUrl, external: true, Icon: GitHubIcon },
     { label: copy.instagramCardLabel, value: contactDetails.instagramHandle, href: contactDetails.instagramUrl, external: true, Icon: InstagramIcon },
   ];
+  const primaryLinkCards = linkCards.slice(0, 2);
+  const traceLinkCards = linkCards.slice(2);
 
   return (
     <motion.section
@@ -264,7 +275,7 @@ export function CtaSection() {
           </p>
         </motion.div>
 
-        <div className="grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:gap-10">
+        <div className="grid gap-8 lg:grid-cols-[0.84fr_1.16fr] lg:gap-10">
           <motion.div variants={revealUp} className="flex flex-col gap-4">
             <div className="rounded-[2rem] border p-6 sm:p-7 contact-panel">
               <div className="flex items-center justify-between gap-4">
@@ -296,10 +307,13 @@ export function CtaSection() {
                 <span className="mt-3 block text-[13px]" style={{ color: 'var(--text-3)' }}>
                   {contactDetails.telegramDm}
                 </span>
+                <span className="mt-2 block text-[12px] leading-relaxed" style={{ color: 'var(--text-4)' }}>
+                  {copy.telegramHint}
+                </span>
               </button>
 
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                {linkCards.map((item) => (
+                {primaryLinkCards.map((item) => (
                   <a
                     key={item.label}
                     href={item.href}
@@ -329,19 +343,45 @@ export function CtaSection() {
                 <div className="space-y-2 text-sm" style={{ color: 'var(--text-3)' }}>
                   <p>{copy.responseTime}</p>
                   <p>{copy.cityTimezone}</p>
+                  <p>{contactFlow.status[2]}</p>
+                </div>
+              </div>
+
+              <div className="mt-5">
+                <p className="mb-3 text-[10px] uppercase tracking-[0.24em]" style={{ color: 'var(--text-4)' }}>
+                  {copy.otherLinksLabel}
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  {traceLinkCards.map((item) => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      target={item.external ? '_blank' : undefined}
+                      rel={item.external ? 'noreferrer' : undefined}
+                      className="inline-flex items-center gap-2 rounded-full border px-3 py-2 text-[11px] transition-all duration-300 contact-reference-link"
+                    >
+                      <item.Icon size={14} />
+                      <span>{item.label}</span>
+                    </a>
+                  ))}
                 </div>
               </div>
             </div>
 
             <div className="rounded-[2rem] border p-6 contact-panel">
-              <p className="type-meta mb-3" style={{ color: 'var(--accent)' }}>
-                {copy.intakeSignal}
-              </p>
+              <div className="mb-4 flex items-center justify-between gap-4">
+                <p className="type-meta" style={{ color: 'var(--accent)' }}>
+                  {copy.intakeSignal}
+                </p>
+                <span className="text-[10px] uppercase tracking-[0.24em]" style={{ color: completion === 100 ? 'var(--live)' : 'var(--text-4)' }}>
+                  {completion}% {copy.readyLabel}
+                </span>
+              </div>
               <div className="grid gap-3">
-                {contactFlow.status.map((status) => (
-                  <div key={status} className="flex items-center justify-between rounded-full border px-4 py-3 contact-chip">
-                    <span className="text-[10px] uppercase tracking-[0.2em]" style={{ color: 'var(--text-4)' }}>
-                      {copy.intakeStatusLabel}
+                {contactFlow.status.map((status, index) => (
+                  <div key={status} className="flex items-center justify-between rounded-[1.3rem] border px-4 py-3 contact-preview-item">
+                    <span className="text-[10px] uppercase tracking-[0.22em]" style={{ color: 'var(--text-4)' }}>
+                      0{index + 1}
                     </span>
                     <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em]" style={{ color: 'var(--text-2)' }}>
                       <span className="h-1.5 w-1.5 rounded-full hero-signal-dot" />
@@ -369,6 +409,14 @@ export function CtaSection() {
                 {completion}% {copy.readyLabel}
               </span>
             </div>
+            <div className="contact-progress-track">
+              <motion.div
+                className="contact-progress-bar"
+                initial={{ width: 0 }}
+                animate={{ width: `${completion}%` }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              />
+            </div>
 
             <div className="grid gap-0 lg:grid-cols-[1.08fr_0.92fr]">
               <div className="border-b p-5 sm:p-7 lg:border-b-0 lg:border-r contact-console-body" style={{ borderColor: 'var(--line)' }}>
@@ -379,9 +427,14 @@ export function CtaSection() {
                   <span className="console-cursor" />
                 </div>
 
-                <div className="space-y-5">
+                <div className="grid gap-4 sm:grid-cols-2">
                   {copy.fields.map((field) => (
-                    <div key={field.key} className="rounded-[1.5rem] border p-4 sm:p-5 contact-console-card">
+                    <div
+                      key={field.key}
+                      className={`rounded-[1.5rem] border p-4 sm:p-5 contact-console-card ${
+                        field.key === 'manual' ? 'sm:col-span-2' : ''
+                      }`}
+                    >
                       <p className="mb-3 text-[11px] uppercase tracking-[0.22em]" style={{ color: 'var(--accent)' }}>
                         &gt; {field.label}
                       </p>
@@ -389,9 +442,11 @@ export function CtaSection() {
                         <textarea
                           value={form[field.key]}
                           onChange={(event) => handleChange(field.key, event.target.value)}
-                          rows={6}
+                          rows={field.key === 'manual' ? 5 : 4}
                           placeholder={field.placeholder}
-                          className="min-h-[160px] w-full resize-none rounded-[1.2rem] border px-4 py-4 text-[14px] outline-none transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-opacity-30"
+                          className={`w-full resize-none rounded-[1.2rem] border px-4 py-4 text-[14px] outline-none transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-opacity-30 ${
+                            field.key === 'manual' ? 'min-h-[160px]' : 'min-h-[132px]'
+                          }`}
                           style={{
                             background: 'var(--input-bg)',
                             color: 'var(--text-1)',
@@ -424,18 +479,27 @@ export function CtaSection() {
                     <p className="type-meta" style={{ color: 'var(--accent)' }}>
                       {copy.signalPacket}
                     </p>
-                    <span
-                      className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em]"
-                      style={{ color: copied || completion === 100 ? 'var(--live)' : 'var(--text-4)' }}
+                    <button
+                      type="button"
+                      onClick={handleCopy}
+                      className="inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.22em] transition-all duration-300 contact-reference-link"
                     >
-                      <span className="h-1.5 w-1.5 rounded-full hero-signal-dot" />
-                      {copied ? copy.signalCopiedLabel : completion === 100 ? contactFlow.status[1] : copy.awaitingInput}
-                    </span>
+                      {copied ? copy.signalCopiedLabel : copy.copyPacketLabel}
+                    </button>
                   </div>
 
-                  <pre className="max-h-[320px] overflow-auto whitespace-pre-wrap text-[12px] leading-6" style={{ color: 'var(--text-2)' }}>
-                    {signalPacket}
-                  </pre>
+                  <div className="grid gap-3">
+                    {copy.fields.map((field) => (
+                      <div key={field.key} className="rounded-[1.2rem] border px-4 py-4 contact-preview-item">
+                        <p className="text-[10px] uppercase tracking-[0.22em]" style={{ color: 'var(--accent)' }}>
+                          {field.label}
+                        </p>
+                        <p className="mt-2 whitespace-pre-wrap text-[13px] leading-relaxed" style={{ color: form[field.key].trim() ? 'var(--text-2)' : 'var(--text-4)' }}>
+                          {form[field.key].trim() || copy.emptyAnswer}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="mt-5 grid gap-3">

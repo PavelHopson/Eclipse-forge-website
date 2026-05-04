@@ -844,6 +844,18 @@ button, a { -webkit-tap-highlight-color: transparent; }
   isolation: isolate;
 }
 
+.hero-core-shell::before {
+  content: '';
+  position: absolute;
+  inset: 8% 4% 6% 10%;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at center, rgba(107, 163, 255, 0.08) 0%, rgba(107, 163, 255, 0.03) 34%, transparent 68%);
+  filter: blur(18px);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
 .hero-data-chip,
 .hero-status-line,
 .case-top-pill,
@@ -860,6 +872,15 @@ button, a { -webkit-tap-highlight-color: transparent; }
   background: var(--accent);
   box-shadow: 0 0 16px rgba(107, 163, 255, 0.5);
   animation: flarePulse 2.4s ease-in-out infinite;
+}
+
+.hero-proof-chip,
+.contact-reference-link,
+.contact-preview-item {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-3);
+  backdrop-filter: blur(18px);
 }
 
 .hero-portrait-card,
@@ -908,6 +929,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .founder-frame {
   position: relative;
   overflow: hidden;
+}
+
+.hero-portrait-card {
+  box-shadow: 0 32px 90px rgba(0, 0, 0, 0.42), 0 0 0 1px rgba(107, 163, 255, 0.08);
+}
+
+.hero-brand-plate {
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.32), 0 0 0 1px rgba(107, 163, 255, 0.06);
 }
 
 .case-atmosphere-bg,
@@ -1017,13 +1046,26 @@ button, a { -webkit-tap-highlight-color: transparent; }
   background: rgba(255, 255, 255, 0.02);
 }
 
+.contact-progress-track {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.contact-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-warm));
+  box-shadow: 0 0 18px rgba(107, 163, 255, 0.35);
+}
+
+.contact-console-card input::placeholder,
 .contact-console-card textarea::placeholder {
   color: var(--text-4);
 }
 
 .contact-primary-link {
   border-color: rgba(107, 163, 255, 0.2);
-  background: linear-gradient(135deg, rgba(107, 163, 255, 0.12), rgba(140, 124, 255, 0.08));
+  background: linear-gradient(135deg, rgba(107, 163, 255, 0.14), rgba(140, 124, 255, 0.1));
+  box-shadow: 0 20px 48px rgba(18, 35, 67, 0.24);
 }
 
 .contact-link-card {
@@ -1142,6 +1184,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 [data-theme='light'] .hero-data-chip,
 [data-theme='light'] .hero-status-line,
+[data-theme='light'] .hero-proof-chip,
 [data-theme='light'] .case-top-pill,
 [data-theme='light'] .case-anchor-chip,
 [data-theme='light'] .systems-filter-pill,
@@ -1161,6 +1204,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
 [data-theme='light'] .founder-chip,
 [data-theme='light'] .contact-console-card,
 [data-theme='light'] .contact-link-card,
+[data-theme='light'] .contact-reference-link,
+[data-theme='light'] .contact-preview-item,
 [data-theme='light'] .contact-console-topbar,
 [data-theme='light'] .case-meta-strip,
 [data-theme='light'] .case-tech-pill,

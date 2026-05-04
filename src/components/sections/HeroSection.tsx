@@ -21,6 +21,7 @@ const heroCopy: Record<
     title: string;
     titleAccent: string;
     description: string;
+    proofs: string[];
     primaryCta: string;
     secondaryCta: string;
     channelStatus: string;
@@ -40,6 +41,7 @@ const heroCopy: Record<
     titleAccent: 'которые работают вместо ручной рутины.',
     description:
       'Автоматизация, SaaS, внутренние платформы и AI-операторы для задач, где обычного сайта уже мало.',
+    proofs: ['AI-операторы', 'automation-контуры', 'внутренние платформы'],
     primaryCta: 'Обсудить задачу',
     secondaryCta: 'Смотреть системы',
     channelStatus: 'канал запроса открыт',
@@ -58,6 +60,7 @@ const heroCopy: Record<
     titleAccent: 'that replace manual routine.',
     description:
       'Automation, SaaS, internal platforms and AI operators for work that has outgrown a simple website.',
+    proofs: ['AI operators', 'automation systems', 'internal platforms'],
     primaryCta: 'Discuss your task',
     secondaryCta: 'Explore systems',
     channelStatus: 'request channel open',
@@ -122,7 +125,7 @@ export function HeroSection() {
       <motion.div className="absolute bottom-[6%] right-[-4%] hidden lg:block hero-ambient-glow-alt" style={{ y: visualY }} />
 
       <div className="relative z-10 mx-auto w-full max-w-[1400px] px-5 sm:px-8 lg:px-12">
-        <div className="grid min-h-[86vh] items-center gap-10 lg:grid-cols-[0.96fr_1.04fr] lg:gap-8">
+        <div className="grid min-h-[86vh] items-center gap-10 lg:grid-cols-[0.84fr_1.16fr] lg:gap-8">
           <motion.div style={{ y: textY }} className="relative">
             <motion.div custom={0.15} variants={reveal} initial="hidden" animate="visible">
               <div className="inline-flex items-center gap-3 rounded-full border px-5 py-2.5 hero-data-chip">
@@ -138,7 +141,7 @@ export function HeroSection() {
               variants={reveal}
               initial="hidden"
               animate="visible"
-              className="type-display mt-8 max-w-[11ch] text-balance text-[clamp(3rem,8vw,7.4rem)]"
+              className="type-display mt-8 max-w-[13ch] text-balance text-[clamp(3rem,7vw,6.4rem)]"
             >
               {copy.title}
               <span className="block text-gradient-hero">{copy.titleAccent}</span>
@@ -155,7 +158,15 @@ export function HeroSection() {
               {copy.description}
             </motion.p>
 
-            <motion.div custom={0.48} variants={reveal} initial="hidden" animate="visible" className="mt-10 flex flex-col gap-3 sm:flex-row">
+            <motion.div custom={0.46} variants={reveal} initial="hidden" animate="visible" className="mt-7 flex flex-wrap gap-2.5">
+              {copy.proofs.map((proof) => (
+                <span key={proof} className="rounded-full border px-4 py-2 text-[10px] uppercase tracking-[0.22em] hero-proof-chip">
+                  {proof}
+                </span>
+              ))}
+            </motion.div>
+
+            <motion.div custom={0.48} variants={reveal} initial="hidden" animate="visible" className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <MagneticButton strength={0.22}>
                 <GlowButton href="#contact" className="justify-center px-10 py-4 text-[14px]">
                   {copy.primaryCta}
@@ -172,7 +183,13 @@ export function HeroSection() {
               </a>
             </motion.div>
 
-            <motion.div custom={0.58} variants={reveal} initial="hidden" animate="visible" className="mt-8 flex flex-wrap gap-3">
+            <motion.div
+              custom={0.58}
+              variants={reveal}
+              initial="hidden"
+              animate="visible"
+              className="mt-9 grid max-w-[36rem] grid-cols-2 gap-3 sm:grid-cols-3"
+            >
               {metrics.map((metric) => (
                 <div key={metric.label} className="rounded-2xl border px-4 py-3 hero-data-chip">
                   <p className="font-display text-lg font-medium tracking-tight" style={{ color: 'var(--text-1)' }}>
@@ -204,77 +221,75 @@ export function HeroSection() {
             </motion.div>
           </motion.div>
 
-          <motion.div style={{ y: visualY }} className="relative">
-            <div className="relative mx-auto flex max-w-[680px] justify-center lg:justify-end">
-              <div className="hero-core-shell relative w-full max-w-[620px]">
-                <motion.div className="absolute left-1/2 top-[46%] z-0 h-[76%] w-[76%] -translate-x-1/2 -translate-y-1/2" style={{ scale: glowScale }}>
+          <motion.div style={{ y: visualY }} className="relative lg:pr-4">
+            <div className="relative mx-auto flex max-w-[760px] justify-center lg:justify-end">
+              <div className="hero-core-shell relative w-full max-w-[720px] min-h-[520px] sm:min-h-[620px] lg:min-h-[700px]">
+                <motion.div className="absolute left-[56%] top-[52%] z-0 h-[82%] w-[82%] -translate-x-1/2 -translate-y-1/2" style={{ scale: glowScale }}>
                   <BlackHoleCanvas className="h-full w-full rounded-full opacity-90" />
                 </motion.div>
 
-                <div className="pointer-events-none absolute left-1/2 top-[46%] z-10 -translate-x-1/2 -translate-y-1/2">
-                  <SolarCorona size={520} rays={28} color="rgba(157,196,255,0.07)" />
+                <div className="pointer-events-none absolute left-[56%] top-[52%] z-10 -translate-x-1/2 -translate-y-1/2">
+                  <SolarCorona size={580} rays={30} color="rgba(157,196,255,0.08)" />
                 </div>
-                <div className="pointer-events-none absolute left-1/2 top-[46%] z-10 -translate-x-1/2 -translate-y-1/2">
-                  <OrbitalRing size={560} dotCount={3} duration={54} color="var(--accent)" />
+                <div className="pointer-events-none absolute left-[56%] top-[52%] z-10 -translate-x-1/2 -translate-y-1/2">
+                  <OrbitalRing size={620} dotCount={3} duration={54} color="var(--accent)" />
                 </div>
-                <div className="pointer-events-none absolute left-1/2 top-[46%] z-10 -translate-x-1/2 -translate-y-1/2 opacity-70">
-                  <OrbitalRing size={680} dotCount={2} duration={78} color="var(--accent-warm)" />
+                <div className="pointer-events-none absolute left-[56%] top-[52%] z-10 -translate-x-1/2 -translate-y-1/2 opacity-70">
+                  <OrbitalRing size={740} dotCount={2} duration={78} color="var(--accent-warm)" />
                 </div>
 
-                <div className="relative z-20 flex min-h-[520px] items-end justify-end sm:min-h-[620px]">
-                  <motion.div
-                    initial={{ opacity: 0, x: 40, y: 24 }}
-                    animate={{ opacity: 1, x: 0, y: 0 }}
-                    transition={{ duration: 1, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                    className="hero-portrait-card relative w-full max-w-[390px] rounded-[2rem] border p-3 sm:p-4"
-                  >
-                    <AssetImage
-                      alt={brandAssets.founderDesk.alt}
-                      sources={brandAssets.founderDesk.sources}
-                      loading="eager"
-                      className="h-[320px] w-full rounded-[1.7rem] object-cover sm:h-[420px]"
-                      style={{ objectPosition: brandAssets.founderDesk.objectPosition }}
-                      fallback={<HeroPortraitFallback title={copy.fallbackTitle} text={copy.fallbackText} />}
-                    />
+                <motion.div
+                  initial={{ opacity: 0, x: 40, y: 24 }}
+                  animate={{ opacity: 1, x: 0, y: 0 }}
+                  transition={{ duration: 1, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                  className="hero-portrait-card absolute left-[4%] top-[14%] z-20 w-[58%] max-w-[390px] rounded-[2rem] border p-3 sm:p-4"
+                >
+                  <AssetImage
+                    alt={brandAssets.founderDesk.alt}
+                    sources={brandAssets.founderDesk.sources}
+                    loading="eager"
+                    className="h-[320px] w-full rounded-[1.7rem] object-cover sm:h-[420px]"
+                    style={{ objectPosition: brandAssets.founderDesk.objectPosition }}
+                    fallback={<HeroPortraitFallback title={copy.fallbackTitle} text={copy.fallbackText} />}
+                  />
 
-                    <div className="pointer-events-none absolute inset-x-10 top-8 rounded-full border px-4 py-2 hero-status-line">
-                      <div className="flex items-center justify-between gap-4 text-[10px] uppercase tracking-[0.24em]">
-                        <span style={{ color: 'var(--text-4)' }}>{copy.operatorLabel}</span>
-                        <span style={{ color: 'var(--text-2)' }}>{copy.operatorStatus}</span>
+                  <div className="pointer-events-none absolute inset-x-6 top-6 rounded-full border px-4 py-2 hero-status-line sm:inset-x-10 sm:top-8">
+                    <div className="flex items-center justify-between gap-4 text-[10px] uppercase tracking-[0.24em]">
+                      <span style={{ color: 'var(--text-4)' }}>{copy.operatorLabel}</span>
+                      <span style={{ color: 'var(--text-2)' }}>{copy.operatorStatus}</span>
+                    </div>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, x: -30, y: 20 }}
+                  animate={{ opacity: 1, x: 0, y: 0 }}
+                  transition={{ duration: 0.9, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                  className="hero-brand-plate absolute bottom-[12%] right-[2%] z-20 hidden w-[250px] rounded-[1.6rem] border p-3 sm:block"
+                >
+                  <AssetImage
+                    alt={brandAssets.heroPlate.alt}
+                    sources={brandAssets.heroPlate.sources}
+                    loading="lazy"
+                    className="h-[148px] w-full rounded-[1.25rem] object-cover"
+                    style={{ objectPosition: brandAssets.heroPlate.objectPosition }}
+                    fallback={
+                      <div className="flex h-[148px] w-full items-end rounded-[1.25rem] bg-[radial-gradient(circle_at_top,rgba(117,140,255,0.18),transparent_58%),linear-gradient(180deg,#0d1117_0%,#07090d_100%)] p-4">
+                        <p className="type-meta" style={{ color: 'var(--text-3)' }}>
+                          {copy.plateFallback}
+                        </p>
                       </div>
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, x: -30, y: 20 }}
-                    animate={{ opacity: 1, x: 0, y: 0 }}
-                    transition={{ duration: 0.9, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                    className="hero-brand-plate absolute left-0 top-10 hidden w-[260px] rounded-[1.6rem] border p-3 sm:block"
-                  >
-                    <AssetImage
-                      alt={brandAssets.heroPlate.alt}
-                      sources={brandAssets.heroPlate.sources}
-                      loading="lazy"
-                      className="h-[148px] w-full rounded-[1.25rem] object-cover"
-                      style={{ objectPosition: brandAssets.heroPlate.objectPosition }}
-                      fallback={
-                        <div className="flex h-[148px] w-full items-end rounded-[1.25rem] bg-[radial-gradient(circle_at_top,rgba(117,140,255,0.18),transparent_58%),linear-gradient(180deg,#0d1117_0%,#07090d_100%)] p-4">
-                          <p className="type-meta" style={{ color: 'var(--text-3)' }}>
-                            {copy.plateFallback}
-                          </p>
-                        </div>
-                      }
-                    />
-                    <div className="mt-3 flex items-center justify-between px-1">
-                      <span className="text-[10px] uppercase tracking-[0.2em]" style={{ color: 'var(--text-4)' }}>
-                        {copy.systemCore}
-                      </span>
-                      <span className="text-[11px] uppercase tracking-[0.2em]" style={{ color: 'var(--accent)' }}>
-                        {copy.orbitalView}
-                      </span>
-                    </div>
-                  </motion.div>
-                </div>
+                    }
+                  />
+                  <div className="mt-3 flex items-center justify-between px-1">
+                    <span className="text-[10px] uppercase tracking-[0.2em]" style={{ color: 'var(--text-4)' }}>
+                      {copy.systemCore}
+                    </span>
+                    <span className="text-[11px] uppercase tracking-[0.2em]" style={{ color: 'var(--accent)' }}>
+                      {copy.orbitalView}
+                    </span>
+                  </div>
+                </motion.div>
               </div>
             </div>
           </motion.div>
