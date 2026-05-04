@@ -1,261 +1,239 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect, useRef } from 'react';
-import { contactDetails } from '../../data/content';
-import { revealUp, viewport } from '../../lib/animation';
-import { EclipseSilhouette, ParticleField, OrbitalRing } from '../ui/EclipseVisuals';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { contactDetails, contactFlow, contactPrompts } from '../../data/content';
+import { revealUp, stagger, viewport } from '../../lib/animation';
+import { ConstellationField, EclipseSilhouette, OrbitalRing, ParticleField } from '../ui/EclipseVisuals';
 
-type Step = 0 | 1 | 2 | 3 | 4;
-
-const BOT_TOKEN = '8709666001:AAHU21ibqUxn2w8JSmGxoMruxFdiXq7qi8g';
-const CHAT_ID = '7842454447';
-
-const prompts = [
-  'Ваше имя?',
-  'Telegram или email для связи?',
-  'Что нужно сделать?',
-  'Какой результат ожидаете?',
-  'Сроки и бюджет, если есть?',
-];
+const emptyAnswers = contactPrompts.map(() => '');
 
 export function CtaSection() {
-  const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState<string[]>(['', '', '', '', '']);
-  const [analyzing, setAnalyzing] = useState(false);
-  const [signal, setSignal] = useState(0);
-  const [sent, setSent] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [answers, setAnswers] = useState<string[]>(emptyAnswers);
+  const [copied, setCopied] = useState(false);
 
-  const handleSubmit = () => {
-    if (step < 5) {
-      if (!answers[step].trim()) return;
-      setStep(step + 1);
-      setTimeout(() => inputRef.current?.focus(), 100);
-    }
-  };
+  const signalPacket = [
+    'Eclipse Forge / Request Signal',
+    '',
+    ...contactPrompts.map((item, index) => `${index + 1}. ${item.prompt}\n${answers[index] || '...'}`),
+  ].join('\n\n');
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') handleSubmit();
-  };
+  const completion = Math.round((answers.filter((value) => value.trim().length > 0).length / contactPrompts.length) * 100);
 
-  const updateAnswer = (val: string) => {
+  const emailHref = `mailto:${contactDetails.email}?subject=${encodeURIComponent('Eclipse Forge request')}&body=${encodeURIComponent(signalPacket)}`;
+
+  const handleAnswerChange = (index: number, value: string) => {
     const next = [...answers];
-    next[step] = val;
+    next[index] = value;
     setAnswers(next);
   };
 
-  useEffect(() => {
-    if (step === 5 && !sent) {
-      setAnalyzing(true);
-      const total = answers.join('').length;
-      const strength = Math.min(98, Math.max(55, Math.round(total * 1.2 + 35)));
-
-      const message = [
-        '🔔 *Новая заявка с сайта*', '',
-        `👤 *Имя:* ${answers[0]}`, `📬 *Контакт:* ${answers[1]}`,
-        `📋 *Задача:* ${answers[2]}`, `🎯 *Результат:* ${answers[3]}`,
-        `⏰ *Сроки/бюджет:* ${answers[4]}`, '', `📊 Signal: ${strength}%`,
-      ].join('\n');
-
-      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: CHAT_ID, text: message, parse_mode: 'Markdown' }),
-      }).catch(() => {});
-
-      setTimeout(() => { setSignal(strength); setAnalyzing(false); setSent(true); }, 2200);
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(signalPacket);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1600);
+    } catch {
+      setCopied(false);
     }
-  }, [step, answers, sent]);
+  };
 
-  const reset = () => { setStep(0); setAnswers(['', '', '', '', '']); setSignal(0); setSent(false); };
+  const handleTelegramOpen = async () => {
+    if (answers.some((item) => item.trim())) {
+      await handleCopy();
+    }
+
+    window.open(contactDetails.telegramDmUrl, '_blank', 'noopener,noreferrer');
+  };
 
   return (
     <motion.section
       id="contact"
-      className="relative overflow-hidden min-h-screen flex items-center"
-      variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } } }}
-      initial="hidden" whileInView="visible" viewport={viewport}
+      className="section-shell relative overflow-hidden py-16 sm:py-24 lg:py-36"
+      variants={stagger}
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewport}
     >
-      {/* Full-screen gradient background */}
-      <div className="absolute inset-0" style={{
-        background: 'radial-gradient(ellipse at 30% 20%, rgba(107,163,255,0.08) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(245,166,35,0.05) 0%, transparent 50%), var(--bg)',
-      }} />
-
-      {/* Eclipse silhouette — large, faded */}
-      <div className="absolute top-[10%] right-[-10%] opacity-20 hidden lg:block">
-        <EclipseSilhouette size={500} coronaColor="rgba(245,166,35,0.12)" coronaSpread={60} />
+      <div className="absolute inset-0 contact-atmosphere-bg" />
+      <div className="absolute inset-0 opacity-45">
+        <ConstellationField className="opacity-30" />
+        <ParticleField count={18} className="opacity-35" />
+      </div>
+      <div className="absolute left-[-8%] top-[18%] hidden lg:block opacity-20">
+        <OrbitalRing size={360} dotCount={3} duration={38} color="var(--accent)" />
+      </div>
+      <div className="absolute bottom-[-8%] right-[-6%] hidden lg:block opacity-20">
+        <EclipseSilhouette size={420} coronaColor="rgba(117, 140, 255, 0.14)" />
       </div>
 
-      {/* Orbital decoration */}
-      <div className="absolute bottom-[20%] left-[-5%] opacity-15 hidden lg:block">
-        <OrbitalRing size={300} dotCount={3} duration={35} color="var(--accent)" />
-      </div>
-
-      {/* Particles */}
-      <ParticleField count={15} />
-
-      {/* Grid lines */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-[25%] w-px h-full" style={{ background: 'linear-gradient(to bottom, transparent, var(--line-subtle) 30%, var(--line-subtle) 70%, transparent)' }} />
-        <div className="absolute top-0 left-[75%] w-px h-full hidden lg:block" style={{ background: 'linear-gradient(to bottom, transparent, var(--line-subtle) 30%, var(--line-subtle) 70%, transparent)' }} />
-      </div>
-
-      <div className="relative z-10 w-full mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12 py-16 sm:py-24 lg:py-32">
-        {/* Header */}
-        <motion.div variants={revealUp} className="text-center mb-14">
-          <p className="type-meta mb-5" style={{ color: 'var(--accent)' }}>Контакт</p>
-          <h2 className="type-display max-w-3xl mx-auto mb-6" style={{ fontSize: 'clamp(2.2rem, 5vw, 4.5rem)' }}>
-            <span className="text-gradient">Опишите задачу.</span>
+      <div className="relative z-10 mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
+        <motion.div variants={revealUp} className="mb-12 max-w-3xl">
+          <p className="type-meta mb-5" style={{ color: 'var(--accent)' }}>
+            Contact console
+          </p>
+          <h2 className="type-display text-[clamp(2.3rem,5vw,4.8rem)]">
+            Bring the manual chaos.
+            <span className="block text-gradient-hero">Leave with a clearer system path.</span>
           </h2>
-          <p className="type-body text-[15px] sm:text-[16px] max-w-lg mx-auto" style={{ color: 'var(--text-3)' }}>
-            Или напишите напрямую в Telegram — ответ в течение нескольких часов.
+          <p className="mt-6 type-body text-[15px] leading-relaxed sm:text-[16px]" style={{ color: 'var(--text-3)' }}>
+            Fill the console in your own words. The packet is designed to make the first conversation precise fast: what you do manually, what the system should produce and where control is leaking now.
           </p>
         </motion.div>
 
-        {/* Two-column: Telegram CTA + Terminal form */}
-        <div className="grid md:grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-12 max-w-5xl mx-auto">
-
-          {/* LEFT — Direct Telegram CTA */}
-          <motion.div variants={revealUp} className="flex flex-col gap-6">
-            {/* Primary CTA */}
-            <a href={contactDetails.telegramDmUrl} target="_blank" rel="noreferrer"
-              className="group relative flex items-center gap-5 border rounded-2xl p-6 sm:p-8 transition-all duration-500 overflow-hidden"
-              style={{ borderColor: 'var(--line)', background: 'var(--bg-card)' }}>
-              {/* Hover glow */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(107,163,255,0.06) 0%, transparent 70%)' }} />
-              <div className="relative flex-shrink-0 w-14 h-14 rounded-xl flex items-center justify-center border"
-                style={{ borderColor: 'var(--accent-dim)', background: 'var(--accent-soft)' }}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--accent)">
-                  <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-                </svg>
+        <div className="grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:gap-10">
+          <motion.div variants={revealUp} className="flex flex-col gap-4">
+            <div className="rounded-[2rem] border p-6 sm:p-7 contact-panel">
+              <div className="flex items-center justify-between gap-4">
+                <p className="type-meta" style={{ color: 'var(--accent)' }}>
+                  Request channel
+                </p>
+                <div className="inline-flex items-center gap-2 rounded-full border px-3 py-1.5 contact-chip">
+                  <span className="h-2 w-2 rounded-full hero-signal-dot" />
+                  <span className="text-[10px] uppercase tracking-[0.22em]" style={{ color: 'var(--text-3)' }}>
+                    {contactFlow.status[0]}
+                  </span>
+                </div>
               </div>
-              <div className="relative flex-1">
-                <span className="font-display text-lg font-medium block mb-1" style={{ color: 'var(--text-1)' }}>
-                  Написать в Telegram
+
+              <button type="button" onClick={handleTelegramOpen} className="mt-6 w-full rounded-[1.7rem] border px-5 py-5 text-left transition-all duration-500 contact-primary-link">
+                <span className="block font-display text-xl tracking-tight" style={{ color: 'var(--text-1)' }}>
+                  Telegram
                 </span>
-                <span className="text-[13px]" style={{ color: 'var(--text-3)' }}>
+                <span className="mt-1 block text-[13px]" style={{ color: 'var(--text-3)' }}>
                   {contactDetails.telegramDm}
                 </span>
-              </div>
-              <span className="relative text-[20px] group-hover:translate-x-1 transition-transform duration-300" style={{ color: 'var(--accent)' }}>→</span>
-            </a>
+              </button>
 
-            {/* Contact links */}
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { icon: '✉', label: 'Email', value: contactDetails.email, href: `mailto:${contactDetails.email}` },
-                { icon: '📢', label: 'Канал', value: contactDetails.telegramChannel, href: contactDetails.telegramChannelUrl },
-                { icon: '📸', label: 'Instagram', value: contactDetails.instagramHandle, href: contactDetails.instagramUrl },
-                { icon: '🔗', label: 'GitHub', value: contactDetails.githubHandle, href: contactDetails.githubUrl },
-              ].map((c) => (
-                <a key={c.label} href={c.href} target="_blank" rel="noreferrer"
-                  className="group border rounded-xl p-4 transition-all duration-400 hover:border-[rgba(107,163,255,0.15)]"
-                  style={{ borderColor: 'var(--line)', background: 'var(--surface-1)' }}>
-                  <p className="text-[10px] tracking-[0.2em] uppercase mb-2" style={{ color: 'var(--text-4)' }}>{c.label}</p>
-                  <p className="font-display text-[13px] truncate group-hover:text-[var(--accent)] transition-colors duration-300" style={{ color: 'var(--text-2)' }}>{c.value}</p>
-                </a>
-              ))}
-            </div>
-
-            {/* Timezone */}
-            <div className="flex items-center gap-3 px-2">
-              <motion.div className="h-1.5 w-1.5 rounded-full" style={{ background: 'var(--live)' }}
-                animate={{ opacity: [0.4, 1, 0.4] }} transition={{ duration: 2, repeat: Infinity }} />
-              <span className="text-[11px] tracking-[0.15em] uppercase" style={{ color: 'var(--text-4)' }}>
-                {contactDetails.cityTimezone} · {contactDetails.responseTime}
-              </span>
-            </div>
-          </motion.div>
-
-          {/* RIGHT — Terminal form */}
-          <motion.div variants={revealUp}
-            className="rounded-2xl border overflow-hidden"
-            style={{ borderColor: 'var(--line)', background: 'var(--bg-card)', boxShadow: '0 0 80px rgba(107,163,255,0.03)' }}>
-
-            {/* Terminal header */}
-            <div className="flex items-center gap-2 px-5 py-3 border-b" style={{ borderColor: 'var(--line)' }}>
-              <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#5C6670' }} />
-              <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#5C6670' }} />
-              <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#5C6670' }} />
-              <span className="ml-3 text-[10px] tracking-[0.2em] uppercase" style={{ color: 'var(--text-4)' }}>
-                eclipse://terminal
-              </span>
-              <span className="ml-auto text-[10px]" style={{ color: 'var(--text-4)' }}>
-                {step}/5
-              </span>
-            </div>
-
-            {/* Terminal body */}
-            <div className="p-6 sm:p-8 min-h-[340px] flex flex-col justify-between font-body">
-              {/* Previous answers */}
-              <div className="space-y-4 mb-6">
-                {prompts.map((prompt, i) => (
-                  i < step && (
-                    <div key={i}>
-                      <p className="text-[12px] mb-1" style={{ color: 'var(--text-4)' }}>{`> ${prompt}`}</p>
-                      <p className="text-[14px] pl-4 border-l-2" style={{ color: 'var(--text-2)', borderColor: 'var(--accent)' }}>{answers[i]}</p>
-                    </div>
-                  )
+              <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                {[
+                  { label: 'Email', value: contactDetails.email, href: emailHref },
+                  { label: 'Channel', value: contactDetails.telegramChannel, href: contactDetails.telegramChannelUrl },
+                  { label: 'GitHub', value: contactDetails.githubHandle, href: contactDetails.githubUrl },
+                  { label: 'Instagram', value: contactDetails.instagramHandle, href: contactDetails.instagramUrl },
+                ].map((item) => (
+                  <a key={item.label} href={item.href} target={item.href.startsWith('mailto:') ? undefined : '_blank'} rel="noreferrer" className="rounded-2xl border px-4 py-4 transition-all duration-300 contact-link-card">
+                    <p className="text-[10px] uppercase tracking-[0.22em]" style={{ color: 'var(--text-4)' }}>
+                      {item.label}
+                    </p>
+                    <p className="mt-2 text-sm" style={{ color: 'var(--text-2)' }}>
+                      {item.value}
+                    </p>
+                  </a>
                 ))}
               </div>
 
-              <AnimatePresence mode="wait">
-                {step < 5 && !analyzing && (
-                  <motion.div key={`step-${step}`} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }}>
-                    <p className="text-[12px] mb-3" style={{ color: 'var(--accent)' }}>{`> ${prompts[step]}`}</p>
-                    <div className="flex gap-3">
-                      <input ref={inputRef} type="text" value={answers[step]}
-                        onChange={(e) => updateAnswer(e.target.value)} onKeyDown={handleKeyDown}
-                        placeholder="Введите ответ..." autoFocus
-                        className="flex-1 px-4 py-3 rounded-xl text-[14px] outline-none border transition-colors duration-300 focus:border-[var(--accent-dim)] focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-opacity-30"
-                        style={{ background: 'var(--input-bg)', color: 'var(--text-1)', borderColor: 'var(--line)', caretColor: 'var(--accent)' }} />
-                      <button onClick={handleSubmit}
-                        className="px-5 py-3 rounded-xl text-[12px] uppercase tracking-[0.15em] font-display font-medium transition-all duration-300 hover:bg-[var(--accent-soft)]"
-                        style={{ background: 'rgba(107,163,255,0.06)', color: 'var(--accent)', border: '1px solid var(--line)' }}>
-                        →
-                      </button>
-                    </div>
-                  </motion.div>
-                )}
+              <div className="mt-6 rounded-[1.6rem] border px-4 py-4 contact-panel">
+                <p className="type-meta mb-3" style={{ color: 'var(--accent)' }}>
+                  Response window
+                </p>
+                <div className="space-y-2 text-sm" style={{ color: 'var(--text-3)' }}>
+                  <p>{contactDetails.responseTime}</p>
+                  <p>{contactDetails.cityTimezone}</p>
+                </div>
+              </div>
+            </div>
 
-                {step === 5 && analyzing && (
-                  <motion.div key="analyzing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-8">
-                    <div className="inline-flex items-center gap-3">
-                      <motion.div className="w-3 h-3 rounded-full" style={{ background: 'var(--accent)' }}
-                        animate={{ scale: [1, 1.3, 1], opacity: [0.4, 1, 0.4] }}
-                        transition={{ duration: 1.2, repeat: Infinity }} />
-                      <p className="text-[13px] font-display tracking-[0.15em] uppercase" style={{ color: 'var(--text-3)' }}>
-                        Analyzing...
+            <div className="rounded-[2rem] border p-6 contact-panel">
+              <p className="type-meta mb-3" style={{ color: 'var(--accent)' }}>
+                Intake signal
+              </p>
+              <div className="grid gap-3">
+                {contactFlow.status.map((status) => (
+                  <div key={status} className="flex items-center justify-between rounded-full border px-4 py-3 contact-chip">
+                    <span className="text-[10px] uppercase tracking-[0.2em]" style={{ color: 'var(--text-4)' }}>
+                      status
+                    </span>
+                    <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em]" style={{ color: 'var(--text-2)' }}>
+                      <span className="h-1.5 w-1.5 rounded-full hero-signal-dot" />
+                      {status}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div variants={revealUp} className="overflow-hidden rounded-[2rem] border contact-console-shell">
+            <div className="flex items-center gap-2 border-b px-5 py-3 contact-console-topbar">
+              <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+              <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+              <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+              <span className="ml-3 text-[10px] uppercase tracking-[0.24em]" style={{ color: 'var(--text-4)' }}>
+                eclipse://operator-console
+              </span>
+              <span className="ml-auto inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.24em]" style={{ color: completion === 100 ? 'var(--live)' : 'var(--text-4)' }}>
+                <span className="h-1.5 w-1.5 rounded-full hero-signal-dot" />
+                {completion}% ready
+              </span>
+            </div>
+
+            <div className="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]">
+              <div className="border-b p-5 sm:p-7 lg:border-b-0 lg:border-r contact-console-body" style={{ borderColor: 'var(--line)' }}>
+                <div className="mb-5 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 contact-chip">
+                  <span className="text-[10px] uppercase tracking-[0.22em]" style={{ color: 'var(--text-4)' }}>
+                    live intake
+                  </span>
+                  <span className="console-cursor" />
+                </div>
+
+                <div className="space-y-5">
+                  {contactPrompts.map((item, index) => (
+                    <div key={item.label} className="rounded-[1.5rem] border p-4 sm:p-5 contact-console-card">
+                      <p className="mb-3 text-[11px] uppercase tracking-[0.22em]" style={{ color: 'var(--accent)' }}>
+                        &gt; {item.prompt}
                       </p>
+                      <textarea
+                        value={answers[index]}
+                        onChange={(event) => handleAnswerChange(index, event.target.value)}
+                        rows={4}
+                        placeholder={item.placeholder}
+                        className="min-h-[120px] w-full resize-none rounded-[1.2rem] border px-4 py-4 text-[14px] outline-none transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-opacity-30"
+                        style={{
+                          background: 'var(--input-bg)',
+                          color: 'var(--text-1)',
+                          borderColor: 'var(--line)',
+                          caretColor: 'var(--accent)',
+                        }}
+                      />
                     </div>
-                  </motion.div>
-                )}
+                  ))}
+                </div>
+              </div>
 
-                {sent && (
-                  <motion.div key="result" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="text-center py-4">
-                    <p className="text-[10px] uppercase tracking-[0.3em] mb-3" style={{ color: 'var(--text-4)' }}>Signal strength</p>
-                    <p className="font-display text-4xl sm:text-5xl font-light mb-2" style={{ color: 'var(--text-1)' }}>{signal}%</p>
-                    <p className="text-[11px] uppercase tracking-[0.2em] mb-8"
-                      style={{ color: signal > 70 ? 'var(--live)' : 'var(--text-3)' }}>
-                      {signal > 70 ? 'Readiness: HIGH' : 'Readiness: MODERATE'}
+              <div className="p-5 sm:p-7 contact-console-body">
+                <div className="rounded-[1.6rem] border p-5 contact-signal-preview">
+                  <div className="mb-4 flex items-center justify-between gap-4">
+                    <p className="type-meta" style={{ color: 'var(--accent)' }}>
+                      Signal packet
                     </p>
-                    <p className="text-[13px] mb-6" style={{ color: 'var(--live)' }}>
-                      Заявка отправлена. Мы свяжемся с вами.
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                      <a href={contactDetails.telegramDmUrl} target="_blank" rel="noreferrer"
-                        className="inline-flex items-center justify-center gap-3 rounded-full px-8 py-4 text-[13px] font-display font-medium btn-sweep transition-all duration-500"
-                        style={{ background: 'var(--accent-soft)', color: 'var(--text-1)', border: '1px solid var(--accent-dim)' }}>
-                        <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'var(--accent)', opacity: 0.5 }} />
-                        Telegram
-                      </a>
-                      <button onClick={reset} className="text-[12px] tracking-[0.15em] uppercase transition-colors duration-300" style={{ color: 'var(--text-4)' }}>
-                        Новая заявка
-                      </button>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                    <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em]" style={{ color: completion === 100 ? 'var(--live)' : 'var(--text-4)' }}>
+                      <span className="h-1.5 w-1.5 rounded-full hero-signal-dot" />
+                      {completion === 100 ? contactFlow.status[1] : 'awaiting input'}
+                    </span>
+                  </div>
+
+                  <pre className="max-h-[300px] overflow-auto whitespace-pre-wrap text-[12px] leading-6" style={{ color: 'var(--text-2)' }}>
+                    {signalPacket}
+                  </pre>
+                </div>
+
+                <div className="mt-5 grid gap-3">
+                  <button type="button" onClick={handleTelegramOpen} className="rounded-full border px-5 py-4 text-[12px] font-display uppercase tracking-[0.16em] transition-all duration-300 contact-console-primary">
+                    {contactFlow.primaryCta}
+                  </button>
+                  <button type="button" onClick={handleCopy} className="rounded-full border px-5 py-4 text-[12px] font-display uppercase tracking-[0.16em] transition-all duration-300 contact-console-secondary">
+                    {copied ? 'Signal copied' : contactFlow.secondaryCta}
+                  </button>
+                </div>
+
+                <div className="mt-5 rounded-[1.6rem] border px-4 py-4 contact-signal-preview">
+                  <p className="type-meta mb-2" style={{ color: 'var(--accent)' }}>
+                    Why this flow
+                  </p>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-3)' }}>
+                    The first brief is usually where precision is lost. This console makes the initial signal structured before the conversation starts.
+                  </p>
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>

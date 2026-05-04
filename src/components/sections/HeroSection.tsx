@@ -1,300 +1,251 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
-import { metrics } from '../../data/content';
-import { EclipseSilhouette, OrbitalRing, ParticleField } from '../ui/EclipseVisuals';
+import { useRef } from 'react';
+import { brandAssets, contactDetails, metrics } from '../../data/content';
+import { AssetImage } from '../ui/AssetImage';
+import { BlackHoleCanvas } from '../ui/BlackHoleCanvas';
 import { GlowButton } from '../ui/GlowButton';
 import { MagneticButton } from '../ui/MagneticButton';
-import { BlackHoleCanvas } from '../ui/BlackHoleCanvas';
+import {
+  ConstellationField,
+  EclipseSilhouette,
+  OrbitalRing,
+  ParticleField,
+  SolarCorona,
+} from '../ui/EclipseVisuals';
 
-/* ── Kinetic word reveal ── */
-const wordReveal = {
-  hidden: { opacity: 0, y: 40, filter: 'blur(8px)', rotateX: 15 },
-  visible: (i: number) => ({
-    opacity: 1, y: 0, filter: 'blur(0px)', rotateX: 0,
-    transition: { duration: 1, delay: 0.4 + i * 0.1, ease: [0.16, 1, 0.3, 1] },
+const reveal = {
+  hidden: { opacity: 0, y: 32 },
+  visible: (delay: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.9, delay, ease: [0.16, 1, 0.3, 1] },
   }),
 };
 
-const fadeIn = {
-  hidden: { opacity: 0, y: 16 },
-  visible: (d: number) => ({
-    opacity: 1, y: 0,
-    transition: { duration: 0.9, delay: d, ease: [0.16, 1, 0.3, 1] },
-  }),
-};
-
-const lineSlide = {
-  hidden: { scaleX: 0 },
-  visible: (d: number) => ({
-    scaleX: 1,
-    transition: { duration: 1.2, delay: d, ease: [0.16, 1, 0.3, 1] },
-  }),
-};
-
-/* ── Scramble text hook ── */
-function useTextScramble(text: string, trigger: boolean) {
-  const [display, setDisplay] = useState(text);
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-
-  useEffect(() => {
-    if (!trigger) return;
-    let frame = 0;
-    const totalFrames = 20;
-    const interval = setInterval(() => {
-      setDisplay(
-        text.split('').map((char, i) => {
-          if (char === ' ') return ' ';
-          if (frame / totalFrames > i / text.length) return char;
-          return chars[Math.floor(Math.random() * chars.length)];
-        }).join('')
-      );
-      frame++;
-      if (frame > totalFrames) clearInterval(interval);
-    }, 35);
-    return () => clearInterval(interval);
-  }, [text, trigger]);
-
-  return display;
+function HeroPortraitFallback() {
+  return (
+    <div className="relative flex h-full min-h-[320px] items-center justify-center overflow-hidden rounded-[1.75rem] border hero-portrait-fallback">
+      <div className="absolute inset-0 hero-portrait-noise" />
+      <EclipseSilhouette size={180} coronaColor="rgba(157, 196, 255, 0.14)" />
+      <div className="absolute bottom-6 left-6 right-6 rounded-2xl border px-4 py-4 hero-data-chip">
+        <p className="type-meta mb-2" style={{ color: 'var(--accent)' }}>
+          portrait slot active
+        </p>
+        <p className="text-sm leading-relaxed" style={{ color: 'var(--text-3)' }}>
+          Drop `founder-portrait.png` into `public/images/projects` to replace the fallback visual.
+        </p>
+      </div>
+    </div>
+  );
 }
 
 export function HeroSection() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const textY = useTransform(scrollYProgress, [0, 1], [0, -80]);
-  const visualY = useTransform(scrollYProgress, [0, 1], [0, 40]);
-  const ringScale = useTransform(scrollYProgress, [0, 1], [1, 1.4]);
-  const ringOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => { setMounted(true); }, []);
-
-  const scrambledBadge = useTextScramble('ECLIPSE FORGE', mounted);
+  const bgY = useTransform(scrollYProgress, [0, 1], [0, 140]);
+  const textY = useTransform(scrollYProgress, [0, 1], [0, -60]);
+  const visualY = useTransform(scrollYProgress, [0, 1], [0, 90]);
+  const glowScale = useTransform(scrollYProgress, [0, 1], [1, 1.18]);
 
   return (
-    <section ref={ref} id="hero" className="relative overflow-hidden min-h-screen flex items-end pb-16 sm:pb-24 lg:items-center lg:pb-0">
-      {/* Black hole — live physics simulation. On mobile: centered behind content with low opacity (acts as ambient bg). On desktop: anchored to right. */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 lg:left-auto -translate-x-1/2 lg:translate-x-0 lg:right-[4%] -translate-y-1/2 pointer-events-none
-                   w-[min(90vw,360px)] h-[min(90vw,360px)]
-                   sm:w-[min(80vw,500px)] sm:h-[min(80vw,500px)]
-                   lg:w-[min(50vw,720px)] lg:h-[min(50vw,720px)]
-                   opacity-40 sm:opacity-60 lg:opacity-100"
-        style={{ scale: ringScale, opacity: ringOpacity, y: visualY }}
-      >
-        {/* Physics sim — particles spiraling into event horizon */}
-        <BlackHoleCanvas className="absolute inset-0 w-full h-full rounded-full" />
-
-        {/* Subtle orbital ring overlay — decorative */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden lg:block">
-          <OrbitalRing size={760} dotCount={2} duration={60} color="var(--accent-warm)" />
-        </div>
-      </motion.div>
-
-      {/* Use EclipseSilhouette import to avoid tree-shake removal if other sections need it */}
-      <div className="hidden">
-        <EclipseSilhouette size={1} />
-      </div>
-
-      {/* Gradient mesh background */}
-      <div className="absolute inset-0 gradient-mesh pointer-events-none opacity-60" />
-
-      {/* Floating particles */}
-      <ParticleField count={25} />
-
-      {/* Grid lines — subtle structure */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-0 left-[20%] w-px h-full" style={{ background: 'linear-gradient(to bottom, transparent, var(--line-subtle) 30%, var(--line-subtle) 70%, transparent)' }} />
-        <div className="absolute top-0 left-[50%] w-px h-full hidden lg:block" style={{ background: 'linear-gradient(to bottom, transparent, var(--line-subtle) 30%, var(--line-subtle) 70%, transparent)' }} />
-        <div className="absolute top-0 left-[80%] w-px h-full hidden lg:block" style={{ background: 'linear-gradient(to bottom, transparent, var(--line-subtle) 30%, var(--line-subtle) 70%, transparent)' }} />
-      </div>
-
-      {/* Fog */}
+    <section ref={ref} id="hero" className="relative min-h-screen overflow-hidden pb-16 pt-20 sm:pb-24 sm:pt-28 lg:flex lg:items-center lg:pb-0">
+      <motion.div className="absolute inset-0 hero-depth-layer" style={{ y: bgY }} />
+      <div className="absolute inset-0 hero-grid-overlay" />
+      <div className="absolute inset-0 hero-vignette" />
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[10%] left-[5%] w-[700px] h-[700px] rounded-full blur-[250px] animate-float" style={{ background: 'rgba(107,163,255,0.03)' }} />
-        <div className="absolute bottom-[10%] right-[10%] w-[500px] h-[500px] rounded-full blur-[200px] animate-float-slow" style={{ background: 'rgba(245,166,35,0.015)' }} />
+        <ConstellationField className="opacity-30" />
+        <ParticleField count={28} className="opacity-45" />
       </div>
+      <motion.div className="absolute left-[-8%] top-[16%] hidden lg:block hero-ambient-glow" style={{ scale: glowScale }} />
+      <motion.div className="absolute bottom-[6%] right-[-4%] hidden lg:block hero-ambient-glow-alt" style={{ y: visualY }} />
 
-      {/* Split-screen content: text LEFT, visual RIGHT */}
-      <motion.div className="relative z-10 w-full max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 pt-20 sm:pt-28 lg:pt-0" style={{ y: textY }}>
-        <div className="grid lg:grid-cols-[1fr_0.8fr] gap-8 sm:gap-10 lg:gap-8 items-center min-h-[80vh]">
-
-          {/* LEFT — Text */}
-          <div className="relative">
-            {/* Badge */}
-            <motion.div custom={0} variants={fadeIn} initial="hidden" animate="visible" className="mb-8 lg:mb-10">
-              <div className="inline-flex items-center gap-3 border px-5 py-2.5 rounded-full" style={{ borderColor: 'var(--line)', background: 'rgba(107,163,255,0.04)' }}>
-                <motion.span
-                  className="h-2 w-2 rounded-full"
-                  style={{ background: 'var(--accent)' }}
-                  animate={{ opacity: [0.3, 1, 0.3], scale: [0.9, 1.1, 0.9] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                />
-                <span className="type-meta font-mono tracking-[0.2em]" style={{ color: 'var(--text-3)', fontSize: '0.65rem' }}>
-                  {scrambledBadge}
+      <div className="relative z-10 mx-auto w-full max-w-[1400px] px-5 sm:px-8 lg:px-12">
+        <div className="grid min-h-[86vh] items-center gap-10 lg:grid-cols-[0.96fr_1.04fr] lg:gap-8">
+          <motion.div style={{ y: textY }} className="relative">
+            <motion.div custom={0.15} variants={reveal} initial="hidden" animate="visible">
+              <div className="inline-flex items-center gap-3 rounded-full border px-5 py-2.5 hero-data-chip">
+                <span className="h-2 w-2 rounded-full hero-signal-dot" />
+                <span className="type-meta" style={{ color: 'var(--text-3)' }}>
+                  Eclipse Forge / systems &gt; interfaces
                 </span>
               </div>
             </motion.div>
 
-            {/* Headline — asymmetric, large */}
-            <div className="mb-8 lg:mb-10" style={{ perspective: '800px' }}>
-              <h1 className="type-display" style={{ fontSize: 'clamp(2.8rem, 8vw, 7rem)' }}>
-                {['Строю'].map((w, i) => (
-                  <motion.span key={i} custom={i} variants={wordReveal} initial="hidden" animate="visible"
-                    className="inline-block mr-[0.2em]" style={{ color: 'var(--text-3)' }}>
-                    {w}
-                  </motion.span>
-                ))}
-                <br />
-                {['AI-системы,'].map((w, i) => (
-                  <motion.span key={`ai-${i}`} custom={i + 1} variants={wordReveal} initial="hidden" animate="visible"
-                    className="inline-block mr-[0.2em] text-gradient-accent">
-                    {w}
-                  </motion.span>
-                ))}
-              </h1>
-              <h1 className="type-display mt-2" style={{ fontSize: 'clamp(2.8rem, 8vw, 7rem)' }}>
-                {['которые'].map((w, i) => (
-                  <motion.span key={`w2-${i}`} custom={i + 2} variants={wordReveal} initial="hidden" animate="visible"
-                    className="inline-block mr-[0.2em]" style={{ color: 'var(--text-4)' }}>
-                    {w}
-                  </motion.span>
-                ))}
-                {['работают.'].map((w, i) => (
-                  <motion.span key={`w3-${i}`} custom={i + 3} variants={wordReveal} initial="hidden" animate="visible"
-                    className="inline-block text-gradient-hero">
-                    {w}
-                  </motion.span>
-                ))}
-              </h1>
-            </div>
-
-            {/* Decorative line */}
-            <motion.div
-              custom={1.0}
-              variants={lineSlide}
+            <motion.h1
+              custom={0.25}
+              variants={reveal}
               initial="hidden"
               animate="visible"
-              className="h-px w-full max-w-[200px] mb-8 origin-left"
-              style={{ background: 'linear-gradient(90deg, var(--accent), transparent)' }}
-            />
+              className="type-display mt-8 max-w-[11ch] text-balance text-[clamp(3rem,8vw,7.4rem)]"
+            >
+              Build systems that keep
+              <span className="block text-gradient-hero">control in motion.</span>
+            </motion.h1>
 
-            {/* Subtitle */}
-            <motion.p custom={1.2} variants={fadeIn} initial="hidden" animate="visible"
-              className="type-body max-w-lg text-[15px] sm:text-[16px] mb-10 leading-relaxed" style={{ color: 'var(--text-2)' }}>
-              Rust-инфраструктура, мультиплатформенные TypeScript-приложения, Python-бэкенды.
-              <span className="block mt-2" style={{ color: 'var(--accent)' }}>958 тестов в 7 проектах. Каждый коммит проверен.</span>
+            <motion.p
+              custom={0.38}
+              variants={reveal}
+              initial="hidden"
+              animate="visible"
+              className="type-body mt-7 max-w-xl text-[15px] leading-relaxed sm:text-[17px]"
+              style={{ color: 'var(--text-2)' }}
+            >
+              Eclipse Forge is where AI operators, automation, SaaS products and internal platforms are designed as working systems.
+              The interface is only the front layer. The real work lives in the routing, state, decisions and execution loops behind it.
             </motion.p>
 
-            {/* CTA buttons */}
-            <motion.div custom={1.5} variants={fadeIn} initial="hidden" animate="visible"
-              className="flex flex-col gap-3 sm:flex-row sm:gap-4">
-              <MagneticButton strength={0.25}>
+            <motion.div
+              custom={0.48}
+              variants={reveal}
+              initial="hidden"
+              animate="visible"
+              className="mt-10 flex flex-col gap-3 sm:flex-row"
+            >
+              <MagneticButton strength={0.22}>
                 <GlowButton href="#contact" className="justify-center px-10 py-4 text-[14px]">
-                  Написать
+                  Enter the system
                 </GlowButton>
               </MagneticButton>
-              <a href="#cases"
+
+              <a
+                href="#cases"
                 className="group inline-flex items-center justify-center gap-3 rounded-full border px-10 py-4 text-[14px] font-display transition-all duration-500 hover:bg-white/[0.02]"
-                style={{ color: 'var(--text-3)', borderColor: 'var(--line)' }}>
-                Портфолио
-                <span className="w-5 h-px transition-all duration-500 group-hover:w-10" style={{ background: 'var(--accent-warm)' }} />
+                style={{ color: 'var(--text-2)', borderColor: 'var(--line)' }}
+              >
+                Explore cases
+                <span className="h-px w-6 transition-all duration-500 group-hover:w-12" style={{ background: 'var(--accent-warm)' }} />
               </a>
             </motion.div>
 
-            {/* Mobile/tablet metric chips — visible on <lg, replace the lg-only floating cards */}
-            <motion.div custom={1.8} variants={fadeIn} initial="hidden" animate="visible"
-              className="mt-10 flex flex-wrap gap-2 lg:hidden">
-              {metrics.map((m) => (
-                <div
-                  key={m.label}
-                  className="inline-flex items-baseline gap-2 border rounded-lg px-3 py-2 backdrop-blur-sm"
-                  style={{ borderColor: 'var(--line)', background: 'var(--hero-stat-bg)' }}
-                >
-                  <span className="font-display text-lg font-semibold leading-none" style={{ color: 'var(--text-1)' }}>
-                    {m.value}
-                  </span>
-                  <span className="text-[10px] tracking-[0.12em] uppercase leading-none" style={{ color: 'var(--text-4)' }}>
-                    {m.label}
-                  </span>
+            <motion.div
+              custom={0.58}
+              variants={reveal}
+              initial="hidden"
+              animate="visible"
+              className="mt-8 flex flex-wrap gap-3"
+            >
+              {metrics.map((metric) => (
+                <div key={metric.label} className="rounded-2xl border px-4 py-3 hero-data-chip">
+                  <p className="font-display text-lg font-medium tracking-tight" style={{ color: 'var(--text-1)' }}>
+                    {metric.value}
+                  </p>
+                  <p className="mt-1 text-[10px] uppercase tracking-[0.2em]" style={{ color: 'var(--text-4)' }}>
+                    {metric.label}
+                  </p>
                 </div>
               ))}
-              <div className="inline-flex items-center gap-2 px-3 py-2">
-                <motion.div
-                  className="h-1.5 w-1.5 rounded-full"
-                  style={{ background: 'var(--live)' }}
-                  animate={{ opacity: [0.4, 1, 0.4] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
-                <span className="text-[10px] tracking-[0.15em] uppercase" style={{ color: 'var(--text-4)' }}>
-                  Открыт к проектам
+            </motion.div>
+
+            <motion.div
+              custom={0.68}
+              variants={reveal}
+              initial="hidden"
+              animate="visible"
+              className="mt-8 flex flex-wrap items-center gap-4"
+            >
+              <div className="inline-flex items-center gap-3 rounded-full border px-4 py-2 hero-data-chip">
+                <span className="h-2 w-2 rounded-full hero-signal-dot" />
+                <span className="text-[10px] uppercase tracking-[0.22em]" style={{ color: 'var(--text-3)' }}>
+                  complex build channel open
                 </span>
               </div>
-            </motion.div>
-          </div>
-
-          {/* RIGHT — Metric cards + visual */}
-          <motion.div custom={1.8} variants={fadeIn} initial="hidden" animate="visible"
-            className="relative hidden lg:flex flex-col gap-4 items-end">
-
-            {/* Floating metric cards */}
-            {metrics.map((m, i) => (
-              <motion.div
-                key={m.label}
-                initial={{ opacity: 0, x: 30, y: 10 }}
-                animate={{ opacity: 1, x: 0, y: 0 }}
-                transition={{ duration: 0.8, delay: 2.0 + i * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                className="border rounded-2xl px-6 py-5 backdrop-blur-sm"
-                style={{
-                  borderColor: 'var(--line)',
-                  background: 'var(--hero-stat-bg)',
-                  marginRight: i === 1 ? '2rem' : i === 2 ? '4rem' : '0',
-                }}
-              >
-                <span className="font-display text-3xl font-light tracking-tight" style={{ color: 'var(--text-1)' }}>
-                  {m.value}
-                </span>
-                <span className="block text-[11px] tracking-[0.15em] uppercase mt-1" style={{ color: 'var(--text-4)' }}>
-                  {m.label}
-                </span>
-              </motion.div>
-            ))}
-
-            {/* Status indicator */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 2.8 }}
-              className="flex items-center gap-2 mt-4 mr-8"
-            >
-              <motion.div
-                className="h-1.5 w-1.5 rounded-full"
-                style={{ background: 'var(--live)' }}
-                animate={{ opacity: [0.4, 1, 0.4] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-              <span className="text-[10px] tracking-[0.25em] uppercase" style={{ color: 'var(--text-4)' }}>
-                Открыт к проектам
+              <span className="text-[11px] uppercase tracking-[0.18em]" style={{ color: 'var(--text-4)' }}>
+                Telegram {contactDetails.telegramDm}
               </span>
             </motion.div>
           </motion.div>
+
+          <motion.div style={{ y: visualY }} className="relative">
+            <div className="relative mx-auto flex max-w-[680px] justify-center lg:justify-end">
+              <div className="hero-core-shell relative w-full max-w-[620px]">
+                <motion.div className="absolute left-1/2 top-[46%] z-0 h-[76%] w-[76%] -translate-x-1/2 -translate-y-1/2" style={{ scale: glowScale }}>
+                  <BlackHoleCanvas className="h-full w-full rounded-full opacity-90" />
+                </motion.div>
+
+                <div className="pointer-events-none absolute left-1/2 top-[46%] z-10 -translate-x-1/2 -translate-y-1/2">
+                  <SolarCorona size={520} rays={28} color="rgba(157,196,255,0.07)" />
+                </div>
+                <div className="pointer-events-none absolute left-1/2 top-[46%] z-10 -translate-x-1/2 -translate-y-1/2">
+                  <OrbitalRing size={560} dotCount={3} duration={54} color="var(--accent)" />
+                </div>
+                <div className="pointer-events-none absolute left-1/2 top-[46%] z-10 -translate-x-1/2 -translate-y-1/2 opacity-70">
+                  <OrbitalRing size={680} dotCount={2} duration={78} color="var(--accent-warm)" />
+                </div>
+
+                <div className="relative z-20 flex min-h-[520px] items-end justify-end sm:min-h-[620px]">
+                  <motion.div
+                    initial={{ opacity: 0, x: 40, y: 24 }}
+                    animate={{ opacity: 1, x: 0, y: 0 }}
+                    transition={{ duration: 1, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                    className="hero-portrait-card relative w-full max-w-[390px] rounded-[2rem] border p-3 sm:p-4"
+                  >
+                    <AssetImage
+                      alt={brandAssets.founderDesk.alt}
+                      sources={brandAssets.founderDesk.sources}
+                      loading="eager"
+                      className="h-[320px] w-full rounded-[1.7rem] object-cover sm:h-[420px]"
+                      style={{ objectPosition: brandAssets.founderDesk.objectPosition }}
+                      fallback={<HeroPortraitFallback />}
+                    />
+
+                    <div className="pointer-events-none absolute inset-x-10 top-8 rounded-full border px-4 py-2 hero-status-line">
+                      <div className="flex items-center justify-between gap-4 text-[10px] uppercase tracking-[0.24em]">
+                        <span style={{ color: 'var(--text-4)' }}>operator</span>
+                        <span style={{ color: 'var(--text-2)' }}>signal stable</span>
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, x: -30, y: 20 }}
+                    animate={{ opacity: 1, x: 0, y: 0 }}
+                    transition={{ duration: 0.9, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    className="hero-brand-plate absolute left-0 top-10 hidden w-[260px] rounded-[1.6rem] border p-3 sm:block"
+                  >
+                    <AssetImage
+                      alt={brandAssets.heroPlate.alt}
+                      sources={brandAssets.heroPlate.sources}
+                      loading="lazy"
+                      className="h-[148px] w-full rounded-[1.25rem] object-cover"
+                      style={{ objectPosition: brandAssets.heroPlate.objectPosition }}
+                      fallback={
+                        <div className="flex h-[148px] w-full items-end rounded-[1.25rem] bg-[radial-gradient(circle_at_top,rgba(117,140,255,0.18),transparent_58%),linear-gradient(180deg,#0d1117_0%,#07090d_100%)] p-4">
+                          <p className="type-meta" style={{ color: 'var(--text-3)' }}>
+                            Eclipse Forge
+                          </p>
+                        </div>
+                      }
+                    />
+                    <div className="mt-3 flex items-center justify-between px-1">
+                      <span className="text-[10px] uppercase tracking-[0.2em]" style={{ color: 'var(--text-4)' }}>
+                        system core
+                      </span>
+                      <span className="text-[11px] uppercase tracking-[0.2em]" style={{ color: 'var(--accent)' }}>
+                        orbital view
+                      </span>
+                    </div>
+                  </motion.div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
-      </motion.div>
+      </div>
 
-      {/* Bottom glow line */}
-      <div className="absolute bottom-0 left-0 right-0 glow-line" />
-
-      {/* Scroll hint */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        className="absolute bottom-7 left-1/2 z-20 hidden -translate-x-1/2 flex-col items-center gap-2 lg:flex"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 3 }}
+        transition={{ delay: 1.4, duration: 0.6 }}
       >
+        <span className="text-[10px] uppercase tracking-[0.28em]" style={{ color: 'var(--text-4)' }}>
+          scroll into orbit
+        </span>
         <motion.div
-          className="w-px h-8"
+          className="h-10 w-px"
           style={{ background: 'linear-gradient(to bottom, var(--accent), transparent)' }}
-          animate={{ scaleY: [0.3, 1, 0.3], opacity: [0.3, 0.7, 0.3] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          animate={{ scaleY: [0.4, 1, 0.4], opacity: [0.3, 0.8, 0.3] }}
+          transition={{ duration: 2.3, repeat: Infinity }}
         />
       </motion.div>
     </section>

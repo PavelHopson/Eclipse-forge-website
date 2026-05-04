@@ -1,82 +1,83 @@
 import { motion } from 'framer-motion';
-import { services } from '../../data/content';
+import { serviceEntryPoints } from '../../data/content';
 import { revealUp, stagger, viewport } from '../../lib/animation';
-import { EclipseSilhouette, MiniEclipse } from '../ui/EclipseVisuals';
-
-const serviceIcons = [
-  // AI brain
-  <svg key="ai" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 2a4 4 0 0 1 4 4c0 1.95-1.4 3.58-3.25 3.93" /><path d="M8 6a4 4 0 0 1 4-4" /><path d="M12 22a4 4 0 0 1-4-4c0-1.95 1.4-3.58 3.25-3.93" />
-    <path d="M16 18a4 4 0 0 1-4 4" /><path d="M2 12a4 4 0 0 1 4-4c1.95 0 3.58 1.4 3.93 3.25" /><path d="M6 16a4 4 0 0 1-4-4" />
-    <path d="M22 12a4 4 0 0 1-4 4c-1.95 0-3.58-1.4-3.93-3.25" /><path d="M18 8a4 4 0 0 1 4 4" /><circle cx="12" cy="12" r="2" />
-  </svg>,
-  // Code/fullstack
-  <svg key="code" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /><line x1="12" y1="2" x2="12" y2="22" />
-  </svg>,
-  // Rust/systems
-  <svg key="rust" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="2" y="3" width="20" height="14" rx="2" ry="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" />
-    <path d="M7 8h4l-2 4h4" />
-  </svg>,
-];
+import { MiniEclipse, OrbitalRing, ParticleField } from '../ui/EclipseVisuals';
 
 export function ServicesSection() {
   return (
-    <motion.section id="services" className="section-shell py-16 sm:py-24 lg:py-40 relative overflow-hidden" variants={stagger} initial="hidden" whileInView="visible" viewport={viewport}>
-      {/* Background eclipse silhouette */}
-      <div className="absolute -top-20 -left-20 opacity-30 hidden lg:block">
-        <EclipseSilhouette size={300} coronaColor="rgba(245,166,35,0.1)" animate={false} />
+    <motion.section
+      id="services"
+      className="section-shell relative overflow-hidden py-16 sm:py-24 lg:py-36"
+      variants={stagger}
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewport}
+    >
+      <div className="absolute inset-0 services-atmosphere-bg" />
+      <div className="absolute inset-0 opacity-35">
+        <ParticleField count={12} />
       </div>
-      <MiniEclipse size={20} className="absolute top-16 right-20 hidden lg:block opacity-30" />
-      <MiniEclipse size={16} className="absolute bottom-24 right-[40%] hidden lg:block opacity-20" color="var(--accent-warm)" />
+      <div className="absolute -left-24 top-12 hidden lg:block opacity-35">
+        <OrbitalRing size={300} dotCount={3} duration={40} color="var(--accent)" />
+      </div>
+      <MiniEclipse size={20} className="absolute right-20 top-20 hidden opacity-35 lg:block" />
+      <MiniEclipse size={16} className="absolute bottom-20 right-[38%] hidden opacity-25 lg:block" color="var(--accent-warm)" />
 
-      <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12 relative">
-        <motion.p variants={revealUp} className="type-meta mb-6" style={{ color: 'var(--accent)' }}>Экспертиза</motion.p>
-        <motion.h2 variants={revealUp} className="type-display max-w-xl mb-16 lg:mb-20" style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}>
-          <span className="text-gradient">Технология как инструмент</span>
-          <br />
-          <span style={{ color: 'var(--text-4)' }}>контроля.</span>
+      <div className="relative mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
+        <motion.p variants={revealUp} className="type-meta mb-6" style={{ color: 'var(--accent)' }}>
+          Entry points
+        </motion.p>
+        <motion.h2 variants={revealUp} className="type-display mb-6 max-w-[12ch] text-[clamp(2.2rem,4.5vw,4rem)]">
+          Things you can actually bring into the forge.
         </motion.h2>
+        <motion.p variants={revealUp} className="max-w-2xl type-body text-[15px] leading-relaxed sm:text-[16px]" style={{ color: 'var(--text-3)' }}>
+          Not a rate card. These are the most natural ways to engage when the problem is operational complexity, AI execution or product logic that needs a strong front layer.
+        </motion.p>
 
-        <div className="grid lg:grid-cols-3 gap-4">
-          {services.map((service, i) => (
-            <motion.div
+        <div className="mt-10 grid gap-4 lg:grid-cols-2 xl:grid-cols-5">
+          {serviceEntryPoints.map((service, index) => (
+            <motion.article
               key={service.title}
               variants={revealUp}
-              whileHover={{ y: -6, borderColor: 'rgba(107,163,255,0.15)' }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="group relative border rounded-2xl p-8 lg:p-10 transition-all duration-500 overflow-hidden"
-              style={{ borderColor: 'var(--line)', background: 'var(--bg-card)' }}
+              whileHover={{ y: -8 }}
+              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              className="group relative overflow-hidden rounded-[1.9rem] border p-6 services-card"
             >
-              {/* Hover gradient */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(107,163,255,0.04) 0%, transparent 70%)' }} />
+              <div className="pointer-events-none absolute inset-0 services-card-glow opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              <div className="pointer-events-none absolute inset-x-10 top-0 h-px opacity-0 transition-opacity duration-500 group-hover:opacity-100 services-edge-glow" />
 
-              {/* Icon */}
-              <div className="relative mb-8 w-14 h-14 flex items-center justify-center rounded-xl border"
-                style={{ borderColor: 'var(--line)', color: 'var(--accent)', background: 'var(--accent-soft)' }}>
-                {serviceIcons[i]}
+              <div className="relative">
+                <div className="mb-5 inline-flex rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.22em] services-chip">
+                  {service.cue}
+                </div>
+                <h3 className="font-display text-[1.2rem] font-medium tracking-tight" style={{ color: 'var(--text-1)' }}>
+                  {service.title}
+                </h3>
+                <p className="mt-4 type-body text-[14px] leading-relaxed" style={{ color: 'var(--text-2)' }}>
+                  {service.description}
+                </p>
+                <div className="mt-5 rounded-2xl border px-4 py-4 services-panel">
+                  <p className="type-meta mb-2" style={{ color: 'var(--accent)' }}>
+                    For who
+                  </p>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-3)' }}>
+                    {service.audience}
+                  </p>
+                </div>
+                <div className="mt-4 rounded-2xl border px-4 py-4 services-panel">
+                  <p className="type-meta mb-2" style={{ color: 'var(--accent)' }}>
+                    Outcome
+                  </p>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-2)' }}>
+                    {service.result}
+                  </p>
+                </div>
               </div>
 
-              {/* Number */}
-              <span className="relative font-display text-[11px] font-light tracking-[0.2em] uppercase block mb-4" style={{ color: 'var(--text-4)' }}>
-                0{i + 1}
-              </span>
-
-              <h3 className="relative font-display text-xl lg:text-2xl font-medium tracking-tight mb-4 transition-colors duration-400"
-                style={{ color: 'var(--text-1)' }}>
-                {service.title}
-              </h3>
-
-              <p className="relative type-body text-[14px] sm:text-[15px] leading-relaxed" style={{ color: 'var(--text-3)' }}>
-                {service.text}
-              </p>
-
-              {/* Bottom accent line on hover */}
-              <div className="absolute bottom-0 left-0 w-0 h-px group-hover:w-full transition-all duration-700"
-                style={{ background: 'linear-gradient(90deg, var(--accent), var(--accent-warm))' }} />
-            </motion.div>
+              <div className="pointer-events-none absolute bottom-4 right-4 text-[3.4rem] font-display font-light tracking-tight text-white/5">
+                0{index + 1}
+              </div>
+            </motion.article>
           ))}
         </div>
       </div>

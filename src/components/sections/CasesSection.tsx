@@ -1,53 +1,83 @@
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { useRef, type MouseEvent as ReactMouseEvent } from 'react';
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  type MouseEvent as ReactMouseEvent,
+} from 'framer-motion';
+import { useRef } from 'react';
 import { allProjects, featuredProjects, portfolioCollections, type Project, type ProjectStatus } from '../../data/content';
 import { revealScale, revealUp, stagger, staggerFast, viewport } from '../../lib/animation';
+import { AssetImage } from '../ui/AssetImage';
+import { ConstellationField, EclipseSilhouette, OrbitalRing, ParticleField } from '../ui/EclipseVisuals';
 import { SectionHeading } from '../ui/SectionHeading';
 
 const statusStyles: Record<ProjectStatus, { color: string; borderColor: string; background: string }> = {
-  Live: { color: '#6EC8A0', borderColor: 'rgba(110,200,160,0.2)', background: 'rgba(110,200,160,0.08)' },
+  Live: { color: '#7EE1B0', borderColor: 'rgba(126,225,176,0.24)', background: 'rgba(126,225,176,0.08)' },
   Beta: { color: 'var(--accent)', borderColor: 'var(--accent-dim)', background: 'var(--accent-soft)' },
-  Prototype: { color: '#D6AE72', borderColor: 'rgba(214,174,114,0.2)', background: 'rgba(214,174,114,0.08)' },
+  Prototype: { color: '#C9BEFF', borderColor: 'rgba(201,190,255,0.28)', background: 'rgba(201,190,255,0.08)' },
   Concept: { color: 'var(--text-3)', borderColor: 'var(--line)', background: 'var(--surface-2)' },
-  Reference: { color: '#9DB6CF', borderColor: 'rgba(157,182,207,0.2)', background: 'rgba(157,182,207,0.08)' },
+  Reference: { color: '#9DB6CF', borderColor: 'rgba(157,182,207,0.24)', background: 'rgba(157,182,207,0.08)' },
 };
 
 const portfolioAnchors = [
-  { href: '#featured-cases', label: 'Флагман', count: featuredProjects.length },
-  { href: '#ai-products', label: 'AI-продукты', count: portfolioCollections[0]?.projects.length ?? 0 },
-  { href: '#web-fullstack', label: 'Веб и Fullstack', count: portfolioCollections[1]?.projects.length ?? 0 },
-  { href: '#engineering-tools', label: 'Инструменты', count: portfolioCollections[2]?.projects.length ?? 0 },
+  { href: '#featured-cases', label: 'Flagships', count: featuredProjects.length },
+  { href: '#ai-products', label: 'AI systems', count: portfolioCollections[0]?.projects.length ?? 0 },
+  { href: '#product-systems', label: 'Product systems', count: portfolioCollections[1]?.projects.length ?? 0 },
+  { href: '#engineering-tools', label: 'Tooling', count: portfolioCollections[2]?.projects.length ?? 0 },
 ];
 
-/* ── 3D Tilt Card ── */
-function TiltCard({ children, className = '', style }: { children: React.ReactNode; className?: string; style?: React.CSSProperties }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [4, -4]), { stiffness: 300, damping: 30 });
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-4, 4]), { stiffness: 300, damping: 30 });
-
-  function handleMouse(e: ReactMouseEvent) {
-    const rect = ref.current?.getBoundingClientRect();
-    if (!rect) return;
-    mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
-    mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
-  }
-
-  function handleLeave() {
-    mouseX.set(0);
-    mouseY.set(0);
-  }
-
+function PlaceholderVisual({ project }: { project: Project }) {
   return (
-    <div ref={ref} className="perspective-container" onMouseMove={handleMouse} onMouseLeave={handleLeave}>
-      <motion.div
-        className={className}
-        style={{ ...style, rotateX, rotateY, transformStyle: 'preserve-3d' }}
-      >
-        {children}
-      </motion.div>
+    <div className="relative flex h-full min-h-[260px] items-center justify-center overflow-hidden rounded-[1.7rem] case-visual-placeholder">
+      <div className="absolute inset-0 case-placeholder-grid" />
+      <div className="absolute inset-0 opacity-35">
+        <ConstellationField />
+      </div>
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-80">
+        <OrbitalRing size={220} dotCount={3} duration={42} color="var(--accent-warm)" />
+      </div>
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <EclipseSilhouette size={150} coronaColor="rgba(157, 196, 255, 0.14)" />
+      </div>
+      <div className="absolute inset-x-5 bottom-5 rounded-2xl border px-4 py-4 case-placeholder-panel">
+        <p className="type-meta mb-2" style={{ color: 'var(--accent)' }}>
+          {project.systemType}
+        </p>
+        <p className="font-display text-lg tracking-tight" style={{ color: 'var(--text-1)' }}>
+          {project.title}
+        </p>
+        <p className="mt-2 text-sm leading-relaxed" style={{ color: 'var(--text-3)' }}>
+          Add a screenshot into `public/images/projects` and the card will pick it up automatically.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function ProjectVisual({ project }: { project: Project }) {
+  return (
+    <div className="case-media relative overflow-hidden rounded-[1.85rem] border">
+      <AssetImage
+        alt={project.image?.alt ?? `${project.title} preview`}
+        sources={project.image?.sources}
+        loading="lazy"
+        className="h-full min-h-[260px] w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+        style={{ objectPosition: project.image?.objectPosition }}
+        fallback={<PlaceholderVisual project={project} />}
+      />
+      <div className="pointer-events-none absolute inset-0 case-media-overlay" />
+      <div className="pointer-events-none absolute left-5 top-5 rounded-full border px-3 py-2 text-[10px] uppercase tracking-[0.22em] case-top-pill">
+        {project.systemType}
+      </div>
+      <div className="pointer-events-none absolute bottom-5 left-5 flex flex-wrap gap-2">
+        {project.tags.slice(0, 2).map((tag) => (
+          <span key={tag} className="rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.18em] case-top-pill">
+            {tag}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }
@@ -55,183 +85,228 @@ function TiltCard({ children, className = '', style }: { children: React.ReactNo
 function ProjectCard({ project, index, featured = false, isLastOdd = false }: { project: Project; index: number; featured?: boolean; isLastOdd?: boolean }) {
   const statusStyle = statusStyles[project.status];
   const isLarge = (featured && index === 0) || isLastOdd;
+  const ref = useRef<HTMLDivElement>(null);
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const smoothX = useSpring(mouseX, { stiffness: 220, damping: 28 });
+  const smoothY = useSpring(mouseY, { stiffness: 220, damping: 28 });
+  const rotateX = useSpring(useTransform(smoothY, [-0.5, 0.5], [3, -3]), { stiffness: 180, damping: 24 });
+  const rotateY = useSpring(useTransform(smoothX, [-0.5, 0.5], [-4, 4]), { stiffness: 180, damping: 24 });
+  const spotlight = useMotionTemplate`radial-gradient(circle at ${useTransform(smoothX, [-0.5, 0.5], ['18%', '82%'])} ${useTransform(
+    smoothY,
+    [-0.5, 0.5],
+    ['12%', '88%'],
+  )}, rgba(157,196,255,0.16), transparent 42%)`;
+
+  const handleMouseMove = (event: ReactMouseEvent) => {
+    const rect = ref.current?.getBoundingClientRect();
+    if (!rect) return;
+
+    mouseX.set((event.clientX - rect.left) / rect.width - 0.5);
+    mouseY.set((event.clientY - rect.top) / rect.height - 0.5);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
 
   return (
-    <motion.article
-      variants={revealScale}
-      className={isLarge ? 'md:col-span-2' : ''}
-    >
-      <TiltCard
-        className="group relative rounded-2xl border p-6 sm:p-8 overflow-hidden transition-all duration-500"
-        style={{
-          background: 'linear-gradient(135deg, var(--bg-card) 0%, var(--bg) 100%)',
-          borderColor: 'var(--line)',
-          boxShadow: '0 2px 20px rgba(0,0,0,0.2)',
-        }}
-      >
-        {/* Hover gradient border glow */}
-        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-600 pointer-events-none"
-          style={{
-            background: 'linear-gradient(135deg, rgba(107,163,255,0.06) 0%, transparent 40%, transparent 60%, rgba(245,166,35,0.04) 100%)',
-          }} />
+    <motion.article variants={revealScale} className={isLarge ? 'lg:col-span-2' : ''}>
+      <div ref={ref} className="perspective-container" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
+        <motion.div
+          style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+          className="group relative overflow-hidden rounded-[2rem] border p-3 transition-all duration-500 case-card-shell"
+        >
+          <motion.div className="pointer-events-none absolute inset-0 rounded-[2rem] opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ backgroundImage: spotlight }} />
+          <div className="pointer-events-none absolute inset-x-10 top-0 h-px opacity-0 transition-opacity duration-500 group-hover:opacity-100 case-edge-glow" />
 
-        {/* Top glow on hover */}
-        <div className="absolute top-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-          style={{ background: 'linear-gradient(90deg, transparent, rgba(107,163,255,0.3), transparent)' }} />
+          <div className="grid gap-4 lg:grid-cols-[1.02fr_0.98fr]">
+            <ProjectVisual project={project} />
 
-        <div className="relative">
-          <div className="mb-5 flex flex-wrap items-center gap-3 sm:gap-4">
-            <span className="font-display text-2xl font-extralight sm:text-3xl" style={{ color: 'var(--text-4)' }}>
-              #{String(index + 1).padStart(2, '0')}
-            </span>
+            <div className="flex flex-col justify-between rounded-[1.85rem] border p-6 sm:p-7 case-copy-panel">
+              <div>
+                <div className="mb-4 flex flex-wrap items-center gap-3">
+                  <span className="font-display text-2xl font-light tracking-tight" style={{ color: 'var(--text-4)' }}>
+                    #{String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span className="rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.22em]" style={statusStyle}>
+                    {project.status}
+                  </span>
+                  {project.liveUrl ? (
+                    <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em]" style={{ color: '#7EE1B0' }}>
+                      <span className="h-1.5 w-1.5 rounded-full bg-current opacity-80" />
+                      demo live
+                    </span>
+                  ) : null}
+                </div>
 
-            <span className="rounded-full border px-3 py-1.5 text-[9px] font-medium uppercase tracking-[0.35em]"
-              style={{ color: 'var(--accent)', borderColor: 'var(--accent-dim)', background: 'var(--accent-soft)', borderWidth: '1px' }}>
-              {project.tag}
-            </span>
+                <h3 className="type-heading text-[1.4rem] leading-tight sm:text-[1.8rem]" style={{ color: 'var(--text-1)' }}>
+                  {project.title}
+                </h3>
 
-            <span className="rounded-full border px-3 py-1.5 text-[9px] font-medium uppercase tracking-[0.28em]"
-              style={{ ...statusStyle, borderWidth: '1px' }}>
-              {project.status}
-            </span>
+                <p className="mt-4 type-body text-[14px] leading-relaxed sm:text-[15px]" style={{ color: 'var(--text-2)' }}>
+                  {project.description}
+                </p>
 
-            {project.liveUrl && (
-              <span className="flex items-center gap-1.5 text-[9px] uppercase tracking-[0.25em]" style={{ color: 'rgba(110,200,160,0.72)' }}>
-                <motion.span
-                  animate={{ opacity: [0.3, 0.9, 0.3] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                  className="h-1.5 w-1.5 rounded-full"
-                  style={{ background: 'rgba(110,200,160,0.8)' }}
-                />
-                Demo
-              </span>
-            )}
+                <div className="mt-5 rounded-2xl border px-4 py-4 case-signal-panel">
+                  <p className="type-meta mb-2" style={{ color: 'var(--accent)' }}>
+                    signal
+                  </p>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-2)' }}>
+                    {project.signal}
+                  </p>
+                </div>
+
+                <motion.div
+                  variants={staggerFast}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.2 }}
+                  className="mt-5 flex flex-wrap gap-2"
+                >
+                  {project.tech.map((tech) => (
+                    <motion.span
+                      key={tech}
+                      variants={revealUp}
+                      className="rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] case-tech-pill"
+                    >
+                      {tech}
+                    </motion.span>
+                  ))}
+                </motion.div>
+              </div>
+
+              <div className="mt-6">
+                <div className="overflow-hidden">
+                  <div className="flex flex-wrap gap-2 rounded-2xl border px-4 py-4 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 case-meta-strip">
+                    {project.tags.map((tag) => (
+                      <span key={tag} className="rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] case-tech-pill">
+                        {tag}
+                      </span>
+                    ))}
+                    <span className="rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] case-tech-pill">
+                      {project.result}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="mt-5 flex flex-wrap items-center gap-3">
+                  {project.liveUrl ? (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full border px-5 py-3 text-[12px] font-display transition-all duration-400 case-link-primary"
+                    >
+                      Demo
+                    </a>
+                  ) : null}
+                  <a
+                    href={project.repoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border px-5 py-3 text-[12px] font-display transition-all duration-400 case-link-secondary"
+                  >
+                    GitHub
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
-
-          <h3 className="type-heading mb-3 text-lg sm:text-xl group-hover:text-gradient-accent transition-colors duration-400" style={{ color: 'var(--text-1)' }}>
-            {project.title}
-          </h3>
-
-          <p className="type-body mb-5 max-w-2xl text-[14px] leading-relaxed sm:text-[15px]" style={{ color: 'var(--text-2)' }}>
-            {project.description}
-          </p>
-
-          <div className="mb-5 inline-flex items-baseline gap-2 border rounded-lg px-4 py-2"
-            style={{ borderColor: 'var(--line)', background: 'var(--accent-soft)' }}>
-            <span className="text-[9px] uppercase tracking-[0.25em]" style={{ color: 'var(--text-4)' }}>Результат:</span>
-            <span className="text-[12px] font-medium" style={{ color: 'var(--accent)' }}>{project.result}</span>
-          </div>
-
-          <motion.div variants={staggerFast} initial="hidden" whileInView="visible" viewport={{ once: true }} className="mb-5 flex flex-wrap gap-1.5">
-            {project.tech.map((tech) => (
-              <motion.span key={tech} variants={revealUp}
-                className="border rounded-md px-2.5 py-1 text-[10px]"
-                style={{ color: 'var(--text-3)', borderColor: 'var(--line)', background: 'var(--bg-card)' }}>
-                {tech}
-              </motion.span>
-            ))}
-          </motion.div>
-
-          <div className="flex flex-wrap items-center gap-4">
-            {project.liveUrl && (
-              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[12px] font-medium font-display transition-all duration-400 hover:shadow-[0_0_20px_rgba(107,163,255,0.08)] sm:text-[13px]"
-                style={{ color: 'var(--accent)', borderColor: 'var(--accent-dim)', background: 'var(--accent-soft)' }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M15 3h6v6" /><path d="M10 14 21 3" /><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                </svg>
-                Демо
-              </a>
-            )}
-            <a href={project.repoUrl} target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[12px] font-display transition-all duration-400 hover:border-[var(--text-3)] hover:text-[var(--text-2)] sm:text-[13px]"
-              style={{ color: 'var(--text-3)', borderColor: 'var(--line)' }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-              </svg>
-              GitHub
-            </a>
-          </div>
-        </div>
-      </TiltCard>
+        </motion.div>
+      </div>
     </motion.article>
   );
 }
 
 export function CasesSection() {
   return (
-    <section id="cases" className="section-shell py-16 sm:py-24 lg:py-40">
-      <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
+    <section id="cases" className="section-shell relative overflow-hidden py-16 sm:py-24 lg:py-36">
+      <div className="absolute inset-0 case-atmosphere-bg" />
+      <div className="absolute inset-0 opacity-40">
+        <ParticleField count={18} />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
         <motion.div variants={revealUp} initial="hidden" whileInView="visible" viewport={viewport} className="animated-divider">
-          <SectionHeading eyebrow="Портфолио" title="Флагманские кейсы и вся экосистема." />
+          <SectionHeading eyebrow="Selected systems" title="Flagship artifacts, then the wider engineering field." />
           <p className="mt-5 max-w-3xl type-body text-[15px] sm:text-base" style={{ color: 'var(--text-3)' }}>
-            Системы, которые продают экспертизу студии. Ниже — вся библиотека: продуктовые демо,
-            backend-инструменты и knowledge-слой.
+            These projects show the pattern clearly: interfaces are only the visible shell. The value lives in control layers,
+            decision flows, AI routing, extraction, monitoring and execution.
           </p>
         </motion.div>
 
         <motion.div variants={revealUp} initial="hidden" whileInView="visible" viewport={viewport} className="mt-8 flex flex-wrap items-center gap-2.5">
-          <span className="rounded-full border px-4 py-2 text-[10px] uppercase tracking-[0.24em]"
-            style={{ color: 'var(--text-2)', borderColor: 'var(--line)', background: 'var(--surface-2)' }}>
-            {allProjects.length} проектов
+          <span className="rounded-full border px-4 py-2 text-[10px] uppercase tracking-[0.24em] case-anchor-chip">
+            {allProjects.length} visible systems
           </span>
           {portfolioAnchors.map((anchor) => (
-            <a key={anchor.href} href={anchor.href}
-              className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[10px] uppercase tracking-[0.22em] transition-colors duration-300 hover:border-[var(--text-3)] hover:text-[var(--text-1)]"
-              style={{ color: 'var(--text-3)', borderColor: 'var(--line)' }}>
+            <a key={anchor.href} href={anchor.href} className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[10px] uppercase tracking-[0.22em] transition-all duration-300 case-anchor-chip">
               <span>{anchor.label}</span>
               <span style={{ color: 'var(--accent)' }}>{anchor.count}</span>
             </a>
           ))}
         </motion.div>
 
-        {/* Featured — bento grid */}
         <div id="featured-cases" className="mt-12 sm:mt-14">
-          <motion.div variants={revealUp} initial="hidden" whileInView="visible" viewport={viewport}
-            className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <motion.div variants={revealUp} initial="hidden" whileInView="visible" viewport={viewport} className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-3xl">
-              <p className="type-meta mb-4" style={{ color: 'var(--accent)' }}>Флагманские проекты</p>
+              <p className="type-meta mb-4" style={{ color: 'var(--accent)' }}>
+                Flagship systems
+              </p>
               <h3 className="type-heading text-2xl sm:text-3xl" style={{ color: 'var(--text-1)' }}>
-                {featuredProjects.length} проектов с глубиной и масштабом
+                Projects that behave like system cores, not portfolio tiles
               </h3>
             </div>
             <p className="max-w-xl text-[14px] leading-relaxed sm:text-[15px]" style={{ color: 'var(--text-3)' }}>
-              Архитектура, инженерная ширина, визуальная подача.
+              Each card is ready for a real screenshot, but already carries the product logic even when only the system signal is visible.
             </p>
           </motion.div>
 
-          <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={viewport}
-            className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+          <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={viewport} className="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-2">
             {featuredProjects.map((project, index) => (
-              <ProjectCard key={project.title} project={project} index={index} featured
-                isLastOdd={index === featuredProjects.length - 1 && featuredProjects.length % 2 !== 0} />
+              <ProjectCard
+                key={project.title}
+                project={project}
+                index={index}
+                featured
+                isLastOdd={index === featuredProjects.length - 1 && featuredProjects.length % 2 !== 0}
+              />
             ))}
           </motion.div>
         </div>
 
-        {/* Collections */}
         {portfolioCollections.map((collection) => (
           <div key={collection.id} id={collection.id} className="mt-16 sm:mt-20">
-            <motion.div variants={revealUp} initial="hidden" whileInView="visible" viewport={viewport}
-              className="border-t pt-6 sm:pt-8" style={{ borderColor: 'var(--line)' }}>
+            <motion.div variants={revealUp} initial="hidden" whileInView="visible" viewport={viewport} className="border-t pt-6 sm:pt-8" style={{ borderColor: 'var(--line)' }}>
               <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
                 <div className="max-w-3xl">
-                  <p className="type-meta mb-4" style={{ color: 'var(--accent)' }}>{collection.eyebrow}</p>
-                  <h3 className="type-heading text-2xl sm:text-3xl" style={{ color: 'var(--text-1)' }}>{collection.title}</h3>
-                  <p className="mt-4 max-w-2xl text-[14px] leading-relaxed sm:text-[15px]" style={{ color: 'var(--text-3)' }}>{collection.description}</p>
+                  <p className="type-meta mb-4" style={{ color: 'var(--accent)' }}>
+                    {collection.eyebrow}
+                  </p>
+                  <h3 className="type-heading text-2xl sm:text-3xl" style={{ color: 'var(--text-1)' }}>
+                    {collection.title}
+                  </h3>
+                  <p className="mt-4 max-w-2xl text-[14px] leading-relaxed sm:text-[15px]" style={{ color: 'var(--text-3)' }}>
+                    {collection.description}
+                  </p>
                 </div>
-                <div className="inline-flex self-start rounded-full border px-4 py-2 text-[10px] uppercase tracking-[0.24em]"
-                  style={{ color: 'var(--text-2)', borderColor: 'var(--line)', background: 'var(--surface-2)' }}>
-                  {collection.projects.length} проектов
+                <div className="inline-flex self-start rounded-full border px-4 py-2 text-[10px] uppercase tracking-[0.24em] case-anchor-chip">
+                  {collection.projects.length} projects
                 </div>
               </div>
             </motion.div>
 
-            <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={viewport}
-              className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
+            <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={viewport} className="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-2">
               {collection.projects.map((project, index) => (
-                <ProjectCard key={project.title} project={project} index={index}
-                  isLastOdd={index === collection.projects.length - 1 && collection.projects.length % 2 !== 0} />
+                <ProjectCard
+                  key={project.title}
+                  project={project}
+                  index={index}
+                  isLastOdd={index === collection.projects.length - 1 && collection.projects.length % 2 !== 0}
+                />
               ))}
             </motion.div>
           </div>

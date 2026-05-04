@@ -4,12 +4,13 @@ import { SiteHeader } from '../components/layout/SiteHeader';
 import { AboutSection } from '../components/sections/AboutSection';
 import { CasesSection } from '../components/sections/CasesSection';
 import { CtaSection } from '../components/sections/CtaSection';
+import { FounderSection } from '../components/sections/FounderSection';
 import { HeroSection } from '../components/sections/HeroSection';
 import { MetricsSection } from '../components/sections/MetricsSection';
 import { ProcessSection } from '../components/sections/ProcessSection';
 import { ServicesSection } from '../components/sections/ServicesSection';
 import { CursorLight } from '../components/ui/CursorLight';
-import { EclipseDivider, EclipseSilhouette, ParticleField } from '../components/ui/EclipseVisuals';
+import { ConstellationField, EclipseDivider, EclipseSilhouette, ParticleField } from '../components/ui/EclipseVisuals';
 
 export function App() {
   const { scrollYProgress } = useScroll();
@@ -17,20 +18,22 @@ export function App() {
 
   return (
     <div className="relative min-h-screen" style={{ background: 'var(--bg)', color: 'var(--text-1)' }}>
-      {/* Scroll progress — dual gradient */}
-      <motion.div className="fixed top-0 left-0 right-0 h-px z-50 origin-left"
-        style={{ scaleX, background: 'linear-gradient(90deg, var(--accent), var(--accent-warm))' }} />
+      <motion.div
+        className="fixed left-0 right-0 top-0 z-50 h-px origin-left"
+        style={{ scaleX, background: 'linear-gradient(90deg, var(--accent), var(--accent-warm))' }}
+      />
 
-      {/* Atmospheric layers */}
       <div className="noise-overlay pointer-events-none fixed inset-0 z-20" />
       <div className="fog-layer" />
+      <div className="app-grid-overlay pointer-events-none fixed inset-0 z-[1]" />
+      <div className="app-vignette pointer-events-none fixed inset-0 z-[2]" />
+      <div className="pointer-events-none fixed inset-0 z-[1] opacity-30">
+        <ConstellationField className="opacity-35" />
+      </div>
       <div className="flare" style={{ top: '20%', right: '15%' }} />
       <div className="flare" style={{ bottom: '30%', left: '10%', animationDelay: '4s' }} />
 
-      {/* Cursor-reactive light (desktop only) */}
       <CursorLight />
-
-      {/* Global particle field — subtle stars */}
       <ParticleField count={30} className="z-[1] opacity-50" />
 
       <SiteHeader />
@@ -44,48 +47,52 @@ export function App() {
         <ServicesSection />
         <ProcessSection />
         <EclipseDivider />
+        <FounderSection />
+        <EclipseDivider />
         <MetricsSection />
         <CtaSection />
       </main>
 
-      {/* Premium footer */}
-      <footer className="relative z-10 border-t px-5 sm:px-8 lg:px-12 py-12 lg:py-16 overflow-hidden" style={{ borderColor: 'var(--line)' }}>
-        {/* Footer eclipse silhouette */}
-        <div className="absolute -bottom-16 right-[10%] opacity-15 hidden lg:block">
-          <EclipseSilhouette size={180} coronaColor="rgba(245,166,35,0.12)" animate={false} />
+      <footer className="relative z-10 overflow-hidden border-t px-5 py-12 sm:px-8 lg:px-12 lg:py-16" style={{ borderColor: 'var(--line)' }}>
+        <div className="absolute -bottom-16 right-[10%] hidden opacity-15 lg:block">
+          <EclipseSilhouette size={180} coronaColor="rgba(117,140,255,0.12)" animate={false} />
         </div>
-        <div className="mx-auto max-w-[1400px] relative">
-          <div className="grid sm:grid-cols-[1fr_auto_auto] gap-8 items-start">
-            {/* Brand */}
+        <div className="relative mx-auto max-w-[1400px]">
+          <div className="grid items-start gap-8 sm:grid-cols-[1fr_auto_auto]">
             <div>
-              <div className="flex items-center gap-3 mb-4">
+              <div className="mb-4 flex items-center gap-3">
                 <span className="h-2 w-2 rounded-full" style={{ background: 'var(--accent)', opacity: 0.5 }} />
-                <span className="font-display text-sm font-medium tracking-[0.2em] uppercase" style={{ color: 'var(--text-2)' }}>Eclipse Forge</span>
+                <span className="font-display text-sm font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--text-2)' }}>
+                  Eclipse Forge
+                </span>
               </div>
-              <p className="text-[13px] max-w-xs leading-relaxed" style={{ color: 'var(--text-4)' }}>
-                Кузница IT-решений. Проектируем, строим, масштабируем.
+              <p className="max-w-xs text-[13px] leading-relaxed" style={{ color: 'var(--text-4)' }}>
+                Systems for control, automation and AI execution. Built for products that need more than a front layer.
               </p>
             </div>
 
-            {/* Social links */}
             <div className="flex items-center gap-4">
               {[
                 { label: 'TG', href: contactDetails.telegramDmUrl },
                 { label: 'CH', href: contactDetails.telegramChannelUrl },
                 { label: 'GH', href: contactDetails.githubUrl },
                 { label: 'IG', href: contactDetails.instagramUrl },
-              ].map((s) => (
-                <a key={s.label} href={s.href} target="_blank" rel="noreferrer"
-                  className="w-10 h-10 rounded-full border flex items-center justify-center text-[10px] font-display font-medium tracking-[0.1em] uppercase transition-all duration-400 hover:border-[var(--accent-dim)] hover:text-[var(--accent)] hover:shadow-[0_0_20px_rgba(107,163,255,0.08)]"
-                  style={{ borderColor: 'var(--line)', color: 'var(--text-4)' }}>
-                  {s.label}
+              ].map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border text-[10px] font-display font-medium uppercase tracking-[0.1em] transition-all duration-400 hover:border-[var(--accent-dim)] hover:text-[var(--accent)] hover:shadow-[0_0_20px_rgba(107,163,255,0.08)]"
+                  style={{ borderColor: 'var(--line)', color: 'var(--text-4)' }}
+                >
+                  {item.label}
                 </a>
               ))}
             </div>
 
-            {/* Info */}
-            <div className="flex items-center gap-6 text-[10px] tracking-[0.2em] uppercase" style={{ color: 'var(--text-4)' }}>
-              <span>Калининград</span>
+            <div className="flex items-center gap-6 text-[10px] uppercase tracking-[0.2em]" style={{ color: 'var(--text-4)' }}>
+              <span>Kaliningrad</span>
               <span className="h-3 w-px" style={{ background: 'var(--line)' }} />
               <span>© 2026</span>
             </div>

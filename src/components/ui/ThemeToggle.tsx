@@ -1,17 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTheme, type ThemeMode } from '../../lib/theme';
 
-/**
- * 3-state theme toggle: AUTO → LIGHT → DARK → AUTO
- * - AUTO uses time of day (06:00-18:00 = light)
- * - Icon reflects current mode
- * - Tooltip shows current resolved theme
- */
-
 function SunIcon({ size = 16 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <circle cx="12" cy="12" r="4" />
       <path d="M12 2v2" />
       <path d="M12 20v2" />
@@ -27,8 +19,7 @@ function SunIcon({ size = 16 }: { size?: number }) {
 
 function MoonIcon({ size = 16 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
     </svg>
   );
@@ -36,27 +27,24 @@ function MoonIcon({ size = 16 }: { size?: number }) {
 
 function AutoIcon({ size = 16 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <circle cx="12" cy="12" r="9" />
-      {/* Half-moon split: one side filled */}
       <path d="M12 3v18" />
       <path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" opacity="0.35" />
     </svg>
   );
 }
 
-const MODE_META: Record<ThemeMode, { label: string; Icon: (p: { size?: number }) => JSX.Element; hint: string }> = {
-  auto:  { label: 'AUTO',  Icon: AutoIcon,  hint: 'по времени суток' },
-  light: { label: 'LIGHT', Icon: SunIcon,   hint: 'всегда светлая' },
-  dark:  { label: 'DARK',  Icon: MoonIcon,  hint: 'всегда тёмная' },
+const MODE_META: Record<ThemeMode, { label: string; Icon: (props: { size?: number }) => JSX.Element; hint: string }> = {
+  auto: { label: 'AUTO', Icon: AutoIcon, hint: 'time-based switching' },
+  light: { label: 'LIGHT', Icon: SunIcon, hint: 'always light' },
+  dark: { label: 'DARK', Icon: MoonIcon, hint: 'always dark' },
 };
 
 export function ThemeToggle({ compact = false }: { compact?: boolean }) {
   const { mode, cycle, theme } = useTheme();
   const meta = MODE_META[mode];
-
-  const title = `Тема: ${meta.hint} · сейчас ${theme === 'light' ? 'светлая' : 'тёмная'}. Клик для смены.`;
+  const title = `Theme: ${meta.hint}. Current surface is ${theme}. Click to cycle.`;
 
   return (
     <button
@@ -84,11 +72,11 @@ export function ThemeToggle({ compact = false }: { compact?: boolean }) {
           <meta.Icon size={14} />
         </motion.span>
       </AnimatePresence>
-      {!compact && (
+      {!compact ? (
         <span className="font-display" style={{ color: 'var(--text-3)' }}>
           {meta.label}
         </span>
-      )}
+      ) : null}
     </button>
   );
 }

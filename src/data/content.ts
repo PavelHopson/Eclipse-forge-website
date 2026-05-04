@@ -1,15 +1,23 @@
 export type ProjectStatus = 'Live' | 'Beta' | 'Prototype' | 'Concept' | 'Reference';
 
+export interface ImageAsset {
+  alt: string;
+  sources: string[];
+  objectPosition?: string;
+}
+
 export interface Project {
   title: string;
-  tag: string;
+  systemType: string;
   status: ProjectStatus;
   description: string;
   tech: string[];
   result: string;
+  signal: string;
+  tags: string[];
   liveUrl?: string;
   repoUrl: string;
-  image?: string;
+  image?: ImageAsset;
 }
 
 export interface ProjectCollection {
@@ -20,167 +28,301 @@ export interface ProjectCollection {
   projects: Project[];
 }
 
+export interface ServiceEntryPoint {
+  title: string;
+  cue: string;
+  description: string;
+  audience: string;
+  result: string;
+}
+
+export interface FounderProfile {
+  eyebrow: string;
+  title: string;
+  summary: string[];
+  pillars: string[];
+  stats: Array<{ value: string; label: string }>;
+  portrait: ImageAsset;
+  supportVisual: ImageAsset;
+}
+
+const projectImage = (primary: string, secondary: string, alt: string, objectPosition = 'center'): ImageAsset => ({
+  alt,
+  objectPosition,
+  sources: [`/images/projects/${primary}.png`, `/images/projects/${secondary}.png`],
+});
+
+export const brandAssets = {
+  heroPlate: {
+    alt: 'Eclipse Forge brand plate',
+    sources: ['/images/projects/eclipse-forge-cover.png', '/images/Шапка.png'],
+    objectPosition: 'center',
+  },
+  founderAvatar: {
+    alt: 'Founder portrait of Pavel Hopson',
+    sources: ['/images/projects/pavel-founder-avatar.png', '/images/Моя аватарка.png'],
+    objectPosition: 'center top',
+  },
+  founderDesk: {
+    alt: 'Pavel Hopson at the operator desk',
+    sources: [
+      '/images/projects/pavel-founder-desk.png',
+      '/images/ChatGPT Image 4 мая 2026 г., 14_42_15.png',
+    ],
+    objectPosition: 'center top',
+  },
+  founderPortrait: {
+    alt: 'Portrait of Pavel Hopson',
+    sources: [
+      '/images/projects/pavel-founder-portrait.png',
+      '/images/ChatGPT Image 4 мая 2026 г., 14_54_55.png',
+    ],
+    objectPosition: 'center top',
+  },
+  founderSeated: {
+    alt: 'Pavel Hopson seated portrait',
+    sources: [
+      '/images/projects/pavel-founder-seated.png',
+      '/images/ChatGPT Image 4 мая 2026 г., 14_56_29.png',
+    ],
+    objectPosition: 'center top',
+  },
+} as const;
+
 export const featuredProjects: Project[] = [
   {
     title: 'Eclipse Valhalla',
-    tag: 'Мультиплатформа / AI / Геймификация',
+    systemType: 'BEHAVIORAL SYSTEM',
     status: 'Live',
-    description: 'Персональная ОС дисциплины: квесты, фокус-режим, тренировки, AI-коуч, 31 достижение, система давления. 128 тестов (unit + e2e Playwright). App.tsx декомпозирован с 978 до 419 строк. 5 AI-провайдеров включая NVIDIA NIM. Web + Electron (Win/Mac/Linux) + Capacitor (iOS/Android).',
-    tech: ['React 19', 'TypeScript', 'Electron', 'Capacitor', 'Zustand', 'Vitest', 'Playwright', 'NVIDIA NIM'],
-    result: '128 тестов, -57% App.tsx, 5 AI-провайдеров, мультиплатформа',
+    description:
+      'Execution OS for discipline, focus and pressure mechanics. Tasks are not stored as a list: the product turns routines into an active loop with AI, quests, recovery and multi-platform sync.',
+    tech: ['React 19', 'TypeScript', 'Electron', 'Capacitor', 'Zustand', 'Vitest', 'Playwright'],
+    result: 'A behavior engine instead of a passive task manager.',
+    signal: '128 tests, 5 AI providers, multi-platform delivery.',
+    tags: ['AI coaching', 'focus loops', 'gamified execution'],
     liveUrl: 'https://eclipse-valhalla.pages.dev',
     repoUrl: 'https://github.com/PavelHopson/Eclipse-Valhalla',
-  },
-  {
-    title: 'Eclipse Claw',
-    tag: 'Rust / Инфраструктура / Парсинг',
-    status: 'Beta',
-    description: 'Высокопроизводительный веб-скрапер с TLS-фингерпринтингом Chrome, LLM-оптимизированным выводом (67% сжатие токенов) и MCP-сервером для AI-агентов. 22 583 строки Rust в 8 крейтах. 417 тестов. Docker + CI. REST API с 9 endpoint-тестами.',
-    tech: ['Rust', 'Axum', 'tokio', 'MCP', 'Docker', 'TLS Fingerprinting'],
-    result: '22K строк Rust, 95.1% точность, 417 тестов',
-    repoUrl: 'https://github.com/PavelHopson/Eclipse-Claw',
-  },
-  {
-    title: 'CryptoPulse 2077',
-    tag: 'Финтех / AI-аналитика',
-    status: 'Live',
-    description: 'Крипто/форекс/фьючерсный терминал с 6 AI-провайдерами, торговым симулятором (до 100x плечо) и live-парсингом новостей через Cloudflare Workers. Паттерн source-tagging устраняет silent fallback. 76 тестов. ARCHITECTURE.md с mermaid-диаграммами.',
-    tech: ['React 19', 'TypeScript', 'Recharts', 'Cloudflare Workers', 'NVIDIA NIM', 'Vitest'],
-    result: '76 тестов, 6 AI-провайдеров, source tagging, ARCHITECTURE.md',
-    liveUrl: 'https://cryptopulse-1d0.pages.dev',
-    repoUrl: 'https://github.com/PavelHopson/CryptoPulse',
+    image: projectImage('valhalla', 'eclipse-valhalla', 'Eclipse Valhalla interface preview', 'center top'),
   },
   {
     title: 'Eclipse Hopson Sentinel',
-    tag: 'Edge AI / Голос / Гибридный стек',
+    systemType: 'AI OPERATOR',
     status: 'Beta',
-    description: 'Локальный AI-оператор с голосовым интерфейсом (TTS/STT/PTT), TypeScript-рантайм, Rust-движок, Python-провайдеры, Bridge API, Windows-инсталлятор. 207K строк TypeScript. 244 теста (200 Bun + 44 pytest). Двойной CI.',
-    tech: ['TypeScript', 'Bun', 'Rust', 'Python', 'WebSocket', 'Ollama', 'Voice'],
-    result: '207K строк, 244 теста, двойной CI, голосовой MVP',
+    description:
+      'A local-first AI operator with voice, terminal tooling, bridge APIs and a hybrid TypeScript, Rust and Python runtime. It is built to act like an operator layer, not a browser chat.',
+    tech: ['TypeScript', 'Bun', 'Rust', 'Python', 'WebSocket', 'Voice', 'Ollama'],
+    result: 'Turns AI from interface into an executable operating layer.',
+    signal: '207K TypeScript lines, 244 tests, dual CI, Windows installer.',
+    tags: ['voice interface', 'tool runtime', 'local-first control'],
     repoUrl: 'https://github.com/PavelHopson/eclipse-hopson-sentinel',
+    image: projectImage(
+      'sentinel',
+      'eclipse-hopson-sentinel',
+      'Eclipse Hopson Sentinel operator interface preview',
+      'center top',
+    ),
   },
   {
-    title: '@pavelhopson/retry-http',
-    tag: 'npm-библиотека / Open Source',
+    title: 'Eclipse Premium Rent',
+    systemType: 'PREMIUM BOOKING',
     status: 'Live',
-    description: 'Exponential backoff retry для HTTP-запросов. Ноль зависимостей, TypeScript-first. Спроектирован в Eclipse Valhalla, портирован без изменений в CryptoPulse, eclipse-ai-hub и Smart-Fitness-Booking-Agent. 4 потребителя, 0 расхождений, 26 тестов проходят с первого запуска в каждом проекте.',
-    tech: ['TypeScript', 'ESM', 'Vitest', 'npm'],
-    result: 'Опубликован на npm, 4 потребителя, zero-edit портируемость',
-    repoUrl: 'https://github.com/PavelHopson/retry-http',
+    description:
+      'A premium booking system for luxury car rental that treats the landing page as a conversion system: visual authority, selection logic and a guided reservation flow work as one product.',
+    tech: ['React 19', 'TypeScript', 'Tailwind', 'Framer Motion', 'Zustand'],
+    result: 'A luxury booking funnel with product-grade logic behind the art direction.',
+    signal: 'Premium visual language, guided booking, responsive conversion flow.',
+    tags: ['premium UX', 'guided reservation', 'high-trust interface'],
+    liveUrl: 'https://eclipse-premiumrent.pages.dev',
+    repoUrl: 'https://github.com/PavelHopson/Eclipse-PremiumRent',
+    image: projectImage(
+      'premium-rent',
+      'eclipse-premiumrent',
+      'Eclipse Premium Rent booking experience preview',
+      'center center',
+    ),
+  },
+  {
+    title: 'Eclipse Claw',
+    systemType: 'DATA ENGINE',
+    status: 'Beta',
+    description:
+      'A self-hosted web extraction engine for AI agents. It retrieves hostile web pages, strips noise, compresses token payloads and exposes the result through an MCP-friendly interface.',
+    tech: ['Rust', 'Axum', 'Tokio', 'MCP', 'Docker', 'TLS Fingerprinting'],
+    result: 'Cleaner, cheaper and more reliable agent-ready extraction than typical scraping stacks.',
+    signal: '22K Rust lines, 417 tests, Docker, CI, REST API.',
+    tags: ['agent extraction', 'LLM optimization', 'self-hosted infra'],
+    repoUrl: 'https://github.com/PavelHopson/Eclipse-Claw',
+    image: projectImage('claw', 'eclipse-claw', 'Eclipse Claw extraction engine preview', 'center center'),
   },
   {
     title: 'Business Data Platform',
-    tag: 'Data Engineering / Observability',
+    systemType: 'AUTOMATION PLATFORM',
     status: 'Beta',
-    description: 'Full-stack ETL-платформа для исследования компаний через API ФНС. FastAPI-бэкенд, Next.js-фронтенд, PostgreSQL, Redis. Полный стек наблюдаемости: Prometheus + Grafana + Loki. Docker Compose из 7 сервисов с health-чеками.',
-    tech: ['FastAPI', 'Python', 'Next.js', 'PostgreSQL', 'Prometheus', 'Grafana', 'Loki', 'Docker'],
-    result: 'ETL + observability + Docker Compose из 7 сервисов',
+    description:
+      'An ETL and company-research platform with FastAPI, ingestion, monitoring and alerting. It replaces fragmented manual checking with an observable pipeline and operator dashboard.',
+    tech: ['FastAPI', 'Python', 'Next.js', 'PostgreSQL', 'Redis', 'Prometheus', 'Grafana', 'Loki'],
+    result: 'From manual company lookup to a monitored data and ops system.',
+    signal: 'ETL, observability and 7-service Docker Compose architecture.',
+    tags: ['ETL', 'observability', 'monitoring'],
     repoUrl: 'https://github.com/PavelHopson/business-data-platform-mvp',
+    image: projectImage(
+      'business-data-platform',
+      'business-data-platform-mvp',
+      'Business Data Platform dashboard preview',
+      'center top',
+    ),
+  },
+  {
+    title: 'Smart Life Assistant',
+    systemType: 'OPERATOR OS',
+    status: 'Beta',
+    description:
+      'A desktop action system for personal operations: finance, subscriptions, health and daily execution are converted into next actions, reminders and guided decisions instead of passive dashboards.',
+    tech: ['Next.js', 'Electron', 'TypeScript', 'Prisma', 'TrueLayer', 'Stripe'],
+    result: 'Transforms personal admin into a guided action loop.',
+    signal: 'Desktop app, banking APIs, payments and action generation.',
+    tags: ['life ops', 'decision support', 'desktop control'],
+    repoUrl: 'https://github.com/PavelHopson/SmartLifeAssistant',
+    image: projectImage(
+      'smart-life-assistant',
+      'smartlifeassistant',
+      'Smart Life Assistant product preview',
+      'center top',
+    ),
   },
 ];
 
 export const portfolioCollections: ProjectCollection[] = [
   {
     id: 'ai-products',
-    eyebrow: 'AI-продукты',
-    title: 'Приложения и агенты на базе AI',
-    description: 'Полноценные продукты вокруг AI: от мульти-провайдерного чата до Function Calling агентов и генерации изображений.',
+    eyebrow: 'AI ecosystem',
+    title: 'Product surfaces built around AI workflows',
+    description:
+      'Not single prompts, but complete flows: provider orchestration, structured output, retries, local models and interfaces that keep the user inside the system.',
     projects: [
       {
         title: 'Eclipse AI Hub',
-        tag: 'AI-платформа',
+        systemType: 'AI WORKSPACE',
         status: 'Live',
-        description: 'Локальная AI-платформа: Чат, Арена, RAG, Code Review, Копирайтер, Сканер безопасности, Image Studio. 8 AI-провайдеров включая NVIDIA NIM. 41 тест.',
-        tech: ['React 19', 'TypeScript', 'Ollama', 'Gemini', 'NVIDIA NIM', 'RAG', 'Vitest'],
-        result: '8 провайдеров, 7 модулей, 41 тест',
+        description:
+          'Local AI workspace with chat, arena, RAG, review and generation modules across multiple providers and local model routes.',
+        tech: ['React 19', 'TypeScript', 'Ollama', 'Gemini', 'NVIDIA NIM', 'Vitest'],
+        result: 'A real operator workspace instead of a single chat screen.',
+        signal: '8 providers, 7 modules, 41 tests.',
+        tags: ['multi-provider', 'RAG', 'local AI'],
         liveUrl: 'https://eclipse-ai-hub.pages.dev',
         repoUrl: 'https://github.com/PavelHopson/eclipse-ai-hub',
       },
       {
         title: 'Smart Fitness Booking Agent',
-        tag: 'AI-агент / Function Calling',
+        systemType: 'AI AGENT',
         status: 'Live',
-        description: 'AI-агент для бронирования тренировок через естественный язык. Gemini Function Calling, retry-паттерны, mock-БД. 4-й потребитель retry-http.',
+        description:
+          'A natural-language booking agent that uses function calling and retry-safe requests to schedule training sessions without a brittle scripted flow.',
         tech: ['React 19', 'TypeScript', 'Gemini AI', 'Function Calling', 'Vitest'],
-        result: 'Function Calling демо, retry.ts (4-й потребитель)',
+        result: 'Shows how AI can operate a constrained booking process safely.',
+        signal: 'Function calling demo with reusable retry patterns.',
+        tags: ['booking agent', 'function calling', 'workflow AI'],
         liveUrl: 'https://fitness-booking-agent.pages.dev',
         repoUrl: 'https://github.com/PavelHopson/Smart-Fitness-Booking-Agent',
       },
       {
         title: 'InterviewForge',
-        tag: 'AI / Desktop / Tauri',
+        systemType: 'VOICE AI TOOL',
         status: 'Live',
-        description: 'Desktop AI-помощник для собеседований на Tauri 2 (Rust). Gemini Live API в реальном времени: аудио-анализ, OCR экрана, горячие клавиши.',
+        description:
+          'Desktop interview copilot on Tauri with real-time audio analysis, OCR and hotkeys powered by the Gemini Live API.',
         tech: ['React 18', 'Tauri 2', 'Rust', 'Gemini Live', 'Web Audio API'],
-        result: 'Tauri desktop + Gemini Live стриминг',
+        result: 'A fast local shell around live multimodal reasoning.',
+        signal: 'Realtime voice plus screen understanding in a desktop runtime.',
+        tags: ['desktop AI', 'OCR', 'live audio'],
         liveUrl: 'https://interviewforge-3pf.pages.dev',
         repoUrl: 'https://github.com/PavelHopson/InterviewForge',
       },
       {
         title: 'Shotforge',
-        tag: 'AI-фотостудия',
+        systemType: 'AI STUDIO',
         status: 'Live',
-        description: 'AI-фотостудия с 3 режимами: AI-фотограф (21 пресет), Face Fusion, Style Transfer. Мульти-провайдер.',
+        description:
+          'A photo-generation studio with multiple modes, style systems and provider routing for image creation and transformation workflows.',
         tech: ['React 19', 'TypeScript', 'Gemini', 'Flux.1 Pro', 'Tailwind'],
-        result: '3 production-режима, мульти-провайдер',
+        result: 'A modular content studio rather than a single generator view.',
+        signal: '3 production modes with multi-provider image generation.',
+        tags: ['image generation', 'creative tooling', 'multi-mode'],
         liveUrl: 'https://shotforge.pages.dev',
         repoUrl: 'https://github.com/PavelHopson/shotforge',
       },
       {
         title: 'Questify (Educator AI)',
-        tag: 'AI / EdTech',
+        systemType: 'AI LEARNING TOOL',
         status: 'Live',
-        description: 'Загрузите PDF или вставьте текст — получите интерактивный Quiz или Escape Room за 60 секунд. Gemini structured output.',
+        description:
+          'Transforms text or PDF content into interactive quizzes and escape-room style learning flows using structured AI output.',
         tech: ['React 19', 'TypeScript', 'Gemini AI', 'Framer Motion'],
-        result: 'PDF → интерактивный квест за 60 сек',
+        result: 'Turns learning material into playable, structured interaction.',
+        signal: 'PDF to interactive quest in roughly one minute.',
+        tags: ['edtech', 'structured output', 'interactive content'],
         liveUrl: 'https://educator-ai.pages.dev',
         repoUrl: 'https://github.com/PavelHopson/Educator-AI',
       },
       {
         title: 'Text2Image Studio',
-        tag: 'AI-генерация изображений',
+        systemType: 'AI GENERATION TOOL',
         status: 'Live',
-        description: 'Мульти-провайдерная студия генерации изображений с улучшением промптов, 10 стилями и историей генераций.',
+        description:
+          'A multi-provider image studio with prompt enhancement, style presets and generation history designed as a reusable creative workflow surface.',
         tech: ['React 19', 'TypeScript', 'Gemini', 'DALL-E', 'OpenRouter', 'Ollama'],
-        result: '4 провайдера, 10 стилей, задеплоен',
+        result: 'Organized generation workflow instead of isolated image prompts.',
+        signal: '4 providers, 10 styles, deployed production demo.',
+        tags: ['prompt enhancement', 'style presets', 'generation history'],
         liveUrl: 'https://text2image-studio.pages.dev',
         repoUrl: 'https://github.com/PavelHopson/Text2Image',
       },
     ],
   },
   {
-    id: 'web-fullstack',
-    eyebrow: 'Веб и Fullstack',
-    title: 'Веб-приложения и fullstack-проекты',
-    description: 'От премиальной аренды авто до таск-менеджера — production-grade веб-приложения с авторизацией, базами данных и адаптивным UI.',
+    id: 'product-systems',
+    eyebrow: 'Product systems',
+    title: 'Interfaces with heavy logic behind the surface',
+    description:
+      'Products that sell through interaction quality, but are grounded in routing, validation, data flows and internal structure instead of visual polish alone.',
     projects: [
       {
-        title: 'Eclipse PremiumRent',
-        tag: 'Премиум-веб',
+        title: 'CryptoPulse 2077',
+        systemType: 'TRADING INTELLIGENCE',
         status: 'Live',
-        description: 'Люксовый сайт аренды автомобилей для Калининграда. Тёмно-золотой дизайн, 5-шаговый визард бронирования, 40+ авто в 7 категориях.',
-        tech: ['React 19', 'TypeScript', 'Tailwind 4', 'Zustand', 'Framer Motion'],
-        result: 'Премиум booking flow с luxury art direction',
-        liveUrl: 'https://eclipse-premiumrent.pages.dev',
-        repoUrl: 'https://github.com/PavelHopson/Eclipse-PremiumRent',
+        description:
+          'A market terminal for crypto, forex and futures with AI analysis, source-tagged news parsing and trading simulation.',
+        tech: ['React 19', 'TypeScript', 'Recharts', 'Cloudflare Workers', 'NVIDIA NIM', 'Vitest'],
+        result: 'An analytical surface with controlled data provenance.',
+        signal: '76 tests, 6 AI providers, architecture docs.',
+        tags: ['market data', 'AI analytics', 'news parsing'],
+        liveUrl: 'https://cryptopulse-1d0.pages.dev',
+        repoUrl: 'https://github.com/PavelHopson/CryptoPulse',
       },
       {
         title: 'Task Manager',
-        tag: 'Fullstack / CRUD',
+        systemType: 'INTERNAL PLATFORM',
         status: 'Live',
-        description: 'Полностековый менеджер задач с JWT-авторизацией, ролями, пагинацией, сортировкой. PostgreSQL в Docker.',
+        description:
+          'A fullstack task platform with authentication, roles, pagination and sorting backed by PostgreSQL and Dockerized infrastructure.',
         tech: ['React 18', 'Express 5', 'Prisma', 'PostgreSQL', 'Docker'],
-        result: 'Auth + роли + Prisma + Docker deploy',
+        result: 'A clean internal admin surface with production fundamentals.',
+        signal: 'Auth, roles, Prisma and Docker deployment.',
+        tags: ['internal tools', 'CRUD', 'auth'],
         liveUrl: 'https://task-manager-eclipse.pages.dev',
         repoUrl: 'https://github.com/PavelHopson/task-manager',
       },
       {
         title: 'Eclipse Media',
-        tag: 'Fullstack / Медиа',
+        systemType: 'MEDIA UTILITY',
         status: 'Beta',
-        description: 'Self-hosted загрузчик видео/аудио с SSE-прогрессом, TTL-очисткой и Docker. Поддержка 1000+ сайтов.',
+        description:
+          'A self-hosted media downloader with SSE progress, automated cleanup and support for large numbers of sources.',
         tech: ['React 19', 'FastAPI', 'yt-dlp', 'Docker', 'SSE'],
-        result: 'Self-hosted медиа-загрузчик с Docker',
+        result: 'Turns ad hoc media retrieval into a controlled self-hosted tool.',
+        signal: '1000+ sources, Dockerized runtime, streaming progress.',
+        tags: ['self-hosted', 'media ops', 'streaming state'],
         liveUrl: 'https://eclipse-media.pages.dev',
         repoUrl: 'https://github.com/PavelHopson/eclipse-media',
       },
@@ -188,80 +330,136 @@ export const portfolioCollections: ProjectCollection[] = [
   },
   {
     id: 'engineering-tools',
-    eyebrow: 'Инфраструктура и инструменты',
-    title: 'CLI, боты и DevOps-автоматизация',
-    description: 'За пределами UI: инструменты, боты и инфраструктура, которые показывают backend-мышление и операционную дисциплину.',
+    eyebrow: 'Infrastructure and tooling',
+    title: 'Reusable control layers behind the products',
+    description:
+      'Libraries, bots and automation pieces that show how the team thinks once the visible interface ends: reliability, portability, deployment and reuse.',
     projects: [
       {
-        title: 'WireGuard Telegram Bot',
-        tag: 'DevOps / Автоматизация',
+        title: '@pavelhopson/retry-http',
+        systemType: 'RELIABILITY MODULE',
         status: 'Live',
-        description: 'Telegram-бот для автоматической раздачи WireGuard VPN конфигов. Генерация ключей, .conf файлы, QR-коды, systemd-сервис.',
-        tech: ['Python', 'aiogram', 'WireGuard', 'Bash', 'systemd'],
-        result: 'VPN-автоматизация через Telegram (2 звезды)',
-        repoUrl: 'https://github.com/PavelHopson/wireguard-telegram-bot',
+        description:
+          'A zero-dependency TypeScript retry library extracted from production work and reused across multiple projects without drift.',
+        tech: ['TypeScript', 'ESM', 'Vitest', 'npm'],
+        result: 'Reliability patterns packaged once and reused everywhere.',
+        signal: 'Published on npm and ported into 4 consumer projects.',
+        tags: ['retry logic', 'reusable module', 'open source'],
+        repoUrl: 'https://github.com/PavelHopson/retry-http',
       },
       {
-        title: 'Smart Life Assistant',
-        tag: 'Desktop / Life OS',
-        status: 'Beta',
-        description: 'Desktop-приложение для управления жизнью: интеграция с банками (TrueLayer), подписки через Stripe, автоматические действия, Electron NSIS-инсталлятор.',
-        tech: ['Next.js', 'Electron', 'TypeScript', 'Prisma', 'TrueLayer', 'Stripe'],
-        result: 'Desktop-приложение с банковским API и Stripe',
-        repoUrl: 'https://github.com/PavelHopson/SmartLifeAssistant',
+        title: 'WireGuard Telegram Bot',
+        systemType: 'AUTOMATION BOT',
+        status: 'Live',
+        description:
+          'A Telegram bot that automates VPN access delivery through config generation, QR codes and service-level provisioning.',
+        tech: ['Python', 'aiogram', 'WireGuard', 'Bash', 'systemd'],
+        result: 'Infrastructure setup turned into a repeatable operator flow.',
+        signal: 'Automated VPN issuance through Telegram workflows.',
+        tags: ['Telegram bot', 'DevOps', 'provisioning'],
+        repoUrl: 'https://github.com/PavelHopson/wireguard-telegram-bot',
       },
     ],
   },
 ];
 
-export const allProjects: Project[] = portfolioCollections.reduce<Project[]>(
-  (acc, collection) => acc.concat(collection.projects),
-  [...featuredProjects],
+export const allProjects: Project[] = [...featuredProjects, ...portfolioCollections.flatMap((collection) => collection.projects)].filter(
+  (project, index, list) => list.findIndex((candidate) => candidate.title === project.title) === index,
 );
 
-export const services = [
+export const serviceEntryPoints: ServiceEntryPoint[] = [
   {
-    title: 'AI-инфраструктура',
-    text: 'Мульти-провайдерные AI-абстракции (6+ провайдеров), RAG-пайплайны, Function Calling агенты, стриминг и retry-устойчивость. NVIDIA NIM, Ollama, Gemini, OpenAI, Anthropic.',
+    title: 'AI automation system',
+    cue: '01 / orchestration',
+    description:
+      'When a team still moves tasks through chats, spreadsheets and manual follow-up, we turn that logic into an AI-assisted execution flow.',
+    audience: 'For founders and operators drowning in repeated decisions.',
+    result: 'A system that sees events, routes actions and closes the loop.',
   },
   {
-    title: 'Fullstack-разработка',
-    text: 'React 19 + TypeScript фронтенды, FastAPI / Express бэкенды, PostgreSQL / Redis, Docker Compose, observability через Prometheus + Grafana + Loki.',
+    title: 'SaaS MVP or internal platform',
+    cue: '02 / product core',
+    description:
+      'When the product is more than screens, we build the control layer, data flow and operator-facing interface that make it usable day to day.',
+    audience: 'For SaaS founders, ops-heavy products and internal teams.',
+    result: 'A usable MVP with logic behind the interface, not a demo shell.',
   },
   {
-    title: 'Системы и Rust',
-    text: 'Высокопроизводительный Rust (22K строк скрапер, TLS-фингерпринтинг, MCP-серверы), гибридные TS+Rust+Python стеки, edge AI на обычном железе.',
+    title: 'Premium landing or booking system',
+    cue: '03 / conversion system',
+    description:
+      'When visual trust and premium positioning matter, we design the front layer as part of a real booking or qualification flow.',
+    audience: 'For high-ticket services, premium products and selective brands.',
+    result: 'A landing that qualifies, guides and converts instead of decorating.',
+  },
+  {
+    title: 'Data scraping and monitoring dashboard',
+    cue: '04 / signal capture',
+    description:
+      'When critical information is scattered across sources, we build ingestion, retries, parsing and dashboards that make it observable.',
+    audience: 'For research teams, analysts and manual data operators.',
+    result: 'A monitored data engine instead of fragile one-off scripts.',
+  },
+  {
+    title: 'AI operator or agent tool',
+    cue: '05 / execution layer',
+    description:
+      'When AI needs to act through tools, voice or local workflows, we build the runtime around it: permissions, tools, guardrails and interfaces.',
+    audience: 'For teams moving from chatbot experiments to real operator systems.',
+    result: 'An AI layer that can actually execute work.',
   },
 ];
 
 export const processSteps = [
   {
     index: '01',
-    title: 'Понять систему',
-    text: 'Изучить архитектуру, построить карту зависимостей, найти настоящую причину. Никогда не менять код, который не понимаю.',
+    title: 'Map the real system',
+    text: 'We start from process anatomy: what the system sees, what state it keeps, where decisions happen and where control currently leaks.',
   },
   {
     index: '02',
-    title: 'Проверить тестами',
-    text: '958 тестов в 7 проектах. Каждое изменение проходит typecheck + test + build. Coverage-бейджи, CI-пайплайны, никаких silent fallback.',
+    title: 'Design the execution loop',
+    text: 'AI, automation, dashboards and notifications are assembled around one loop: detect, decide, act, verify and record.',
   },
   {
     index: '03',
-    title: 'Релизить инкрементально',
-    text: 'Атомарные коммиты, feature-ветки, squash-merge PR. 11+ смерженных PR только в этом портфолио — каждый зелёный перед мержем.',
+    title: 'Ship with engineering discipline',
+    text: 'Builds, tests, deploy checks and observable logs are part of the delivery. The goal is not a demo but a system that keeps working.',
   },
   {
     index: '04',
-    title: 'Переиспользовать между проектами',
-    text: 'retry-http: спроектирован однажды, портирован без изменений в 4 проекта, опубликован как npm-пакет. Source tagging, NVIDIA NIM — всё кросс-проектное.',
+    title: 'Reuse patterns across products',
+    text: 'Once a control pattern proves itself, we package it and reuse it across projects: adapters, retries, operator panels, parsing layers and AI routes.',
   },
 ];
 
 export const metrics = [
-  { value: '958', label: 'тестов в 7 проектах' },
-  { value: '22K', label: 'строк Rust (Eclipse Claw)' },
-  { value: '6', label: 'AI-провайдеров на проект' },
+  { value: '958+', label: 'tests across flagship systems' },
+  { value: '22K', label: 'Rust lines in the extraction engine' },
+  { value: '6', label: 'flagship systems positioned on this site' },
 ];
+
+export const founderProfile: FounderProfile = {
+  eyebrow: 'Operator profile',
+  title: 'Who stands behind the system',
+  summary: [
+    'Pavel is the developer and founder behind Eclipse Forge. The focus is not “code for code’s sake”, but systems that can observe, decide, automate and keep control when a process becomes complex.',
+    'The work sits where product UX, internal tooling, AI runtime design and operational logic meet. The interface matters, but the real value is in the contour behind it: what the system tracks, how it reacts and where it closes the loop.',
+  ],
+  pillars: [
+    'AI systems, agents and local-first operator tooling',
+    'Automation flows that reduce manual routing and follow-up',
+    'SaaS MVPs and internal platforms with real logic behind the UI',
+    'Behavioral systems and products that change execution, not just visibility',
+  ],
+  stats: [
+    { value: 'Rust + TS + Python', label: 'hybrid engineering stack' },
+    { value: 'Products + tooling', label: 'one mind across UI and infra' },
+    { value: 'Control over noise', label: 'the main design principle' },
+  ],
+  portrait: brandAssets.founderPortrait,
+  supportVisual: brandAssets.heroPlate,
+};
 
 export const contactDetails = {
   email: 'hopsintoxin@mail.ru',
@@ -273,15 +471,30 @@ export const contactDetails = {
   githubHandle: 'PavelHopson',
   instagramUrl: 'https://instagram.com/PavelHopson',
   instagramHandle: '@PavelHopson',
-  responseTime: 'Обычно отвечаю в течение нескольких часов',
-  cityTimezone: 'Калининград / UTC+2',
+  responseTime: 'Usually replies within a few hours',
+  cityTimezone: 'Kaliningrad / UTC+2',
 } as const;
 
+export const contactPrompts = [
+  {
+    label: 'manual_load',
+    prompt: 'What are you still doing manually?',
+    placeholder: 'For example: routing leads, checking data, rewriting reports, coordinating requests...',
+  },
+  {
+    label: 'target_state',
+    prompt: 'What result should the system produce?',
+    placeholder: 'For example: classify requests, trigger actions, generate briefs, monitor anomalies...',
+  },
+  {
+    label: 'control_gap',
+    prompt: 'Where are time, money or control leaking now?',
+    placeholder: 'For example: approvals stall, information gets lost, handoffs fail, data arrives too late...',
+  },
+];
+
 export const contactFlow = {
-  primaryCta: 'Написать в Telegram',
-  telegramChecklist: [
-    'Что нужно сделать',
-    'Сроки и объём',
-    'Предпочтения по стеку (если есть)',
-  ],
+  primaryCta: 'Open Telegram channel',
+  secondaryCta: 'Copy signal packet',
+  status: ['request channel open', 'signal ready', 'operator online'],
 } as const;
