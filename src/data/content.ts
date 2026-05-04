@@ -682,6 +682,7 @@ const portfolioCollectionDefinitions: LocalizedProjectCollectionDefinition[] = [
         signal: localized('Опубликована на npm и встроена в 4 проекта.', 'Published on npm and ported into 4 consumer projects.'),
         tags: localized(['retry logic', 'переиспользуемый модуль', 'open source'], ['retry logic', 'reusable module', 'open source']),
         repoUrl: 'https://github.com/PavelHopson/retry-http',
+        image: projectImage('retry-http', 'retry-http', '@pavelhopson/retry-http cover', 'center'),
       },
       {
         title: 'WireGuard Telegram Bot',
@@ -702,6 +703,7 @@ const portfolioCollectionDefinitions: LocalizedProjectCollectionDefinition[] = [
         ),
         tags: localized(['Telegram bot', 'DevOps', 'provisioning'], ['Telegram bot', 'DevOps', 'provisioning']),
         repoUrl: 'https://github.com/PavelHopson/wireguard-telegram-bot',
+        image: projectImage('wireguard-telegram-bot', 'wireguard-telegram-bot', 'WireGuard Telegram Bot cover', 'center'),
       },
     ],
   },
