@@ -1,14 +1,6 @@
-import {
-  motion,
-  useMotionTemplate,
-  useMotionValue,
-  useSpring,
-  useTransform,
-  type MouseEvent as ReactMouseEvent,
-} from 'framer-motion';
-import { useRef } from 'react';
+import { motion } from 'framer-motion';
 import { type Project, useSiteContent } from '../../data/content';
-import { revealScale, revealUp, stagger, staggerFast, viewport } from '../../lib/animation';
+import { revealScale, revealUp, stagger, viewport } from '../../lib/animation';
 import { useLocale, type Locale } from '../../lib/locale';
 import { AssetImage } from '../ui/AssetImage';
 import { ConstellationField, EclipseSilhouette, MiniEclipse, OrbitalRing, ParticleField } from '../ui/EclipseVisuals';
@@ -64,114 +56,74 @@ function EcosystemCard({
   demoLabel: string;
   githubLabel: string;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const smoothX = useSpring(mouseX, { stiffness: 220, damping: 26 });
-  const smoothY = useSpring(mouseY, { stiffness: 220, damping: 26 });
-  const rotateX = useSpring(useTransform(smoothY, [-0.5, 0.5], [2.5, -2.5]), { stiffness: 180, damping: 24 });
-  const rotateY = useSpring(useTransform(smoothX, [-0.5, 0.5], [-3, 3]), { stiffness: 180, damping: 24 });
-  const spotlight = useMotionTemplate`radial-gradient(circle at ${useTransform(smoothX, [-0.5, 0.5], ['18%', '82%'])} ${useTransform(
-    smoothY,
-    [-0.5, 0.5],
-    ['16%', '84%'],
-  )}, rgba(157,196,255,0.14), transparent 44%)`;
-  const tags = project.ecosystemTags ?? project.tags.slice(0, 3);
-
-  const handleMove = (event: ReactMouseEvent) => {
-    const rect = ref.current?.getBoundingClientRect();
-    if (!rect) return;
-
-    mouseX.set((event.clientX - rect.left) / rect.width - 0.5);
-    mouseY.set((event.clientY - rect.top) / rect.height - 0.5);
-  };
-
-  const handleLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-  };
-
   const fileName = project.image?.sources?.[0]?.split('/').pop() ?? 'project-image.png';
 
   return (
     <motion.article variants={revealScale}>
-      <div ref={ref} className="perspective-container" onMouseMove={handleMove} onMouseLeave={handleLeave}>
-        <motion.div
-          whileHover={{ y: -8 }}
-          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-          style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-          className="group systems-card-shell relative overflow-hidden rounded-[2rem] border p-3"
-        >
-          <motion.div className="pointer-events-none absolute inset-0 rounded-[2rem] opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ backgroundImage: spotlight }} />
-          <div className="systems-card-edge pointer-events-none absolute inset-x-10 top-0 h-px opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+      <motion.div
+        whileHover={{ y: -6 }}
+        transition={{ type: 'spring', stiffness: 280, damping: 26 }}
+        className="group systems-card-shell relative flex h-full flex-col overflow-hidden rounded-[1.85rem] border"
+      >
+        <div
+          className="pointer-events-none absolute -inset-px rounded-[1.9rem] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          style={{
+            background:
+              'linear-gradient(135deg, rgba(212,175,55,0.18), transparent 30%, transparent 70%, rgba(212,175,55,0.14))',
+          }}
+        />
 
-          <div className="systems-card-body flex h-full flex-col rounded-[1.65rem] border p-3">
-            <div className="systems-card-image-wrap relative overflow-hidden rounded-[1.35rem] border">
-              <AssetImage
-                alt={project.image?.alt ?? `${project.title} preview`}
-                sources={project.image?.sources}
-                loading="lazy"
-                className="h-[210px] w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                style={{ objectPosition: project.image?.objectPosition }}
-                fallback={<SystemsFallback project={project} hint={fallbackHint.replace('%file%', fileName)} />}
-              />
-              <div className="systems-card-image-overlay pointer-events-none absolute inset-0" />
-            </div>
+        <div className="relative aspect-[3/2] w-full overflow-hidden">
+          <AssetImage
+            alt={project.image?.alt ?? `${project.title} preview`}
+            sources={project.image?.sources}
+            loading="lazy"
+            className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"
+            style={{ objectPosition: project.image?.objectPosition ?? 'center' }}
+            fallback={<SystemsFallback project={project} hint={fallbackHint.replace('%file%', fileName)} />}
+          />
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-20"
+            style={{ background: 'linear-gradient(to top, rgba(5,7,9,0.85), transparent)' }}
+          />
+        </div>
 
-            <div className="flex flex-1 flex-col px-2 pb-2 pt-5 sm:px-3">
-              <div className="mb-4 flex items-start justify-between gap-4">
-                <div>
-                  <p className="font-display text-[0.9rem] uppercase tracking-[0.34em]" style={{ color: 'var(--text-4)' }}>
-                    {String(index + 1).padStart(2, '0')}
-                  </p>
-                </div>
-                <div className="systems-card-panel rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.2em]">
-                  {project.systemType}
-                </div>
-              </div>
-
-              <h3 className="font-display text-[1.3rem] font-medium uppercase leading-tight tracking-[0.02em] sm:text-[1.45rem]" style={{ color: 'var(--text-1)' }}>
-                {project.title}
-              </h3>
-
-              <p className="mt-3 type-body min-h-[4.4rem] text-[14px] leading-relaxed" style={{ color: 'var(--text-2)' }}>
-                {project.description}
-              </p>
-
-              <motion.div variants={staggerFast} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }} className="mt-4 flex flex-wrap gap-2">
-                {tags.map((tag) => (
-                  <motion.span key={tag} variants={revealUp} className="systems-tag rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.16em]">
-                    {tag}
-                  </motion.span>
-                ))}
-              </motion.div>
-
-              <div className="mt-6 flex flex-wrap items-center gap-3">
-                {project.liveUrl ? (
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="systems-link-primary inline-flex items-center gap-2 rounded-full border px-5 py-3 text-[12px] font-display transition-all duration-400"
-                  >
-                    {demoLabel}
-                  </a>
-                ) : null}
-                {project.repoUrl ? (
-                  <a
-                    href={project.repoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="systems-link-secondary inline-flex items-center gap-2 rounded-full border px-5 py-3 text-[12px] font-display transition-all duration-400"
-                  >
-                    {githubLabel}
-                  </a>
-                ) : null}
-              </div>
-            </div>
+        <div className="relative flex flex-1 flex-col gap-4 px-5 py-5 sm:px-6 sm:py-6">
+          <div className="flex items-center justify-between gap-3 text-[10px] uppercase tracking-[0.24em]" style={{ color: 'var(--text-4)' }}>
+            <span className="font-display">#{String(index + 1).padStart(2, '0')}</span>
+            <span style={{ color: 'var(--accent)' }}>{project.systemType}</span>
           </div>
-        </motion.div>
-      </div>
+
+          <p className="type-body text-[13.5px] leading-relaxed sm:text-[14px]" style={{ color: 'var(--text-2)' }}>
+            {project.description}
+          </p>
+
+          <div className="mt-auto flex flex-wrap items-center gap-3">
+            {project.liveUrl ? (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="systems-link-primary inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[12px] font-display tracking-[0.04em] transition-all duration-400"
+              >
+                {demoLabel}
+                <span aria-hidden>→</span>
+              </a>
+            ) : null}
+            {project.repoUrl ? (
+              <a
+                href={project.repoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="systems-link-secondary inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[12px] font-display tracking-[0.04em] transition-all duration-400"
+              >
+                {githubLabel}
+                <span aria-hidden>↗</span>
+              </a>
+            ) : null}
+          </div>
+        </div>
+      </motion.div>
     </motion.article>
   );
 }

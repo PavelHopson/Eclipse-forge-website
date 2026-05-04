@@ -1,14 +1,6 @@
-import {
-  motion,
-  useMotionTemplate,
-  useMotionValue,
-  useSpring,
-  useTransform,
-  type MouseEvent as ReactMouseEvent,
-} from 'framer-motion';
-import { useRef } from 'react';
+import { motion } from 'framer-motion';
 import { type Project, type ProjectStatus, useSiteContent } from '../../data/content';
-import { revealScale, revealUp, stagger, staggerFast, viewport } from '../../lib/animation';
+import { revealScale, revealUp, stagger, viewport } from '../../lib/animation';
 import { useLocale, type Locale } from '../../lib/locale';
 import { AssetImage } from '../ui/AssetImage';
 import { ConstellationField, EclipseSilhouette, OrbitalRing, ParticleField } from '../ui/EclipseVisuals';
@@ -120,32 +112,6 @@ function PlaceholderVisual({ project, hint }: { project: Project; hint: string }
   );
 }
 
-function ProjectVisual({ project, placeholderHint }: { project: Project; placeholderHint: string }) {
-  return (
-    <div className="case-media relative overflow-hidden rounded-[1.85rem] border">
-      <AssetImage
-        alt={project.image?.alt ?? `${project.title} preview`}
-        sources={project.image?.sources}
-        loading="lazy"
-        className="h-full min-h-[260px] w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-        style={{ objectPosition: project.image?.objectPosition }}
-        fallback={<PlaceholderVisual project={project} hint={placeholderHint} />}
-      />
-      <div className="pointer-events-none absolute inset-0 case-media-overlay" />
-      <div className="pointer-events-none absolute left-5 top-5 rounded-full border px-3 py-2 text-[10px] uppercase tracking-[0.22em] case-top-pill">
-        {project.systemType}
-      </div>
-      <div className="pointer-events-none absolute bottom-5 left-5 flex flex-wrap gap-2">
-        {project.tags.slice(0, 2).map((tag) => (
-          <span key={tag} className="rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.18em] case-top-pill">
-            {tag}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function ProjectCard({
   project,
   index,
@@ -161,131 +127,80 @@ function ProjectCard({
 }) {
   const statusStyle = statusStyles[project.status];
   const isLarge = (featured && index === 0) || isLastOdd;
-  const ref = useRef<HTMLDivElement>(null);
-
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const smoothX = useSpring(mouseX, { stiffness: 220, damping: 28 });
-  const smoothY = useSpring(mouseY, { stiffness: 220, damping: 28 });
-  const rotateX = useSpring(useTransform(smoothY, [-0.5, 0.5], [3, -3]), { stiffness: 180, damping: 24 });
-  const rotateY = useSpring(useTransform(smoothX, [-0.5, 0.5], [-4, 4]), { stiffness: 180, damping: 24 });
-  const spotlight = useMotionTemplate`radial-gradient(circle at ${useTransform(smoothX, [-0.5, 0.5], ['18%', '82%'])} ${useTransform(
-    smoothY,
-    [-0.5, 0.5],
-    ['12%', '88%'],
-  )}, rgba(157,196,255,0.16), transparent 42%)`;
-
-  const handleMouseMove = (event: ReactMouseEvent) => {
-    const rect = ref.current?.getBoundingClientRect();
-    if (!rect) return;
-
-    mouseX.set((event.clientX - rect.left) / rect.width - 0.5);
-    mouseY.set((event.clientY - rect.top) / rect.height - 0.5);
-  };
-
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-  };
 
   return (
     <motion.article variants={revealScale} className={isLarge ? 'lg:col-span-2' : ''}>
-      <div ref={ref} className="perspective-container" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
-        <motion.div
-          style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-          className="group relative overflow-hidden rounded-[2rem] border p-3 transition-all duration-500 case-card-shell"
-        >
-          <motion.div className="pointer-events-none absolute inset-0 rounded-[2rem] opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ backgroundImage: spotlight }} />
-          <div className="pointer-events-none absolute inset-x-10 top-0 h-px opacity-0 transition-opacity duration-500 group-hover:opacity-100 case-edge-glow" />
+      <motion.div
+        whileHover={{ y: -6 }}
+        transition={{ type: 'spring', stiffness: 280, damping: 26 }}
+        className="group relative flex h-full flex-col overflow-hidden rounded-[1.9rem] border transition-all duration-500 case-card-shell"
+      >
+        <div
+          className="pointer-events-none absolute -inset-px rounded-[1.95rem] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          style={{
+            background:
+              'linear-gradient(135deg, rgba(212,175,55,0.18), transparent 30%, transparent 70%, rgba(212,175,55,0.14))',
+          }}
+        />
 
-          <div className="grid gap-4 lg:grid-cols-[1.02fr_0.98fr]">
-            <ProjectVisual project={project} placeholderHint={copy.placeholderHint} />
-
-            <div className="flex flex-col justify-between rounded-[1.85rem] border p-6 sm:p-7 case-copy-panel">
-              <div>
-                <div className="mb-4 flex flex-wrap items-center gap-3">
-                  <span className="font-display text-2xl font-light tracking-tight" style={{ color: 'var(--text-4)' }}>
-                    #{String(index + 1).padStart(2, '0')}
-                  </span>
-                  <span className="rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.22em]" style={statusStyle}>
-                    {copy.statusLabels[project.status]}
-                  </span>
-                  {project.liveUrl ? (
-                    <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em]" style={{ color: '#7EE1B0' }}>
-                      <span className="h-1.5 w-1.5 rounded-full bg-current opacity-80" />
-                      {copy.liveLabel}
-                    </span>
-                  ) : null}
-                </div>
-
-                <h3 className="type-heading text-[1.4rem] leading-tight sm:text-[1.8rem]" style={{ color: 'var(--text-1)' }}>
-                  {project.title}
-                </h3>
-
-                <p className="mt-3 font-display text-[1rem] leading-relaxed sm:text-[1.08rem]" style={{ color: 'var(--accent-glow)' }}>
-                  {project.result}
-                </p>
-
-                <p className="mt-4 type-body text-[14px] leading-relaxed sm:text-[15px]" style={{ color: 'var(--text-2)' }}>
-                  {project.description}
-                </p>
-
-                <div className="mt-5 rounded-2xl border px-4 py-4 case-signal-panel">
-                  <p className="type-meta mb-2" style={{ color: 'var(--accent)' }}>
-                    {copy.signalLabel}
-                  </p>
-                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-2)' }}>
-                    {project.signal}
-                  </p>
-                </div>
-
-                <motion.div variants={staggerFast} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="mt-5 flex flex-wrap gap-2">
-                  {project.tech.map((tech) => (
-                    <motion.span key={tech} variants={revealUp} className="rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] case-tech-pill">
-                      {tech}
-                    </motion.span>
-                  ))}
-                </motion.div>
-              </div>
-
-              <div className="mt-6">
-                <div className="overflow-hidden">
-                  <div className="flex flex-wrap gap-2 rounded-2xl border px-4 py-4 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 case-meta-strip">
-                    {project.tags.map((tag) => (
-                      <span key={tag} className="rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] case-tech-pill">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="mt-5 flex flex-wrap items-center gap-3">
-                  {project.liveUrl ? (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border px-5 py-3 text-[12px] font-display transition-all duration-400 case-link-primary"
-                    >
-                      {copy.demoLabel}
-                    </a>
-                  ) : null}
-                  {project.repoUrl ? (
-                    <a
-                      href={project.repoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border px-5 py-3 text-[12px] font-display transition-all duration-400 case-link-secondary"
-                    >
-                      {copy.githubLabel}
-                    </a>
-                  ) : null}
-                </div>
-              </div>
-            </div>
+        <div className="relative aspect-[3/2] w-full overflow-hidden">
+          <AssetImage
+            alt={project.image?.alt ?? `${project.title} preview`}
+            sources={project.image?.sources}
+            loading="lazy"
+            className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"
+            style={{ objectPosition: project.image?.objectPosition ?? 'center' }}
+            fallback={<PlaceholderVisual project={project} hint={copy.placeholderHint} />}
+          />
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-24"
+            style={{ background: 'linear-gradient(to top, rgba(5,7,9,0.85), transparent)' }}
+          />
+          <div
+            className="pointer-events-none absolute right-4 top-4 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.22em] backdrop-blur-md"
+            style={{ ...statusStyle, background: 'rgba(5,7,9,0.55)' }}
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-current opacity-80" />
+            {copy.statusLabels[project.status]}
           </div>
-        </motion.div>
-      </div>
+        </div>
+
+        <div className="relative flex flex-1 flex-col gap-5 px-6 py-6 sm:px-7 sm:py-7">
+          <div className="flex items-center justify-between gap-3 text-[10px] uppercase tracking-[0.24em]" style={{ color: 'var(--text-4)' }}>
+            <span className="font-display">#{String(index + 1).padStart(2, '0')}</span>
+            <span style={{ color: 'var(--accent)' }}>{project.systemType}</span>
+          </div>
+
+          <p className="type-body text-[14px] leading-relaxed sm:text-[15px]" style={{ color: 'var(--text-2)' }}>
+            {project.description}
+          </p>
+
+          <div className="mt-auto flex flex-wrap items-center gap-3">
+            {project.liveUrl ? (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-[12px] font-display tracking-[0.04em] transition-all duration-400 case-link-primary"
+              >
+                {copy.demoLabel}
+                <span aria-hidden>→</span>
+              </a>
+            ) : null}
+            {project.repoUrl ? (
+              <a
+                href={project.repoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-[12px] font-display tracking-[0.04em] transition-all duration-400 case-link-secondary"
+              >
+                {copy.githubLabel}
+                <span aria-hidden>↗</span>
+              </a>
+            ) : null}
+          </div>
+        </div>
+      </motion.div>
     </motion.article>
   );
 }

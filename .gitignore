@@ -6,3 +6,4 @@ vite.config.js
 vite.config.d.ts
 .vite-preview.log
 .vite-preview.err.log
+design-backups/
