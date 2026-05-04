@@ -1,6 +1,7 @@
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { SiteHeader } from '../components/layout/SiteHeader';
 import { AboutSection } from '../components/sections/AboutSection';
+import { BusinessImpactSection } from '../components/sections/BusinessImpactSection';
 import { CasesSection } from '../components/sections/CasesSection';
 import { CtaSection } from '../components/sections/CtaSection';
 import { FounderSection } from '../components/sections/FounderSection';
@@ -85,15 +86,16 @@ export function App() {
         <HeroSection />
         <SystemsNotSitesSection />
         <EclipseDivider />
+        <FounderSection />
+        <EclipseDivider />
         <AboutSection />
+        <BusinessImpactSection />
         <CasesSection />
         <SystemsEcosystemSection />
         <EclipseDivider />
         <HowItWorksSection />
         <ServicesSection />
         <ProcessSection />
-        <EclipseDivider />
-        <FounderSection />
         <EclipseDivider />
         <MetricsSection />
         <CtaSection />

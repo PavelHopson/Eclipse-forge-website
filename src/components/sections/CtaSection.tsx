@@ -14,7 +14,7 @@ import {
 } from '../ui/SocialIcons';
 
 type FormField = {
-  key: 'name' | 'task' | 'contact';
+  key: 'name' | 'manual' | 'loss' | 'result' | 'contact';
   label: string;
   placeholder: string;
   multiline?: boolean;
@@ -55,7 +55,7 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     title: 'Опишите задачу.',
     titleAccent: 'Разберём и превратим в систему.',
     description:
-      'Короткий сигнал вместо долгого созвона. Имя, задача и канал связи уже достаточно, чтобы я быстро понял контур и предложил рабочую системную модель.',
+      'Опишите процесс, который сейчас делается вручную. Этого достаточно, чтобы я понял, где теряется время, деньги или контроль, и предложил системный контур вместо очередного набора экранов.',
     requestChannel: 'Канал запроса',
     responseWindow: 'Окно ответа',
     responseTime: 'Ответ в течение 24 часов',
@@ -74,16 +74,28 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     instagramCardLabel: 'Instagram',
     whyTitle: 'Почему так',
     whyText:
-      'Первый бриф обычно теряет точность в общих словах. Этот контур собирает минимальный, но достаточный сигнал, чтобы разговор сразу пошёл в сторону системы, а не обсуждения экранов.',
+      'Так разговор сразу начинается с процесса и результата. Не с абстрактного “нужен сайт”, а с того, что именно нужно автоматизировать, контролировать и доводить до действия.',
     packetHeader: 'Eclipse Forge / Сигнал запроса',
     emptyAnswer: 'не заполнено',
-    telegramLabel: 'Открыть Telegram',
+    telegramLabel: 'Написать в Telegram',
     fields: [
       { key: 'name', label: 'Имя', placeholder: 'Как к вам обращаться?' },
       {
-        key: 'task',
-        label: 'Что нужно превратить в систему?',
-        placeholder: 'Опишите процесс, ручную рутину, узкое место или результат, который хотите получить...',
+        key: 'manual',
+        label: 'Что сейчас делаете вручную?',
+        placeholder: 'Какой процесс сейчас держится на людях, сообщениях, таблицах, ручных переносах или постоянном контроле...',
+        multiline: true,
+      },
+      {
+        key: 'loss',
+        label: 'Где теряется время, деньги или контроль?',
+        placeholder: 'Где возникают задержки, ошибки, дублирование, пропущенные шаги или непрозрачность...',
+        multiline: true,
+      },
+      {
+        key: 'result',
+        label: 'Какой результат нужен?',
+        placeholder: 'Что система должна делать сама, какой выход давать и что должно стать проще после запуска...',
         multiline: true,
       },
       {
@@ -98,7 +110,7 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     title: 'Describe the task.',
     titleAccent: "We'll turn it into a system.",
     description:
-      'A short signal instead of a long intro call. Name, task and contact channel are already enough for me to understand the contour and propose a working system model.',
+      'Describe the process that is still done manually. That is enough for me to see where time, money or control is leaking and propose a system instead of another set of screens.',
     requestChannel: 'Request channel',
     responseWindow: 'Response window',
     responseTime: 'Reply within 24 hours',
@@ -117,16 +129,28 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     instagramCardLabel: 'Instagram',
     whyTitle: 'Why this flow',
     whyText:
-      'The first brief usually loses precision in general language. This contour captures the smallest useful signal so the conversation starts with a system, not a surface.',
+      'This makes the conversation start from process and outcome. Not from a vague “we need a website”, but from what actually needs to be automated, controlled and pushed to action.',
     packetHeader: 'Eclipse Forge / Request Signal',
     emptyAnswer: 'not filled',
-    telegramLabel: 'Open Telegram',
+    telegramLabel: 'Message on Telegram',
     fields: [
       { key: 'name', label: 'Name', placeholder: 'How should I address you?' },
       {
-        key: 'task',
-        label: 'What needs to become a system?',
-        placeholder: 'Describe the process, manual routine, bottleneck or the result you want to achieve...',
+        key: 'manual',
+        label: 'What is still done manually?',
+        placeholder: 'Which process still depends on people, messages, spreadsheets, manual transfers or constant supervision...',
+        multiline: true,
+      },
+      {
+        key: 'loss',
+        label: 'Where are time, money or control being lost?',
+        placeholder: 'Where do delays, errors, duplicated work or missing visibility show up...',
+        multiline: true,
+      },
+      {
+        key: 'result',
+        label: 'What outcome do you need?',
+        placeholder: 'What should the system do on its own, what output should it produce and what should become easier after launch...',
         multiline: true,
       },
       {
@@ -140,13 +164,17 @@ const ctaCopy: Record<Locale, CtaCopy> = {
 
 type FormState = {
   name: string;
-  task: string;
+  manual: string;
+  loss: string;
+  result: string;
   contact: string;
 };
 
 const emptyForm: FormState = {
   name: '',
-  task: '',
+  manual: '',
+  loss: '',
+  result: '',
   contact: '',
 };
 
@@ -168,7 +196,9 @@ export function CtaSection() {
     ].join('\n\n');
   }, [copy.emptyAnswer, copy.fields, copy.packetHeader, form]);
 
-  const emailHref = `mailto:${contactDetails.email}?subject=${encodeURIComponent('Eclipse Forge request')}&body=${encodeURIComponent(signalPacket)}`;
+  const emailHref = `mailto:${contactDetails.email}?subject=${encodeURIComponent(
+    locale === 'ru' ? 'Запрос в Eclipse Forge' : 'Eclipse Forge request',
+  )}&body=${encodeURIComponent(signalPacket)}`;
 
   const handleChange = (key: keyof FormState, value: string) => {
     setForm((current) => ({ ...current, [key]: value }));
@@ -396,10 +426,10 @@ export function CtaSection() {
                     </p>
                     <span
                       className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em]"
-                      style={{ color: completion === 100 ? 'var(--live)' : 'var(--text-4)' }}
+                      style={{ color: copied || completion === 100 ? 'var(--live)' : 'var(--text-4)' }}
                     >
                       <span className="h-1.5 w-1.5 rounded-full hero-signal-dot" />
-                      {completion === 100 ? contactFlow.status[1] : copy.awaitingInput}
+                      {copied ? copy.signalCopiedLabel : completion === 100 ? contactFlow.status[1] : copy.awaitingInput}
                     </span>
                   </div>
 
@@ -416,13 +446,12 @@ export function CtaSection() {
                   >
                     {contactFlow.primaryCta}
                   </button>
-                  <button
-                    type="button"
-                    onClick={handleCopy}
+                  <a
+                    href={emailHref}
                     className="rounded-full border px-5 py-4 text-[12px] font-display uppercase tracking-[0.16em] transition-all duration-300 contact-console-secondary"
                   >
-                    {copied ? copy.signalCopiedLabel : contactFlow.secondaryCta}
-                  </button>
+                    {contactFlow.secondaryCta}
+                  </a>
                 </div>
 
                 <div className="mt-5 rounded-[1.6rem] border px-4 py-4 contact-signal-preview">

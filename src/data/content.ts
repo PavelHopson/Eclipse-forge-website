@@ -179,16 +179,19 @@ const projectImage = (primary: string, secondary: string, alt: string, objectPos
 });
 
 const founderSources = [
+  '/founder-portrait.png',
   '/images/projects/founder-portrait.png',
   '/images/ChatGPT Image 4 \u043c\u0430\u044f 2026 \u0433., 14_54_55.png',
 ];
 
 const founderDeskSources = [
+  '/founder-portrait.png',
   '/images/projects/founder-portrait.png',
   '/images/ChatGPT Image 4 \u043c\u0430\u044f 2026 \u0433., 14_42_15.png',
 ];
 
 const founderSeatedSources = [
+  '/founder-portrait.png',
   '/images/projects/founder-portrait.png',
   '/images/ChatGPT Image 4 \u043c\u0430\u044f 2026 \u0433., 14_56_29.png',
 ];
@@ -301,8 +304,8 @@ const featuredProjectDefinitions: LocalizedProjectDefinition[] = [
     ),
     tech: ['React 19', 'TypeScript', 'Electron', 'Capacitor', 'Zustand', 'Vitest', 'Playwright'],
     result: localized(
-      'Поведенческий движок вместо пассивного таск-менеджера.',
-      'A behavior engine instead of a passive task manager.',
+      'Система исполнения, которая превращает задачи в давление, фокус и результат.',
+      'An execution system that turns tasks into pressure, focus and outcome.',
     ),
     signal: localized(
       '128 тестов, 5 AI-провайдеров, мультиплатформенная поставка.',
@@ -327,8 +330,8 @@ const featuredProjectDefinitions: LocalizedProjectDefinition[] = [
     ),
     tech: ['TypeScript', 'Bun', 'Rust', 'Python', 'WebSocket', 'Voice', 'Ollama'],
     result: localized(
-      'Превращает AI из интерфейса в исполняемый операционный слой.',
-      'Turns AI from interface into an executable operating layer.',
+      'Локальный AI-оператор для кода, терминала, voice-flow и автоматизации.',
+      'A local AI operator for code, terminal workflows, voice flow and automation.',
     ),
     signal: localized(
       '207K строк TypeScript, 244 теста, двойной CI, Windows installer.',
@@ -357,8 +360,8 @@ const featuredProjectDefinitions: LocalizedProjectDefinition[] = [
     ),
     tech: ['React 19', 'TypeScript', 'Tailwind', 'Framer Motion', 'Zustand'],
     result: localized(
-      'Luxury booking funnel с продуктовой логикой за арт-дирекшеном.',
-      'A luxury booking funnel with product-grade logic behind the art direction.',
+      'Premium booking experience: каталог, выбор, доверие и путь до бронирования.',
+      'A premium booking experience for catalog, selection, trust and the path to reservation.',
     ),
     signal: localized(
       'Премиальный визуальный язык, guided booking и адаптивный конверсионный flow.',
@@ -383,8 +386,8 @@ const featuredProjectDefinitions: LocalizedProjectDefinition[] = [
     ),
     tech: ['Rust', 'Axum', 'Tokio', 'MCP', 'Docker', 'TLS Fingerprinting'],
     result: localized(
-      'Более чистое, дешёвое и надёжное agent-ready извлечение, чем у типичных scraping-стеков.',
-      'Cleaner, cheaper and more reliable agent-ready extraction than typical scraping stacks.',
+      'Data extraction engine для AI-агентов: меньше сырого HTML, больше готового сигнала.',
+      'A data extraction engine for AI agents: less raw HTML, more ready signal.',
     ),
     signal: localized(
       '22K строк Rust, 417 тестов, Docker, CI, REST API.',
@@ -408,8 +411,8 @@ const featuredProjectDefinitions: LocalizedProjectDefinition[] = [
     ),
     tech: ['FastAPI', 'Python', 'Next.js', 'PostgreSQL', 'Redis', 'Prometheus', 'Grafana', 'Loki'],
     result: localized(
-      'От ручного поиска компаний к наблюдаемой data/ops-системе.',
-      'From manual company lookup to a monitored data and ops system.',
+      'Сбор, мониторинг и алерты вместо ручного ресерча по разным источникам.',
+      'Collection, monitoring and alerts instead of manual research across scattered sources.',
     ),
     signal: localized(
       'ETL, observability и 7-сервисная архитектура на Docker Compose.',
@@ -430,8 +433,8 @@ const featuredProjectDefinitions: LocalizedProjectDefinition[] = [
     ),
     tech: ['Next.js', 'Electron', 'TypeScript', 'Prisma', 'TrueLayer', 'Stripe'],
     result: localized(
-      'Преобразует личную операционку в направляемый action loop.',
-      'Transforms personal admin into a guided action loop.',
+      'Action OS, которая превращает данные о жизни в следующие действия.',
+      'An action OS that turns life data into the next actions.',
     ),
     signal: localized(
       'Desktop app, banking API, платежи и генерация действий.',
@@ -817,38 +820,38 @@ const founderProfileDefinition: LocalizedFounderProfileDefinition = {
   title: localized('Кто стоит за системой', 'Who stands behind the system'),
   summary: localized(
     [
-      'Павел Хопсон — основатель Eclipse Forge. Я создаю системы, которые заменяют ручную работу и становятся частью бизнеса. Не интерфейсы, не «сделать сайт» — контуры исполнения, которые работают сами.',
-      'Работа лежит на стыке product UX, AI-runtime и операционной логики. Видимый слой важен, но настоящая ценность — в системе за ним: что она отслеживает, как принимает решения и где замыкает цикл без человека в петле.',
+      'Павел Хопсон — основатель Eclipse Forge. Я не делаю интерфейсы ради интерфейсов. Я собираю системы, которые забирают ручную рутину, фиксируют процесс и становятся рабочей частью бизнеса.',
+      'Если задача живёт между чатами, таблицами, людьми и постоянным ручным контролем, я превращаю это в управляемый контур: что система видит, как принимает решение и где доводит действие до результата.',
     ],
     [
-      'Pavel Hopson — founder of Eclipse Forge. I build systems that replace manual work and become part of the business. Not interfaces, not "make me a site" — execution contours that run themselves.',
-      'The work sits where product UX, AI runtime and operational logic meet. The visible layer matters, but the real value is in the system behind it: what it observes, how it decides, and where it closes the loop without a human in it.',
+      'Pavel Hopson is the founder of Eclipse Forge. I do not build interfaces for the sake of interfaces. I build systems that remove manual routine, fix the process and become a working part of the business.',
+      'If a task lives between chats, spreadsheets, people and constant manual control, I turn it into a controllable contour: what the system sees, how it decides and where it drives the action to result.',
     ],
   ),
   pillars: localized(
     [
-      'AI-системы, агенты и local-first операторские инструменты',
-      'Automation flows, которые уменьшают ручную маршрутизацию и follow-up',
-      'SaaS MVP и внутренние платформы с реальной логикой за UI',
-      'Поведенческие системы и продукты, которые меняют исполнение, а не только видимость',
+      'AI-системы и operator flows, где модель не отвечает в чате, а реально исполняет работу',
+      'Automation-контуры, которые снимают ручную маршрутизацию, follow-up и повторяющиеся проверки',
+      'SaaS MVP и внутренние платформы, где за UI уже есть состояние, правила и рабочая логика',
+      'Продукты, в которых интерфейс не украшение, а управляемая поверхность для дорогого процесса',
     ],
     [
-      'AI systems, agents and local-first operator tooling',
-      'Automation flows that reduce manual routing and follow-up',
-      'SaaS MVPs and internal platforms with real logic behind the UI',
-      'Behavioral systems and products that change execution, not just visibility',
+      'AI systems and operator flows where the model does not just chat, but actually executes work',
+      'Automation contours that remove manual routing, follow-up and repeated checks',
+      'SaaS MVPs and internal platforms with state, rules and working logic behind the UI',
+      'Products where the interface is not decoration, but a controllable surface for a high-value process',
     ],
   ),
   stats: localized(
     [
-      { value: 'Rust + TS + Python', label: 'гибридный инженерный стек' },
-      { value: 'Продукты + tooling', label: 'единая логика от UI до infra' },
-      { value: 'Контроль над шумом', label: 'главный принцип дизайна' },
+      { value: 'AI + automation + SaaS', label: 'один системный контур' },
+      { value: 'UI + runtime + data', label: 'не только фронтовый слой' },
+      { value: 'Процесс -> система', label: 'главная логика работы' },
     ],
     [
-      { value: 'Rust + TS + Python', label: 'hybrid engineering stack' },
-      { value: 'Products + tooling', label: 'one mind across UI and infra' },
-      { value: 'Control over noise', label: 'the main design principle' },
+      { value: 'AI + automation + SaaS', label: 'one system contour' },
+      { value: 'UI + runtime + data', label: 'more than a front layer' },
+      { value: 'Process -> system', label: 'the core working logic' },
     ],
   ),
   portrait: brandAssets.founderPortrait,
@@ -877,9 +880,9 @@ const contactPromptDefinitions: LocalizedContactPromptDefinition[] = [
 ];
 
 const contactFlowDefinition: LocalizedContactFlowDefinition = {
-  primaryCta: localized('Открыть Telegram', 'Open Telegram'),
-  secondaryCta: localized('Скопировать сигнал', 'Copy signal packet'),
-  status: localized(['канал запроса открыт', 'сигнал готов', 'оператор в сети'], ['request channel open', 'signal ready', 'operator online']),
+  primaryCta: localized('Написать в Telegram', 'Message on Telegram'),
+  secondaryCta: localized('Открыть email', 'Open email'),
+  status: localized(['канал запроса открыт', 'сигнал готов', 'Павел отвечает лично'], ['request channel open', 'signal ready', 'Pavel replies personally']),
 };
 
 const systemsEcosystemOrder = [

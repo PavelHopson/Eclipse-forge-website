@@ -50,8 +50,8 @@ const casesCopy: Record<
     visibleSystems: 'видимых систем',
     anchorLabels: ['Флагманы', 'AI-системы', 'Продуктовые системы', 'Инструменты'],
     featuredEyebrow: 'Флагманские системы',
-    featuredTitle: 'Проекты, которые ведут себя как ядра систем, а не как плитки портфолио',
-    featuredDescription: 'Каждая карточка готова к реальному скриншоту, но уже сейчас несёт продуктовую логику даже тогда, когда виден только системный сигнал.',
+    featuredTitle: 'Проекты, которые объясняют не только устройство, но и эффект от запуска',
+    featuredDescription: 'Здесь важно не просто что собрано, а что это меняет: где уходит ручная рутина, где появляется контроль и как система начинает работать вместо человека.',
     placeholderHint: 'Добавь скриншот в `public/images/projects`, и карточка подхватит его автоматически.',
     liveLabel: 'демо активно',
     signalLabel: 'сигнал',
@@ -74,8 +74,8 @@ const casesCopy: Record<
     visibleSystems: 'visible systems',
     anchorLabels: ['Flagships', 'AI systems', 'Product systems', 'Tooling'],
     featuredEyebrow: 'Flagship systems',
-    featuredTitle: 'Projects that behave like system cores, not portfolio tiles',
-    featuredDescription: 'Each card is ready for a real screenshot, but already carries the product logic even when only the system signal is visible.',
+    featuredTitle: 'Projects that explain not only how they work, but what changes after launch',
+    featuredDescription: 'What matters here is not just the build itself, but the effect: less manual routine, more control and a system that starts doing the work.',
     placeholderHint: 'Add a screenshot into `public/images/projects` and the card will pick it up automatically.',
     liveLabel: 'demo live',
     signalLabel: 'signal',
@@ -222,6 +222,10 @@ function ProjectCard({
                   {project.title}
                 </h3>
 
+                <p className="mt-3 font-display text-[1rem] leading-relaxed sm:text-[1.08rem]" style={{ color: 'var(--accent-glow)' }}>
+                  {project.result}
+                </p>
+
                 <p className="mt-4 type-body text-[14px] leading-relaxed sm:text-[15px]" style={{ color: 'var(--text-2)' }}>
                   {project.description}
                 </p>
@@ -252,9 +256,6 @@ function ProjectCard({
                         {tag}
                       </span>
                     ))}
-                    <span className="rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] case-tech-pill">
-                      {project.result}
-                    </span>
                   </div>
                 </div>
 
