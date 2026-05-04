@@ -1,16 +1,45 @@
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll } from 'framer-motion';
 import { useState } from 'react';
+import { useLocale, type Locale } from '../../lib/locale';
 import { useTheme } from '../../lib/theme';
 import { GlowButton } from '../ui/GlowButton';
+import { LanguageToggle } from '../ui/LanguageToggle';
 import { ThemeToggle } from '../ui/ThemeToggle';
 
-const navItems = [
-  { label: 'Positioning', href: '#about' },
-  { label: 'Cases', href: '#cases' },
-  { label: 'Services', href: '#services' },
-  { label: 'Process', href: '#process' },
-  { label: 'Contact', href: '#contact' },
-];
+const headerCopy: Record<
+  Locale,
+  {
+    navItems: Array<{ label: string; href: string }>;
+    cta: string;
+    openMenu: string;
+    closeMenu: string;
+  }
+> = {
+  ru: {
+    navItems: [
+      { label: 'Позиционирование', href: '#about' },
+      { label: 'Кейсы', href: '#cases' },
+      { label: 'Услуги', href: '#services' },
+      { label: 'Процесс', href: '#process' },
+      { label: 'Контакт', href: '#contact' },
+    ],
+    cta: 'Открыть запрос',
+    openMenu: 'Открыть меню',
+    closeMenu: 'Закрыть меню',
+  },
+  en: {
+    navItems: [
+      { label: 'Positioning', href: '#about' },
+      { label: 'Cases', href: '#cases' },
+      { label: 'Services', href: '#services' },
+      { label: 'Process', href: '#process' },
+      { label: 'Contact', href: '#contact' },
+    ],
+    cta: 'Open a request',
+    openMenu: 'Open menu',
+    closeMenu: 'Close menu',
+  },
+};
 
 export function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,6 +47,8 @@ export function SiteHeader() {
   const reduceMotion = useReducedMotion();
   const { scrollY } = useScroll();
   const { theme } = useTheme();
+  const { locale } = useLocale();
+  const copy = headerCopy[locale];
   const isLight = theme === 'light';
 
   useMotionValueEvent(scrollY, 'change', (latest) => setIsScrolled(latest > 20));
@@ -44,7 +75,7 @@ export function SiteHeader() {
               : { backgroundColor: bgIdle, borderColor: borderIdle, backdropFilter: 'blur(8px)' }
           }
           transition={{ duration: 0.3 }}
-          className="mx-auto flex max-w-[1400px] items-center justify-between rounded-full border px-5 py-3"
+          className="mx-auto flex max-w-[1400px] items-center justify-between rounded-full border px-4 py-3 sm:px-5"
           style={{ boxShadow: isScrolled ? shadowScrolled : 'none' }}
         >
           <a href="#hero" className="flex min-w-0 items-center gap-3" onClick={closeMenu}>
@@ -55,7 +86,7 @@ export function SiteHeader() {
           </a>
 
           <nav className="hidden items-center gap-6 text-sm md:flex" style={{ color: 'var(--text-3)' }}>
-            {navItems.map((item) => (
+            {copy.navItems.map((item) => (
               <a key={item.href} href={item.href} className="transition-colors duration-300 hover:!text-[var(--text-1)]">
                 {item.label}
               </a>
@@ -63,6 +94,7 @@ export function SiteHeader() {
           </nav>
 
           <div className="flex items-center gap-2 sm:gap-3">
+            <LanguageToggle compact />
             <div className="sm:hidden">
               <ThemeToggle compact />
             </div>
@@ -71,13 +103,13 @@ export function SiteHeader() {
             </div>
             <div className="hidden sm:block">
               <GlowButton href="#contact" className="px-5 py-2.5 text-[0.78rem]">
-                Open a request
+                {copy.cta}
               </GlowButton>
             </div>
 
             <button
               type="button"
-              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-label={isMenuOpen ? copy.closeMenu : copy.openMenu}
               onClick={() => setIsMenuOpen((open) => !open)}
               className="inline-flex h-10 w-10 items-center justify-center rounded-full border md:hidden"
               style={{ borderColor: 'var(--line)', color: 'var(--text-2)' }}
@@ -111,7 +143,7 @@ export function SiteHeader() {
               style={{ borderColor: 'var(--line)', background: 'var(--bg-card)' }}
             >
               <nav className="grid gap-1">
-                {navItems.map((item) => (
+                {copy.navItems.map((item) => (
                   <a
                     key={item.href}
                     href={item.href}
@@ -125,7 +157,7 @@ export function SiteHeader() {
               </nav>
               <div className="mt-4 border-t pt-4" style={{ borderColor: 'var(--line)' }}>
                 <GlowButton href="#contact" onClick={closeMenu} className="w-full justify-center">
-                  Open a request
+                  {copy.cta}
                 </GlowButton>
               </div>
             </motion.div>

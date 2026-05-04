@@ -1,7 +1,8 @@
 import { motion, useInView, useMotionValue, useSpring } from 'framer-motion';
 import { useEffect, useRef } from 'react';
-import { metrics } from '../../data/content';
+import { useSiteContent } from '../../data/content';
 import { revealUp, stagger, viewport } from '../../lib/animation';
+import { useLocale, type Locale } from '../../lib/locale';
 import { ConstellationField, EclipseSilhouette, SolarCorona } from '../ui/EclipseVisuals';
 
 function useAnimatedCounter(target: number, duration = 2, inView: boolean) {
@@ -78,9 +79,23 @@ const metricConfigs = [
   { numericValue: 6, max: 8, suffix: '', accent: false },
 ];
 
+const metricsCopy: Record<Locale, { eyebrow: string; title: string }> = {
+  ru: {
+    eyebrow: 'Метрики',
+    title: 'Числа, которые показывают инженерный вес.',
+  },
+  en: {
+    eyebrow: 'Metrics',
+    title: 'Numbers that reveal engineering weight.',
+  },
+};
+
 export function MetricsSection() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.3 });
+  const { locale } = useLocale();
+  const copy = metricsCopy[locale];
+  const { metrics } = useSiteContent();
 
   return (
     <motion.section
@@ -110,10 +125,10 @@ export function MetricsSection() {
 
       <div className="relative mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
         <motion.p variants={revealUp} className="type-meta mb-6 text-center" style={{ color: 'var(--accent)' }}>
-          Metrics
+          {copy.eyebrow}
         </motion.p>
         <motion.h2 variants={revealUp} className="type-display mb-16 text-center text-[clamp(1.8rem,3.5vw,3rem)] lg:mb-20">
-          <span className="text-gradient">Numbers that reveal engineering weight.</span>
+          <span className="text-gradient">{copy.title}</span>
         </motion.h2>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:gap-8">

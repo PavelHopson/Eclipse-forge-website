@@ -1,21 +1,63 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import { brandAssets, founderProfile } from '../../data/content';
-import { revealUp, stagger, viewport } from '../../lib/animation';
 import { AssetImage } from '../ui/AssetImage';
 import { ConstellationField, EclipseSilhouette, OrbitalRing, ParticleField } from '../ui/EclipseVisuals';
+import { brandAssets, useSiteContent } from '../../data/content';
+import { revealUp, stagger, viewport } from '../../lib/animation';
+import { useLocale, type Locale } from '../../lib/locale';
 
-function PortraitFallback() {
+const founderCopy: Record<
+  Locale,
+  {
+    fallbackTitle: string;
+    fallbackText: string;
+    status: string;
+    plateFallback: string;
+    noteTitle: string;
+    noteText: string;
+    modeLabel: string;
+    modeValue: string;
+    surfaceLabel: string;
+    surfaceValue: string;
+  }
+> = {
+  ru: {
+    fallbackTitle: 'сигнал основателя',
+    fallbackText: 'Слот портрета готов. Положи `founder-portrait.png` в `public/images/projects`, чтобы заменить fallback-рамку.',
+    status: 'оператор в сети',
+    plateFallback: 'Eclipse Forge / системы > интерфейсы',
+    noteTitle: 'Системная заметка',
+    noteText: 'Eclipse Forge лучше всего работает на проектах, где сложность лежит не в самом экране, а в модели исполнения за ним.',
+    modeLabel: 'режим',
+    modeValue: 'systems first',
+    surfaceLabel: 'поверхность',
+    surfaceValue: 'UI + логика оператора',
+  },
+  en: {
+    fallbackTitle: 'Founder signal',
+    fallbackText: 'Portrait slot is ready. Drop `founder-portrait.png` into `public/images/projects` to replace the fallback frame.',
+    status: 'operator online',
+    plateFallback: 'Eclipse Forge / systems > interfaces',
+    noteTitle: 'System note',
+    noteText: 'Eclipse Forge works best on projects where the hard part is not the screen itself, but the execution model behind it.',
+    modeLabel: 'mode',
+    modeValue: 'systems first',
+    surfaceLabel: 'surface',
+    surfaceValue: 'UI + operator logic',
+  },
+};
+
+function PortraitFallback({ title, text }: { title: string; text: string }) {
   return (
     <div className="relative flex h-full min-h-[420px] items-center justify-center overflow-hidden rounded-[2rem] border founder-frame-inner">
       <div className="absolute inset-0 founder-orbit-sheen" />
       <EclipseSilhouette size={220} coronaColor="rgba(157, 196, 255, 0.14)" />
       <div className="absolute bottom-8 left-8 right-8 rounded-2xl border px-5 py-4 founder-panel">
         <p className="type-meta mb-2" style={{ color: 'var(--accent)' }}>
-          Founder signal
+          {title}
         </p>
         <p className="text-sm leading-relaxed" style={{ color: 'var(--text-3)' }}>
-          Portrait slot is ready. Drop `founder-portrait.png` into `public/images/projects` to replace the fallback frame.
+          {text}
         </p>
       </div>
     </div>
@@ -26,6 +68,9 @@ export function FounderSection() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
   const panelY = useTransform(scrollYProgress, [0, 1], [30, -30]);
+  const { locale } = useLocale();
+  const copy = founderCopy[locale];
+  const { founderProfile } = useSiteContent();
 
   return (
     <motion.section
@@ -107,11 +152,11 @@ export function FounderSection() {
                 loading="lazy"
                 className="h-full min-h-[420px] w-full rounded-[1.6rem] object-cover"
                 style={{ objectPosition: founderProfile.portrait.objectPosition }}
-                fallback={<PortraitFallback />}
+                fallback={<PortraitFallback title={copy.fallbackTitle} text={copy.fallbackText} />}
               />
               <div className="pointer-events-none absolute inset-0 rounded-[2rem] founder-frame-glow" />
               <div className="pointer-events-none absolute right-8 top-8 hidden rounded-full border px-4 py-2 text-[10px] uppercase tracking-[0.26em] sm:inline-flex founder-status">
-                operator online
+                {copy.status}
               </div>
             </div>
 
@@ -126,7 +171,7 @@ export function FounderSection() {
                   fallback={
                     <div className="flex min-h-[180px] items-end bg-[radial-gradient(circle_at_top,rgba(117,140,255,0.16),transparent_58%),linear-gradient(180deg,#0c1117_0%,#07090d_100%)] p-6">
                       <p className="type-meta" style={{ color: 'var(--text-3)' }}>
-                        Eclipse Forge / systems &gt; interfaces
+                        {copy.plateFallback}
                       </p>
                     </div>
                   }
@@ -135,26 +180,26 @@ export function FounderSection() {
 
               <div className="rounded-[1.7rem] border p-5 founder-panel">
                 <p className="type-meta mb-3" style={{ color: 'var(--accent)' }}>
-                  System note
+                  {copy.noteTitle}
                 </p>
                 <p className="type-body text-[14px] leading-relaxed sm:text-[15px]" style={{ color: 'var(--text-2)' }}>
-                  Eclipse Forge works best on projects where the hard part is not the screen itself, but the execution model behind it.
+                  {copy.noteText}
                 </p>
                 <div className="mt-5 space-y-2">
                   <div className="flex items-center justify-between rounded-full border px-3 py-2 founder-chip">
                     <span className="text-[10px] uppercase tracking-[0.18em]" style={{ color: 'var(--text-4)' }}>
-                      mode
+                      {copy.modeLabel}
                     </span>
                     <span className="text-[11px] uppercase tracking-[0.18em]" style={{ color: 'var(--text-2)' }}>
-                      systems first
+                      {copy.modeValue}
                     </span>
                   </div>
                   <div className="flex items-center justify-between rounded-full border px-3 py-2 founder-chip">
                     <span className="text-[10px] uppercase tracking-[0.18em]" style={{ color: 'var(--text-4)' }}>
-                      surface
+                      {copy.surfaceLabel}
                     </span>
                     <span className="text-[11px] uppercase tracking-[0.18em]" style={{ color: 'var(--text-2)' }}>
-                      UI + operator logic
+                      {copy.surfaceValue}
                     </span>
                   </div>
                 </div>

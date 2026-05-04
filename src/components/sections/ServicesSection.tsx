@@ -1,9 +1,40 @@
 import { motion } from 'framer-motion';
-import { serviceEntryPoints } from '../../data/content';
+import { useSiteContent } from '../../data/content';
 import { revealUp, stagger, viewport } from '../../lib/animation';
+import { useLocale, type Locale } from '../../lib/locale';
 import { MiniEclipse, OrbitalRing, ParticleField } from '../ui/EclipseVisuals';
 
+const servicesCopy: Record<
+  Locale,
+  {
+    eyebrow: string;
+    title: string;
+    description: string;
+    audienceLabel: string;
+    resultLabel: string;
+  }
+> = {
+  ru: {
+    eyebrow: 'Точки входа',
+    title: 'То, с чем реально можно зайти в forge.',
+    description: 'Это не прайс. Это самые естественные входы, когда проблема лежит в операционной сложности, AI-исполнении или продуктовой логике, которой нужен сильный front layer.',
+    audienceLabel: 'Для кого',
+    resultLabel: 'Результат',
+  },
+  en: {
+    eyebrow: 'Entry points',
+    title: 'Things you can actually bring into the forge.',
+    description: 'Not a rate card. These are the most natural ways to engage when the problem is operational complexity, AI execution or product logic that needs a strong front layer.',
+    audienceLabel: 'For who',
+    resultLabel: 'Outcome',
+  },
+};
+
 export function ServicesSection() {
+  const { locale } = useLocale();
+  const copy = servicesCopy[locale];
+  const { serviceEntryPoints } = useSiteContent();
+
   return (
     <motion.section
       id="services"
@@ -25,13 +56,13 @@ export function ServicesSection() {
 
       <div className="relative mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
         <motion.p variants={revealUp} className="type-meta mb-6" style={{ color: 'var(--accent)' }}>
-          Entry points
+          {copy.eyebrow}
         </motion.p>
         <motion.h2 variants={revealUp} className="type-display mb-6 max-w-[12ch] text-[clamp(2.2rem,4.5vw,4rem)]">
-          Things you can actually bring into the forge.
+          {copy.title}
         </motion.h2>
         <motion.p variants={revealUp} className="max-w-2xl type-body text-[15px] leading-relaxed sm:text-[16px]" style={{ color: 'var(--text-3)' }}>
-          Not a rate card. These are the most natural ways to engage when the problem is operational complexity, AI execution or product logic that needs a strong front layer.
+          {copy.description}
         </motion.p>
 
         <div className="mt-10 grid gap-4 lg:grid-cols-2 xl:grid-cols-5">
@@ -58,7 +89,7 @@ export function ServicesSection() {
                 </p>
                 <div className="mt-5 rounded-2xl border px-4 py-4 services-panel">
                   <p className="type-meta mb-2" style={{ color: 'var(--accent)' }}>
-                    For who
+                    {copy.audienceLabel}
                   </p>
                   <p className="text-sm leading-relaxed" style={{ color: 'var(--text-3)' }}>
                     {service.audience}
@@ -66,7 +97,7 @@ export function ServicesSection() {
                 </div>
                 <div className="mt-4 rounded-2xl border px-4 py-4 services-panel">
                   <p className="type-meta mb-2" style={{ color: 'var(--accent)' }}>
-                    Outcome
+                    {copy.resultLabel}
                   </p>
                   <p className="text-sm leading-relaxed" style={{ color: 'var(--text-2)' }}>
                     {service.result}

@@ -1,6 +1,5 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import { brandAssets, contactDetails, metrics } from '../../data/content';
 import { AssetImage } from '../ui/AssetImage';
 import { BlackHoleCanvas } from '../ui/BlackHoleCanvas';
 import { GlowButton } from '../ui/GlowButton';
@@ -12,6 +11,83 @@ import {
   ParticleField,
   SolarCorona,
 } from '../ui/EclipseVisuals';
+import { brandAssets, contactDetails, useSiteContent } from '../../data/content';
+import { useLocale, type Locale } from '../../lib/locale';
+
+const heroCopy: Record<
+  Locale,
+  {
+    eyebrow: string;
+    title: string;
+    titleAccent: string;
+    description: string;
+    primaryCta: string;
+    secondaryCta: string;
+    channelStatus: string;
+    fallbackTitle: string;
+    fallbackText: string;
+    operatorLabel: string;
+    operatorStatus: string;
+    systemCore: string;
+    orbitalView: string;
+    scrollHint: string;
+    plateFallback: string;
+  }
+> = {
+  ru: {
+    eyebrow: 'Eclipse Forge / системы > интерфейсы',
+    title: 'Строим системы, которые держат',
+    titleAccent: 'контроль в движении.',
+    description:
+      'Eclipse Forge — это место, где AI-операторы, автоматизация, SaaS-продукты и внутренние платформы проектируются как рабочие системы. Интерфейс здесь только фронтовый слой. Главная работа живёт в маршрутизации, состоянии, решениях и циклах исполнения за ним.',
+    primaryCta: 'Войти в систему',
+    secondaryCta: 'Смотреть кейсы',
+    channelStatus: 'канал сложных задач открыт',
+    fallbackTitle: 'слот портрета активен',
+    fallbackText: 'Положи `founder-portrait.png` в `public/images/projects`, чтобы заменить fallback-визуал.',
+    operatorLabel: 'оператор',
+    operatorStatus: 'сигнал стабилен',
+    systemCore: 'ядро системы',
+    orbitalView: 'орбитальный обзор',
+    scrollHint: 'спуститься в орбиту',
+    plateFallback: 'Eclipse Forge',
+  },
+  en: {
+    eyebrow: 'Eclipse Forge / systems > interfaces',
+    title: 'Build systems that keep',
+    titleAccent: 'control in motion.',
+    description:
+      'Eclipse Forge is where AI operators, automation, SaaS products and internal platforms are designed as working systems. The interface is only the front layer. The real work lives in the routing, state, decisions and execution loops behind it.',
+    primaryCta: 'Enter the system',
+    secondaryCta: 'Explore cases',
+    channelStatus: 'complex build channel open',
+    fallbackTitle: 'portrait slot active',
+    fallbackText: 'Drop `founder-portrait.png` into `public/images/projects` to replace the fallback visual.',
+    operatorLabel: 'operator',
+    operatorStatus: 'signal stable',
+    systemCore: 'system core',
+    orbitalView: 'orbital view',
+    scrollHint: 'scroll into orbit',
+    plateFallback: 'Eclipse Forge',
+  },
+};
+
+function HeroPortraitFallback({ title, text }: { title: string; text: string }) {
+  return (
+    <div className="relative flex h-full min-h-[320px] items-center justify-center overflow-hidden rounded-[1.75rem] border hero-portrait-fallback">
+      <div className="absolute inset-0 hero-portrait-noise" />
+      <EclipseSilhouette size={180} coronaColor="rgba(157, 196, 255, 0.14)" />
+      <div className="absolute bottom-6 left-6 right-6 rounded-2xl border px-4 py-4 hero-data-chip">
+        <p className="type-meta mb-2" style={{ color: 'var(--accent)' }}>
+          {title}
+        </p>
+        <p className="text-sm leading-relaxed" style={{ color: 'var(--text-3)' }}>
+          {text}
+        </p>
+      </div>
+    </div>
+  );
+}
 
 const reveal = {
   hidden: { opacity: 0, y: 32 },
@@ -22,23 +98,6 @@ const reveal = {
   }),
 };
 
-function HeroPortraitFallback() {
-  return (
-    <div className="relative flex h-full min-h-[320px] items-center justify-center overflow-hidden rounded-[1.75rem] border hero-portrait-fallback">
-      <div className="absolute inset-0 hero-portrait-noise" />
-      <EclipseSilhouette size={180} coronaColor="rgba(157, 196, 255, 0.14)" />
-      <div className="absolute bottom-6 left-6 right-6 rounded-2xl border px-4 py-4 hero-data-chip">
-        <p className="type-meta mb-2" style={{ color: 'var(--accent)' }}>
-          portrait slot active
-        </p>
-        <p className="text-sm leading-relaxed" style={{ color: 'var(--text-3)' }}>
-          Drop `founder-portrait.png` into `public/images/projects` to replace the fallback visual.
-        </p>
-      </div>
-    </div>
-  );
-}
-
 export function HeroSection() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
@@ -46,6 +105,9 @@ export function HeroSection() {
   const textY = useTransform(scrollYProgress, [0, 1], [0, -60]);
   const visualY = useTransform(scrollYProgress, [0, 1], [0, 90]);
   const glowScale = useTransform(scrollYProgress, [0, 1], [1, 1.18]);
+  const { locale } = useLocale();
+  const copy = heroCopy[locale];
+  const { metrics } = useSiteContent();
 
   return (
     <section ref={ref} id="hero" className="relative min-h-screen overflow-hidden pb-16 pt-20 sm:pb-24 sm:pt-28 lg:flex lg:items-center lg:pb-0">
@@ -66,7 +128,7 @@ export function HeroSection() {
               <div className="inline-flex items-center gap-3 rounded-full border px-5 py-2.5 hero-data-chip">
                 <span className="h-2 w-2 rounded-full hero-signal-dot" />
                 <span className="type-meta" style={{ color: 'var(--text-3)' }}>
-                  Eclipse Forge / systems &gt; interfaces
+                  {copy.eyebrow}
                 </span>
               </div>
             </motion.div>
@@ -78,8 +140,8 @@ export function HeroSection() {
               animate="visible"
               className="type-display mt-8 max-w-[11ch] text-balance text-[clamp(3rem,8vw,7.4rem)]"
             >
-              Build systems that keep
-              <span className="block text-gradient-hero">control in motion.</span>
+              {copy.title}
+              <span className="block text-gradient-hero">{copy.titleAccent}</span>
             </motion.h1>
 
             <motion.p
@@ -90,20 +152,13 @@ export function HeroSection() {
               className="type-body mt-7 max-w-xl text-[15px] leading-relaxed sm:text-[17px]"
               style={{ color: 'var(--text-2)' }}
             >
-              Eclipse Forge is where AI operators, automation, SaaS products and internal platforms are designed as working systems.
-              The interface is only the front layer. The real work lives in the routing, state, decisions and execution loops behind it.
+              {copy.description}
             </motion.p>
 
-            <motion.div
-              custom={0.48}
-              variants={reveal}
-              initial="hidden"
-              animate="visible"
-              className="mt-10 flex flex-col gap-3 sm:flex-row"
-            >
+            <motion.div custom={0.48} variants={reveal} initial="hidden" animate="visible" className="mt-10 flex flex-col gap-3 sm:flex-row">
               <MagneticButton strength={0.22}>
                 <GlowButton href="#contact" className="justify-center px-10 py-4 text-[14px]">
-                  Enter the system
+                  {copy.primaryCta}
                 </GlowButton>
               </MagneticButton>
 
@@ -112,18 +167,12 @@ export function HeroSection() {
                 className="group inline-flex items-center justify-center gap-3 rounded-full border px-10 py-4 text-[14px] font-display transition-all duration-500 hover:bg-white/[0.02]"
                 style={{ color: 'var(--text-2)', borderColor: 'var(--line)' }}
               >
-                Explore cases
+                {copy.secondaryCta}
                 <span className="h-px w-6 transition-all duration-500 group-hover:w-12" style={{ background: 'var(--accent-warm)' }} />
               </a>
             </motion.div>
 
-            <motion.div
-              custom={0.58}
-              variants={reveal}
-              initial="hidden"
-              animate="visible"
-              className="mt-8 flex flex-wrap gap-3"
-            >
+            <motion.div custom={0.58} variants={reveal} initial="hidden" animate="visible" className="mt-8 flex flex-wrap gap-3">
               {metrics.map((metric) => (
                 <div key={metric.label} className="rounded-2xl border px-4 py-3 hero-data-chip">
                   <p className="font-display text-lg font-medium tracking-tight" style={{ color: 'var(--text-1)' }}>
@@ -146,7 +195,7 @@ export function HeroSection() {
               <div className="inline-flex items-center gap-3 rounded-full border px-4 py-2 hero-data-chip">
                 <span className="h-2 w-2 rounded-full hero-signal-dot" />
                 <span className="text-[10px] uppercase tracking-[0.22em]" style={{ color: 'var(--text-3)' }}>
-                  complex build channel open
+                  {copy.channelStatus}
                 </span>
               </div>
               <span className="text-[11px] uppercase tracking-[0.18em]" style={{ color: 'var(--text-4)' }}>
@@ -185,13 +234,13 @@ export function HeroSection() {
                       loading="eager"
                       className="h-[320px] w-full rounded-[1.7rem] object-cover sm:h-[420px]"
                       style={{ objectPosition: brandAssets.founderDesk.objectPosition }}
-                      fallback={<HeroPortraitFallback />}
+                      fallback={<HeroPortraitFallback title={copy.fallbackTitle} text={copy.fallbackText} />}
                     />
 
                     <div className="pointer-events-none absolute inset-x-10 top-8 rounded-full border px-4 py-2 hero-status-line">
                       <div className="flex items-center justify-between gap-4 text-[10px] uppercase tracking-[0.24em]">
-                        <span style={{ color: 'var(--text-4)' }}>operator</span>
-                        <span style={{ color: 'var(--text-2)' }}>signal stable</span>
+                        <span style={{ color: 'var(--text-4)' }}>{copy.operatorLabel}</span>
+                        <span style={{ color: 'var(--text-2)' }}>{copy.operatorStatus}</span>
                       </div>
                     </div>
                   </motion.div>
@@ -211,17 +260,17 @@ export function HeroSection() {
                       fallback={
                         <div className="flex h-[148px] w-full items-end rounded-[1.25rem] bg-[radial-gradient(circle_at_top,rgba(117,140,255,0.18),transparent_58%),linear-gradient(180deg,#0d1117_0%,#07090d_100%)] p-4">
                           <p className="type-meta" style={{ color: 'var(--text-3)' }}>
-                            Eclipse Forge
+                            {copy.plateFallback}
                           </p>
                         </div>
                       }
                     />
                     <div className="mt-3 flex items-center justify-between px-1">
                       <span className="text-[10px] uppercase tracking-[0.2em]" style={{ color: 'var(--text-4)' }}>
-                        system core
+                        {copy.systemCore}
                       </span>
                       <span className="text-[11px] uppercase tracking-[0.2em]" style={{ color: 'var(--accent)' }}>
-                        orbital view
+                        {copy.orbitalView}
                       </span>
                     </div>
                   </motion.div>
@@ -239,7 +288,7 @@ export function HeroSection() {
         transition={{ delay: 1.4, duration: 0.6 }}
       >
         <span className="text-[10px] uppercase tracking-[0.28em]" style={{ color: 'var(--text-4)' }}>
-          scroll into orbit
+          {copy.scrollHint}
         </span>
         <motion.div
           className="h-10 w-px"

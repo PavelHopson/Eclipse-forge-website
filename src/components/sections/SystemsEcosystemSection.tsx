@@ -7,12 +7,26 @@ import {
   type MouseEvent as ReactMouseEvent,
 } from 'framer-motion';
 import { useRef } from 'react';
-import { systemsEcosystemIntro, systemsEcosystemProjects, type Project } from '../../data/content';
+import { type Project, useSiteContent } from '../../data/content';
 import { revealScale, revealUp, stagger, staggerFast, viewport } from '../../lib/animation';
+import { useLocale, type Locale } from '../../lib/locale';
 import { AssetImage } from '../ui/AssetImage';
 import { ConstellationField, EclipseSilhouette, MiniEclipse, OrbitalRing, ParticleField } from '../ui/EclipseVisuals';
 
-function SystemsFallback({ project }: { project: Project }) {
+const systemsCopy: Record<Locale, { fallbackHint: string; demoLabel: string; githubLabel: string }> = {
+  ru: {
+    fallbackHint: 'Добавь `%file%` в `public/images/projects`.',
+    demoLabel: 'Демо',
+    githubLabel: 'GitHub',
+  },
+  en: {
+    fallbackHint: 'Add `%file%` to `public/images/projects`.',
+    demoLabel: 'Demo',
+    githubLabel: 'GitHub',
+  },
+};
+
+function SystemsFallback({ project, hint }: { project: Project; hint: string }) {
   return (
     <div className="systems-card-fallback relative flex min-h-[210px] items-center justify-center overflow-hidden rounded-[1.35rem] border">
       <div className="absolute inset-0 case-placeholder-grid opacity-60" />
@@ -30,14 +44,26 @@ function SystemsFallback({ project }: { project: Project }) {
           {project.systemType}
         </p>
         <p className="text-sm leading-relaxed" style={{ color: 'var(--text-3)' }}>
-          Add `{project.image?.sources?.[0]?.split('/').pop() ?? 'project-image.png'}` to `public/images/projects`.
+          {hint}
         </p>
       </div>
     </div>
   );
 }
 
-function EcosystemCard({ project, index }: { project: Project; index: number }) {
+function EcosystemCard({
+  project,
+  index,
+  fallbackHint,
+  demoLabel,
+  githubLabel,
+}: {
+  project: Project;
+  index: number;
+  fallbackHint: string;
+  demoLabel: string;
+  githubLabel: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -65,6 +91,8 @@ function EcosystemCard({ project, index }: { project: Project; index: number }) 
     mouseY.set(0);
   };
 
+  const fileName = project.image?.sources?.[0]?.split('/').pop() ?? 'project-image.png';
+
   return (
     <motion.article variants={revealScale}>
       <div ref={ref} className="perspective-container" onMouseMove={handleMove} onMouseLeave={handleLeave}>
@@ -85,7 +113,7 @@ function EcosystemCard({ project, index }: { project: Project; index: number }) 
                 loading="lazy"
                 className="h-[210px] w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                 style={{ objectPosition: project.image?.objectPosition }}
-                fallback={<SystemsFallback project={project} />}
+                fallback={<SystemsFallback project={project} hint={fallbackHint.replace('%file%', fileName)} />}
               />
               <div className="systems-card-image-overlay pointer-events-none absolute inset-0" />
             </div>
@@ -126,7 +154,7 @@ function EcosystemCard({ project, index }: { project: Project; index: number }) 
                     rel="noopener noreferrer"
                     className="systems-link-primary inline-flex items-center gap-2 rounded-full border px-5 py-3 text-[12px] font-display transition-all duration-400"
                   >
-                    Demo
+                    {demoLabel}
                   </a>
                 ) : null}
                 <a
@@ -135,7 +163,7 @@ function EcosystemCard({ project, index }: { project: Project; index: number }) 
                   rel="noopener noreferrer"
                   className="systems-link-secondary inline-flex items-center gap-2 rounded-full border px-5 py-3 text-[12px] font-display transition-all duration-400"
                 >
-                  GitHub
+                  {githubLabel}
                 </a>
               </div>
             </div>
@@ -147,6 +175,10 @@ function EcosystemCard({ project, index }: { project: Project; index: number }) 
 }
 
 export function SystemsEcosystemSection() {
+  const { locale } = useLocale();
+  const copy = systemsCopy[locale];
+  const { systemsEcosystemIntro, systemsEcosystemProjects } = useSiteContent();
+
   return (
     <section id="systems-ecosystem" className="section-shell relative overflow-hidden py-16 sm:py-24 lg:py-32">
       <div className="systems-ecosystem-bg absolute inset-0" />
@@ -191,12 +223,7 @@ export function SystemsEcosystemSection() {
           </motion.div>
 
           <div className="relative mt-10">
-            <svg
-              className="pointer-events-none absolute inset-0 hidden h-full w-full xl:block"
-              viewBox="0 0 1200 760"
-              preserveAspectRatio="none"
-              aria-hidden="true"
-            >
+            <svg className="pointer-events-none absolute inset-0 hidden h-full w-full xl:block" viewBox="0 0 1200 760" preserveAspectRatio="none" aria-hidden="true">
               <defs>
                 <linearGradient id="systems-connector-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stopColor="rgba(107,163,255,0.2)" />
@@ -246,7 +273,14 @@ export function SystemsEcosystemSection() {
 
             <motion.div variants={stagger} className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
               {systemsEcosystemProjects.map((project, index) => (
-                <EcosystemCard key={project.title} project={project} index={index} />
+                <EcosystemCard
+                  key={project.title}
+                  project={project}
+                  index={index}
+                  fallbackHint={copy.fallbackHint}
+                  demoLabel={copy.demoLabel}
+                  githubLabel={copy.githubLabel}
+                />
               ))}
             </motion.div>
           </div>

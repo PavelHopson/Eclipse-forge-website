@@ -1,5 +1,4 @@
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { contactDetails } from '../data/content';
 import { SiteHeader } from '../components/layout/SiteHeader';
 import { AboutSection } from '../components/sections/AboutSection';
 import { CasesSection } from '../components/sections/CasesSection';
@@ -12,10 +11,25 @@ import { ServicesSection } from '../components/sections/ServicesSection';
 import { SystemsEcosystemSection } from '../components/sections/SystemsEcosystemSection';
 import { CursorLight } from '../components/ui/CursorLight';
 import { ConstellationField, EclipseDivider, EclipseSilhouette, ParticleField } from '../components/ui/EclipseVisuals';
+import { contactDetails } from '../data/content';
+import { useLocale, type Locale } from '../lib/locale';
+
+const footerCopy: Record<Locale, { description: string; location: string }> = {
+  ru: {
+    description: 'Системы для контроля, автоматизации и AI-исполнения. Для продуктов, которым нужен не только фронтовый слой.',
+    location: 'Калининград',
+  },
+  en: {
+    description: 'Systems for control, automation and AI execution. Built for products that need more than a front layer.',
+    location: 'Kaliningrad',
+  },
+};
 
 export function App() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  const { locale } = useLocale();
+  const copy = footerCopy[locale];
 
   return (
     <div className="relative min-h-screen" style={{ background: 'var(--bg)', color: 'var(--text-1)' }}>
@@ -69,7 +83,7 @@ export function App() {
                 </span>
               </div>
               <p className="max-w-xs text-[13px] leading-relaxed" style={{ color: 'var(--text-4)' }}>
-                Systems for control, automation and AI execution. Built for products that need more than a front layer.
+                {copy.description}
               </p>
             </div>
 
@@ -94,9 +108,9 @@ export function App() {
             </div>
 
             <div className="flex items-center gap-6 text-[10px] uppercase tracking-[0.2em]" style={{ color: 'var(--text-4)' }}>
-              <span>Kaliningrad</span>
+              <span>{copy.location}</span>
               <span className="h-3 w-px" style={{ background: 'var(--line)' }} />
-              <span>© 2026</span>
+              <span>&copy; 2026</span>
             </div>
           </div>
         </div>

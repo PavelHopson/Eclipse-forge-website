@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
+import { useLocale, type Locale } from '../../lib/locale';
 import { useTheme, type ThemeMode } from '../../lib/theme';
 
 function SunIcon({ size = 16 }: { size?: number }) {
@@ -35,16 +36,27 @@ function AutoIcon({ size = 16 }: { size?: number }) {
   );
 }
 
-const MODE_META: Record<ThemeMode, { label: string; Icon: (props: { size?: number }) => JSX.Element; hint: string }> = {
-  auto: { label: 'AUTO', Icon: AutoIcon, hint: 'time-based switching' },
-  light: { label: 'LIGHT', Icon: SunIcon, hint: 'always light' },
-  dark: { label: 'DARK', Icon: MoonIcon, hint: 'always dark' },
+const MODE_META: Record<Locale, Record<ThemeMode, { label: string; Icon: (props: { size?: number }) => JSX.Element; hint: string }>> = {
+  ru: {
+    auto: { label: 'АВТО', Icon: AutoIcon, hint: 'переключение по времени' },
+    light: { label: 'СВЕТ', Icon: SunIcon, hint: 'всегда светлая тема' },
+    dark: { label: 'ТЬМА', Icon: MoonIcon, hint: 'всегда тёмная тема' },
+  },
+  en: {
+    auto: { label: 'AUTO', Icon: AutoIcon, hint: 'time-based switching' },
+    light: { label: 'LIGHT', Icon: SunIcon, hint: 'always light' },
+    dark: { label: 'DARK', Icon: MoonIcon, hint: 'always dark' },
+  },
 };
 
 export function ThemeToggle({ compact = false }: { compact?: boolean }) {
   const { mode, cycle, theme } = useTheme();
-  const meta = MODE_META[mode];
-  const title = `Theme: ${meta.hint}. Current surface is ${theme}. Click to cycle.`;
+  const { locale } = useLocale();
+  const meta = MODE_META[locale][mode];
+  const title =
+    locale === 'ru'
+      ? `Тема: ${meta.hint}. Сейчас активна ${theme === 'dark' ? 'тёмная' : 'светлая'} поверхность. Нажмите, чтобы переключить.`
+      : `Theme: ${meta.hint}. Current surface is ${theme}. Click to cycle.`;
 
   return (
     <button

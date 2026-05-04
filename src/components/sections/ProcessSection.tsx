@@ -1,13 +1,43 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import { processSteps } from '../../data/content';
+import { useSiteContent } from '../../data/content';
 import { revealUp, stagger, viewport } from '../../lib/animation';
+import { useLocale, type Locale } from '../../lib/locale';
 import { MiniEclipse, OrbitalRing } from '../ui/EclipseVisuals';
+
+const processCopy: Record<
+  Locale,
+  {
+    eyebrow: string;
+    titleTop: string;
+    titleBottom: string;
+    inputLabel: string;
+    resultLabel: string;
+  }
+> = {
+  ru: {
+    eyebrow: 'Процесс',
+    titleTop: 'От запроса',
+    titleBottom: 'к операционной форме.',
+    inputLabel: 'вход',
+    resultLabel: 'контролируемый результат',
+  },
+  en: {
+    eyebrow: 'Process',
+    titleTop: 'From request',
+    titleBottom: 'to operational shape.',
+    inputLabel: 'input',
+    resultLabel: 'controlled result',
+  },
+};
 
 export function ProcessSection() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
   const progressWidth = useTransform(scrollYProgress, [0.2, 0.7], ['0%', '100%']);
+  const { locale } = useLocale();
+  const copy = processCopy[locale];
+  const { processSteps } = useSiteContent();
 
   return (
     <motion.section
@@ -28,12 +58,12 @@ export function ProcessSection() {
         <div className="grid gap-8 sm:gap-10 lg:grid-cols-[1fr_2fr] lg:gap-20">
           <div className="lg:sticky lg:top-32 lg:self-start">
             <motion.p variants={revealUp} className="type-meta mb-6" style={{ color: 'var(--accent)' }}>
-              Process
+              {copy.eyebrow}
             </motion.p>
             <motion.h2 variants={revealUp} className="type-display mb-8 text-[clamp(2rem,4vw,3.5rem)]">
-              <span className="text-gradient">From request</span>
+              <span className="text-gradient">{copy.titleTop}</span>
               <br />
-              <span style={{ color: 'var(--text-4)' }}>to operational shape.</span>
+              <span style={{ color: 'var(--text-4)' }}>{copy.titleBottom}</span>
             </motion.h2>
             <div className="hidden lg:block">
               <div className="h-px w-full overflow-hidden rounded-full" style={{ background: 'var(--line)' }}>
@@ -41,10 +71,10 @@ export function ProcessSection() {
               </div>
               <div className="mt-2 flex justify-between">
                 <span className="text-[10px] uppercase tracking-[0.2em]" style={{ color: 'var(--text-4)' }}>
-                  input
+                  {copy.inputLabel}
                 </span>
                 <span className="text-[10px] uppercase tracking-[0.2em]" style={{ color: 'var(--text-4)' }}>
-                  controlled result
+                  {copy.resultLabel}
                 </span>
               </div>
             </div>
