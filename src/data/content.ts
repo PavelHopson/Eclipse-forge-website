@@ -15,6 +15,7 @@ export interface Project {
   result: string;
   signal: string;
   tags: string[];
+  ecosystemTags?: string[];
   liveUrl?: string;
   repoUrl: string;
   image?: ImageAsset;
@@ -44,6 +45,14 @@ export interface FounderProfile {
   stats: Array<{ value: string; label: string }>;
   portrait: ImageAsset;
   supportVisual: ImageAsset;
+}
+
+export interface SystemsEcosystemIntro {
+  eyebrow: string;
+  title: string;
+  description: string;
+  note: string;
+  categories: string[];
 }
 
 const projectImage = (primary: string, secondary: string, alt: string, objectPosition = 'center'): ImageAsset => ({
@@ -100,6 +109,7 @@ export const featuredProjects: Project[] = [
     result: 'A behavior engine instead of a passive task manager.',
     signal: '128 tests, 5 AI providers, multi-platform delivery.',
     tags: ['AI coaching', 'focus loops', 'gamified execution'],
+    ecosystemTags: ['AI', 'behavior engine', 'cross-platform'],
     liveUrl: 'https://eclipse-valhalla.pages.dev',
     repoUrl: 'https://github.com/PavelHopson/Eclipse-Valhalla',
     image: projectImage('valhalla', 'eclipse-valhalla', 'Eclipse Valhalla interface preview', 'center top'),
@@ -114,6 +124,7 @@ export const featuredProjects: Project[] = [
     result: 'Turns AI from interface into an executable operating layer.',
     signal: '207K TypeScript lines, 244 tests, dual CI, Windows installer.',
     tags: ['voice interface', 'tool runtime', 'local-first control'],
+    ecosystemTags: ['AI', 'Rust / TS / Python', 'local-first'],
     repoUrl: 'https://github.com/PavelHopson/eclipse-hopson-sentinel',
     image: projectImage(
       'sentinel',
@@ -132,6 +143,7 @@ export const featuredProjects: Project[] = [
     result: 'A luxury booking funnel with product-grade logic behind the art direction.',
     signal: 'Premium visual language, guided booking, responsive conversion flow.',
     tags: ['premium UX', 'guided reservation', 'high-trust interface'],
+    ecosystemTags: ['UX', 'booking flow', 'premium surface'],
     liveUrl: 'https://eclipse-premiumrent.pages.dev',
     repoUrl: 'https://github.com/PavelHopson/Eclipse-PremiumRent',
     image: projectImage(
@@ -151,6 +163,7 @@ export const featuredProjects: Project[] = [
     result: 'Cleaner, cheaper and more reliable agent-ready extraction than typical scraping stacks.',
     signal: '22K Rust lines, 417 tests, Docker, CI, REST API.',
     tags: ['agent extraction', 'LLM optimization', 'self-hosted infra'],
+    ecosystemTags: ['automation', 'Rust', 'data extraction'],
     repoUrl: 'https://github.com/PavelHopson/Eclipse-Claw',
     image: projectImage('claw', 'eclipse-claw', 'Eclipse Claw extraction engine preview', 'center center'),
   },
@@ -164,6 +177,7 @@ export const featuredProjects: Project[] = [
     result: 'From manual company lookup to a monitored data and ops system.',
     signal: 'ETL, observability and 7-service Docker Compose architecture.',
     tags: ['ETL', 'observability', 'monitoring'],
+    ecosystemTags: ['automation', 'ETL', 'monitoring'],
     repoUrl: 'https://github.com/PavelHopson/business-data-platform-mvp',
     image: projectImage(
       'business-data-platform',
@@ -182,6 +196,7 @@ export const featuredProjects: Project[] = [
     result: 'Transforms personal admin into a guided action loop.',
     signal: 'Desktop app, banking APIs, payments and action generation.',
     tags: ['life ops', 'decision support', 'desktop control'],
+    ecosystemTags: ['automation', 'desktop', 'decision support'],
     repoUrl: 'https://github.com/PavelHopson/SmartLifeAssistant',
     image: projectImage(
       'smart-life-assistant',
@@ -191,6 +206,27 @@ export const featuredProjects: Project[] = [
     ),
   },
 ];
+
+export const systemsEcosystemIntro: SystemsEcosystemIntro = {
+  eyebrow: 'Flagship systems',
+  title: 'Systems ecosystem',
+  description: 'We do not build isolated projects. We build systems that can live next to each other, share control patterns and behave like modules of a larger product mind.',
+  note: 'Each module keeps its own role, but the engineering pattern stays coherent: observe, route, act and record.',
+  categories: ['AI SYSTEMS', 'AUTOMATION', 'SaaS', 'UX'],
+};
+
+const systemsEcosystemOrder = [
+  'Eclipse Valhalla',
+  'Eclipse Hopson Sentinel',
+  'Eclipse Claw',
+  'Eclipse Premium Rent',
+  'Business Data Platform',
+  'Smart Life Assistant',
+] as const;
+
+export const systemsEcosystemProjects: Project[] = systemsEcosystemOrder
+  .map((title) => featuredProjects.find((project) => project.title === title))
+  .filter((project): project is Project => Boolean(project));
 
 export const portfolioCollections: ProjectCollection[] = [
   {

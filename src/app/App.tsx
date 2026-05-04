@@ -9,6 +9,7 @@ import { HeroSection } from '../components/sections/HeroSection';
 import { MetricsSection } from '../components/sections/MetricsSection';
 import { ProcessSection } from '../components/sections/ProcessSection';
 import { ServicesSection } from '../components/sections/ServicesSection';
+import { SystemsEcosystemSection } from '../components/sections/SystemsEcosystemSection';
 import { CursorLight } from '../components/ui/CursorLight';
 import { ConstellationField, EclipseDivider, EclipseSilhouette, ParticleField } from '../components/ui/EclipseVisuals';
 
@@ -43,6 +44,7 @@ export function App() {
         <EclipseDivider />
         <AboutSection />
         <CasesSection />
+        <SystemsEcosystemSection />
         <EclipseDivider />
         <ServicesSection />
         <ProcessSection />
