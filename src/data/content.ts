@@ -178,39 +178,45 @@ const projectImage = (primary: string, secondary: string, alt: string, objectPos
   sources: [`/images/projects/${primary}.png`, `/images/projects/${secondary}.png`],
 });
 
+const founderSources = [
+  '/images/projects/founder-portrait.png',
+  '/images/ChatGPT Image 4 \u043c\u0430\u044f 2026 \u0433., 14_54_55.png',
+];
+
+const founderDeskSources = [
+  '/images/projects/founder-portrait.png',
+  '/images/ChatGPT Image 4 \u043c\u0430\u044f 2026 \u0433., 14_42_15.png',
+];
+
+const founderSeatedSources = [
+  '/images/projects/founder-portrait.png',
+  '/images/ChatGPT Image 4 \u043c\u0430\u044f 2026 \u0433., 14_56_29.png',
+];
+
 export const brandAssets = {
   heroPlate: {
     alt: 'Eclipse Forge brand plate',
-    sources: ['/images/projects/eclipse-forge-cover.png', '/images/\u0428\u0430\u043f\u043a\u0430.png'],
+    sources: ['/images/projects/eclipse-forge-cover.png'],
     objectPosition: 'center',
   },
   founderAvatar: {
     alt: 'Founder portrait of Pavel Hopson',
-    sources: ['/images/projects/pavel-founder-avatar.png', '/images/\u041c\u043e\u044f \u0430\u0432\u0430\u0442\u0430\u0440\u043a\u0430.png'],
+    sources: founderSources,
     objectPosition: 'center top',
   },
   founderDesk: {
     alt: 'Pavel Hopson at the operator desk',
-    sources: [
-      '/images/projects/pavel-founder-desk.png',
-      '/images/ChatGPT Image 4 \u043c\u0430\u044f 2026 \u0433., 14_42_15.png',
-    ],
+    sources: founderDeskSources,
     objectPosition: 'center top',
   },
   founderPortrait: {
     alt: 'Portrait of Pavel Hopson',
-    sources: [
-      '/images/projects/pavel-founder-portrait.png',
-      '/images/ChatGPT Image 4 \u043c\u0430\u044f 2026 \u0433., 14_54_55.png',
-    ],
+    sources: founderSources,
     objectPosition: 'center top',
   },
   founderSeated: {
     alt: 'Pavel Hopson seated portrait',
-    sources: [
-      '/images/projects/pavel-founder-seated.png',
-      '/images/ChatGPT Image 4 \u043c\u0430\u044f 2026 \u0433., 14_56_29.png',
-    ],
+    sources: founderSeatedSources,
     objectPosition: 'center top',
   },
 } as const;
@@ -465,6 +471,7 @@ const portfolioCollectionDefinitions: LocalizedProjectCollectionDefinition[] = [
         tags: localized(['multi-provider', 'RAG', 'local AI'], ['multi-provider', 'RAG', 'local AI']),
         liveUrl: 'https://eclipse-ai-hub.pages.dev',
         repoUrl: 'https://github.com/PavelHopson/eclipse-ai-hub',
+        image: projectImage('eclipse-ai-hub', 'ai-hub', 'Eclipse AI Hub workspace preview', 'center top'),
       },
       {
         title: 'Smart Fitness Booking Agent',
@@ -486,6 +493,12 @@ const portfolioCollectionDefinitions: LocalizedProjectCollectionDefinition[] = [
         tags: localized(['booking agent', 'function calling', 'workflow AI'], ['booking agent', 'function calling', 'workflow AI']),
         liveUrl: 'https://fitness-booking-agent.pages.dev',
         repoUrl: 'https://github.com/PavelHopson/Smart-Fitness-Booking-Agent',
+        image: projectImage(
+          'smart-fitness-booking-agent',
+          'fitness-booking-agent',
+          'Smart Fitness Booking Agent preview',
+          'center top',
+        ),
       },
       {
         title: 'InterviewForge',
@@ -506,6 +519,7 @@ const portfolioCollectionDefinitions: LocalizedProjectCollectionDefinition[] = [
         ),
         tags: localized(['desktop AI', 'OCR', 'live audio'], ['desktop AI', 'OCR', 'live audio']),
         liveUrl: 'https://interviewforge-3pf.pages.dev',
+        image: projectImage('interviewforge', 'interview-forge', 'InterviewForge desktop copilot preview', 'center top'),
       },
       {
         title: 'Shotforge',
@@ -527,6 +541,7 @@ const portfolioCollectionDefinitions: LocalizedProjectCollectionDefinition[] = [
         tags: localized(['генерация изображений', 'creative tooling', 'multi-mode'], ['image generation', 'creative tooling', 'multi-mode']),
         liveUrl: 'https://shotforge.pages.dev',
         repoUrl: 'https://github.com/PavelHopson/shotforge',
+        image: projectImage('shotforge', 'shot-forge', 'Shotforge AI studio preview', 'center top'),
       },
       {
         title: 'Questify (Educator AI)',
@@ -545,6 +560,7 @@ const portfolioCollectionDefinitions: LocalizedProjectCollectionDefinition[] = [
         tags: localized(['edtech', 'structured output', 'interactive content'], ['edtech', 'structured output', 'interactive content']),
         liveUrl: 'https://educator-ai.pages.dev',
         repoUrl: 'https://github.com/PavelHopson/Educator-AI',
+        image: projectImage('educator-ai', 'questify', 'Questify learning tool preview', 'center top'),
       },
       {
         title: 'Text2Image Studio',
@@ -563,6 +579,7 @@ const portfolioCollectionDefinitions: LocalizedProjectCollectionDefinition[] = [
         tags: localized(['улучшение промптов', 'style presets', 'история генераций'], ['prompt enhancement', 'style presets', 'generation history']),
         liveUrl: 'https://text2image-studio.pages.dev',
         repoUrl: 'https://github.com/PavelHopson/Text2Image',
+        image: projectImage('text2image-studio', 'text2image', 'Text2Image Studio preview', 'center top'),
       },
     ],
   },
@@ -592,6 +609,7 @@ const portfolioCollectionDefinitions: LocalizedProjectCollectionDefinition[] = [
         tags: localized(['market data', 'AI-аналитика', 'парсинг новостей'], ['market data', 'AI analytics', 'news parsing']),
         liveUrl: 'https://cryptopulse-1d0.pages.dev',
         repoUrl: 'https://github.com/PavelHopson/CryptoPulse',
+        image: projectImage('cryptopulse', 'cryptopulse-2077', 'CryptoPulse 2077 trading terminal preview', 'center top'),
       },
       {
         title: 'Task Manager',
@@ -610,6 +628,7 @@ const portfolioCollectionDefinitions: LocalizedProjectCollectionDefinition[] = [
         tags: localized(['internal tools', 'CRUD', 'auth'], ['internal tools', 'CRUD', 'auth']),
         liveUrl: 'https://task-manager-eclipse.pages.dev',
         repoUrl: 'https://github.com/PavelHopson/task-manager',
+        image: projectImage('task-manager', 'task-manager-eclipse', 'Task Manager admin preview', 'center top'),
       },
       {
         title: 'Eclipse Media',
@@ -631,6 +650,7 @@ const portfolioCollectionDefinitions: LocalizedProjectCollectionDefinition[] = [
         tags: localized(['self-hosted', 'media ops', 'streaming state'], ['self-hosted', 'media ops', 'streaming state']),
         liveUrl: 'https://eclipse-media.pages.dev',
         repoUrl: 'https://github.com/PavelHopson/eclipse-media',
+        image: projectImage('eclipse-media', 'media', 'Eclipse Media downloader preview', 'center top'),
       },
     ],
   },
