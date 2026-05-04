@@ -21,7 +21,6 @@ const heroCopy: Record<
     title: string;
     titleAccent: string;
     description: string;
-    proofs: string[];
     primaryCta: string;
     secondaryCta: string;
     channelStatus: string;
@@ -39,9 +38,7 @@ const heroCopy: Record<
     eyebrow: 'Eclipse Forge / AI systems engineering',
     title: 'Строю AI-системы,',
     titleAccent: 'которые работают вместо ручной рутины.',
-    description:
-      'Автоматизация, SaaS, внутренние платформы и AI-операторы для задач, где обычного сайта уже мало.',
-    proofs: ['AI-операторы', 'automation-контуры', 'внутренние платформы'],
+    description: 'Автоматизация, SaaS и AI-операторы для задач, где ручной процесс уже стал узким местом.',
     primaryCta: 'Обсудить задачу',
     secondaryCta: 'Смотреть системы',
     channelStatus: 'канал запроса открыт',
@@ -58,9 +55,7 @@ const heroCopy: Record<
     eyebrow: 'Eclipse Forge / AI systems engineering',
     title: 'I build AI systems',
     titleAccent: 'that replace manual routine.',
-    description:
-      'Automation, SaaS, internal platforms and AI operators for work that has outgrown a simple website.',
-    proofs: ['AI operators', 'automation systems', 'internal platforms'],
+    description: 'Automation, SaaS and AI operators for work where manual process has become the bottleneck.',
     primaryCta: 'Discuss your task',
     secondaryCta: 'Explore systems',
     channelStatus: 'request channel open',
@@ -124,8 +119,8 @@ export function HeroSection() {
       <motion.div className="absolute left-[-8%] top-[16%] hidden lg:block hero-ambient-glow" style={{ scale: glowScale }} />
       <motion.div className="absolute bottom-[6%] right-[-4%] hidden lg:block hero-ambient-glow-alt" style={{ y: visualY }} />
 
-      <div className="relative z-10 mx-auto w-full max-w-[1400px] px-5 sm:px-8 lg:px-12">
-        <div className="grid min-h-[86vh] items-center gap-10 lg:grid-cols-[0.84fr_1.16fr] lg:gap-8">
+      <div className="relative z-10 mx-auto w-full max-w-[1320px] px-5 sm:px-8 lg:px-12">
+        <div className="grid min-h-[86vh] items-center gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-8">
           <motion.div style={{ y: textY }} className="relative">
             <motion.div custom={0.15} variants={reveal} initial="hidden" animate="visible">
               <div className="inline-flex items-center gap-3 rounded-full border px-5 py-2.5 hero-data-chip">
@@ -141,7 +136,7 @@ export function HeroSection() {
               variants={reveal}
               initial="hidden"
               animate="visible"
-              className="type-display mt-8 max-w-[13ch] text-balance text-[clamp(3rem,7vw,6.4rem)]"
+              className="type-display mt-8 max-w-[11.5ch] text-balance text-[clamp(3rem,6.2vw,5.8rem)]"
             >
               {copy.title}
               <span className="block text-gradient-hero">{copy.titleAccent}</span>
@@ -152,19 +147,11 @@ export function HeroSection() {
               variants={reveal}
               initial="hidden"
               animate="visible"
-              className="type-body mt-7 max-w-xl text-[15px] leading-relaxed sm:text-[17px]"
+              className="type-body mt-7 max-w-md text-[15px] leading-relaxed sm:text-[17px]"
               style={{ color: 'var(--text-2)' }}
             >
               {copy.description}
             </motion.p>
-
-            <motion.div custom={0.46} variants={reveal} initial="hidden" animate="visible" className="mt-7 flex flex-wrap gap-2.5">
-              {copy.proofs.map((proof) => (
-                <span key={proof} className="rounded-full border px-4 py-2 text-[10px] uppercase tracking-[0.22em] hero-proof-chip">
-                  {proof}
-                </span>
-              ))}
-            </motion.div>
 
             <motion.div custom={0.48} variants={reveal} initial="hidden" animate="visible" className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <MagneticButton strength={0.22}>
@@ -188,7 +175,7 @@ export function HeroSection() {
               variants={reveal}
               initial="hidden"
               animate="visible"
-              className="mt-9 grid max-w-[36rem] grid-cols-2 gap-3 sm:grid-cols-3"
+              className="mt-9 grid max-w-[31rem] grid-cols-2 gap-3 sm:grid-cols-3"
             >
               {metrics.map((metric) => (
                 <div key={metric.label} className="rounded-2xl border px-4 py-3 hero-data-chip">
@@ -221,28 +208,28 @@ export function HeroSection() {
             </motion.div>
           </motion.div>
 
-          <motion.div style={{ y: visualY }} className="relative lg:pr-4">
-            <div className="relative mx-auto flex max-w-[760px] justify-center lg:justify-end">
-              <div className="hero-core-shell relative w-full max-w-[720px] min-h-[520px] sm:min-h-[620px] lg:min-h-[700px]">
-                <motion.div className="absolute left-[56%] top-[52%] z-0 h-[82%] w-[82%] -translate-x-1/2 -translate-y-1/2" style={{ scale: glowScale }}>
+          <motion.div style={{ y: visualY }} className="relative lg:pr-2">
+            <div className="relative mx-auto flex max-w-[690px] justify-center lg:justify-end">
+              <div className="hero-core-shell relative w-full max-w-[650px] min-h-[500px] sm:min-h-[580px] lg:min-h-[640px]">
+                <motion.div className="absolute left-[55%] top-[51%] z-0 h-[80%] w-[80%] -translate-x-1/2 -translate-y-1/2" style={{ scale: glowScale }}>
                   <BlackHoleCanvas className="h-full w-full rounded-full opacity-90" />
                 </motion.div>
 
-                <div className="pointer-events-none absolute left-[56%] top-[52%] z-10 -translate-x-1/2 -translate-y-1/2">
-                  <SolarCorona size={580} rays={30} color="rgba(157,196,255,0.08)" />
+                <div className="pointer-events-none absolute left-[55%] top-[51%] z-10 -translate-x-1/2 -translate-y-1/2">
+                  <SolarCorona size={520} rays={28} color="rgba(157,196,255,0.07)" />
                 </div>
-                <div className="pointer-events-none absolute left-[56%] top-[52%] z-10 -translate-x-1/2 -translate-y-1/2">
-                  <OrbitalRing size={620} dotCount={3} duration={54} color="var(--accent)" />
+                <div className="pointer-events-none absolute left-[55%] top-[51%] z-10 -translate-x-1/2 -translate-y-1/2">
+                  <OrbitalRing size={560} dotCount={3} duration={54} color="var(--accent)" />
                 </div>
-                <div className="pointer-events-none absolute left-[56%] top-[52%] z-10 -translate-x-1/2 -translate-y-1/2 opacity-70">
-                  <OrbitalRing size={740} dotCount={2} duration={78} color="var(--accent-warm)" />
+                <div className="pointer-events-none absolute left-[55%] top-[51%] z-10 -translate-x-1/2 -translate-y-1/2 opacity-70">
+                  <OrbitalRing size={660} dotCount={2} duration={78} color="var(--accent-warm)" />
                 </div>
 
                 <motion.div
                   initial={{ opacity: 0, x: 40, y: 24 }}
                   animate={{ opacity: 1, x: 0, y: 0 }}
                   transition={{ duration: 1, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                  className="hero-portrait-card absolute left-[4%] top-[14%] z-20 w-[58%] max-w-[390px] rounded-[2rem] border p-3 sm:p-4"
+                  className="hero-portrait-card absolute left-[8%] top-[15%] z-20 w-[52%] max-w-[350px] rounded-[2rem] border p-3 sm:p-4"
                 >
                   <AssetImage
                     alt={brandAssets.founderDesk.alt}
@@ -265,7 +252,7 @@ export function HeroSection() {
                   initial={{ opacity: 0, x: -30, y: 20 }}
                   animate={{ opacity: 1, x: 0, y: 0 }}
                   transition={{ duration: 0.9, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                  className="hero-brand-plate absolute bottom-[12%] right-[2%] z-20 hidden w-[250px] rounded-[1.6rem] border p-3 sm:block"
+                  className="hero-brand-plate absolute bottom-[13%] right-[4%] z-20 hidden w-[220px] rounded-[1.6rem] border p-3 sm:block"
                 >
                   <AssetImage
                     alt={brandAssets.heroPlate.alt}

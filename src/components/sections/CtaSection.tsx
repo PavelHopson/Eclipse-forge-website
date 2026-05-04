@@ -26,6 +26,7 @@ type CtaCopy = {
   titleAccent: string;
   description: string;
   telegramHint: string;
+  previewHint: string;
   requestChannel: string;
   responseWindow: string;
   responseTime: string;
@@ -57,9 +58,9 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     eyebrow: 'Контактная консоль',
     title: 'Опишите задачу.',
     titleAccent: 'Разберём и превратим в систему.',
-    description:
-      'Опишите процесс, который сейчас делается вручную. Этого достаточно, чтобы я понял, где теряется время, деньги или контроль, и предложил системный контур вместо очередного набора экранов.',
-    telegramHint: 'Самый быстрый канал, чтобы запустить разговор по задаче.',
+    description: 'Опишите ручной процесс. Я быстро скажу, как превратить его в систему.',
+    telegramHint: 'Быстрее всего отвечаю в Telegram.',
+    previewHint: 'Заполните 2-3 поля, и здесь соберётся короткий пакет.',
     requestChannel: 'Канал запроса',
     responseWindow: 'Окно ответа',
     responseTime: 'Ответ в течение 24 часов',
@@ -77,37 +78,36 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     githubCardLabel: 'GitHub',
     instagramCardLabel: 'Instagram',
     whyTitle: 'Почему так',
-    whyText:
-      'Так разговор сразу начинается с процесса и результата. Не с абстрактного “нужен сайт”, а с того, что именно нужно автоматизировать, контролировать и доводить до действия.',
+    whyText: 'Начинаем с процесса и результата, а не с абстрактного “нужен сайт”.',
     packetHeader: 'Eclipse Forge / Сигнал запроса',
     emptyAnswer: 'не заполнено',
     telegramLabel: 'Написать в Telegram',
     copyPacketLabel: 'Скопировать пакет',
     otherLinksLabel: 'Другие следы',
     fields: [
-      { key: 'name', label: 'Имя', placeholder: 'Как к вам обращаться?' },
+      { key: 'name', label: 'Имя', placeholder: 'Имя или компания' },
       {
         key: 'manual',
-        label: 'Что сейчас делаете вручную?',
-        placeholder: 'Какой процесс сейчас держится на людях, сообщениях, таблицах, ручных переносах или постоянном контроле...',
+        label: 'Что делаете вручную?',
+        placeholder: 'Какой процесс уже тормозит работу?',
         multiline: true,
       },
       {
         key: 'loss',
-        label: 'Где теряется время, деньги или контроль?',
-        placeholder: 'Где возникают задержки, ошибки, дублирование, пропущенные шаги или непрозрачность...',
+        label: 'Где теряется контроль?',
+        placeholder: 'Где уходят время, деньги или точность?',
         multiline: true,
       },
       {
         key: 'result',
-        label: 'Какой результат нужен?',
-        placeholder: 'Что система должна делать сама, какой выход давать и что должно стать проще после запуска...',
+        label: 'Какой нужен результат?',
+        placeholder: 'Что система должна начать делать сама?',
         multiline: true,
       },
       {
         key: 'contact',
         label: 'Telegram или email',
-        placeholder: '@username или email@example.com',
+        placeholder: '@username или email',
       },
     ],
   },
@@ -115,9 +115,9 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     eyebrow: 'Contact console',
     title: 'Describe the task.',
     titleAccent: "We'll turn it into a system.",
-    description:
-      'Describe the process that is still done manually. That is enough for me to see where time, money or control is leaking and propose a system instead of another set of screens.',
-    telegramHint: 'The fastest channel to start the conversation around the task.',
+    description: 'Describe the manual process. I will quickly show how to turn it into a system.',
+    telegramHint: 'Fastest replies happen in Telegram.',
+    previewHint: 'Fill 2-3 fields and a compact packet will appear here.',
     requestChannel: 'Request channel',
     responseWindow: 'Response window',
     responseTime: 'Reply within 24 hours',
@@ -135,37 +135,36 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     githubCardLabel: 'GitHub',
     instagramCardLabel: 'Instagram',
     whyTitle: 'Why this flow',
-    whyText:
-      'This makes the conversation start from process and outcome. Not from a vague “we need a website”, but from what actually needs to be automated, controlled and pushed to action.',
+    whyText: 'The conversation starts from process and outcome, not from “we need a website”.',
     packetHeader: 'Eclipse Forge / Request Signal',
     emptyAnswer: 'not filled',
     telegramLabel: 'Message on Telegram',
     copyPacketLabel: 'Copy packet',
     otherLinksLabel: 'Other traces',
     fields: [
-      { key: 'name', label: 'Name', placeholder: 'How should I address you?' },
+      { key: 'name', label: 'Name', placeholder: 'Name or company' },
       {
         key: 'manual',
-        label: 'What is still done manually?',
-        placeholder: 'Which process still depends on people, messages, spreadsheets, manual transfers or constant supervision...',
+        label: 'What is manual?',
+        placeholder: 'Which process is already slowing the work down?',
         multiline: true,
       },
       {
         key: 'loss',
-        label: 'Where are time, money or control being lost?',
-        placeholder: 'Where do delays, errors, duplicated work or missing visibility show up...',
+        label: 'Where is control lost?',
+        placeholder: 'Where do time, money or precision leak?',
         multiline: true,
       },
       {
         key: 'result',
-        label: 'What outcome do you need?',
-        placeholder: 'What should the system do on its own, what output should it produce and what should become easier after launch...',
+        label: 'What outcome is needed?',
+        placeholder: 'What should the system start doing on its own?',
         multiline: true,
       },
       {
         key: 'contact',
         label: 'Telegram or email',
-        placeholder: '@username or email@example.com',
+        placeholder: '@username or email',
       },
     ],
   },
@@ -204,6 +203,7 @@ export function CtaSection() {
       ...copy.fields.map((field, index) => `${index + 1}. ${field.label}\n${form[field.key].trim() || copy.emptyAnswer}`),
     ].join('\n\n');
   }, [copy.emptyAnswer, copy.fields, copy.packetHeader, form]);
+  const previewFields = copy.fields.filter((field) => form[field.key].trim());
 
   const emailHref = `mailto:${contactDetails.email}?subject=${encodeURIComponent(
     locale === 'ru' ? 'Запрос в Eclipse Forge' : 'Eclipse Forge request',
@@ -261,12 +261,12 @@ export function CtaSection() {
         <EclipseSilhouette size={420} coronaColor="rgba(117, 140, 255, 0.14)" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
-        <motion.div variants={revealUp} className="mb-12 max-w-3xl">
+      <div className="relative z-10 mx-auto max-w-[1240px] px-5 sm:px-8 lg:px-12">
+        <motion.div variants={revealUp} className="mb-12 max-w-2xl">
           <p className="type-meta mb-5" style={{ color: 'var(--accent)' }}>
             {copy.eyebrow}
           </p>
-          <h2 className="type-display text-[clamp(2.3rem,5vw,4.8rem)]">
+          <h2 className="type-display text-[clamp(2.15rem,4.3vw,4rem)]">
             {copy.title}
             <span className="block text-gradient-hero">{copy.titleAccent}</span>
           </h2>
@@ -275,7 +275,7 @@ export function CtaSection() {
           </p>
         </motion.div>
 
-        <div className="grid gap-8 lg:grid-cols-[0.84fr_1.16fr] lg:gap-10">
+        <div className="grid gap-8 lg:grid-cols-[0.78fr_1fr] lg:gap-8">
           <motion.div variants={revealUp} className="flex flex-col gap-4">
             <div className="rounded-[2rem] border p-6 sm:p-7 contact-panel">
               <div className="flex items-center justify-between gap-4">
@@ -307,7 +307,7 @@ export function CtaSection() {
                 <span className="mt-3 block text-[13px]" style={{ color: 'var(--text-3)' }}>
                   {contactDetails.telegramDm}
                 </span>
-                <span className="mt-2 block text-[12px] leading-relaxed" style={{ color: 'var(--text-4)' }}>
+                <span className="mt-2 block text-[12px]" style={{ color: 'var(--text-4)' }}>
                   {copy.telegramHint}
                 </span>
               </button>
@@ -343,27 +343,6 @@ export function CtaSection() {
                 <div className="space-y-2 text-sm" style={{ color: 'var(--text-3)' }}>
                   <p>{copy.responseTime}</p>
                   <p>{copy.cityTimezone}</p>
-                  <p>{contactFlow.status[2]}</p>
-                </div>
-              </div>
-
-              <div className="mt-5">
-                <p className="mb-3 text-[10px] uppercase tracking-[0.24em]" style={{ color: 'var(--text-4)' }}>
-                  {copy.otherLinksLabel}
-                </p>
-                <div className="flex flex-wrap gap-3">
-                  {traceLinkCards.map((item) => (
-                    <a
-                      key={item.label}
-                      href={item.href}
-                      target={item.external ? '_blank' : undefined}
-                      rel={item.external ? 'noreferrer' : undefined}
-                      className="inline-flex items-center gap-2 rounded-full border px-3 py-2 text-[11px] transition-all duration-300 contact-reference-link"
-                    >
-                      <item.Icon size={14} />
-                      <span>{item.label}</span>
-                    </a>
-                  ))}
                 </div>
               </div>
             </div>
@@ -388,6 +367,20 @@ export function CtaSection() {
                       {status}
                     </span>
                   </div>
+                ))}
+              </div>
+              <div className="mt-4 flex flex-wrap gap-3">
+                {traceLinkCards.map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target={item.external ? '_blank' : undefined}
+                    rel={item.external ? 'noreferrer' : undefined}
+                    className="inline-flex items-center gap-2 rounded-full border px-3 py-2 text-[11px] transition-all duration-300 contact-reference-link"
+                  >
+                    <item.Icon size={14} />
+                    <span>{item.label}</span>
+                  </a>
                 ))}
               </div>
             </div>
@@ -418,7 +411,7 @@ export function CtaSection() {
               />
             </div>
 
-            <div className="grid gap-0 lg:grid-cols-[1.08fr_0.92fr]">
+            <div className="grid gap-0 lg:grid-cols-[0.98fr_0.82fr]">
               <div className="border-b p-5 sm:p-7 lg:border-b-0 lg:border-r contact-console-body" style={{ borderColor: 'var(--line)' }}>
                 <div className="mb-5 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 contact-chip">
                   <span className="text-[10px] uppercase tracking-[0.22em]" style={{ color: 'var(--text-4)' }}>
@@ -427,14 +420,9 @@ export function CtaSection() {
                   <span className="console-cursor" />
                 </div>
 
-                <div className="grid gap-4 sm:grid-cols-2">
+                <div className="space-y-4">
                   {copy.fields.map((field) => (
-                    <div
-                      key={field.key}
-                      className={`rounded-[1.5rem] border p-4 sm:p-5 contact-console-card ${
-                        field.key === 'manual' ? 'sm:col-span-2' : ''
-                      }`}
-                    >
+                    <div key={field.key} className="rounded-[1.5rem] border p-4 sm:p-5 contact-console-card">
                       <p className="mb-3 text-[11px] uppercase tracking-[0.22em]" style={{ color: 'var(--accent)' }}>
                         &gt; {field.label}
                       </p>
@@ -442,10 +430,10 @@ export function CtaSection() {
                         <textarea
                           value={form[field.key]}
                           onChange={(event) => handleChange(field.key, event.target.value)}
-                          rows={field.key === 'manual' ? 5 : 4}
+                          rows={field.key === 'manual' ? 4 : 3}
                           placeholder={field.placeholder}
                           className={`w-full resize-none rounded-[1.2rem] border px-4 py-4 text-[14px] outline-none transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-opacity-30 ${
-                            field.key === 'manual' ? 'min-h-[160px]' : 'min-h-[132px]'
+                            field.key === 'manual' ? 'min-h-[136px]' : 'min-h-[112px]'
                           }`}
                           style={{
                             background: 'var(--input-bg)',
@@ -488,18 +476,26 @@ export function CtaSection() {
                     </button>
                   </div>
 
-                  <div className="grid gap-3">
-                    {copy.fields.map((field) => (
-                      <div key={field.key} className="rounded-[1.2rem] border px-4 py-4 contact-preview-item">
-                        <p className="text-[10px] uppercase tracking-[0.22em]" style={{ color: 'var(--accent)' }}>
-                          {field.label}
-                        </p>
-                        <p className="mt-2 whitespace-pre-wrap text-[13px] leading-relaxed" style={{ color: form[field.key].trim() ? 'var(--text-2)' : 'var(--text-4)' }}>
-                          {form[field.key].trim() || copy.emptyAnswer}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
+                  {previewFields.length > 0 ? (
+                    <div className="grid gap-3">
+                      {previewFields.map((field) => (
+                        <div key={field.key} className="rounded-[1.2rem] border px-4 py-4 contact-preview-item">
+                          <p className="text-[10px] uppercase tracking-[0.22em]" style={{ color: 'var(--accent)' }}>
+                            {field.label}
+                          </p>
+                          <p className="mt-2 max-h-[3.9rem] overflow-hidden whitespace-pre-wrap text-[12px] leading-5" style={{ color: 'var(--text-2)' }}>
+                            {form[field.key].trim()}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="rounded-[1.2rem] border px-4 py-5 contact-preview-item">
+                      <p className="text-[12px] leading-relaxed" style={{ color: 'var(--text-4)' }}>
+                        {copy.previewHint}
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 <div className="mt-5 grid gap-3">
