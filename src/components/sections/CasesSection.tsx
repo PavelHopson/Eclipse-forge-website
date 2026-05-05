@@ -30,25 +30,29 @@ const casesCopy: Record<
     signalLabel: string;
     demoLabel: string;
     githubLabel: string;
+    openDemoLabel: string;
+    openRepoLabel: string;
     projectsLabel: string;
     statusLabels: Record<ProjectStatus, string>;
   }
 > = {
   ru: {
     headingEyebrow: 'Избранные системы',
-    headingTitle: 'Сначала флагманы, затем более широкое инженерное поле.',
+    headingTitle: 'Флагманы — и инженерное поле вокруг.',
     headingDescription:
-      'Эти проекты хорошо показывают паттерн: интерфейсы здесь только видимая оболочка. Настоящая ценность живёт в слоях контроля, decision flow, AI-routing, extraction, monitoring и execution.',
+      'Не просто что собрано, а что меняется после запуска: где уходит ручная рутина, где появляется контроль, как система начинает работать вместо человека.',
     visibleSystems: 'видимых систем',
     anchorLabels: ['Флагманы', 'AI-системы', 'Продуктовые системы', 'Инструменты'],
     featuredEyebrow: 'Флагманские системы',
-    featuredTitle: 'Проекты, которые объясняют не только устройство, но и эффект от запуска',
-    featuredDescription: 'Здесь важно не просто что собрано, а что это меняет: где уходит ручная рутина, где появляется контроль и как система начинает работать вместо человека.',
+    featuredTitle: 'Шесть проектов, которые показывают паттерн.',
+    featuredDescription: 'Каждый — рабочий контур исполнения, а не демонстрационный интерфейс.',
     placeholderHint: 'Добавь скриншот в `public/images/projects`, и карточка подхватит его автоматически.',
     liveLabel: 'демо активно',
     signalLabel: 'сигнал',
-    demoLabel: 'Демо',
+    demoLabel: 'Открыть демо',
     githubLabel: 'GitHub',
+    openDemoLabel: 'Открыть демо',
+    openRepoLabel: 'Открыть репозиторий',
     projectsLabel: 'проектов',
     statusLabels: {
       live: 'Live',
@@ -60,19 +64,21 @@ const casesCopy: Record<
   },
   en: {
     headingEyebrow: 'Selected systems',
-    headingTitle: 'Flagship artifacts, then the wider engineering field.',
+    headingTitle: 'Flagships, and the engineering field around them.',
     headingDescription:
-      'These projects show the pattern clearly: interfaces are only the visible shell. The value lives in control layers, decision flows, AI routing, extraction, monitoring and execution.',
+      'Not just what was built, but what changes after launch: less manual routine, more control, and a system that starts doing the work.',
     visibleSystems: 'visible systems',
     anchorLabels: ['Flagships', 'AI systems', 'Product systems', 'Tooling'],
     featuredEyebrow: 'Flagship systems',
-    featuredTitle: 'Projects that explain not only how they work, but what changes after launch',
-    featuredDescription: 'What matters here is not just the build itself, but the effect: less manual routine, more control and a system that starts doing the work.',
+    featuredTitle: 'Six projects that show the pattern.',
+    featuredDescription: 'Each one is a working execution contour, not a demo interface.',
     placeholderHint: 'Add a screenshot into `public/images/projects` and the card will pick it up automatically.',
     liveLabel: 'demo live',
     signalLabel: 'signal',
-    demoLabel: 'Demo',
+    demoLabel: 'Open demo',
     githubLabel: 'GitHub',
+    openDemoLabel: 'Open demo',
+    openRepoLabel: 'Open repository',
     projectsLabel: 'projects',
     statusLabels: {
       live: 'Live',
@@ -127,6 +133,8 @@ function ProjectCard({
 }) {
   const statusStyle = statusStyles[project.status];
   const isLarge = (featured && index === 0) || isLastOdd;
+  const primaryUrl = project.liveUrl ?? project.repoUrl;
+  const primaryHoverLabel = project.liveUrl ? copy.openDemoLabel : copy.openRepoLabel;
 
   return (
     <motion.article variants={revealScale} className={isLarge ? 'lg:col-span-2' : ''}>
@@ -143,32 +151,75 @@ function ProjectCard({
           }}
         />
 
-        <div className="relative aspect-[3/2] w-full overflow-hidden">
-          <AssetImage
-            alt={project.image?.alt ?? `${project.title} preview`}
-            sources={project.image?.sources}
-            loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"
-            style={{ objectPosition: project.image?.objectPosition ?? 'center' }}
-            fallback={<PlaceholderVisual project={project} hint={copy.placeholderHint} />}
-          />
-          <div
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-24"
-            style={{ background: 'linear-gradient(to top, rgba(5,7,9,0.85), transparent)' }}
-          />
-          <div
-            className="pointer-events-none absolute right-4 top-4 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.22em] backdrop-blur-md"
-            style={{ ...statusStyle, background: 'rgba(5,7,9,0.55)' }}
+        {primaryUrl ? (
+          <a
+            href={primaryUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${primaryHoverLabel}: ${project.title}`}
+            className="relative block aspect-[3/2] w-full overflow-hidden"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-current opacity-80" />
-            {copy.statusLabels[project.status]}
+            <AssetImage
+              alt={project.image?.alt ?? `${project.title} preview`}
+              sources={project.image?.sources}
+              loading="lazy"
+              className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"
+              style={{ objectPosition: project.image?.objectPosition ?? 'center' }}
+              fallback={<PlaceholderVisual project={project} hint={copy.placeholderHint} />}
+            />
+            <div
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-24"
+              style={{ background: 'linear-gradient(to top, rgba(5,7,9,0.85), transparent)' }}
+            />
+            <div
+              className="pointer-events-none absolute right-4 top-4 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.22em] backdrop-blur-md"
+              style={{ ...statusStyle, background: 'rgba(5,7,9,0.55)' }}
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-current opacity-80" />
+              {copy.statusLabels[project.status]}
+            </div>
+            <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center opacity-0 transition-opacity duration-400 group-hover:opacity-100">
+              <span
+                className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-display uppercase tracking-[0.22em] backdrop-blur-md"
+                style={{
+                  borderColor: 'rgba(212,175,55,0.35)',
+                  background: 'rgba(5,7,9,0.7)',
+                  color: 'rgba(245,233,196,0.95)',
+                }}
+              >
+                {primaryHoverLabel}
+                <span aria-hidden>↗</span>
+              </span>
+            </div>
+          </a>
+        ) : (
+          <div className="relative aspect-[3/2] w-full overflow-hidden">
+            <AssetImage
+              alt={project.image?.alt ?? `${project.title} preview`}
+              sources={project.image?.sources}
+              loading="lazy"
+              className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"
+              style={{ objectPosition: project.image?.objectPosition ?? 'center' }}
+              fallback={<PlaceholderVisual project={project} hint={copy.placeholderHint} />}
+            />
+            <div
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-24"
+              style={{ background: 'linear-gradient(to top, rgba(5,7,9,0.85), transparent)' }}
+            />
+            <div
+              className="pointer-events-none absolute right-4 top-4 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.22em] backdrop-blur-md"
+              style={{ ...statusStyle, background: 'rgba(5,7,9,0.55)' }}
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-current opacity-80" />
+              {copy.statusLabels[project.status]}
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="relative flex flex-1 flex-col gap-5 px-6 py-6 sm:px-7 sm:py-7">
           <div className="flex items-center justify-between gap-3 text-[10px] uppercase tracking-[0.24em]" style={{ color: 'var(--text-4)' }}>
             <span className="font-display">#{String(index + 1).padStart(2, '0')}</span>
-            <span style={{ color: 'var(--accent)' }}>{project.systemType}</span>
+            <span className="font-display" style={{ color: 'var(--text-3)' }}>{project.systemType}</span>
           </div>
 
           <p className="type-body text-[14px] leading-relaxed sm:text-[15px]" style={{ color: 'var(--text-2)' }}>

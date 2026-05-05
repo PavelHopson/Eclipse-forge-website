@@ -5,16 +5,23 @@ import { useLocale, type Locale } from '../../lib/locale';
 import { AssetImage } from '../ui/AssetImage';
 import { ConstellationField, EclipseSilhouette, MiniEclipse, OrbitalRing, ParticleField } from '../ui/EclipseVisuals';
 
-const systemsCopy: Record<Locale, { fallbackHint: string; demoLabel: string; githubLabel: string }> = {
+const systemsCopy: Record<
+  Locale,
+  { fallbackHint: string; demoLabel: string; githubLabel: string; openDemoLabel: string; openRepoLabel: string }
+> = {
   ru: {
     fallbackHint: 'Добавь `%file%` в `public/images/projects`.',
-    demoLabel: 'Демо',
+    demoLabel: 'Открыть демо',
     githubLabel: 'GitHub',
+    openDemoLabel: 'Открыть демо',
+    openRepoLabel: 'Открыть репозиторий',
   },
   en: {
     fallbackHint: 'Add `%file%` to `public/images/projects`.',
-    demoLabel: 'Demo',
+    demoLabel: 'Open demo',
     githubLabel: 'GitHub',
+    openDemoLabel: 'Open demo',
+    openRepoLabel: 'Open repository',
   },
 };
 
@@ -49,14 +56,51 @@ function EcosystemCard({
   fallbackHint,
   demoLabel,
   githubLabel,
+  openDemoLabel,
+  openRepoLabel,
 }: {
   project: Project;
   index: number;
   fallbackHint: string;
   demoLabel: string;
   githubLabel: string;
+  openDemoLabel: string;
+  openRepoLabel: string;
 }) {
   const fileName = project.image?.sources?.[0]?.split('/').pop() ?? 'project-image.png';
+  const primaryUrl = project.liveUrl ?? project.repoUrl;
+  const primaryHoverLabel = project.liveUrl ? openDemoLabel : openRepoLabel;
+  const ImageBlock = (
+    <>
+      <AssetImage
+        alt={project.image?.alt ?? `${project.title} preview`}
+        sources={project.image?.sources}
+        loading="lazy"
+        className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"
+        style={{ objectPosition: project.image?.objectPosition ?? 'center' }}
+        fallback={<SystemsFallback project={project} hint={fallbackHint.replace('%file%', fileName)} />}
+      />
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-20"
+        style={{ background: 'linear-gradient(to top, rgba(5,7,9,0.85), transparent)' }}
+      />
+      {primaryUrl ? (
+        <div className="pointer-events-none absolute inset-x-0 bottom-3 flex justify-center opacity-0 transition-opacity duration-400 group-hover:opacity-100">
+          <span
+            className="inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] font-display uppercase tracking-[0.22em] backdrop-blur-md"
+            style={{
+              borderColor: 'rgba(212,175,55,0.35)',
+              background: 'rgba(5,7,9,0.7)',
+              color: 'rgba(245,233,196,0.95)',
+            }}
+          >
+            {primaryHoverLabel}
+            <span aria-hidden>↗</span>
+          </span>
+        </div>
+      ) : null}
+    </>
+  );
 
   return (
     <motion.article variants={revealScale}>
@@ -73,25 +117,24 @@ function EcosystemCard({
           }}
         />
 
-        <div className="relative aspect-[3/2] w-full overflow-hidden">
-          <AssetImage
-            alt={project.image?.alt ?? `${project.title} preview`}
-            sources={project.image?.sources}
-            loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"
-            style={{ objectPosition: project.image?.objectPosition ?? 'center' }}
-            fallback={<SystemsFallback project={project} hint={fallbackHint.replace('%file%', fileName)} />}
-          />
-          <div
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-20"
-            style={{ background: 'linear-gradient(to top, rgba(5,7,9,0.85), transparent)' }}
-          />
-        </div>
+        {primaryUrl ? (
+          <a
+            href={primaryUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${primaryHoverLabel}: ${project.title}`}
+            className="relative block aspect-[3/2] w-full overflow-hidden"
+          >
+            {ImageBlock}
+          </a>
+        ) : (
+          <div className="relative aspect-[3/2] w-full overflow-hidden">{ImageBlock}</div>
+        )}
 
         <div className="relative flex flex-1 flex-col gap-4 px-5 py-5 sm:px-6 sm:py-6">
           <div className="flex items-center justify-between gap-3 text-[10px] uppercase tracking-[0.24em]" style={{ color: 'var(--text-4)' }}>
             <span className="font-display">#{String(index + 1).padStart(2, '0')}</span>
-            <span style={{ color: 'var(--accent)' }}>{project.systemType}</span>
+            <span className="font-display" style={{ color: 'var(--text-3)' }}>{project.systemType}</span>
           </div>
 
           <p className="type-body text-[13.5px] leading-relaxed sm:text-[14px]" style={{ color: 'var(--text-2)' }}>
@@ -234,6 +277,8 @@ export function SystemsEcosystemSection() {
                   fallbackHint={copy.fallbackHint}
                   demoLabel={copy.demoLabel}
                   githubLabel={copy.githubLabel}
+                  openDemoLabel={copy.openDemoLabel}
+                  openRepoLabel={copy.openRepoLabel}
                 />
               ))}
             </motion.div>

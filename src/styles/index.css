@@ -1008,7 +1008,20 @@ button, a { -webkit-tap-highlight-color: transparent; }
   background: rgba(255, 255, 255, 0.02);
 }
 
-.case-link-primary,
+.case-link-primary {
+  border-color: rgba(212, 175, 55, 0.36);
+  color: rgba(245, 233, 196, 0.96);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.18), rgba(212, 175, 55, 0.06));
+  box-shadow: 0 14px 30px rgba(80, 60, 20, 0.22);
+}
+
+.case-link-primary:hover {
+  transform: translateY(-1px);
+  border-color: rgba(228, 195, 90, 0.55);
+  color: rgba(252, 240, 204, 1);
+  box-shadow: 0 16px 36px rgba(120, 90, 30, 0.28);
+}
+
 .contact-console-primary {
   border-color: rgba(107, 163, 255, 0.24);
   color: var(--text-1);
@@ -1016,7 +1029,6 @@ button, a { -webkit-tap-highlight-color: transparent; }
   box-shadow: 0 16px 38px rgba(24, 46, 84, 0.22);
 }
 
-.case-link-primary:hover,
 .case-link-secondary:hover,
 .contact-console-primary:hover,
 .contact-console-secondary:hover {
@@ -1150,13 +1162,18 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 
 .systems-link-primary {
-  border-color: rgba(107, 163, 255, 0.24);
-  color: var(--text-1);
-  background: linear-gradient(135deg, rgba(107, 163, 255, 0.18), rgba(140, 124, 255, 0.08));
-  box-shadow: 0 14px 32px rgba(24, 46, 84, 0.2);
+  border-color: rgba(212, 175, 55, 0.36);
+  color: rgba(245, 233, 196, 0.96);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.18), rgba(212, 175, 55, 0.06));
+  box-shadow: 0 12px 28px rgba(80, 60, 20, 0.2);
 }
 
-.systems-link-primary:hover,
+.systems-link-primary:hover {
+  transform: translateY(-1px);
+  border-color: rgba(228, 195, 90, 0.55);
+  color: rgba(252, 240, 204, 1);
+}
+
 .systems-link-secondary:hover {
   transform: translateY(-1px);
   border-color: rgba(157, 196, 255, 0.28);
@@ -1252,11 +1269,12 @@ button, a { -webkit-tap-highlight-color: transparent; }
     radial-gradient(circle at top, rgba(30, 86, 232, 0.08), transparent 36%);
 }
 
+[data-theme='light'] .case-link-primary,
 [data-theme='light'] .systems-link-primary {
-  border-color: rgba(30, 86, 232, 0.18);
-  background: linear-gradient(135deg, rgba(30, 86, 232, 0.16), rgba(109, 75, 255, 0.08));
-  color: #07070A;
-  box-shadow: 0 14px 28px rgba(30, 86, 232, 0.12);
+  border-color: rgba(186, 138, 24, 0.32);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.22), rgba(186, 138, 24, 0.1));
+  color: #463110;
+  box-shadow: 0 14px 28px rgba(186, 138, 24, 0.16);
 }
 
 /* ═══════════════ RESPONSIVE ═══════════════ */
