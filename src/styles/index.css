@@ -1080,9 +1080,61 @@ button, a { -webkit-tap-highlight-color: transparent; }
   box-shadow: 0 20px 48px rgba(18, 35, 67, 0.24);
 }
 
+.contact-telegram-cta {
+  border-color: rgba(212, 175, 55, 0.32);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.16), rgba(212, 175, 55, 0.04));
+  box-shadow: 0 18px 42px rgba(80, 60, 20, 0.22);
+  transition: border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.contact-telegram-cta:hover {
+  border-color: rgba(228, 195, 90, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 22px 50px rgba(120, 90, 30, 0.28);
+}
+
 .contact-link-card {
   border-color: rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.02);
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+}
+
+.contact-link-card:hover {
+  border-color: rgba(212, 175, 55, 0.22);
+  background: rgba(212, 175, 55, 0.04);
+  transform: translateY(-1px);
+}
+
+.contact-field {
+  background: rgba(8, 11, 16, 0.6);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: var(--text-1);
+  caret-color: rgba(212, 175, 55, 0.85);
+}
+
+.contact-field::placeholder {
+  color: var(--text-4);
+}
+
+.contact-field:hover {
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.contact-field:focus {
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+.contact-copy-link {
+  border-color: rgba(255, 255, 255, 0.08);
+  color: var(--text-3);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.contact-copy-link:hover {
+  border-color: rgba(212, 175, 55, 0.28);
+  color: rgba(245, 233, 196, 0.95);
+  transform: translateY(-1px);
 }
 
 .founder-list-row {
@@ -1270,11 +1322,33 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 
 [data-theme='light'] .case-link-primary,
-[data-theme='light'] .systems-link-primary {
+[data-theme='light'] .systems-link-primary,
+[data-theme='light'] .contact-telegram-cta {
   border-color: rgba(186, 138, 24, 0.32);
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.22), rgba(186, 138, 24, 0.1));
   color: #463110;
   box-shadow: 0 14px 28px rgba(186, 138, 24, 0.16);
+}
+
+[data-theme='light'] .contact-field {
+  background: rgba(255, 255, 255, 0.86);
+  border-color: rgba(7, 7, 10, 0.1);
+  color: #07070A;
+}
+
+[data-theme='light'] .contact-field::placeholder {
+  color: rgba(7, 7, 10, 0.42);
+}
+
+[data-theme='light'] .contact-field:focus {
+  border-color: rgba(186, 138, 24, 0.42);
+  box-shadow: 0 0 0 3px rgba(186, 138, 24, 0.12);
+}
+
+[data-theme='light'] .contact-copy-link {
+  background: rgba(255, 255, 255, 0.78);
+  border-color: rgba(7, 7, 10, 0.1);
+  color: rgba(7, 7, 10, 0.7);
 }
 
 /* ═══════════════ RESPONSIVE ═══════════════ */
