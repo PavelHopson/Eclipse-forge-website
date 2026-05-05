@@ -321,7 +321,7 @@ const featuredProjectDefinitions: LocalizedProjectDefinition[] = [
       ['AI coaching', 'focus loops', 'gamified execution'],
     ),
     ecosystemTags: localized(['AI', 'поведенческий движок', 'cross-platform'], ['AI', 'behavior engine', 'cross-platform']),
-    liveUrl: 'https://eclipse-valhalla.pages.dev',
+    liveUrl: 'https://pavelhopson.github.io/Eclipse-Valhalla/',
     repoUrl: 'https://github.com/PavelHopson/Eclipse-Valhalla',
     image: projectImage('valhalla', 'eclipse-valhalla', 'Eclipse Valhalla interface preview', 'center top'),
   },
