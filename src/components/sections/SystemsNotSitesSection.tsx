@@ -255,7 +255,8 @@ export function SystemsNotSitesSection() {
               <motion.article
                 key={card.index}
                 variants={revealUp}
-                whileHover={{ y: -4, borderColor: 'rgba(107,163,255,0.22)' }}
+                whileHover={{ y: -4, borderColor: 'rgba(212,175,55,0.32)' }}
+                whileTap={{ scale: 0.985 }}
                 transition={{ type: 'spring', stiffness: 280, damping: 26 }}
                 className="group relative overflow-hidden rounded-[1.75rem] border p-6 sm:p-7 lg:p-8"
                 style={{ borderColor: 'var(--line)', background: 'var(--bg-card)' }}

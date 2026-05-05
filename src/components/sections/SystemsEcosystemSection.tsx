@@ -106,6 +106,7 @@ function EcosystemCard({
     <motion.article variants={revealScale}>
       <motion.div
         whileHover={{ y: -6 }}
+        whileTap={{ scale: 0.985 }}
         transition={{ type: 'spring', stiffness: 280, damping: 26 }}
         className="group systems-card-shell relative flex h-full flex-col overflow-hidden rounded-[1.85rem] border"
       >

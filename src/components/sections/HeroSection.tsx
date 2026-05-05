@@ -12,6 +12,7 @@ import {
   SolarCorona,
 } from '../ui/EclipseVisuals';
 import { brandAssets, contactDetails, useSiteContent } from '../../data/content';
+import { revealWord, staggerWord } from '../../lib/animation';
 import { useLocale, type Locale } from '../../lib/locale';
 
 const heroCopy: Record<
@@ -132,14 +133,35 @@ export function HeroSection() {
             </motion.div>
 
             <motion.h1
-              custom={0.25}
-              variants={reveal}
+              variants={staggerWord}
               initial="hidden"
               animate="visible"
               className="type-display mt-8 max-w-[11.5ch] text-balance text-[clamp(3rem,6.2vw,5.8rem)]"
             >
-              {copy.title}
-              <span className="block text-gradient-hero">{copy.titleAccent}</span>
+              <span className="block">
+                {copy.title.split(' ').map((word, idx) => (
+                  <motion.span
+                    key={`title-${idx}`}
+                    variants={revealWord}
+                    className="inline-block"
+                    style={{ marginRight: '0.32em' }}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </span>
+              <span className="block text-gradient-hero">
+                {copy.titleAccent.split(' ').map((word, idx) => (
+                  <motion.span
+                    key={`accent-${idx}`}
+                    variants={revealWord}
+                    className="inline-block"
+                    style={{ marginRight: '0.32em' }}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </span>
             </motion.h1>
 
             <motion.p

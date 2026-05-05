@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 import { type Project, type ProjectStatus, useSiteContent } from '../../data/content';
 import { revealScale, revealUp, stagger, viewport } from '../../lib/animation';
 import { useLocale, type Locale } from '../../lib/locale';
@@ -140,6 +141,7 @@ function ProjectCard({
     <motion.article variants={revealScale} className={isLarge ? 'lg:col-span-2' : ''}>
       <motion.div
         whileHover={{ y: -6 }}
+        whileTap={{ scale: 0.985 }}
         transition={{ type: 'spring', stiffness: 280, damping: 26 }}
         className="group relative flex h-full flex-col overflow-hidden rounded-[1.9rem] border transition-all duration-500 case-card-shell"
       >
@@ -260,6 +262,9 @@ export function CasesSection() {
   const { locale } = useLocale();
   const copy = casesCopy[locale];
   const { allProjects, featuredProjects, portfolioCollections } = useSiteContent();
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] });
+  const progressWidth = useTransform(scrollYProgress, [0.05, 0.55], ['0%', '100%']);
 
   const portfolioAnchors = [
     { href: '#featured-cases', label: copy.anchorLabels[0], count: featuredProjects.length },
@@ -269,11 +274,19 @@ export function CasesSection() {
   ];
 
   return (
-    <section id="cases" className="section-shell relative overflow-hidden py-16 sm:py-24 lg:py-36">
+    <section ref={sectionRef} id="cases" className="section-shell relative overflow-hidden py-16 sm:py-24 lg:py-36">
       <div className="absolute inset-0 case-atmosphere-bg" />
       <div className="absolute inset-0 opacity-40">
         <ParticleField count={18} />
       </div>
+
+      <motion.div
+        className="absolute left-0 top-0 h-px origin-left"
+        style={{
+          width: progressWidth,
+          background: 'linear-gradient(90deg, transparent, rgba(212,175,55,0.7), rgba(107,163,255,0.4), transparent)',
+        }}
+      />
 
       <div className="relative z-10 mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
         <motion.div variants={revealUp} initial="hidden" whileInView="visible" viewport={viewport} className="animated-divider">

@@ -78,17 +78,41 @@ export function SiteHeader() {
           className="mx-auto flex max-w-[1400px] items-center justify-between rounded-full border px-4 py-3 sm:px-5"
           style={{ boxShadow: isScrolled ? shadowScrolled : 'none' }}
         >
-          <a href="#hero" className="flex min-w-0 items-center gap-3" onClick={closeMenu}>
-            <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: 'var(--accent)', boxShadow: '0 0 12px rgba(167,180,194,0.3)' }} />
-            <span className="truncate font-display text-[0.72rem] font-medium uppercase tracking-[0.3em]" style={{ color: 'var(--text-2)' }}>
+          <a href="#hero" className="group flex min-w-0 items-center gap-3" onClick={closeMenu}>
+            <motion.span
+              className="relative flex h-3.5 w-3.5 shrink-0 items-center justify-center"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 24, repeat: Infinity, ease: 'linear' }}
+            >
+              <span
+                className="absolute inset-0 rounded-full"
+                style={{ background: 'rgba(212,175,55,0.85)', boxShadow: '0 0 12px rgba(212,175,55,0.5)' }}
+              />
+              <span
+                className="absolute inset-[2px] rounded-full"
+                style={{ background: 'var(--bg)' }}
+              />
+            </motion.span>
+            <span
+              className="truncate font-display text-[0.72rem] font-medium uppercase tracking-[0.3em] transition-colors duration-400 group-hover:text-[var(--text-1)]"
+              style={{ color: 'var(--text-2)' }}
+            >
               Eclipse Forge
             </span>
           </a>
 
           <nav className="hidden items-center gap-6 text-sm md:flex" style={{ color: 'var(--text-3)' }}>
             {copy.navItems.map((item) => (
-              <a key={item.href} href={item.href} className="transition-colors duration-300 hover:!text-[var(--text-1)]">
+              <a
+                key={item.href}
+                href={item.href}
+                className="group relative inline-flex items-center transition-colors duration-300 hover:!text-[var(--text-1)]"
+              >
                 {item.label}
+                <span
+                  className="pointer-events-none absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
+                  style={{ background: 'linear-gradient(90deg, rgba(212,175,55,0.7), rgba(107,163,255,0.5))' }}
+                />
               </a>
             ))}
           </nav>

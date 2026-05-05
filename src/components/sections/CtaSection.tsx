@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useMemo, useState } from 'react';
 import { contactDetails } from '../../data/content';
-import { revealUp, stagger, viewport } from '../../lib/animation';
+import { revealUp, stagger, staggerFast, viewport } from '../../lib/animation';
 import { useLocale, type Locale } from '../../lib/locale';
 import { ConstellationField, EclipseSilhouette, OrbitalRing, ParticleField } from '../ui/EclipseVisuals';
 import {
@@ -255,9 +255,11 @@ export function CtaSection() {
                 {copy.channelsLabel}
               </p>
 
-              <button
+              <motion.button
                 type="button"
                 onClick={handleTelegramOpen}
+                whileTap={{ scale: 0.985 }}
+                transition={{ type: 'spring', stiffness: 380, damping: 24 }}
                 className="group block w-full rounded-[1.4rem] border px-5 py-5 text-left transition-all duration-400 contact-telegram-cta"
               >
                 <span className="flex items-center gap-4">
@@ -282,7 +284,7 @@ export function CtaSection() {
                     <ArrowUpRightIcon size={14} />
                   </span>
                 </span>
-              </button>
+              </motion.button>
 
               <p className="mt-4 text-[12px] leading-relaxed" style={{ color: 'var(--text-4)' }}>
                 {copy.telegramHint}
@@ -338,9 +340,15 @@ export function CtaSection() {
               </span>
             </div>
 
-            <div className="grid gap-5 px-6 py-6 sm:px-7 sm:py-7">
+            <motion.div
+              variants={staggerFast}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              className="grid gap-5 px-6 py-6 sm:px-7 sm:py-7"
+            >
               {copy.fields.map((field) => (
-                <div key={field.key} className="flex flex-col gap-2">
+                <motion.div key={field.key} variants={revealUp} className="flex flex-col gap-2">
                   <label
                     htmlFor={`cta-${field.key}`}
                     className="text-[11px] uppercase tracking-[0.22em]"
@@ -366,36 +374,45 @@ export function CtaSection() {
                       className="contact-field w-full rounded-[0.95rem] border px-4 py-3 text-[14px] outline-none transition-all duration-300"
                     />
                   )}
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
             <div className="border-t px-6 py-6 sm:px-7" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                <button
+                <motion.button
                   type="button"
                   onClick={handleTelegramOpen}
+                  whileTap={{ scale: 0.97 }}
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: 'spring', stiffness: 380, damping: 22 }}
                   className="case-link-primary inline-flex flex-1 items-center justify-center gap-2 rounded-full border px-6 py-3.5 text-[13px] font-display tracking-[0.04em] transition-all duration-400"
                 >
                   <TelegramIcon size={14} />
                   {copy.telegramLabel}
                   <span aria-hidden>→</span>
-                </button>
-                <a
+                </motion.button>
+                <motion.a
                   href={emailHref}
+                  whileTap={{ scale: 0.97 }}
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: 'spring', stiffness: 380, damping: 22 }}
                   className="case-link-secondary inline-flex items-center justify-center gap-2 rounded-full border px-6 py-3.5 text-[13px] font-display tracking-[0.04em] transition-all duration-400"
                 >
                   <MailIcon size={14} />
                   {copy.emailLabel}
-                </a>
-                <button
+                </motion.a>
+                <motion.button
                   type="button"
                   onClick={handleCopy}
+                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.04 }}
+                  transition={{ type: 'spring', stiffness: 380, damping: 22 }}
                   className="inline-flex items-center justify-center gap-2 rounded-full border px-4 py-3.5 text-[11px] uppercase tracking-[0.18em] transition-all duration-300 contact-copy-link"
                   aria-live="polite"
                 >
                   {copied ? copy.signalCopiedLabel : 'Copy'}
-                </button>
+                </motion.button>
               </div>
               <p className="mt-4 text-[12px] leading-relaxed" style={{ color: 'var(--text-4)' }}>
                 {copy.bottomNote}

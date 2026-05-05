@@ -67,7 +67,9 @@ function PortraitFallback({ title, text }: { title: string; text: string }) {
 export function FounderSection() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-  const panelY = useTransform(scrollYProgress, [0, 1], [30, -30]);
+  const panelY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const portraitY = useTransform(scrollYProgress, [0, 1], [-30, 30]);
+  const portraitScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.96, 1, 1.02]);
   const { locale } = useLocale();
   const copy = founderCopy[locale];
   const { founderProfile } = useSiteContent();
@@ -145,20 +147,29 @@ export function FounderSection() {
           </motion.div>
 
           <motion.div variants={revealUp} style={{ y: panelY }} className="relative flex flex-col gap-4">
-            <div className="founder-frame rounded-[2rem] border p-3 sm:p-4">
-              <AssetImage
-                alt={founderProfile.portrait.alt}
-                sources={founderProfile.portrait.sources}
-                loading="lazy"
-                className="h-full min-h-[420px] w-full rounded-[1.6rem] object-cover"
-                style={{ objectPosition: founderProfile.portrait.objectPosition }}
-                fallback={<PortraitFallback title={copy.fallbackTitle} text={copy.fallbackText} />}
-              />
-              <div className="pointer-events-none absolute inset-0 rounded-[2rem] founder-frame-glow" />
-              <div className="pointer-events-none absolute right-8 top-8 hidden rounded-full border px-4 py-2 text-[10px] uppercase tracking-[0.26em] sm:inline-flex founder-status">
-                {copy.status}
+            <motion.div
+              style={{ y: portraitY, scale: portraitScale }}
+              className="founder-frame rounded-[2rem] border p-3 sm:p-4"
+            >
+              <div className="overflow-hidden rounded-[1.6rem]">
+                <AssetImage
+                  alt={founderProfile.portrait.alt}
+                  sources={founderProfile.portrait.sources}
+                  loading="lazy"
+                  className="h-full min-h-[420px] w-full rounded-[1.6rem] object-cover"
+                  style={{ objectPosition: founderProfile.portrait.objectPosition }}
+                  fallback={<PortraitFallback title={copy.fallbackTitle} text={copy.fallbackText} />}
+                />
               </div>
-            </div>
+              <div className="pointer-events-none absolute inset-0 rounded-[2rem] founder-frame-glow" />
+              <motion.div
+                className="pointer-events-none absolute right-8 top-8 hidden rounded-full border px-4 py-2 text-[10px] uppercase tracking-[0.26em] sm:inline-flex founder-status"
+                animate={{ opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                {copy.status}
+              </motion.div>
+            </motion.div>
 
             <div className="grid gap-4 sm:grid-cols-[1.05fr_0.95fr]">
               <div className="flex items-center justify-center overflow-hidden rounded-[1.7rem] border founder-panel" style={{ background: '#000' }}>
