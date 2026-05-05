@@ -36,12 +36,13 @@ const heroCopy: Record<
   }
 > = {
   ru: {
-    eyebrow: 'Eclipse Forge / AI systems engineering',
-    title: 'Строю',
-    titleAccent: 'AI-системы.',
-    description: 'Вместо ручной рутины: автоматизация, SaaS и AI-операторы для задач, где процесс уже стал узким местом.',
+    eyebrow: 'Eclipse Forge / Инженерия AI-систем',
+    title: 'Строю системы,',
+    titleAccent: 'которые работают сами.',
+    description:
+      'Превращаю ручные процессы в системы — автоматизация, SaaS и AI-операторы там, где это уже узкое место.',
     primaryCta: 'Обсудить задачу',
-    secondaryCta: 'Смотреть системы',
+    secondaryCta: 'Смотреть проекты',
     channelStatus: 'канал запроса открыт',
     fallbackTitle: 'слот портрета активен',
     fallbackText: 'Положи `founder-portrait.png` в `public`, чтобы заменить fallback-визуал.',
@@ -54,11 +55,12 @@ const heroCopy: Record<
   },
   en: {
     eyebrow: 'Eclipse Forge / AI systems engineering',
-    title: 'I build',
-    titleAccent: 'AI systems.',
-    description: 'Instead of manual routine: automation, SaaS and AI operators for work where process has become the bottleneck.',
+    title: 'I build systems',
+    titleAccent: 'that run themselves.',
+    description:
+      'Turning manual processes into systems — automation, SaaS and AI operators where things have already become a bottleneck.',
     primaryCta: 'Discuss your task',
-    secondaryCta: 'Explore systems',
+    secondaryCta: 'Explore projects',
     channelStatus: 'request channel open',
     fallbackTitle: 'portrait slot active',
     fallbackText: 'Drop `founder-portrait.png` into `public` to replace the fallback visual.',
@@ -136,7 +138,7 @@ export function HeroSection() {
               variants={staggerWord}
               initial="hidden"
               animate="visible"
-              className="type-display mt-8 max-w-[11.5ch] text-balance text-[clamp(3rem,6.2vw,5.8rem)]"
+              className="type-display mt-8 max-w-[14ch] text-balance text-[clamp(2.6rem,5.6vw,5.2rem)] leading-[1.02]"
             >
               <span className="block">
                 {copy.title.split(' ').map((word, idx) => (
