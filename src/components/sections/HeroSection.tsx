@@ -138,7 +138,7 @@ export function HeroSection() {
               variants={staggerWord}
               initial="hidden"
               animate="visible"
-              className="type-display mt-8 max-w-[14ch] text-balance text-[clamp(2.6rem,5.6vw,5.2rem)] leading-[1.02]"
+              className="type-display mt-8 max-w-[16ch] text-balance text-[clamp(2.2rem,4.6vw,4.4rem)] leading-[1.04]"
             >
               <span className="block">
                 {copy.title.split(' ').map((word, idx) => (
@@ -146,24 +146,18 @@ export function HeroSection() {
                     key={`title-${idx}`}
                     variants={revealWord}
                     className="inline-block"
-                    style={{ marginRight: '0.32em' }}
+                    style={{ marginRight: '0.28em' }}
                   >
                     {word}
                   </motion.span>
                 ))}
               </span>
-              <span className="block text-gradient-hero">
-                {copy.titleAccent.split(' ').map((word, idx) => (
-                  <motion.span
-                    key={`accent-${idx}`}
-                    variants={revealWord}
-                    className="inline-block"
-                    style={{ marginRight: '0.32em' }}
-                  >
-                    {word}
-                  </motion.span>
-                ))}
-              </span>
+              <motion.span
+                variants={revealWord}
+                className="mt-1 block text-gradient-hero"
+              >
+                {copy.titleAccent}
+              </motion.span>
             </motion.h1>
 
             <motion.p
