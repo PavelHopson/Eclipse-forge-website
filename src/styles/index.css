@@ -28,6 +28,10 @@
   --accent-warm-dim: #6B5CDA;
   --accent-warm-glow: #C6BEFF;
   --accent-warm-soft: rgba(140, 124, 255, 0.1);
+  --gold: #D4AF37;
+  --gold-soft: rgba(212, 175, 55, 0.85);
+  --gold-mute: rgba(212, 175, 55, 0.6);
+  --gold-haze: rgba(212, 175, 55, 0.08);
   --glow: rgba(157, 196, 255, 0.06);
   --glow-strong: rgba(157, 196, 255, 0.12);
   --live: #4AE6A0;
@@ -60,6 +64,10 @@
   --accent-warm-dim: #5536D4;
   --accent-warm-glow: #8E74FF;
   --accent-warm-soft: rgba(109, 75, 255, 0.08);
+  --gold: #B88A18;
+  --gold-soft: rgba(184, 138, 24, 0.95);
+  --gold-mute: rgba(184, 138, 24, 0.7);
+  --gold-haze: rgba(184, 138, 24, 0.08);
   --glow: rgba(30, 86, 232, 0.05);
   --glow-strong: rgba(30, 86, 232, 0.12);
   --live: #047857;
@@ -861,7 +869,6 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .case-top-pill,
 .case-anchor-chip,
 .services-chip,
-.contact-chip,
 .founder-status {
   border-color: rgba(255, 255, 255, 0.08);
   background: rgba(7, 10, 15, 0.52);
@@ -874,9 +881,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   animation: flarePulse 2.4s ease-in-out infinite;
 }
 
-.hero-proof-chip,
-.contact-reference-link,
-.contact-preview-item {
+.hero-proof-chip {
   border-color: rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.02);
   color: var(--text-3);
@@ -888,7 +893,6 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .founder-frame,
 .case-card-shell,
 .services-card,
-.contact-console-shell,
 .contact-panel {
   border-color: rgba(255, 255, 255, 0.08);
   background:
@@ -951,7 +955,6 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .case-card-shell:hover,
 .services-card:hover,
-.contact-primary-link:hover,
 .contact-link-card:hover,
 .founder-list-row:hover {
   border-color: rgba(107, 163, 255, 0.24);
@@ -982,11 +985,9 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .case-signal-panel,
 .case-placeholder-panel,
 .services-panel,
-.contact-signal-preview,
 .founder-panel,
 .founder-metric,
-.founder-chip,
-.contact-console-card {
+.founder-chip {
   border-color: rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(18px);
@@ -1022,15 +1023,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   box-shadow: 0 16px 36px rgba(120, 90, 30, 0.28);
 }
 
-.contact-console-primary {
-  border-color: rgba(107, 163, 255, 0.24);
-  color: var(--text-1);
-  background: linear-gradient(135deg, rgba(107, 163, 255, 0.18), rgba(107, 163, 255, 0.08));
-  box-shadow: 0 16px 38px rgba(24, 46, 84, 0.22);
-}
-
 .case-link-secondary:hover,
-.contact-console-primary:hover,
 .contact-console-secondary:hover {
   transform: translateY(-1px);
   border-color: rgba(157, 196, 255, 0.28);
@@ -1046,38 +1039,6 @@ button, a { -webkit-tap-highlight-color: transparent; }
   background:
     radial-gradient(circle at top, rgba(107, 163, 255, 0.18), transparent 44%),
     linear-gradient(180deg, transparent 0%, rgba(140, 124, 255, 0.08) 100%);
-}
-
-.contact-console-shell,
-.contact-console-topbar,
-.contact-console-body {
-  border-color: rgba(255, 255, 255, 0.08);
-}
-
-.contact-console-topbar {
-  background: rgba(255, 255, 255, 0.02);
-}
-
-.contact-progress-track {
-  height: 1px;
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.contact-progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, var(--accent), var(--accent-warm));
-  box-shadow: 0 0 18px rgba(107, 163, 255, 0.35);
-}
-
-.contact-console-card input::placeholder,
-.contact-console-card textarea::placeholder {
-  color: var(--text-4);
-}
-
-.contact-primary-link {
-  border-color: rgba(107, 163, 255, 0.2);
-  background: linear-gradient(135deg, rgba(107, 163, 255, 0.14), rgba(140, 124, 255, 0.1));
-  box-shadow: 0 20px 48px rgba(18, 35, 67, 0.24);
 }
 
 .contact-telegram-cta {
@@ -1150,15 +1111,6 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .founder-frame-glow {
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
-}
-
-.console-cursor {
-  width: 8px;
-  height: 14px;
-  border-radius: 999px;
-  background: var(--accent);
-  box-shadow: 0 0 14px rgba(107, 163, 255, 0.5);
-  animation: flarePulse 1.2s ease-in-out infinite;
 }
 
 .systems-ecosystem-bg {
@@ -1261,21 +1213,15 @@ button, a { -webkit-tap-highlight-color: transparent; }
 [data-theme='light'] .systems-tag,
 [data-theme='light'] .systems-link-secondary,
 [data-theme='light'] .services-chip,
-[data-theme='light'] .contact-chip,
 [data-theme='light'] .founder-status,
 [data-theme='light'] .case-copy-panel,
 [data-theme='light'] .case-signal-panel,
 [data-theme='light'] .case-placeholder-panel,
 [data-theme='light'] .services-panel,
-[data-theme='light'] .contact-signal-preview,
 [data-theme='light'] .founder-panel,
 [data-theme='light'] .founder-metric,
 [data-theme='light'] .founder-chip,
-[data-theme='light'] .contact-console-card,
 [data-theme='light'] .contact-link-card,
-[data-theme='light'] .contact-reference-link,
-[data-theme='light'] .contact-preview-item,
-[data-theme='light'] .contact-console-topbar,
 [data-theme='light'] .case-meta-strip,
 [data-theme='light'] .case-tech-pill,
 [data-theme='light'] .case-link-secondary,
@@ -1291,7 +1237,6 @@ button, a { -webkit-tap-highlight-color: transparent; }
 [data-theme='light'] .case-card-shell,
 [data-theme='light'] .systems-card-shell,
 [data-theme='light'] .services-card,
-[data-theme='light'] .contact-console-shell,
 [data-theme='light'] .contact-panel,
 [data-theme='light'] .case-media {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 246, 241, 0.96) 100%);

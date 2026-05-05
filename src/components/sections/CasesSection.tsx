@@ -105,7 +105,7 @@ function PlaceholderVisual({ project, hint }: { project: Project; hint: string }
         <EclipseSilhouette size={150} coronaColor="rgba(157, 196, 255, 0.14)" />
       </div>
       <div className="absolute inset-x-5 bottom-5 rounded-2xl border px-4 py-4 case-placeholder-panel">
-        <p className="type-meta mb-2" style={{ color: 'var(--accent)' }}>
+        <p className="type-meta mb-2" style={{ color: 'var(--gold)' }}>
           {project.systemType}
         </p>
         <p className="font-display text-lg tracking-tight" style={{ color: 'var(--text-1)' }}>
@@ -311,7 +311,7 @@ export function CasesSection() {
         <div id="featured-cases" className="mt-12 sm:mt-14">
           <motion.div variants={revealUp} initial="hidden" whileInView="visible" viewport={viewport} className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-3xl">
-              <p className="type-meta mb-4" style={{ color: 'var(--accent)' }}>
+              <p className="type-meta mb-4" style={{ color: 'var(--gold)' }}>
                 {copy.featuredEyebrow}
               </p>
               <h3 className="type-heading text-2xl sm:text-3xl" style={{ color: 'var(--text-1)' }}>
@@ -342,7 +342,7 @@ export function CasesSection() {
             <motion.div variants={revealUp} initial="hidden" whileInView="visible" viewport={viewport} className="border-t pt-6 sm:pt-8" style={{ borderColor: 'var(--line)' }}>
               <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
                 <div className="max-w-3xl">
-                  <p className="type-meta mb-4" style={{ color: 'var(--accent)' }}>
+                  <p className="type-meta mb-4" style={{ color: 'var(--gold)' }}>
                     {collection.eyebrow}
                   </p>
                   <h3 className="type-heading text-2xl sm:text-3xl" style={{ color: 'var(--text-1)' }}>

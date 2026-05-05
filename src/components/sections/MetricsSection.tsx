@@ -126,7 +126,7 @@ export function MetricsSection() {
       </div>
 
       <div className="relative mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
-        <motion.p variants={revealUp} className="type-meta mb-6 text-center" style={{ color: 'var(--accent)' }}>
+        <motion.p variants={revealUp} className="type-meta mb-6 text-center" style={{ color: 'var(--gold)' }}>
           {copy.eyebrow}
         </motion.p>
         <motion.h2 variants={revealUp} className="type-display mb-6 text-center text-[clamp(1.8rem,3.5vw,3rem)]">

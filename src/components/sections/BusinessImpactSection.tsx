@@ -114,7 +114,7 @@ export function BusinessImpactSection() {
 
       <div className="relative z-10 mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
         <div className="max-w-3xl">
-          <motion.p variants={revealUp} className="type-meta mb-5" style={{ color: 'var(--accent)' }}>
+          <motion.p variants={revealUp} className="type-meta mb-5" style={{ color: 'var(--gold)' }}>
             {copy.eyebrow}
           </motion.p>
           <motion.h2 variants={revealUp} className="type-display text-[clamp(2.15rem,4.6vw,4.2rem)]">

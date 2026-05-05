@@ -79,7 +79,7 @@ function HeroPortraitFallback({ title, text }: { title: string; text: string }) 
       <div className="absolute inset-0 hero-portrait-noise" />
       <EclipseSilhouette size={180} coronaColor="rgba(157, 196, 255, 0.14)" />
       <div className="absolute bottom-6 left-6 right-6 rounded-2xl border px-4 py-4 hero-data-chip">
-        <p className="type-meta mb-2" style={{ color: 'var(--accent)' }}>
+        <p className="type-meta mb-2" style={{ color: 'var(--gold)' }}>
           {title}
         </p>
         <p className="text-sm leading-relaxed" style={{ color: 'var(--text-3)' }}>

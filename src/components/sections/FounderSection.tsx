@@ -53,7 +53,7 @@ function PortraitFallback({ title, text }: { title: string; text: string }) {
       <div className="absolute inset-0 founder-orbit-sheen" />
       <EclipseSilhouette size={220} coronaColor="rgba(157, 196, 255, 0.14)" />
       <div className="absolute bottom-8 left-8 right-8 rounded-2xl border px-5 py-4 founder-panel">
-        <p className="type-meta mb-2" style={{ color: 'var(--accent)' }}>
+        <p className="type-meta mb-2" style={{ color: 'var(--gold)' }}>
           {title}
         </p>
         <p className="text-sm leading-relaxed" style={{ color: 'var(--text-3)' }}>
@@ -99,7 +99,7 @@ export function FounderSection() {
       <div className="relative z-10 mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
         <div className="grid gap-8 lg:grid-cols-[1.02fr_0.98fr] lg:gap-12">
           <motion.div variants={revealUp} className="rounded-[2rem] border p-7 sm:p-10 founder-panel">
-            <p className="type-meta mb-5" style={{ color: 'var(--accent)' }}>
+            <p className="type-meta mb-5" style={{ color: 'var(--gold)' }}>
               {founderProfile.eyebrow}
             </p>
             <h2 className="type-display max-w-[13ch] text-balance text-[clamp(2.2rem,4.5vw,4.6rem)]">
@@ -190,7 +190,7 @@ export function FounderSection() {
               </div>
 
               <div className="rounded-[1.7rem] border p-5 founder-panel">
-                <p className="type-meta mb-3" style={{ color: 'var(--accent)' }}>
+                <p className="type-meta mb-3" style={{ color: 'var(--gold)' }}>
                   {copy.noteTitle}
                 </p>
                 <p className="type-body text-[14px] leading-relaxed sm:text-[15px]" style={{ color: 'var(--text-2)' }}>

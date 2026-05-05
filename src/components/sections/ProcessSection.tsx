@@ -57,7 +57,7 @@ export function ProcessSection() {
       <div className="relative mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
         <div className="grid gap-8 sm:gap-10 lg:grid-cols-[1fr_2fr] lg:gap-20">
           <div className="lg:sticky lg:top-32 lg:self-start">
-            <motion.p variants={revealUp} className="type-meta mb-6" style={{ color: 'var(--accent)' }}>
+            <motion.p variants={revealUp} className="type-meta mb-6" style={{ color: 'var(--gold)' }}>
               {copy.eyebrow}
             </motion.p>
             <motion.h2 variants={revealUp} className="type-display mb-8 text-[clamp(2rem,4vw,3.5rem)]">

@@ -78,7 +78,7 @@ export function AboutSection() {
 
         <div className="grid gap-10 sm:gap-12 lg:grid-cols-[1.2fr_1fr] lg:gap-24">
           <div>
-            <motion.p variants={revealUp} className="type-meta mb-6" style={{ color: 'var(--accent)' }}>
+            <motion.p variants={revealUp} className="type-meta mb-6" style={{ color: 'var(--gold)' }}>
               {copy.eyebrow}
             </motion.p>
             <motion.h2 variants={revealUp} className="type-display mb-8 max-w-xl text-[clamp(2rem,4vw,3.5rem)]" style={{ color: 'var(--text-1)' }}>

@@ -232,7 +232,7 @@ export function SystemsNotSitesSection() {
 
       <div className="relative mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
         <div className="mb-12 max-w-3xl lg:mb-16">
-          <motion.p variants={revealUp} className="type-meta mb-5" style={{ color: 'var(--accent)' }}>
+          <motion.p variants={revealUp} className="type-meta mb-5" style={{ color: 'var(--gold)' }}>
             {copy.eyebrow}
           </motion.p>
           <motion.h2 variants={revealUp} className="type-display text-[clamp(2rem,4.5vw,4.2rem)]">

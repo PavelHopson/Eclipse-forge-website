@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 import { type Project, useSiteContent } from '../../data/content';
 import { revealScale, revealUp, stagger, viewport } from '../../lib/animation';
 import { useLocale, type Locale } from '../../lib/locale';
@@ -39,7 +40,7 @@ function SystemsFallback({ project, hint }: { project: Project; hint: string }) 
         <EclipseSilhouette size={120} coronaColor="rgba(157, 196, 255, 0.13)" />
       </div>
       <div className="absolute inset-x-4 bottom-4 rounded-2xl border px-4 py-3 systems-card-panel">
-        <p className="type-meta mb-2" style={{ color: 'var(--accent)' }}>
+        <p className="type-meta mb-2" style={{ color: 'var(--gold)' }}>
           {project.systemType}
         </p>
         <p className="text-sm leading-relaxed" style={{ color: 'var(--text-3)' }}>
@@ -176,9 +177,12 @@ export function SystemsEcosystemSection() {
   const { locale } = useLocale();
   const copy = systemsCopy[locale];
   const { systemsEcosystemIntro, systemsEcosystemProjects } = useSiteContent();
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] });
+  const progressWidth = useTransform(scrollYProgress, [0.05, 0.55], ['0%', '100%']);
 
   return (
-    <section id="systems-ecosystem" className="section-shell relative overflow-hidden py-16 sm:py-24 lg:py-32">
+    <section ref={sectionRef} id="systems-ecosystem" className="section-shell relative overflow-hidden py-16 sm:py-24 lg:py-32">
       <div className="systems-ecosystem-bg absolute inset-0" />
       <div className="absolute inset-0 opacity-35">
         <ParticleField count={16} />
@@ -191,10 +195,18 @@ export function SystemsEcosystemSection() {
       </div>
       <MiniEclipse size={18} className="absolute right-16 top-20 hidden opacity-30 lg:block" color="var(--accent-warm)" />
 
+      <motion.div
+        className="absolute left-0 top-0 h-px origin-left"
+        style={{
+          width: progressWidth,
+          background: 'linear-gradient(90deg, transparent, rgba(212,175,55,0.7), rgba(107,163,255,0.4), transparent)',
+        }}
+      />
+
       <div className="relative z-10 mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={viewport}>
           <motion.div variants={revealUp} className="animated-divider">
-            <p className="type-meta mb-6" style={{ color: 'var(--accent)' }}>
+            <p className="type-meta mb-6" style={{ color: 'var(--gold)' }}>
               {systemsEcosystemIntro.eyebrow}
             </p>
             <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">

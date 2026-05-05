@@ -55,7 +55,7 @@ export function ServicesSection() {
       <MiniEclipse size={16} className="absolute bottom-20 right-[38%] hidden opacity-25 lg:block" color="var(--accent-warm)" />
 
       <div className="relative mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
-        <motion.p variants={revealUp} className="type-meta mb-6" style={{ color: 'var(--accent)' }}>
+        <motion.p variants={revealUp} className="type-meta mb-6" style={{ color: 'var(--gold)' }}>
           {copy.eyebrow}
         </motion.p>
         <motion.h2 variants={revealUp} className="type-display mb-6 max-w-[12ch] text-[clamp(2.2rem,4.5vw,4rem)]">
@@ -88,7 +88,7 @@ export function ServicesSection() {
                   {service.description}
                 </p>
                 <div className="mt-5 rounded-2xl border px-4 py-4 services-panel">
-                  <p className="type-meta mb-2" style={{ color: 'var(--accent)' }}>
+                  <p className="type-meta mb-2" style={{ color: 'var(--gold)' }}>
                     {copy.audienceLabel}
                   </p>
                   <p className="text-sm leading-relaxed" style={{ color: 'var(--text-3)' }}>
@@ -96,7 +96,7 @@ export function ServicesSection() {
                   </p>
                 </div>
                 <div className="mt-4 rounded-2xl border px-4 py-4 services-panel">
-                  <p className="type-meta mb-2" style={{ color: 'var(--accent)' }}>
+                  <p className="type-meta mb-2" style={{ color: 'var(--gold)' }}>
                     {copy.resultLabel}
                   </p>
                   <p className="text-sm leading-relaxed" style={{ color: 'var(--text-2)' }}>
