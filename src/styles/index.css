@@ -767,6 +767,11 @@ button, a { -webkit-tap-highlight-color: transparent; }
   perspective: 1000px;
 }
 
+.perspective-card {
+  transform-origin: center;
+  will-change: transform;
+}
+
 .tilt-card {
   transform-style: preserve-3d;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -846,6 +851,83 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .hero-ambient-glow-alt {
   background: rgba(140, 124, 255, 0.1);
+}
+
+/* === Cinematic upgrade: atmospheric fog + volumetric light beams === */
+.hero-fog-layer {
+  background:
+    radial-gradient(ellipse 70% 55% at 28% 18%, rgba(212, 175, 55, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 40% at 82% 78%, rgba(107, 163, 255, 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 70% at 50% 110%, rgba(212, 175, 55, 0.05) 0%, transparent 60%);
+  filter: blur(40px);
+  opacity: 0.95;
+  animation: heroFogDrift 32s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes heroFogDrift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(-3%, 2%, 0) scale(1.04); }
+}
+
+.hero-light-beam {
+  pointer-events: none;
+  position: absolute;
+  width: 1200px;
+  height: 100%;
+  top: -10%;
+  opacity: 0.45;
+  mix-blend-mode: screen;
+  filter: blur(2px);
+}
+
+.hero-light-beam--left {
+  left: -20%;
+  background:
+    linear-gradient(112deg, transparent 0%, rgba(212, 175, 55, 0.06) 38%, rgba(212, 175, 55, 0.02) 50%, transparent 62%);
+  animation: heroBeamShift 24s ease-in-out infinite;
+}
+
+.hero-light-beam--right {
+  right: -30%;
+  background:
+    linear-gradient(248deg, transparent 0%, rgba(107, 163, 255, 0.05) 38%, rgba(107, 163, 255, 0.02) 52%, transparent 64%);
+  animation: heroBeamShift 28s ease-in-out infinite reverse;
+}
+
+@keyframes heroBeamShift {
+  0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.35; }
+  50%      { transform: translate3d(40px, -20px, 0); opacity: 0.55; }
+}
+
+/* === Massive FORGE letterform — broken-grid wordmark === */
+.hero-forge-mark {
+  font-family: 'Outfit', 'Cinzel', system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  font-size: clamp(120px, 18vw, 320px);
+  line-height: 0.85;
+  color: rgba(212, 175, 55, 0.045);
+  -webkit-text-stroke: 1px rgba(212, 175, 55, 0.07);
+  z-index: 1;
+  bottom: 12%;
+  left: 50%;
+  transform-origin: 50% 50%;
+  text-transform: uppercase;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  user-select: none;
+}
+
+[data-theme='light'] .hero-forge-mark {
+  color: rgba(186, 138, 24, 0.08);
+  -webkit-text-stroke: 1px rgba(186, 138, 24, 0.12);
+  mix-blend-mode: multiply;
+}
+
+@media (max-width: 768px) {
+  .hero-forge-mark { display: none; }
+  .hero-light-beam { opacity: 0.25; }
 }
 
 .hero-core-shell {

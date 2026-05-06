@@ -1,5 +1,5 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion';
+import { useEffect, useRef, type RefObject } from 'react';
 import { AssetImage } from '../ui/AssetImage';
 import { BlackHoleCanvas } from '../ui/BlackHoleCanvas';
 import { GlowButton } from '../ui/GlowButton';
@@ -14,6 +14,40 @@ import {
 import { brandAssets, contactDetails, useSiteContent } from '../../data/content';
 import { revealWord, staggerWord } from '../../lib/animation';
 import { useLocale, type Locale } from '../../lib/locale';
+
+function useMouseParallax(ref: RefObject<HTMLElement | null>) {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const handleMove = (event: MouseEvent) => {
+      const rect = el.getBoundingClientRect();
+      const cx = (event.clientX - rect.left) / rect.width - 0.5;
+      const cy = (event.clientY - rect.top) / rect.height - 0.5;
+      x.set(cx);
+      y.set(cy);
+    };
+    const handleLeave = () => {
+      x.set(0);
+      y.set(0);
+    };
+
+    el.addEventListener('mousemove', handleMove);
+    el.addEventListener('mouseleave', handleLeave);
+    return () => {
+      el.removeEventListener('mousemove', handleMove);
+      el.removeEventListener('mouseleave', handleLeave);
+    };
+  }, [ref, x, y]);
+
+  return {
+    x: useSpring(x, { stiffness: 80, damping: 22, mass: 0.6 }),
+    y: useSpring(y, { stiffness: 80, damping: 22, mass: 0.6 }),
+  };
+}
 
 const heroCopy: Record<
   Locale,
@@ -106,21 +140,63 @@ export function HeroSection() {
   const textY = useTransform(scrollYProgress, [0, 1], [0, -60]);
   const visualY = useTransform(scrollYProgress, [0, 1], [0, 90]);
   const glowScale = useTransform(scrollYProgress, [0, 1], [1, 1.18]);
+
+  // Mouse parallax: small offsets per layer, deeper layers move less
+  const mouse = useMouseParallax(ref);
+  const starsX = useTransform(mouse.x, [-0.5, 0.5], [-6, 6]);
+  const starsY = useTransform(mouse.y, [-0.5, 0.5], [-4, 4]);
+  const fogX = useTransform(mouse.x, [-0.5, 0.5], [-14, 14]);
+  const fogY = useTransform(mouse.y, [-0.5, 0.5], [-10, 10]);
+  const eclipseX = useTransform(mouse.x, [-0.5, 0.5], [-26, 26]);
+  const eclipseY = useTransform(mouse.y, [-0.5, 0.5], [-20, 20]);
+  const particlesX = useTransform(mouse.x, [-0.5, 0.5], [-40, 40]);
+  const particlesY = useTransform(mouse.y, [-0.5, 0.5], [-28, 28]);
+  const forgeX = useTransform(mouse.x, [-0.5, 0.5], [40, -40]);
+  const forgeY = useTransform(mouse.y, [-0.5, 0.5], [12, -12]);
+
   const { locale } = useLocale();
   const copy = heroCopy[locale];
   const { metrics } = useSiteContent();
 
   return (
     <section ref={ref} id="hero" className="relative min-h-screen overflow-hidden pb-16 pt-20 sm:pb-24 sm:pt-28 lg:flex lg:items-center lg:pb-0">
-      <motion.div className="absolute inset-0 hero-depth-layer" style={{ y: bgY }} />
-      <div className="absolute inset-0 hero-grid-overlay" />
+      {/* Layer 1: deep stars + grid (slowest) */}
+      <motion.div className="absolute inset-0 hero-depth-layer" style={{ y: bgY, x: starsX }} />
+      <motion.div className="absolute inset-0 hero-grid-overlay" style={{ x: starsX, y: starsY }} />
       <div className="absolute inset-0 hero-vignette" />
-      <div className="absolute inset-0 pointer-events-none">
+
+      {/* Layer 2: atmospheric fog + volumetric light beams */}
+      <motion.div className="absolute inset-0 hero-fog-layer" style={{ x: fogX, y: fogY }} />
+      <div className="hero-light-beam hero-light-beam--left" />
+      <div className="hero-light-beam hero-light-beam--right" />
+
+      {/* Layer 3: massive FORGE letterform (broken-grid wordmark) */}
+      <motion.div
+        aria-hidden
+        className="hero-forge-mark pointer-events-none absolute select-none whitespace-nowrap"
+        style={{ x: forgeX, y: forgeY }}
+      >
+        FORGE
+      </motion.div>
+
+      {/* Layer 4: constellation + ambient glows (medium) */}
+      <motion.div className="absolute inset-0 pointer-events-none" style={{ x: eclipseX, y: eclipseY }}>
         <ConstellationField className="opacity-30" />
+      </motion.div>
+
+      {/* Layer 5: particles (fastest, closest to viewer) */}
+      <motion.div className="absolute inset-0 pointer-events-none" style={{ x: particlesX, y: particlesY }}>
         <ParticleField count={28} className="opacity-45" />
-      </div>
-      <motion.div className="absolute left-[-8%] top-[16%] hidden lg:block hero-ambient-glow" style={{ scale: glowScale }} />
-      <motion.div className="absolute bottom-[6%] right-[-4%] hidden lg:block hero-ambient-glow-alt" style={{ y: visualY }} />
+      </motion.div>
+
+      <motion.div
+        className="absolute left-[-8%] top-[16%] hidden lg:block hero-ambient-glow"
+        style={{ scale: glowScale, x: fogX }}
+      />
+      <motion.div
+        className="absolute bottom-[6%] right-[-4%] hidden lg:block hero-ambient-glow-alt"
+        style={{ y: visualY, x: eclipseX }}
+      />
 
       <div className="relative z-10 mx-auto w-full max-w-[1320px] px-5 sm:px-8 lg:px-12">
         <div className="grid min-h-[86vh] items-center gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-8">
@@ -228,19 +304,31 @@ export function HeroSection() {
 
           <motion.div style={{ y: visualY }} className="relative lg:pr-2">
             <div className="relative mx-auto flex max-w-[690px] justify-center lg:justify-end">
-              <div className="hero-core-shell relative w-full max-w-[650px] min-h-[500px] sm:min-h-[580px] lg:min-h-[640px]">
-                <motion.div className="absolute left-[55%] top-[51%] z-0 h-[80%] w-[80%] -translate-x-1/2 -translate-y-1/2" style={{ scale: glowScale }}>
+              <motion.div
+                className="hero-core-shell relative w-full max-w-[650px] min-h-[500px] sm:min-h-[580px] lg:min-h-[640px]"
+                style={{ x: eclipseX, y: eclipseY }}
+              >
+                <motion.div
+                  className="absolute left-[55%] top-[51%] z-0 h-[80%] w-[80%] -translate-x-1/2 -translate-y-1/2"
+                  style={{ scale: glowScale }}
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 90, repeat: Infinity, ease: 'linear' }}
+                >
                   <BlackHoleCanvas className="h-full w-full rounded-full opacity-90" />
                 </motion.div>
 
-                <div className="pointer-events-none absolute left-[55%] top-[51%] z-10 -translate-x-1/2 -translate-y-1/2">
-                  <SolarCorona size={520} rays={28} color="rgba(157,196,255,0.07)" />
-                </div>
+                <motion.div
+                  className="pointer-events-none absolute left-[55%] top-[51%] z-10 -translate-x-1/2 -translate-y-1/2"
+                  animate={{ scale: [1, 1.06, 1], opacity: [0.7, 1, 0.7] }}
+                  transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                  <SolarCorona size={520} rays={28} color="rgba(212,175,55,0.08)" />
+                </motion.div>
                 <div className="pointer-events-none absolute left-[55%] top-[51%] z-10 -translate-x-1/2 -translate-y-1/2">
                   <OrbitalRing size={560} dotCount={3} duration={54} color="var(--accent)" />
                 </div>
                 <div className="pointer-events-none absolute left-[55%] top-[51%] z-10 -translate-x-1/2 -translate-y-1/2 opacity-70">
-                  <OrbitalRing size={660} dotCount={2} duration={78} color="var(--accent-warm)" />
+                  <OrbitalRing size={660} dotCount={2} duration={78} color="rgba(212,175,55,0.5)" />
                 </div>
 
                 <motion.div
@@ -290,12 +378,12 @@ export function HeroSection() {
                     <span className="text-[10px] uppercase tracking-[0.2em]" style={{ color: 'var(--text-4)' }}>
                       {copy.systemCore}
                     </span>
-                    <span className="text-[11px] uppercase tracking-[0.2em]" style={{ color: 'var(--accent)' }}>
+                    <span className="text-[11px] uppercase tracking-[0.2em]" style={{ color: 'var(--gold)' }}>
                       {copy.orbitalView}
                     </span>
                   </div>
                 </motion.div>
-              </div>
+              </motion.div>
             </div>
           </motion.div>
         </div>

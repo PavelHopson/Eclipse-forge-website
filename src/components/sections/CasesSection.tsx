@@ -1,4 +1,12 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useScroll,
+  useSpring,
+  useTransform,
+  type MouseEvent as ReactMouseEvent,
+} from 'framer-motion';
 import { useRef } from 'react';
 import { type Project, type ProjectStatus, useSiteContent } from '../../data/content';
 import { revealScale, revealUp, stagger, viewport } from '../../lib/animation';
@@ -137,19 +145,57 @@ function ProjectCard({
   const primaryUrl = project.liveUrl ?? project.repoUrl;
   const primaryHoverLabel = project.liveUrl ? copy.openDemoLabel : copy.openRepoLabel;
 
+  const cardRef = useRef<HTMLDivElement>(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const smoothX = useSpring(mouseX, { stiffness: 220, damping: 26 });
+  const smoothY = useSpring(mouseY, { stiffness: 220, damping: 26 });
+  const rotateX = useSpring(useTransform(smoothY, [-0.5, 0.5], [2.4, -2.4]), {
+    stiffness: 180,
+    damping: 24,
+  });
+  const rotateY = useSpring(useTransform(smoothX, [-0.5, 0.5], [-3.2, 3.2]), {
+    stiffness: 180,
+    damping: 24,
+  });
+  const cursorX = useTransform(smoothX, [-0.5, 0.5], ['18%', '82%']);
+  const cursorY = useTransform(smoothY, [-0.5, 0.5], ['12%', '88%']);
+  const spotlight = useMotionTemplate`radial-gradient(420px circle at ${cursorX} ${cursorY}, rgba(245, 233, 196, 0.14), rgba(212, 175, 55, 0.04) 40%, transparent 70%)`;
+
+  const handlePointerMove = (event: ReactMouseEvent<HTMLDivElement>) => {
+    const rect = cardRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    mouseX.set((event.clientX - rect.left) / rect.width - 0.5);
+    mouseY.set((event.clientY - rect.top) / rect.height - 0.5);
+  };
+
+  const handlePointerLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
   return (
     <motion.article variants={revealScale} className={isLarge ? 'lg:col-span-2' : ''}>
       <motion.div
+        ref={cardRef}
+        onMouseMove={handlePointerMove}
+        onMouseLeave={handlePointerLeave}
         whileHover={{ y: -6 }}
         whileTap={{ scale: 0.985 }}
         transition={{ type: 'spring', stiffness: 280, damping: 26 }}
-        className="group relative flex h-full flex-col overflow-hidden rounded-[1.9rem] border transition-all duration-500 case-card-shell"
+        style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+        className="group relative flex h-full flex-col overflow-hidden rounded-[1.9rem] border transition-all duration-500 case-card-shell perspective-card"
       >
+        <motion.div
+          className="pointer-events-none absolute inset-0 z-[5] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          style={{ background: spotlight }}
+          aria-hidden
+        />
         <div
           className="pointer-events-none absolute -inset-px rounded-[1.95rem] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
           style={{
             background:
-              'linear-gradient(135deg, rgba(212,175,55,0.18), transparent 30%, transparent 70%, rgba(212,175,55,0.14))',
+              'linear-gradient(135deg, rgba(212,175,55,0.22), transparent 30%, transparent 70%, rgba(212,175,55,0.16))',
           }}
         />
 
@@ -323,7 +369,7 @@ export function CasesSection() {
             </p>
           </motion.div>
 
-          <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={viewport} className="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-2">
+          <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={viewport} className="perspective-container mt-6 grid grid-cols-1 gap-5 lg:grid-cols-2">
             {featuredProjects.map((project, index) => (
               <ProjectCard
                 key={project.title}
@@ -358,7 +404,7 @@ export function CasesSection() {
               </div>
             </motion.div>
 
-            <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={viewport} className="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-2">
+            <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={viewport} className="perspective-container mt-6 grid grid-cols-1 gap-5 lg:grid-cols-2">
               {collection.projects.map((project, index) => (
                 <ProjectCard
                   key={project.title}
