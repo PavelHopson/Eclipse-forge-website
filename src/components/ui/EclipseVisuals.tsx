@@ -90,9 +90,21 @@ export function MiniEclipse({
 export function EclipseDivider({ className = '' }: { className?: string }) {
   return (
     <div className={`relative flex items-center justify-center py-8 ${className}`}>
-      <div className="absolute inset-x-0 top-1/2 h-px" style={{
-        background: 'linear-gradient(90deg, transparent, var(--line) 20%, var(--line) 40%, transparent 50%, var(--line) 60%, var(--line) 80%, transparent)',
-      }} />
+      <div
+        className="absolute inset-x-0 top-1/2 h-px"
+        style={{
+          background:
+            'linear-gradient(90deg, transparent, var(--line) 18%, rgba(212,175,55,0.22) 32%, var(--line) 46%, transparent 50%, var(--line) 54%, rgba(212,175,55,0.22) 68%, var(--line) 82%, transparent)',
+        }}
+      />
+      <div
+        aria-hidden
+        className="divider-traveler absolute top-1/2 h-1 w-1 -translate-y-1/2 rounded-full"
+        style={{
+          background: 'rgba(212,175,55,0.95)',
+          boxShadow: '0 0 12px rgba(212,175,55,0.85), 0 0 24px rgba(212,175,55,0.45)',
+        }}
+      />
       <div className="relative z-10" style={{ background: 'var(--bg)', padding: '0 1rem' }}>
         <MiniEclipse size={32} />
       </div>

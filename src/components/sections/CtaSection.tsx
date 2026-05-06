@@ -47,7 +47,7 @@ type CtaCopy = {
 
 const ctaCopy: Record<Locale, CtaCopy> = {
   ru: {
-    eyebrow: 'Контакт',
+    eyebrow: 'Открыть канал',
     title: 'Опишите задачу.',
     titleAccent: 'Разберём и превратим в систему.',
     description: 'Опишите ручной процесс — быстро скажу, как превратить его в систему.',
@@ -96,7 +96,7 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     ],
   },
   en: {
-    eyebrow: 'Contact',
+    eyebrow: 'Open the channel',
     title: 'Describe the task.',
     titleAccent: "We'll turn it into a system.",
     description: 'Describe the manual process — I will quickly show how to turn it into a system.',

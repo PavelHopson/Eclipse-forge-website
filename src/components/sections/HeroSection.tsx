@@ -2,6 +2,7 @@ import { motion, useMotionValue, useScroll, useSpring, useTransform } from 'fram
 import { useEffect, useRef, type RefObject } from 'react';
 import { AssetImage } from '../ui/AssetImage';
 import { BlackHoleCanvas } from '../ui/BlackHoleCanvas';
+import { EclipseTelemetryHud } from '../ui/EclipseTelemetryHud';
 import { GlowButton } from '../ui/GlowButton';
 import { MagneticButton } from '../ui/MagneticButton';
 import {
@@ -70,7 +71,7 @@ const heroCopy: Record<
   }
 > = {
   ru: {
-    eyebrow: 'Eclipse Forge / Инженерия AI-систем',
+    eyebrow: 'Eclipse Forge / AI Systems Engineering',
     title: 'Строю системы,',
     titleAccent: 'которые работают сами.',
     description:
@@ -330,6 +331,8 @@ export function HeroSection() {
                 <div className="pointer-events-none absolute left-[55%] top-[51%] z-10 -translate-x-1/2 -translate-y-1/2 opacity-70">
                   <OrbitalRing size={660} dotCount={2} duration={78} color="rgba(212,175,55,0.5)" />
                 </div>
+
+                <EclipseTelemetryHud />
 
                 <motion.div
                   initial={{ opacity: 0, x: 40, y: 24 }}

@@ -71,6 +71,8 @@ export function App() {
       <div className="fog-layer" />
       <div className="app-grid-overlay pointer-events-none fixed inset-0 z-[1]" />
       <div className="app-vignette pointer-events-none fixed inset-0 z-[2]" />
+      <div className="ambient-nebula ambient-nebula--gold pointer-events-none fixed z-[1]" />
+      <div className="ambient-nebula ambient-nebula--cyan pointer-events-none fixed z-[1]" />
       <div className="pointer-events-none fixed inset-0 z-[1] opacity-30">
         <ConstellationField className="opacity-35" />
       </div>
@@ -78,7 +80,7 @@ export function App() {
       <div className="flare" style={{ bottom: '30%', left: '10%', animationDelay: '4s' }} />
 
       <CursorLight />
-      <ParticleField count={30} className="z-[1] opacity-50" />
+      <ParticleField count={36} className="z-[1] opacity-55" />
 
       <SiteHeader />
 

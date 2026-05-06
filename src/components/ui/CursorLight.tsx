@@ -2,14 +2,20 @@ import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { useEffect } from 'react';
 
 export function CursorLight() {
-  const mouseX = useMotionValue(-200);
-  const mouseY = useMotionValue(-200);
-  const springX = useSpring(mouseX, { damping: 20, stiffness: 100 });
-  const springY = useSpring(mouseY, { damping: 20, stiffness: 100 });
+  const mouseX = useMotionValue(-400);
+  const mouseY = useMotionValue(-400);
+
+  // Three followers at different latencies → trail illusion
+  const fastX = useSpring(mouseX, { damping: 20, stiffness: 220 });
+  const fastY = useSpring(mouseY, { damping: 20, stiffness: 220 });
+  const midX = useSpring(mouseX, { damping: 28, stiffness: 95 });
+  const midY = useSpring(mouseY, { damping: 28, stiffness: 95 });
+  const slowX = useSpring(mouseX, { damping: 36, stiffness: 50 });
+  const slowY = useSpring(mouseY, { damping: 36, stiffness: 50 });
 
   useEffect(() => {
-    const isTouchDevice = 'ontouchstart' in window;
-    if (isTouchDevice) return;
+    if (window.matchMedia('(hover: none)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const move = (e: MouseEvent) => {
       mouseX.set(e.clientX);
@@ -21,34 +27,52 @@ export function CursorLight() {
 
   return (
     <>
-      {/* Primary glow — larger, dual-color */}
+      {/* Primary glow — large warm gold halo */}
       <motion.div
         className="fixed pointer-events-none z-30 hidden lg:block"
         style={{
-          x: springX,
-          y: springY,
-          width: 600,
-          height: 600,
-          marginLeft: -300,
-          marginTop: -300,
+          x: slowX,
+          y: slowY,
+          width: 720,
+          height: 720,
+          marginLeft: -360,
+          marginTop: -360,
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(107,163,255,0.04) 0%, rgba(245,166,35,0.01) 30%, transparent 60%)',
-          filter: 'blur(40px)',
+          background: 'radial-gradient(circle, rgba(212,175,55,0.10) 0%, rgba(212,175,55,0.04) 28%, transparent 62%)',
+          filter: 'blur(50px)',
+          mixBlendMode: 'screen',
         }}
       />
-      {/* Secondary dot — small, sharp */}
+      {/* Secondary glow — tighter cyan companion */}
       <motion.div
-        className="fixed pointer-events-none z-30 hidden lg:block mix-blend-screen"
+        className="fixed pointer-events-none z-30 hidden lg:block"
         style={{
-          x: springX,
-          y: springY,
-          width: 8,
-          height: 8,
-          marginLeft: -4,
-          marginTop: -4,
+          x: midX,
+          y: midY,
+          width: 320,
+          height: 320,
+          marginLeft: -160,
+          marginTop: -160,
           borderRadius: '50%',
-          background: 'rgba(107,163,255,0.3)',
-          boxShadow: '0 0 20px rgba(107,163,255,0.15)',
+          background: 'radial-gradient(circle, rgba(107,163,255,0.10) 0%, rgba(107,163,255,0.03) 38%, transparent 62%)',
+          filter: 'blur(28px)',
+          mixBlendMode: 'screen',
+        }}
+      />
+      {/* Sharp dot at cursor — gold core */}
+      <motion.div
+        className="fixed pointer-events-none z-30 hidden lg:block"
+        style={{
+          x: fastX,
+          y: fastY,
+          width: 10,
+          height: 10,
+          marginLeft: -5,
+          marginTop: -5,
+          borderRadius: '50%',
+          background: 'rgba(245,233,196,0.9)',
+          boxShadow: '0 0 18px rgba(212,175,55,0.85), 0 0 38px rgba(212,175,55,0.45)',
+          mixBlendMode: 'screen',
         }}
       />
     </>

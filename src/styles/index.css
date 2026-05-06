@@ -930,6 +930,82 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .hero-light-beam { opacity: 0.25; }
 }
 
+/* === Site-wide ambient nebula (slow-drift gold + cyan clouds) === */
+.ambient-nebula {
+  width: 70vw;
+  height: 70vw;
+  max-width: 900px;
+  max-height: 900px;
+  border-radius: 999px;
+  filter: blur(140px);
+  opacity: 0.28;
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+}
+
+.ambient-nebula--gold {
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.4) 0%, transparent 60%);
+  top: -10vh;
+  left: -20vw;
+  animation: nebulaDriftGold 60s ease-in-out infinite;
+}
+
+.ambient-nebula--cyan {
+  background: radial-gradient(circle, rgba(107, 163, 255, 0.3) 0%, transparent 60%);
+  bottom: -20vh;
+  right: -25vw;
+  animation: nebulaDriftCyan 80s ease-in-out infinite;
+  opacity: 0.22;
+}
+
+@keyframes nebulaDriftGold {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1);   opacity: 0.22; }
+  33%      { transform: translate3d(8vw, 12vh, 0) scale(1.08); opacity: 0.32; }
+  66%      { transform: translate3d(18vw, 4vh, 0) scale(0.96); opacity: 0.26; }
+}
+
+@keyframes nebulaDriftCyan {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1);   opacity: 0.18; }
+  50%      { transform: translate3d(-12vw, -8vh, 0) scale(1.1); opacity: 0.28; }
+}
+
+[data-theme='light'] .ambient-nebula {
+  mix-blend-mode: multiply;
+  opacity: 0.16;
+}
+[data-theme='light'] .ambient-nebula--gold {
+  background: radial-gradient(circle, rgba(186, 138, 24, 0.3) 0%, transparent 60%);
+}
+[data-theme='light'] .ambient-nebula--cyan {
+  background: radial-gradient(circle, rgba(30, 86, 232, 0.22) 0%, transparent 60%);
+}
+
+/* Section divider: gold dot traversing the hairline */
+.divider-traveler {
+  left: 8%;
+  animation: dividerTravel 8s ease-in-out infinite;
+}
+
+@keyframes dividerTravel {
+  0%   { left: 8%;  opacity: 0; }
+  10%  {            opacity: 1; }
+  45%  { left: 38%; opacity: 1; }
+  55%  { left: 62%; opacity: 1; }
+  90%  { left: 92%; opacity: 1; }
+  100% { left: 92%; opacity: 0; }
+}
+
+.hud-label {
+  border-color: rgba(212, 175, 55, 0.22);
+  background: rgba(8, 11, 16, 0.55);
+  box-shadow: 0 0 18px rgba(212, 175, 55, 0.06), inset 0 0 0 1px rgba(212, 175, 55, 0.04);
+}
+
+[data-theme='light'] .hud-label {
+  border-color: rgba(186, 138, 24, 0.32);
+  background: rgba(255, 252, 246, 0.85);
+}
+
 .hero-core-shell {
   isolation: isolate;
 }
