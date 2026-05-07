@@ -1218,6 +1218,26 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .hero-core-shell {
   isolation: isolate;
+  /* GPU acceleration — keeps mouse parallax smooth, prevents flicker */
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+/* Same GPU promotion for floating card layers in hero — they sit
+   inside parallax parents and inherit subpixel motion */
+.hero-portrait-card,
+.hero-brand-plate {
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.hero-forge-mark,
+.hero-light-beam,
+.hero-fog-layer {
+  backface-visibility: hidden;
 }
 
 .hero-core-shell::before {

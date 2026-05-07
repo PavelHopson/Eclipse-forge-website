@@ -21,24 +21,41 @@ function useMouseParallax(ref: RefObject<HTMLElement | null>) {
   const y = useMotionValue(0);
 
   useEffect(() => {
+    // Skip entirely on touch devices and reduced-motion users
+    if (typeof window === 'undefined') return;
+    if (window.matchMedia('(hover: none)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     const el = ref.current;
     if (!el) return;
 
-    const handleMove = (event: MouseEvent) => {
-      const rect = el.getBoundingClientRect();
-      const cx = (event.clientX - rect.left) / rect.width - 0.5;
-      const cy = (event.clientY - rect.top) / rect.height - 0.5;
-      x.set(cx);
-      y.set(cy);
-    };
-    const handleLeave = () => {
-      x.set(0);
-      y.set(0);
+    let rafId: number | null = null;
+    let nextX = 0;
+    let nextY = 0;
+
+    const apply = () => {
+      x.set(nextX);
+      y.set(nextY);
+      rafId = null;
     };
 
-    el.addEventListener('mousemove', handleMove);
+    const handleMove = (event: MouseEvent) => {
+      const rect = el.getBoundingClientRect();
+      nextX = (event.clientX - rect.left) / rect.width - 0.5;
+      nextY = (event.clientY - rect.top) / rect.height - 0.5;
+      // Throttle via rAF — one update per frame
+      if (rafId === null) rafId = requestAnimationFrame(apply);
+    };
+    const handleLeave = () => {
+      nextX = 0;
+      nextY = 0;
+      if (rafId === null) rafId = requestAnimationFrame(apply);
+    };
+
+    el.addEventListener('mousemove', handleMove, { passive: true });
     el.addEventListener('mouseleave', handleLeave);
     return () => {
+      if (rafId !== null) cancelAnimationFrame(rafId);
       el.removeEventListener('mousemove', handleMove);
       el.removeEventListener('mouseleave', handleLeave);
     };
@@ -306,7 +323,7 @@ export function HeroSection() {
           <motion.div style={{ y: visualY }} className="relative lg:pr-2">
             <div className="relative mx-auto flex max-w-[690px] justify-center lg:justify-end">
               <motion.div
-                className="hero-core-shell relative w-full max-w-[650px] min-h-[500px] sm:min-h-[580px] lg:min-h-[640px]"
+                className="hero-core-shell relative w-full max-w-[650px] min-h-[380px] sm:min-h-[520px] lg:min-h-[640px]"
                 style={{ x: eclipseX, y: eclipseY }}
               >
                 <motion.div
@@ -344,7 +361,7 @@ export function HeroSection() {
                     alt={brandAssets.founderDesk.alt}
                     sources={brandAssets.founderDesk.sources}
                     loading="eager"
-                    className="h-[320px] w-full rounded-[1.7rem] object-cover sm:h-[420px]"
+                    className="h-[260px] w-full rounded-[1.7rem] object-cover sm:h-[380px] lg:h-[420px]"
                     style={{ objectPosition: brandAssets.founderDesk.objectPosition }}
                     fallback={<HeroPortraitFallback title={copy.fallbackTitle} text={copy.fallbackText} />}
                   />

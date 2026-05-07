@@ -1,7 +1,8 @@
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export function CursorLight() {
+  const [enabled, setEnabled] = useState(false);
   const mouseX = useMotionValue(-400);
   const mouseY = useMotionValue(-400);
 
@@ -14,8 +15,12 @@ export function CursorLight() {
   const slowY = useSpring(mouseY, { damping: 36, stiffness: 50 });
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
     if (window.matchMedia('(hover: none)').matches) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.innerWidth < 1024) return; // also skip below lg breakpoint
+
+    setEnabled(true);
 
     const move = (e: MouseEvent) => {
       mouseX.set(e.clientX);
@@ -24,6 +29,8 @@ export function CursorLight() {
     window.addEventListener('mousemove', move, { passive: true });
     return () => window.removeEventListener('mousemove', move);
   }, [mouseX, mouseY]);
+
+  if (!enabled) return null;
 
   return (
     <>

@@ -43,19 +43,19 @@ export function EclipseTelemetryHud() {
             ease: 'easeInOut',
           }}
         >
-          <div className="hud-label flex items-center gap-2 rounded-full border px-2.5 py-1 backdrop-blur-md">
+          <div className="hud-label flex items-center gap-1.5 rounded-full border px-2 py-0.5 backdrop-blur-md sm:gap-2 sm:px-2.5 sm:py-1">
             <span
-              className="h-1.5 w-1.5 rounded-full"
+              className="h-1.5 w-1.5 shrink-0 rounded-full"
               style={{
                 background: 'rgba(212,175,55,0.85)',
                 boxShadow: '0 0 8px rgba(212,175,55,0.6)',
               }}
             />
-            <span className="font-mono text-[9px] uppercase tracking-[0.22em]" style={{ color: 'rgba(245,233,196,0.6)' }}>
+            <span className="font-mono text-[8px] uppercase tracking-[0.18em] sm:text-[9px] sm:tracking-[0.22em]" style={{ color: 'rgba(245,233,196,0.6)' }}>
               {item.label}
             </span>
             <span
-              className="font-mono text-[10px] tracking-[0.04em]"
+              className="font-mono text-[9px] tracking-[0.04em] sm:text-[10px]"
               style={{ color: 'rgba(245,233,196,0.92)' }}
             >
               {item.value}

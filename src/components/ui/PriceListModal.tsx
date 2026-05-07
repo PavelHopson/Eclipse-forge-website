@@ -123,9 +123,9 @@ export function PriceListModal() {
                             item.highlight ? 'price-item--highlight' : ''
                           }`}
                         >
-                          <div className="flex items-baseline justify-between gap-3">
+                          <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
                             <h4
-                              className="font-display text-[15px] font-medium tracking-tight sm:text-[16px]"
+                              className="min-w-0 font-display text-[14px] font-medium leading-snug tracking-tight sm:text-[16px]"
                               style={{ color: 'var(--text-1)' }}
                             >
                               {item.title}
@@ -140,7 +140,7 @@ export function PriceListModal() {
                               ) : null}
                             </h4>
                             <span
-                              className="shrink-0 font-display text-[13px] tracking-tight sm:text-[14px]"
+                              className="shrink-0 font-display text-[12.5px] tracking-tight sm:text-[14px]"
                               style={{ color: 'var(--gold)' }}
                             >
                               {item.price}
