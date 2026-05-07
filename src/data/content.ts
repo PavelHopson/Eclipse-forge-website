@@ -204,7 +204,7 @@ const projectImage = (primary: string, secondary: string, alt: string, objectPos
 });
 
 const founderSources = [
-  '/founder-portrait.png',
+  '/images/projects/founder-operator.png',
   '/images/projects/founder-portrait.png',
   '/images/ChatGPT Image 4 \u043c\u0430\u044f 2026 \u0433., 14_54_55.png',
 ];
