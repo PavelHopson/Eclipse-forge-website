@@ -1,6 +1,7 @@
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll } from 'framer-motion';
 import { useState } from 'react';
 import { useLocale, type Locale } from '../../lib/locale';
+import { usePriceModal } from '../../lib/priceModal';
 import { useTheme } from '../../lib/theme';
 import { GlowButton } from '../ui/GlowButton';
 import { LanguageToggle } from '../ui/LanguageToggle';
@@ -13,6 +14,7 @@ const headerCopy: Record<
     cta: string;
     openMenu: string;
     closeMenu: string;
+    priceLabel: string;
   }
 > = {
   ru: {
@@ -26,6 +28,7 @@ const headerCopy: Record<
     cta: 'Открыть запрос',
     openMenu: 'Открыть меню',
     closeMenu: 'Закрыть меню',
+    priceLabel: 'Прайс',
   },
   en: {
     navItems: [
@@ -38,6 +41,7 @@ const headerCopy: Record<
     cta: 'Open a request',
     openMenu: 'Open menu',
     closeMenu: 'Close menu',
+    priceLabel: 'Pricing',
   },
 };
 
@@ -48,6 +52,7 @@ export function SiteHeader() {
   const { scrollY } = useScroll();
   const { theme } = useTheme();
   const { locale } = useLocale();
+  const { setOpen: setPriceOpen } = usePriceModal();
   const copy = headerCopy[locale];
   const isLight = theme === 'light';
 
@@ -115,6 +120,18 @@ export function SiteHeader() {
                 />
               </a>
             ))}
+            <button
+              type="button"
+              onClick={() => setPriceOpen(true)}
+              className="group relative inline-flex items-center transition-colors duration-300 hover:!text-[var(--text-1)]"
+              style={{ color: 'var(--gold)' }}
+            >
+              {copy.priceLabel}
+              <span
+                className="pointer-events-none absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
+                style={{ background: 'linear-gradient(90deg, rgba(212,175,55,0.9), rgba(212,175,55,0.4))' }}
+              />
+            </button>
           </nav>
 
           <div className="flex items-center gap-2 sm:gap-3">
@@ -167,6 +184,17 @@ export function SiteHeader() {
               style={{ borderColor: 'var(--line)', background: 'var(--bg-card)' }}
             >
               <nav className="grid gap-1">
+                <button
+                  type="button"
+                  onClick={() => {
+                    closeMenu();
+                    setPriceOpen(true);
+                  }}
+                  className="rounded-xl px-4 py-4 text-left text-sm uppercase tracking-[0.15em] transition-colors hover:bg-white/[0.03]"
+                  style={{ color: 'var(--gold)' }}
+                >
+                  {copy.priceLabel} →
+                </button>
                 {copy.navItems.map((item) => (
                   <a
                     key={item.href}

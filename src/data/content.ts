@@ -92,6 +92,30 @@ export interface SiteContent {
   systemsEcosystemProjects: Project[];
   contactPrompts: ContactPrompt[];
   contactFlow: ContactFlow;
+  priceList: PriceListContent;
+}
+
+export interface PriceItem {
+  title: string;
+  price: string;
+  description: string;
+  highlight?: boolean;
+}
+
+export interface PriceGroup {
+  label: string;
+  items: PriceItem[];
+}
+
+export interface PriceListContent {
+  title: string;
+  subtitle: string;
+  openLabel: string;
+  closeLabel: string;
+  contactLabel: string;
+  contactHref: string;
+  note: string;
+  groups: PriceGroup[];
 }
 
 type Localized<T> = Record<Locale, T>;
@@ -892,6 +916,251 @@ const contactFlowDefinition: LocalizedContactFlowDefinition = {
   status: localized(['канал запроса открыт', 'сигнал готов', 'Павел отвечает лично'], ['request channel open', 'signal ready', 'Pavel replies personally']),
 };
 
+const priceListDefinition: {
+  title: Localized<string>;
+  subtitle: Localized<string>;
+  openLabel: Localized<string>;
+  closeLabel: Localized<string>;
+  contactLabel: Localized<string>;
+  contactHref: string;
+  note: Localized<string>;
+  groups: Localized<PriceGroup[]>;
+} = {
+  title: localized('Прайс-лист', 'Price list'),
+  subtitle: localized(
+    'Стартовые цены. Финальная смета — после брифа в 30 минут.',
+    'Starting prices. Final estimate — after a 30-minute brief.',
+  ),
+  openLabel: localized('Открыть прайс', 'Open price list'),
+  closeLabel: localized('Закрыть', 'Close'),
+  contactLabel: localized('Обсудить задачу', 'Discuss your task'),
+  contactHref: '#contact',
+  note: localized(
+    'Все цены — стартовые «от». Под уточнённую задачу — индивидуальная смета.',
+    'All prices are starting «from». Final scope — individual quote.',
+  ),
+  groups: localized(
+    [
+      {
+        label: 'Системы и AI',
+        items: [
+          {
+            title: 'SaaS-разработка',
+            price: 'от 350 000 ₽',
+            description:
+              'Полный SaaS-продукт: фронт + бэкенд + auth + биллинг + админка. Multi-tenant, role-based access, recurring подписки.',
+            highlight: true,
+          },
+          {
+            title: 'AI-операторы и автоматизация',
+            price: 'от 120 000 ₽',
+            description:
+              'AI-агент, который реально исполняет работу: function calling, retry-safe запросы, разрешения, инструменты, логирование.',
+            highlight: true,
+          },
+          {
+            title: 'CRM / Dashboard-системы',
+            price: 'от 180 000 ₽',
+            description:
+              'Внутренние платформы: метрики, операторские панели, ETL и observability stack — Grafana / Prometheus / Loki.',
+          },
+          {
+            title: 'Создание скриптов',
+            price: 'от 50 000 ₽',
+            description:
+              'Парсеры, Telegram-боты, integration между API, ETL-задачи, CI/CD-сценарии. Python / Node.js / Rust.',
+          },
+        ],
+      },
+      {
+        label: 'Сайты',
+        items: [
+          {
+            title: 'Разработка сайта под ключ',
+            price: 'от 250 000 ₽',
+            description:
+              'Полный цикл: исследование → дизайн → разработка → деплой → 30 дней сопровождения. Стек React 19 + TypeScript + FastAPI / Express.',
+          },
+          {
+            title: 'Корпоративный сайт',
+            price: 'от 250 000 ₽',
+            description:
+              'Многостраничник с продуктовой логикой: каталог услуг, блог, кейсы, форма заявки в CRM / Telegram, админка.',
+          },
+          {
+            title: 'Интернет-магазин',
+            price: 'от 350 000 ₽',
+            description:
+              'Каталог + корзина + оплата (ЮKassa / Stripe) + личный кабинет + админка. Интеграция со складом и доставкой.',
+          },
+          {
+            title: 'Сайт-каталог',
+            price: 'от 180 000 ₽',
+            description:
+              'Каталог товаров / услуг / специалистов с поиском, фильтрами, сортировкой и детальными карточками.',
+          },
+          {
+            title: 'Информационный сайт',
+            price: 'от 150 000 ₽',
+            description:
+              'Блог, медиа, справочник. Headless CMS, удобный редактор без HTML, RSS, оптимизация под чтение.',
+          },
+          {
+            title: 'Одностраничный сайт / landing',
+            price: 'от 150 000 ₽',
+            description:
+              'Конверсионный landing для запуска продукта: hero, ценность, кейсы, прайс, FAQ, форма с аналитикой.',
+          },
+          {
+            title: 'Сайт-визитка',
+            price: 'от 100 000 ₽',
+            description:
+              'Премиум-визитка для эксперта или частной практики. Один экран, портрет, кейсы, форма заявки.',
+          },
+        ],
+      },
+      {
+        label: 'Дизайн и поддержка',
+        items: [
+          {
+            title: 'Редизайн сайта',
+            price: 'от 150 000 ₽',
+            description:
+              'Перерисовка в современном стеке с сохранением URL и SEO. Дизайн в Figma, миграция на React 19, ускорение Core Web Vitals.',
+          },
+          {
+            title: 'Дизайн в Figma',
+            price: 'от 100 000 ₽',
+            description:
+              'Только дизайн без кода. Бренд, типографика, design system, все экраны с компонентами и auto-layout.',
+          },
+          {
+            title: 'Доработка сайта',
+            price: 'от 5 000 ₽ / час',
+            description:
+              'Точечные правки: новые секции, баги, ускорение, миграции, интеграции. Минимальный заказ — 30 000 ₽.',
+          },
+          {
+            title: 'Сопровождение сайта',
+            price: 'от 30 000 ₽ / мес',
+            description:
+              'Бэкапы, monitoring, обновления безопасности, до N часов работ в месяц. Гарантированный ответ в 24 часа.',
+          },
+        ],
+      },
+    ],
+    [
+      {
+        label: 'Systems & AI',
+        items: [
+          {
+            title: 'SaaS development',
+            price: 'from 350 000 ₽',
+            description:
+              'Full SaaS product: front + back + auth + billing + admin. Multi-tenant, RBAC, recurring subscriptions.',
+            highlight: true,
+          },
+          {
+            title: 'AI operators & automation',
+            price: 'from 120 000 ₽',
+            description:
+              'An AI agent that actually executes work: function calling, retry-safe requests, permissions, tools, logging.',
+            highlight: true,
+          },
+          {
+            title: 'CRM / Dashboard systems',
+            price: 'from 180 000 ₽',
+            description:
+              'Internal platforms: metrics, operator panels, ETL and observability stack — Grafana / Prometheus / Loki.',
+          },
+          {
+            title: 'Custom scripts',
+            price: 'from 50 000 ₽',
+            description:
+              'Parsers, Telegram bots, API integrations, ETL pipelines, CI/CD scripts. Python / Node.js / Rust.',
+          },
+        ],
+      },
+      {
+        label: 'Websites',
+        items: [
+          {
+            title: 'Turnkey website',
+            price: 'from 250 000 ₽',
+            description:
+              'Full cycle: research → design → development → deploy → 30 days of support. Stack: React 19 + TypeScript + FastAPI / Express.',
+          },
+          {
+            title: 'Corporate website',
+            price: 'from 250 000 ₽',
+            description:
+              'Multi-page site with product logic: services catalog, blog, cases, lead form to CRM / Telegram, content admin.',
+          },
+          {
+            title: 'E-commerce',
+            price: 'from 350 000 ₽',
+            description:
+              'Catalog + cart + payments (ЮKassa / Stripe) + customer account + admin. Inventory and shipping integrations.',
+          },
+          {
+            title: 'Catalog website',
+            price: 'from 180 000 ₽',
+            description:
+              'Catalog of products / services / specialists with search, filters, sorting and detail pages.',
+          },
+          {
+            title: 'Content website',
+            price: 'from 150 000 ₽',
+            description:
+              'Blog, media, reference site. Headless CMS, comfortable editor without HTML, RSS, reading-optimized.',
+          },
+          {
+            title: 'Single-page landing',
+            price: 'from 150 000 ₽',
+            description:
+              'Conversion-focused landing for product launch: hero, value, cases, pricing, FAQ, form with analytics.',
+          },
+          {
+            title: 'Personal site',
+            price: 'from 100 000 ₽',
+            description:
+              'Premium business card for an expert or private practice. One screen, portrait, cases, lead form.',
+          },
+        ],
+      },
+      {
+        label: 'Design & support',
+        items: [
+          {
+            title: 'Redesign',
+            price: 'from 150 000 ₽',
+            description:
+              'Redrawing on a modern stack with URL/SEO preservation. Figma design, migration to React 19, Core Web Vitals tune-up.',
+          },
+          {
+            title: 'Figma design only',
+            price: 'from 100 000 ₽',
+            description:
+              'Design without code. Brand, typography, design system, all screens with components and auto-layout.',
+          },
+          {
+            title: 'Site fixes & improvements',
+            price: 'from 5 000 ₽ / hour',
+            description:
+              'Point fixes: new sections, bugs, performance, migrations, integrations. Min order — 30 000 ₽.',
+          },
+          {
+            title: 'Maintenance',
+            price: 'from 30 000 ₽ / mo',
+            description:
+              'Backups, uptime monitoring, security updates, up to N hours of work per month. 24-hour response guarantee.',
+          },
+        ],
+      },
+    ],
+  ),
+};
+
 const systemsEcosystemOrder = [
   'Eclipse Valhalla',
   'Eclipse Hopson Sentinel',
@@ -937,6 +1206,16 @@ const siteContentByLocale: Record<Locale, SiteContent> = Object.fromEntries(
         primaryCta: contactFlowDefinition.primaryCta[locale],
         secondaryCta: contactFlowDefinition.secondaryCta[locale],
         status: contactFlowDefinition.status[locale],
+      },
+      priceList: {
+        title: priceListDefinition.title[locale],
+        subtitle: priceListDefinition.subtitle[locale],
+        openLabel: priceListDefinition.openLabel[locale],
+        closeLabel: priceListDefinition.closeLabel[locale],
+        contactLabel: priceListDefinition.contactLabel[locale],
+        contactHref: priceListDefinition.contactHref,
+        note: priceListDefinition.note[locale],
+        groups: priceListDefinition.groups[locale],
       },
     };
 

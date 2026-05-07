@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useSiteContent } from '../../data/content';
 import { revealUp, stagger, viewport } from '../../lib/animation';
 import { useLocale, type Locale } from '../../lib/locale';
+import { usePriceModal } from '../../lib/priceModal';
 import { MiniEclipse, OrbitalRing, ParticleField } from '../ui/EclipseVisuals';
 
 const servicesCopy: Record<
@@ -33,7 +34,8 @@ const servicesCopy: Record<
 export function ServicesSection() {
   const { locale } = useLocale();
   const copy = servicesCopy[locale];
-  const { serviceEntryPoints } = useSiteContent();
+  const { serviceEntryPoints, priceList } = useSiteContent();
+  const { setOpen: setPriceOpen } = usePriceModal();
 
   return (
     <motion.section
@@ -111,6 +113,28 @@ export function ServicesSection() {
             </motion.article>
           ))}
         </div>
+
+        <motion.div
+          variants={revealUp}
+          className="mt-10 flex flex-col items-start gap-3 rounded-[1.4rem] border px-6 py-5 services-price-rail sm:flex-row sm:items-center sm:gap-6 sm:px-7"
+        >
+          <div className="flex-1">
+            <p className="font-display text-[15px] tracking-tight sm:text-[16px]" style={{ color: 'var(--text-1)' }}>
+              {priceList.title} · {priceList.subtitle}
+            </p>
+          </div>
+          <motion.button
+            type="button"
+            onClick={() => setPriceOpen(true)}
+            whileTap={{ scale: 0.97 }}
+            whileHover={{ scale: 1.02 }}
+            transition={{ type: 'spring', stiffness: 380, damping: 22 }}
+            className="case-link-primary inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-[12px] font-display tracking-[0.04em] transition-all duration-400"
+          >
+            {priceList.openLabel}
+            <span aria-hidden>→</span>
+          </motion.button>
+        </motion.div>
       </div>
     </motion.section>
   );

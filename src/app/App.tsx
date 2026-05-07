@@ -14,6 +14,7 @@ import { SystemsEcosystemSection } from '../components/sections/SystemsEcosystem
 import { SystemsNotSitesSection } from '../components/sections/SystemsNotSitesSection';
 import { CursorLight } from '../components/ui/CursorLight';
 import { ConstellationField, EclipseDivider, EclipseSilhouette, ParticleField } from '../components/ui/EclipseVisuals';
+import { PriceListModal } from '../components/ui/PriceListModal';
 import { BroadcastIcon, GitHubIcon, InstagramIcon, TelegramIcon } from '../components/ui/SocialIcons';
 import { contactDetails } from '../data/content';
 import { useLocale, type Locale } from '../lib/locale';
@@ -81,6 +82,8 @@ export function App() {
 
       <CursorLight />
       <ParticleField count={36} className="z-[1] opacity-55" />
+
+      <PriceListModal />
 
       <SiteHeader />
 
