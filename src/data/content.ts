@@ -114,6 +114,7 @@ export interface PriceListContent {
   closeLabel: string;
   contactLabel: string;
   contactHref: string;
+  printLabel: string;
   note: string;
   groups: PriceGroup[];
 }
@@ -923,6 +924,7 @@ const priceListDefinition: {
   closeLabel: Localized<string>;
   contactLabel: Localized<string>;
   contactHref: string;
+  printLabel: Localized<string>;
   note: Localized<string>;
   groups: Localized<PriceGroup[]>;
 } = {
@@ -935,6 +937,7 @@ const priceListDefinition: {
   closeLabel: localized('Закрыть', 'Close'),
   contactLabel: localized('Обсудить задачу', 'Discuss your task'),
   contactHref: '#contact',
+  printLabel: localized('Печать', 'Print'),
   note: localized(
     'Все цены — стартовые «от». Под уточнённую задачу — индивидуальная смета.',
     'All prices are starting «from». Final scope — individual quote.',
@@ -963,6 +966,7 @@ const priceListDefinition: {
             price: 'от 180 000 ₽',
             description:
               'Внутренние платформы: метрики, операторские панели, ETL и observability stack — Grafana / Prometheus / Loki.',
+            highlight: true,
           },
           {
             title: 'Создание скриптов',
@@ -980,6 +984,7 @@ const priceListDefinition: {
             price: 'от 250 000 ₽',
             description:
               'Полный цикл: исследование → дизайн → разработка → деплой → 30 дней сопровождения. Стек React 19 + TypeScript + FastAPI / Express.',
+            highlight: true,
           },
           {
             title: 'Корпоративный сайт',
@@ -1072,6 +1077,7 @@ const priceListDefinition: {
             price: 'from 180 000 ₽',
             description:
               'Internal platforms: metrics, operator panels, ETL and observability stack — Grafana / Prometheus / Loki.',
+            highlight: true,
           },
           {
             title: 'Custom scripts',
@@ -1089,6 +1095,7 @@ const priceListDefinition: {
             price: 'from 250 000 ₽',
             description:
               'Full cycle: research → design → development → deploy → 30 days of support. Stack: React 19 + TypeScript + FastAPI / Express.',
+            highlight: true,
           },
           {
             title: 'Corporate website',
@@ -1214,6 +1221,7 @@ const siteContentByLocale: Record<Locale, SiteContent> = Object.fromEntries(
         closeLabel: priceListDefinition.closeLabel[locale],
         contactLabel: priceListDefinition.contactLabel[locale],
         contactHref: priceListDefinition.contactHref,
+        printLabel: priceListDefinition.printLabel[locale],
         note: priceListDefinition.note[locale],
         groups: priceListDefinition.groups[locale],
       },

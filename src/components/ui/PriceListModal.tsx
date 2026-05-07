@@ -3,9 +3,27 @@ import { useEffect } from 'react';
 import { useSiteContent } from '../../data/content';
 import { usePriceModal } from '../../lib/priceModal';
 
+function PrintIcon({ size = 14 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden>
+      <path
+        d="M4 5V2.5h8V5M3.5 12H2v-5a1.5 1.5 0 0 1 1.5-1.5h9A1.5 1.5 0 0 1 14 7v5h-1.5M4 9h8v4.5H4V9Z"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function PriceListModal() {
   const { open, setOpen } = usePriceModal();
   const { priceList } = useSiteContent();
+
+  const handlePrint = () => {
+    window.print();
+  };
 
   // ESC closes; lock body scroll while open
   useEffect(() => {
@@ -87,59 +105,66 @@ export function PriceListModal() {
             </div>
 
             {/* Body — scrollable */}
-            <div className="flex-1 overflow-y-auto px-6 py-6 sm:px-8 sm:py-7">
-              {priceList.groups.map((group) => (
-                <div key={group.label} className="mb-7 last:mb-0">
-                  <h3
-                    className="mb-3 text-[11px] font-display uppercase tracking-[0.28em]"
-                    style={{ color: 'var(--text-4)' }}
-                  >
-                    {group.label}
-                  </h3>
-                  <div className="grid gap-2.5">
-                    {group.items.map((item) => (
-                      <div
-                        key={item.title}
-                        className={`price-item rounded-[1rem] border px-4 py-4 transition-all duration-300 sm:px-5 sm:py-5 ${
-                          item.highlight ? 'price-item--highlight' : ''
-                        }`}
-                      >
-                        <div className="flex items-baseline justify-between gap-3">
-                          <h4
-                            className="font-display text-[15px] font-medium tracking-tight sm:text-[16px]"
-                            style={{ color: 'var(--text-1)' }}
-                          >
-                            {item.title}
-                            {item.highlight ? (
-                              <span
-                                aria-hidden
-                                className="ml-2 align-middle text-[10px] font-normal uppercase tracking-[0.2em]"
-                                style={{ color: 'var(--gold)' }}
-                              >
-                                ★
-                              </span>
-                            ) : null}
-                          </h4>
-                          <span
-                            className="shrink-0 font-display text-[13px] tracking-tight sm:text-[14px]"
-                            style={{ color: 'var(--gold)' }}
-                          >
-                            {item.price}
-                          </span>
+            <div className="price-modal-body flex-1 overflow-y-auto px-6 py-6 sm:px-8 sm:py-7">
+              {priceList.groups.map((group, groupIdx) => (
+                <div key={group.label}>
+                  <div className="mb-7">
+                    <h3
+                      className="mb-3 text-[11px] font-display uppercase tracking-[0.28em]"
+                      style={{ color: 'var(--text-4)' }}
+                    >
+                      {group.label}
+                    </h3>
+                    <div className="grid gap-2.5">
+                      {group.items.map((item) => (
+                        <div
+                          key={item.title}
+                          className={`price-item rounded-[1rem] border px-4 py-4 transition-all duration-300 sm:px-5 sm:py-5 ${
+                            item.highlight ? 'price-item--highlight' : ''
+                          }`}
+                        >
+                          <div className="flex items-baseline justify-between gap-3">
+                            <h4
+                              className="font-display text-[15px] font-medium tracking-tight sm:text-[16px]"
+                              style={{ color: 'var(--text-1)' }}
+                            >
+                              {item.title}
+                              {item.highlight ? (
+                                <span
+                                  aria-hidden
+                                  className="ml-2 align-middle text-[10px] font-normal uppercase tracking-[0.2em]"
+                                  style={{ color: 'var(--gold)' }}
+                                >
+                                  ★
+                                </span>
+                              ) : null}
+                            </h4>
+                            <span
+                              className="shrink-0 font-display text-[13px] tracking-tight sm:text-[14px]"
+                              style={{ color: 'var(--gold)' }}
+                            >
+                              {item.price}
+                            </span>
+                          </div>
+                          <p className="mt-2 text-[13px] leading-relaxed" style={{ color: 'var(--text-3)' }}>
+                            {item.description}
+                          </p>
                         </div>
-                        <p className="mt-2 text-[13px] leading-relaxed" style={{ color: 'var(--text-3)' }}>
-                          {item.description}
-                        </p>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
+                  {groupIdx < priceList.groups.length - 1 ? (
+                    <div className="price-group-divider" aria-hidden>
+                      <span className="price-group-divider-mark">✦</span>
+                    </div>
+                  ) : null}
                 </div>
               ))}
             </div>
 
             {/* Footer */}
             <div
-              className="flex flex-col gap-4 border-t px-6 py-5 sm:flex-row sm:items-center sm:px-8"
+              className="price-modal-footer flex flex-col gap-4 border-t px-6 py-5 sm:flex-row sm:items-center sm:px-8"
               style={{ borderColor: 'rgba(255,255,255,0.06)' }}
             >
               <p className="flex-1 text-[12px] leading-relaxed" style={{ color: 'var(--text-4)' }}>
@@ -154,6 +179,15 @@ export function PriceListModal() {
                   {priceList.contactLabel}
                   <span aria-hidden>→</span>
                 </a>
+                <button
+                  type="button"
+                  onClick={handlePrint}
+                  aria-label={priceList.printLabel}
+                  className="contact-copy-link inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-[11px] uppercase tracking-[0.18em] transition-all duration-300"
+                >
+                  <PrintIcon size={13} />
+                  {priceList.printLabel}
+                </button>
                 <button
                   type="button"
                   onClick={() => setOpen(false)}

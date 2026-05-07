@@ -1039,6 +1039,140 @@ button, a { -webkit-tap-highlight-color: transparent; }
   border-color: rgba(228, 195, 90, 0.4);
 }
 
+.price-group-divider {
+  position: relative;
+  height: 1px;
+  margin: 28px 6px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.22) 30%, rgba(212, 175, 55, 0.22) 70%, transparent);
+}
+
+.price-group-divider-mark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0 14px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: rgba(212, 175, 55, 0.55);
+  background: linear-gradient(180deg, rgba(15, 20, 27, 0.96) 0%, rgba(8, 11, 16, 0.96) 100%);
+}
+
+[data-theme='light'] .price-group-divider-mark {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 246, 241, 0.98) 100%);
+  color: rgba(186, 138, 24, 0.7);
+}
+
+/* === Print layout: when user prints from price modal === */
+@media print {
+  @page {
+    size: A4;
+    margin: 18mm 14mm;
+  }
+
+  /* Hide everything globally */
+  body * {
+    visibility: hidden !important;
+  }
+
+  /* Show only the modal contents */
+  .price-modal-panel,
+  .price-modal-panel * {
+    visibility: visible !important;
+  }
+
+  /* Override modal panel for paper layout */
+  .price-modal-panel {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    height: auto !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    color: #07070A !important;
+    overflow: visible !important;
+  }
+
+  /* Backdrop hidden */
+  .price-modal-panel ~ div,
+  [aria-hidden='true'] {
+    display: none !important;
+  }
+
+  /* Force readable type on paper */
+  .price-modal-panel,
+  .price-modal-panel * {
+    color: #07070A !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+
+  /* Re-color price chips and highlights for paper */
+  .price-modal-panel [style*='--gold'],
+  .price-modal-panel .text-\[var\(--gold\)\] {
+    color: #8a6512 !important;
+  }
+
+  .price-item,
+  .price-item--highlight {
+    border: 1px solid #e0d6bf !important;
+    background: #fffbef !important;
+    page-break-inside: avoid;
+    margin-bottom: 6pt !important;
+  }
+
+  .price-item--highlight {
+    background: #fbf2d6 !important;
+    border-color: #c9a96e !important;
+  }
+
+  .price-group-divider {
+    background: linear-gradient(90deg, transparent, #c9a96e 50%, transparent) !important;
+    margin: 14pt 6pt !important;
+  }
+
+  .price-group-divider-mark {
+    background: #ffffff !important;
+    color: #8a6512 !important;
+  }
+
+  /* Hide interactive footer + close ✕ + footer buttons */
+  .price-modal-close,
+  .price-modal-footer button,
+  .price-modal-footer a {
+    display: none !important;
+  }
+
+  /* Footer note still printed */
+  .price-modal-footer {
+    border-top: 1px solid #c9a96e !important;
+    padding-top: 8pt !important;
+  }
+
+  /* Body scroll → natural flow on paper */
+  .price-modal-body {
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  /* Hide cursor light, ambient layers, etc */
+  .ambient-nebula,
+  .noise-overlay,
+  .fog-layer,
+  .app-grid-overlay,
+  .app-vignette,
+  .flare {
+    display: none !important;
+  }
+}
+
 [data-theme='light'] .price-modal-panel {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 246, 241, 0.98) 100%);
   border-color: rgba(186, 138, 24, 0.32);
