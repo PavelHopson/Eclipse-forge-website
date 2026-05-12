@@ -1,23 +1,14 @@
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { SiteHeader } from '../components/layout/SiteHeader';
-import { AboutSection } from '../components/sections/AboutSection';
-import { BusinessImpactSection } from '../components/sections/BusinessImpactSection';
-import { CasesSection } from '../components/sections/CasesSection';
-import { CtaSection } from '../components/sections/CtaSection';
-import { FounderSection } from '../components/sections/FounderSection';
-import { HeroSection } from '../components/sections/HeroSection';
-import { HowItWorksSection } from '../components/sections/HowItWorksSection';
-import { MetricsSection } from '../components/sections/MetricsSection';
-import { ProcessSection } from '../components/sections/ProcessSection';
-import { ServicesSection } from '../components/sections/ServicesSection';
-import { SystemsEcosystemSection } from '../components/sections/SystemsEcosystemSection';
-import { SystemsNotSitesSection } from '../components/sections/SystemsNotSitesSection';
 import { CursorLight } from '../components/ui/CursorLight';
-import { ConstellationField, EclipseDivider, EclipseSilhouette, ParticleField } from '../components/ui/EclipseVisuals';
+import { ConstellationField, EclipseSilhouette, ParticleField } from '../components/ui/EclipseVisuals';
 import { PriceListModal } from '../components/ui/PriceListModal';
 import { BroadcastIcon, GitHubIcon, InstagramIcon, TelegramIcon } from '../components/ui/SocialIcons';
 import { contactDetails } from '../data/content';
 import { useLocale, type Locale } from '../lib/locale';
+import { useHashRoute, useScrollResetOnRoute } from '../lib/routing';
+import { ConstructionPage } from '../pages/ConstructionPage';
+import { LandingPage } from '../pages/LandingPage';
 
 const footerCopy: Record<
   Locale,
@@ -53,6 +44,9 @@ export function App() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
   const { locale } = useLocale();
+  const route = useHashRoute();
+  useScrollResetOnRoute(route);
+
   const copy = footerCopy[locale];
   const socialLinks = [
     { label: copy.socialLabels.telegram, href: contactDetails.telegramDmUrl, Icon: TelegramIcon },
@@ -60,6 +54,8 @@ export function App() {
     { label: copy.socialLabels.github, href: contactDetails.githubUrl, Icon: GitHubIcon },
     { label: copy.socialLabels.instagram, href: contactDetails.instagramUrl, Icon: InstagramIcon },
   ];
+
+  const isConstruction = route === '/construction';
 
   return (
     <div className="relative min-h-screen" style={{ background: 'var(--bg)', color: 'var(--text-1)' }}>
@@ -87,24 +83,7 @@ export function App() {
 
       <SiteHeader />
 
-      <main className="relative z-10">
-        <HeroSection />
-        <SystemsNotSitesSection />
-        <EclipseDivider />
-        <FounderSection />
-        <EclipseDivider />
-        <AboutSection />
-        <BusinessImpactSection />
-        <CasesSection />
-        <SystemsEcosystemSection />
-        <EclipseDivider />
-        <HowItWorksSection />
-        <ServicesSection />
-        <ProcessSection />
-        <EclipseDivider />
-        <MetricsSection />
-        <CtaSection />
-      </main>
+      {isConstruction ? <ConstructionPage /> : <LandingPage />}
 
       <footer className="relative z-10 overflow-hidden border-t px-5 py-12 sm:px-8 lg:px-12 lg:py-16" style={{ borderColor: 'var(--line)' }}>
         <div className="absolute -bottom-16 right-[10%] hidden opacity-15 lg:block">

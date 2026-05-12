@@ -1,14 +1,15 @@
 import { motion } from 'framer-motion';
-import { revealUp, stagger, viewport } from '../../lib/animation';
+import { revealUp, revealLeft, revealRight, stagger, viewport } from '../../lib/animation';
 import { useLocale, type Locale } from '../../lib/locale';
 
-type SystemCard = {
-  index: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  signals: string[];
-  glyph: 'operator' | 'automation' | 'pipeline' | 'execution';
+type ComparisonRow = {
+  surface: string;
+  system: string;
+};
+
+type LoopStep = {
+  label: string;
+  hint: string;
 };
 
 type Copy = {
@@ -16,199 +17,170 @@ type Copy = {
   title: string;
   titleAccent: string;
   description: string;
-  cards: SystemCard[];
-  liveLabel: string;
+  leftHeading: string;
+  leftSub: string;
+  rightHeading: string;
+  rightSub: string;
+  comparisonHeader: { surface: string; system: string };
+  rows: ComparisonRow[];
+  closing: string;
+  loopEyebrow: string;
+  loop: LoopStep[];
+  loopFooter: string;
 };
 
 const COPY: Record<Locale, Copy> = {
   ru: {
-    eyebrow: 'Что я делаю',
-    title: 'Я не делаю сайты.',
-    titleAccent: 'Я строю системы.',
+    eyebrow: 'Позиционирование',
+    title: 'Не сайт.',
+    titleAccent: 'Система.',
     description:
-      'Каждая система — это контур, который наблюдает, принимает решения и доводит процесс до конца. Без человека, который сидит и нажимает кнопки.',
-    liveLabel: 'live',
-    cards: [
+      'Обычный сайт показывает информацию и собирает заявки. Eclipse Forge строит контур, который доводит заявку до результата — без ручного управления через мессенджеры и таблицы.',
+    leftHeading: 'Обычный сайт',
+    leftSub: 'Витрина — front layer без исполнения',
+    rightHeading: 'Eclipse Forge система',
+    rightSub: 'Execution layer — сайт + AI + dashboard + automation',
+    comparisonHeader: { surface: 'Что делает витрина', system: 'Что делает система' },
+    rows: [
       {
-        index: '01',
-        title: 'AI-оператор',
-        subtitle: 'Operator layer',
-        description:
-          'Голос, terminal tooling, инструменты и permissions. AI, который не отвечает в чате, а исполняет работу.',
-        signals: ['voice runtime', 'tool calling', 'local-first контроль'],
-        glyph: 'operator',
+        surface: 'Показывает информацию о компании',
+        system: 'Принимает заявку и сразу запускает workflow исполнения',
       },
       {
-        index: '02',
-        title: 'Automation engine',
-        subtitle: 'Execution loop',
-        description:
-          'Триггеры, маршрутизация, retries, очереди и наблюдаемость. Система превращает входящий поток событий в действия.',
-        signals: ['event routing', 'retry-safe', 'observable runs'],
-        glyph: 'automation',
+        surface: 'Собирает заявку в email или Telegram',
+        system: 'Структурирует данные через AI и кладёт в operator dashboard',
       },
       {
-        index: '03',
-        title: 'Data pipeline',
-        subtitle: 'Signal capture',
-        description:
-          'Ingestion, parsing, enrichment, dashboards. Данные перестают быть россыпью источников и становятся наблюдаемым потоком.',
-        signals: ['ETL + monitoring', 'TLS scraping', 'schema-aware'],
-        glyph: 'pipeline',
+        surface: 'Заявка попадает менеджеру вручную',
+        system: 'Менеджер получает готовую карточку без переноса из мессенджера',
       },
       {
-        index: '04',
-        title: 'Execution system',
-        subtitle: 'Decision contour',
-        description:
-          'Полный контур: вход, ядро решений, исполнение, фиксация. Это не интерфейс — это процесс, упакованный в систему.',
-        signals: ['detect → decide → act', 'guarded actions', 'closed loop'],
-        glyph: 'execution',
+        surface: 'Логистика и адреса уходят в WhatsApp / звонки',
+        system: 'Маршрут, объект и комментарии — в единой системе у исполнителя',
+      },
+      {
+        surface: 'Договор собирается руками в Word',
+        system: 'Документ генерируется автоматически и подписывается онлайн',
+      },
+      {
+        surface: 'Нет картины: где заявка, что с заказом',
+        system: 'Статус исполнения виден в реальном времени, руководитель получает отчёт',
       },
     ],
+    closing:
+      'Когда заказы живут в Excel, мессенджерах и звонках — теряются деньги и контроль. Система убирает ручную передачу между людьми.',
+    loopEyebrow: 'Контур исполнения',
+    loop: [
+      { label: 'Заявка', hint: 'клиент оставляет данные на сайте' },
+      { label: 'AI quality', hint: 'модель уточняет и структурирует' },
+      { label: 'Operator dashboard', hint: 'менеджер видит готовую карточку' },
+      { label: 'Workflow', hint: 'логистика, документы, уведомления' },
+      { label: 'Execution', hint: 'заказ доведён до результата' },
+    ],
+    loopFooter: 'Каждый шаг наблюдаем. Каждое действие фиксируется. Цикл закрыт.',
   },
   en: {
-    eyebrow: 'What I do',
-    title: "I don't build sites.",
-    titleAccent: 'I build systems.',
+    eyebrow: 'Positioning',
+    title: 'Not a site.',
+    titleAccent: 'A system.',
     description:
-      'Each system is a contour that observes, decides and drives a process to completion. Without a human sitting there pressing buttons.',
-    liveLabel: 'live',
-    cards: [
+      'A regular website shows information and collects leads. Eclipse Forge builds the contour that drives a lead to outcome — without manual coordination through messengers and spreadsheets.',
+    leftHeading: 'A regular website',
+    leftSub: 'A storefront — front layer without execution',
+    rightHeading: 'Eclipse Forge system',
+    rightSub: 'Execution layer — site + AI + dashboard + automation',
+    comparisonHeader: { surface: 'What a storefront does', system: 'What a system does' },
+    rows: [
       {
-        index: '01',
-        title: 'AI operator',
-        subtitle: 'Operator layer',
-        description:
-          'Voice, terminal tooling, tools and permissions. AI that does not chat — it executes work.',
-        signals: ['voice runtime', 'tool calling', 'local-first control'],
-        glyph: 'operator',
+        surface: 'Shows company information',
+        system: 'Accepts a request and immediately fires the execution workflow',
       },
       {
-        index: '02',
-        title: 'Automation engine',
-        subtitle: 'Execution loop',
-        description:
-          'Triggers, routing, retries, queues and observability. The system turns an event stream into actions.',
-        signals: ['event routing', 'retry-safe', 'observable runs'],
-        glyph: 'automation',
+        surface: 'Sends leads to email or Telegram',
+        system: 'Structures data through AI into an operator dashboard',
       },
       {
-        index: '03',
-        title: 'Data pipeline',
-        subtitle: 'Signal capture',
-        description:
-          'Ingestion, parsing, enrichment, dashboards. Scattered sources become an observable stream.',
-        signals: ['ETL + monitoring', 'TLS scraping', 'schema-aware'],
-        glyph: 'pipeline',
+        surface: 'Manager re-types data from messengers',
+        system: 'Manager receives a ready-made order card without re-entry',
       },
       {
-        index: '04',
-        title: 'Execution system',
-        subtitle: 'Decision contour',
-        description:
-          'The full contour: input, decision core, action, recording. Not an interface — a process packaged as a system.',
-        signals: ['detect → decide → act', 'guarded actions', 'closed loop'],
-        glyph: 'execution',
+        surface: 'Logistics and addresses live in WhatsApp / calls',
+        system: 'Route, site and notes live in one operator system',
+      },
+      {
+        surface: 'Contracts are stitched together by hand',
+        system: 'Documents are generated automatically and signed online',
+      },
+      {
+        surface: 'No picture: where is the order, what is the status',
+        system: 'Execution status is visible in real-time, owner gets a report',
       },
     ],
+    closing:
+      'When orders live in spreadsheets, messengers and calls — money and control leak. A system removes the manual hand-off between people.',
+    loopEyebrow: 'Execution loop',
+    loop: [
+      { label: 'Lead', hint: 'client submits data on the site' },
+      { label: 'AI qualification', hint: 'model clarifies and structures' },
+      { label: 'Operator dashboard', hint: 'manager sees a ready card' },
+      { label: 'Workflow', hint: 'logistics, documents, notifications' },
+      { label: 'Execution', hint: 'order driven to outcome' },
+    ],
+    loopFooter: 'Every step observable. Every action recorded. The loop is closed.',
   },
 };
 
-function GlyphOperator() {
+function ArrowGlyph() {
   return (
-    <svg viewBox="0 0 120 120" className="h-full w-full" aria-hidden="true">
-      <defs>
-        <radialGradient id="op-core" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="rgba(107,163,255,0.55)" />
-          <stop offset="100%" stopColor="rgba(107,163,255,0)" />
-        </radialGradient>
-      </defs>
-      <circle cx="60" cy="60" r="44" fill="none" stroke="rgba(107,163,255,0.18)" />
-      <circle cx="60" cy="60" r="30" fill="none" stroke="rgba(107,163,255,0.32)" />
-      <circle cx="60" cy="60" r="18" fill="url(#op-core)" />
-      <circle cx="60" cy="60" r="3.4" fill="rgba(255,255,255,0.85)" />
-      <g stroke="rgba(157,196,255,0.55)" strokeLinecap="round">
-        <line x1="20" y1="60" x2="40" y2="60" strokeWidth="1.2" />
-        <line x1="80" y1="60" x2="100" y2="60" strokeWidth="1.2" />
-        <line x1="60" y1="20" x2="60" y2="40" strokeWidth="1.2" />
-        <line x1="60" y1="80" x2="60" y2="100" strokeWidth="1.2" />
-      </g>
-      <g fill="rgba(255,200,138,0.95)">
-        <circle cx="20" cy="60" r="1.6" />
-        <circle cx="100" cy="60" r="1.6" />
-        <circle cx="60" cy="20" r="1.6" />
-        <circle cx="60" cy="100" r="1.6" />
-      </g>
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className="h-3.5 w-3.5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M5 12h14" />
+      <path d="M13 6l6 6-6 6" />
     </svg>
   );
 }
 
-function GlyphAutomation() {
+function CrossGlyph() {
   return (
-    <svg viewBox="0 0 120 120" className="h-full w-full" aria-hidden="true">
-      <g stroke="rgba(107,163,255,0.45)" fill="none" strokeLinecap="round">
-        <path d="M16 36 Q40 36 40 60 T64 84 H104" strokeWidth="1.4" />
-        <path d="M16 60 Q44 60 44 60 T74 60 H104" strokeWidth="1.4" />
-        <path d="M16 84 Q40 84 40 60 T64 36 H104" strokeWidth="1.4" />
-      </g>
-      <g fill="rgba(157,196,255,0.95)">
-        <circle cx="16" cy="36" r="2.4" />
-        <circle cx="16" cy="60" r="2.4" />
-        <circle cx="16" cy="84" r="2.4" />
-      </g>
-      <g fill="rgba(255,200,138,0.95)">
-        <circle cx="104" cy="60" r="3" />
-      </g>
-      <circle cx="60" cy="60" r="6" fill="none" stroke="rgba(255,200,138,0.6)" strokeWidth="1.2" />
-      <circle cx="60" cy="60" r="2" fill="rgba(255,200,138,0.9)" />
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className="h-3.5 w-3.5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    >
+      <path d="M6 6l12 12" />
+      <path d="M18 6L6 18" />
     </svg>
   );
 }
 
-function GlyphPipeline() {
+function CheckGlyph() {
   return (
-    <svg viewBox="0 0 120 120" className="h-full w-full" aria-hidden="true">
-      <g stroke="rgba(107,163,255,0.5)" fill="none" strokeLinecap="round">
-        <line x1="14" y1="32" x2="106" y2="32" strokeWidth="1.2" strokeDasharray="2 4" />
-        <line x1="14" y1="60" x2="106" y2="60" strokeWidth="1.2" />
-        <line x1="14" y1="88" x2="106" y2="88" strokeWidth="1.2" strokeDasharray="2 4" />
-      </g>
-      <g fill="rgba(157,196,255,0.85)">
-        <rect x="20" y="28" width="6" height="8" rx="1" />
-        <rect x="40" y="56" width="6" height="8" rx="1" />
-        <rect x="60" y="56" width="6" height="8" rx="1" />
-        <rect x="80" y="56" width="6" height="8" rx="1" />
-        <rect x="46" y="84" width="6" height="8" rx="1" />
-      </g>
-      <g fill="rgba(255,200,138,0.95)">
-        <rect x="94" y="56" width="8" height="8" rx="1.5" />
-      </g>
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className="h-3.5 w-3.5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M5 12.5l4.5 4.5L19 7" />
     </svg>
   );
 }
-
-function GlyphExecution() {
-  return (
-    <svg viewBox="0 0 120 120" className="h-full w-full" aria-hidden="true">
-      <g fill="none" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="14" y="46" width="22" height="28" rx="3" stroke="rgba(107,163,255,0.5)" strokeWidth="1.2" />
-        <rect x="49" y="38" width="22" height="44" rx="3" stroke="rgba(107,163,255,0.7)" strokeWidth="1.4" />
-        <rect x="84" y="46" width="22" height="28" rx="3" stroke="rgba(255,200,138,0.7)" strokeWidth="1.2" />
-        <line x1="36" y1="60" x2="49" y2="60" stroke="rgba(157,196,255,0.55)" strokeWidth="1.2" />
-        <line x1="71" y1="60" x2="84" y2="60" stroke="rgba(157,196,255,0.55)" strokeWidth="1.2" />
-      </g>
-      <circle cx="60" cy="60" r="3.6" fill="rgba(255,255,255,0.9)" />
-    </svg>
-  );
-}
-
-const GLYPHS = {
-  operator: GlyphOperator,
-  automation: GlyphAutomation,
-  pipeline: GlyphPipeline,
-  execution: GlyphExecution,
-};
 
 export function SystemsNotSitesSection() {
   const { locale } = useLocale();
@@ -225,8 +197,8 @@ export function SystemsNotSitesSection() {
     >
       <div className="pointer-events-none absolute inset-0">
         <div
-          className="absolute left-1/2 top-0 h-[300px] w-[700px] -translate-x-1/2 rounded-full blur-[180px] opacity-40"
-          style={{ background: 'radial-gradient(ellipse, rgba(107,163,255,0.05) 0%, transparent 70%)' }}
+          className="absolute left-1/2 top-0 h-[320px] w-[820px] -translate-x-1/2 rounded-full blur-[180px] opacity-40"
+          style={{ background: 'radial-gradient(ellipse, rgba(212,175,55,0.06) 0%, transparent 70%)' }}
         />
       </div>
 
@@ -235,8 +207,10 @@ export function SystemsNotSitesSection() {
           <motion.p variants={revealUp} className="type-meta mb-5" style={{ color: 'var(--gold)' }}>
             {copy.eyebrow}
           </motion.p>
-          <motion.h2 variants={revealUp} className="type-display text-[clamp(2rem,4.5vw,4.2rem)]">
-            {copy.title}
+          <motion.h2 variants={revealUp} className="type-display text-[clamp(2rem,4.5vw,4.2rem)] leading-[1.02]">
+            <span className="block" style={{ color: 'var(--text-4)' }}>
+              {copy.title}
+            </span>
             <span className="block text-gradient-hero">{copy.titleAccent}</span>
           </motion.h2>
           <motion.p
@@ -248,76 +222,174 @@ export function SystemsNotSitesSection() {
           </motion.p>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:gap-6">
-          {copy.cards.map((card) => {
-            const Glyph = GLYPHS[card.glyph];
-            return (
-              <motion.article
-                key={card.index}
-                variants={revealUp}
-                whileHover={{ y: -4, borderColor: 'rgba(212,175,55,0.32)' }}
-                whileTap={{ scale: 0.985 }}
-                transition={{ type: 'spring', stiffness: 280, damping: 26 }}
-                className="group relative overflow-hidden rounded-[1.75rem] border p-6 sm:p-7 lg:p-8"
-                style={{ borderColor: 'var(--line)', background: 'var(--bg-card)' }}
+        <div className="grid gap-5 lg:grid-cols-2 lg:gap-6">
+          <motion.article
+            variants={revealLeft}
+            className="relative overflow-hidden rounded-[1.75rem] border p-7 sm:p-8 lg:p-9"
+            style={{ borderColor: 'var(--line)', background: 'var(--bg-card)' }}
+          >
+            <div className="flex items-center gap-3">
+              <span
+                className="inline-flex h-6 w-6 items-center justify-center rounded-full border"
+                style={{ borderColor: 'var(--line)', color: 'var(--text-4)' }}
               >
-                <div
-                  className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                  style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(107,163,255,0.06) 0%, transparent 70%)' }}
-                />
-                <div
-                  className="pointer-events-none absolute -right-12 -top-12 h-36 w-36 rounded-full blur-[60px] opacity-30 transition-opacity duration-500 group-hover:opacity-60"
-                  style={{ background: 'radial-gradient(circle, rgba(255,200,138,0.18) 0%, transparent 70%)' }}
-                />
+                <CrossGlyph />
+              </span>
+              <span
+                className="type-meta"
+                style={{ color: 'var(--text-4)' }}
+              >
+                {copy.leftSub}
+              </span>
+            </div>
+            <h3 className="mt-3 font-display text-[24px] tracking-tight sm:text-[28px]" style={{ color: 'var(--text-2)' }}>
+              {copy.leftHeading}
+            </h3>
+            <p className="mt-1 text-[10px] uppercase tracking-[0.22em]" style={{ color: 'var(--text-4)' }}>
+              {copy.comparisonHeader.surface}
+            </p>
+            <ul className="mt-6 flex flex-col gap-3">
+              {copy.rows.map((row, idx) => (
+                <li
+                  key={`surface-${idx}`}
+                  className="flex items-start gap-3 rounded-2xl border px-4 py-3 text-[13.5px] leading-relaxed sm:text-[14.5px]"
+                  style={{
+                    borderColor: 'var(--line-subtle)',
+                    background: 'rgba(255,255,255,0.015)',
+                    color: 'var(--text-3)',
+                  }}
+                >
+                  <span
+                    className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full"
+                    style={{ background: 'rgba(74,85,104,0.16)', color: 'var(--text-4)' }}
+                  >
+                    <CrossGlyph />
+                  </span>
+                  <span>{row.surface}</span>
+                </li>
+              ))}
+            </ul>
+          </motion.article>
 
-                <div className="relative flex items-start justify-between gap-6">
-                  <div>
-                    <div className="flex items-center gap-3">
-                      <span className="font-display text-[11px] font-light tracking-[0.22em]" style={{ color: 'var(--text-4)' }}>
-                        {card.index}
-                      </span>
-                      <span className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[9px] uppercase tracking-[0.22em]" style={{ borderColor: 'var(--line)', color: 'var(--text-3)' }}>
-                        <span className="h-1.5 w-1.5 rounded-full hero-signal-dot" />
-                        {copy.liveLabel}
-                      </span>
-                    </div>
-                    <h3 className="mt-4 font-display text-[22px] tracking-tight sm:text-[26px]" style={{ color: 'var(--text-1)' }}>
-                      {card.title}
-                    </h3>
-                    <p className="mt-1 text-[11px] uppercase tracking-[0.22em]" style={{ color: 'var(--accent)' }}>
-                      {card.subtitle}
-                    </p>
-                  </div>
-
-                  <div className="h-20 w-20 shrink-0 rounded-2xl border p-3 transition-all duration-500 group-hover:scale-[1.04]" style={{ borderColor: 'var(--line)', background: 'rgba(15, 18, 24, 0.4)' }}>
-                    <Glyph />
-                  </div>
-                </div>
-
-                <p className="relative mt-5 text-[14px] leading-relaxed sm:text-[15px]" style={{ color: 'var(--text-2)' }}>
-                  {card.description}
-                </p>
-
-                <div className="relative mt-6 flex flex-wrap gap-2">
-                  {card.signals.map((signal) => (
-                    <span
-                      key={signal}
-                      className="rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.16em]"
-                      style={{ borderColor: 'var(--line)', color: 'var(--text-3)', background: 'rgba(15,18,24,0.4)' }}
-                    >
-                      {signal}
-                    </span>
-                  ))}
-                </div>
-
-                <div
-                  className="absolute bottom-0 left-0 h-px w-0 transition-all duration-700 group-hover:w-full"
-                  style={{ background: 'linear-gradient(90deg, var(--accent), var(--accent-warm))' }}
-                />
-              </motion.article>
-            );
-          })}
+          <motion.article
+            variants={revealRight}
+            className="relative overflow-hidden rounded-[1.75rem] border p-7 sm:p-8 lg:p-9"
+            style={{
+              borderColor: 'rgba(212,175,55,0.28)',
+              background:
+                'linear-gradient(180deg, rgba(212,175,55,0.04) 0%, rgba(12,17,23,0.6) 60%)',
+            }}
+          >
+            <div
+              className="pointer-events-none absolute -right-12 -top-12 h-44 w-44 rounded-full blur-[80px] opacity-40"
+              style={{ background: 'radial-gradient(circle, rgba(212,175,55,0.18) 0%, transparent 70%)' }}
+            />
+            <div className="relative flex items-center gap-3">
+              <span
+                className="inline-flex h-6 w-6 items-center justify-center rounded-full border"
+                style={{ borderColor: 'rgba(212,175,55,0.32)', color: 'var(--gold)' }}
+              >
+                <CheckGlyph />
+              </span>
+              <span className="type-meta" style={{ color: 'var(--gold)' }}>
+                {copy.rightSub}
+              </span>
+            </div>
+            <h3 className="relative mt-3 font-display text-[24px] tracking-tight sm:text-[28px]" style={{ color: 'var(--text-1)' }}>
+              {copy.rightHeading}
+            </h3>
+            <p className="relative mt-1 text-[10px] uppercase tracking-[0.22em]" style={{ color: 'var(--text-3)' }}>
+              {copy.comparisonHeader.system}
+            </p>
+            <ul className="relative mt-6 flex flex-col gap-3">
+              {copy.rows.map((row, idx) => (
+                <li
+                  key={`system-${idx}`}
+                  className="flex items-start gap-3 rounded-2xl border px-4 py-3 text-[13.5px] leading-relaxed sm:text-[14.5px]"
+                  style={{
+                    borderColor: 'rgba(212,175,55,0.14)',
+                    background: 'rgba(212,175,55,0.04)',
+                    color: 'var(--text-2)',
+                  }}
+                >
+                  <span
+                    className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full"
+                    style={{ background: 'rgba(212,175,55,0.18)', color: 'var(--gold)' }}
+                  >
+                    <CheckGlyph />
+                  </span>
+                  <span>{row.system}</span>
+                </li>
+              ))}
+            </ul>
+          </motion.article>
         </div>
+
+        <motion.p
+          variants={revealUp}
+          className="mx-auto mt-10 max-w-3xl text-center text-[14px] leading-relaxed sm:text-[15px] lg:mt-14"
+          style={{ color: 'var(--text-3)' }}
+        >
+          {copy.closing}
+        </motion.p>
+
+        <motion.div variants={revealUp} className="mt-14 lg:mt-20">
+          <p className="mb-6 text-center type-meta" style={{ color: 'var(--gold)' }}>
+            {copy.loopEyebrow}
+          </p>
+          <div
+            className="relative mx-auto max-w-[1180px] overflow-hidden rounded-[1.75rem] border p-5 sm:p-7 lg:p-8"
+            style={{ borderColor: 'var(--line)', background: 'var(--bg-card)' }}
+          >
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch sm:gap-2 lg:gap-3">
+              {copy.loop.map((step, idx) => (
+                <div key={step.label} className="flex flex-1 items-stretch gap-2">
+                  <div
+                    className="flex flex-1 flex-col items-start rounded-2xl border px-4 py-4 sm:px-5 sm:py-5"
+                    style={{
+                      borderColor: idx === copy.loop.length - 1 ? 'rgba(212,175,55,0.28)' : 'var(--line-subtle)',
+                      background:
+                        idx === copy.loop.length - 1
+                          ? 'rgba(212,175,55,0.04)'
+                          : 'rgba(15,18,24,0.4)',
+                    }}
+                  >
+                    <span
+                      className="text-[10px] uppercase tracking-[0.22em]"
+                      style={{ color: 'var(--text-4)' }}
+                    >
+                      {String(idx + 1).padStart(2, '0')}
+                    </span>
+                    <span
+                      className="mt-2 font-display text-[15px] tracking-tight sm:text-[16px]"
+                      style={{ color: idx === copy.loop.length - 1 ? 'var(--gold)' : 'var(--text-1)' }}
+                    >
+                      {step.label}
+                    </span>
+                    <span
+                      className="mt-1 text-[12px] leading-snug"
+                      style={{ color: 'var(--text-3)' }}
+                    >
+                      {step.hint}
+                    </span>
+                  </div>
+                  {idx < copy.loop.length - 1 ? (
+                    <div
+                      aria-hidden="true"
+                      className="hidden flex-col items-center justify-center sm:flex"
+                      style={{ color: 'var(--text-4)' }}
+                    >
+                      <ArrowGlyph />
+                    </div>
+                  ) : null}
+                </div>
+              ))}
+            </div>
+            <p className="mt-5 text-center text-[12px] uppercase tracking-[0.22em]" style={{ color: 'var(--text-4)' }}>
+              {copy.loopFooter}
+            </p>
+          </div>
+        </motion.div>
       </div>
     </motion.section>
   );
