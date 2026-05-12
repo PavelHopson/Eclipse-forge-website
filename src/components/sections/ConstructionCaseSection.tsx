@@ -17,7 +17,7 @@ type Copy = {
 
 const COPY: Record<Locale, Copy> = {
   ru: {
-    eyebrow: 'Пример отрасли · Стройка',
+    eyebrow: 'Контур исполнения · Строительные операции',
     title: 'Стройка живёт в Excel,',
     titleAccent: 'WhatsApp и звонках.',
     description:
@@ -35,7 +35,7 @@ const COPY: Record<Locale, Copy> = {
     ctaSub: 'Forge Construction Runtime — все 7 модулей, before/after, схема workflow',
   },
   en: {
-    eyebrow: 'Industry example · Construction',
+    eyebrow: 'Execution contour · Construction operations',
     title: 'Construction lives in Excel,',
     titleAccent: 'WhatsApp and phone calls.',
     description:

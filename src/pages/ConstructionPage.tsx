@@ -71,7 +71,7 @@ const COPY: Record<Locale, ConstructionCopy> = {
   ru: {
     meta: {
       backLabel: 'Назад на главную',
-      productTag: 'Forge Construction Runtime · концепт-демо',
+      productTag: 'Forge Construction Runtime · reference architecture',
     },
     hero: {
       eyebrow: 'Forge Construction Runtime',
@@ -204,7 +204,7 @@ const COPY: Record<Locale, ConstructionCopy> = {
   en: {
     meta: {
       backLabel: 'Back to home',
-      productTag: 'Forge Construction Runtime · concept demo',
+      productTag: 'Forge Construction Runtime · reference architecture',
     },
     hero: {
       eyebrow: 'Forge Construction Runtime',
