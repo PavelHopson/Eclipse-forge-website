@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 
 /* ═══════════════════════════════════════════════════════════
    ECLIPSE SILHOUETTE — dark disc with glowing corona
@@ -253,6 +253,62 @@ export function ConstellationField({ className = '' }: { className?: string }) {
           />
         ))}
       </svg>
+    </div>
+  );
+}
+
+const galaxyStreams = Array.from({ length: 18 }, (_, index) => ({
+  id: index,
+  angle: `${index * 20}deg`,
+  delay: `${index * -220}ms`,
+  opacity: 0.16 + (index % 6) * 0.04,
+}));
+
+const galaxyNodes = Array.from({ length: 22 }, (_, index) => ({
+  id: index,
+  angle: `${index * 16.4}deg`,
+  distance: `${80 + (index % 8) * 24}px`,
+  offset: `${((index % 7) - 3) * 9}px`,
+  delay: `${index * -150}ms`,
+}));
+
+export function InteractiveGalaxyLayer({ className = '' }: { className?: string }) {
+  return (
+    <div className={`ef-galaxy-layer pointer-events-none fixed ${className}`} aria-hidden>
+      <div className="ef-galaxy-layer__halo" />
+      <div className="ef-galaxy-layer__ring ef-galaxy-layer__ring--outer" />
+      <div className="ef-galaxy-layer__ring ef-galaxy-layer__ring--inner" />
+      <div className="ef-galaxy-layer__core" />
+      <div className="ef-galaxy-layer__corona" />
+      <div className="ef-galaxy-layer__streams">
+        {galaxyStreams.map((stream) => (
+          <span
+            key={stream.id}
+            style={
+              {
+                '--stream-angle': stream.angle,
+                '--stream-delay': stream.delay,
+                '--stream-opacity': stream.opacity,
+              } as CSSProperties
+            }
+          />
+        ))}
+      </div>
+      <div className="ef-galaxy-layer__nodes">
+        {galaxyNodes.map((node) => (
+          <span
+            key={node.id}
+            style={
+              {
+                '--node-angle': node.angle,
+                '--node-distance': node.distance,
+                '--node-offset': node.offset,
+                '--node-delay': node.delay,
+              } as CSSProperties
+            }
+          />
+        ))}
+      </div>
     </div>
   );
 }

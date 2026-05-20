@@ -1,7 +1,12 @@
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { SiteHeader } from '../components/layout/SiteHeader';
 import { CursorLight } from '../components/ui/CursorLight';
-import { ConstellationField, EclipseSilhouette, ParticleField } from '../components/ui/EclipseVisuals';
+import {
+  ConstellationField,
+  EclipseSilhouette,
+  InteractiveGalaxyLayer,
+  ParticleField,
+} from '../components/ui/EclipseVisuals';
 import { PriceListModal } from '../components/ui/PriceListModal';
 import { BroadcastIcon, GitHubIcon, InstagramIcon, TelegramIcon } from '../components/ui/SocialIcons';
 import { contactDetails } from '../data/content';
@@ -78,6 +83,7 @@ export function App() {
 
       <CursorLight />
       <ParticleField count={36} className="z-[1] opacity-55" />
+      <InteractiveGalaxyLayer className="z-[1]" />
 
       <PriceListModal />
 

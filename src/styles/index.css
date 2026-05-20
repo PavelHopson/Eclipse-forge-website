@@ -1782,6 +1782,157 @@ button, a { -webkit-tap-highlight-color: transparent; }
   }
 }
 
+/* Interactive Galaxy — lightweight CSS rewrite inspired by Pavel's effects set. */
+.ef-galaxy-layer {
+  right: clamp(-22rem, -18vw, -8rem);
+  top: clamp(4rem, 12vh, 10rem);
+  width: min(52vw, 720px);
+  aspect-ratio: 1;
+  opacity: 0.46;
+  contain: layout paint;
+  isolation: isolate;
+}
+
+.ef-galaxy-layer__halo,
+.ef-galaxy-layer__ring,
+.ef-galaxy-layer__core,
+.ef-galaxy-layer__corona,
+.ef-galaxy-layer__streams,
+.ef-galaxy-layer__nodes {
+  position: absolute;
+  inset: 0;
+}
+
+.ef-galaxy-layer__halo {
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(107, 163, 255, 0.28), transparent 20%),
+    radial-gradient(circle at 58% 48%, rgba(140, 124, 255, 0.18), transparent 34%),
+    radial-gradient(circle at 38% 55%, rgba(212, 175, 55, 0.15), transparent 44%);
+  filter: blur(24px);
+  animation: forgeGalaxyBreathe 11s ease-in-out infinite;
+}
+
+.ef-galaxy-layer__core {
+  inset: 38%;
+  border-radius: 999px;
+  background: radial-gradient(circle at 44% 38%, #141b25, #05070a 62%, #000 100%);
+  box-shadow:
+    inset -18px -20px 34px rgba(0, 0, 0, 0.72),
+    0 0 0 1px rgba(157, 196, 255, 0.2),
+    0 0 64px rgba(107, 163, 255, 0.28),
+    0 0 120px rgba(212, 175, 55, 0.08);
+  z-index: 4;
+}
+
+.ef-galaxy-layer__corona {
+  inset: 35.5%;
+  border-radius: 999px;
+  background:
+    conic-gradient(
+      from 18deg,
+      transparent 0 8%,
+      rgba(212, 175, 55, 0.86) 11%,
+      rgba(157, 196, 255, 0.28) 18%,
+      transparent 25% 55%,
+      rgba(140, 124, 255, 0.44) 62%,
+      transparent 70% 100%
+    );
+  filter: blur(4px);
+  animation: forgeGalaxySpin 28s linear infinite;
+  z-index: 3;
+}
+
+.ef-galaxy-layer__ring {
+  border-radius: 999px;
+  background:
+    repeating-conic-gradient(
+      from 0deg,
+      rgba(157, 196, 255, 0.18) 0 1deg,
+      transparent 1deg 9deg
+    );
+  mask: radial-gradient(circle, transparent 45%, #000 46% 47%, transparent 48%);
+  -webkit-mask: radial-gradient(circle, transparent 45%, #000 46% 47%, transparent 48%);
+}
+
+.ef-galaxy-layer__ring--outer {
+  inset: 5%;
+  animation: forgeGalaxySpin 62s linear infinite;
+}
+
+.ef-galaxy-layer__ring--inner {
+  inset: 22%;
+  opacity: 0.74;
+  animation: forgeGalaxySpinReverse 39s linear infinite;
+}
+
+.ef-galaxy-layer__streams span,
+.ef-galaxy-layer__nodes span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-origin: 0 0;
+}
+
+.ef-galaxy-layer__streams span {
+  width: clamp(78px, 11vw, 160px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(157, 196, 255, 0.48), rgba(212, 175, 55, 0.18), transparent);
+  transform: rotate(var(--stream-angle)) translateX(clamp(92px, 15vw, 180px));
+  opacity: var(--stream-opacity);
+  animation: forgeGalaxyStream 5.6s ease-in-out infinite;
+  animation-delay: var(--stream-delay);
+}
+
+.ef-galaxy-layer__nodes span {
+  width: 2px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--accent-glow);
+  box-shadow: 0 0 14px rgba(157, 196, 255, 0.82);
+  transform: rotate(var(--node-angle)) translateX(var(--node-distance)) translateY(var(--node-offset));
+  animation: forgeGalaxyNode 4.2s ease-in-out infinite;
+  animation-delay: var(--node-delay);
+}
+
+@keyframes forgeGalaxySpin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes forgeGalaxySpinReverse {
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes forgeGalaxyBreathe {
+  0%, 100% { opacity: 0.56; transform: scale(1); }
+  50% { opacity: 0.92; transform: scale(1.035); }
+}
+
+@keyframes forgeGalaxyStream {
+  0%, 100% { opacity: 0.12; filter: blur(0); }
+  50% { opacity: 0.48; filter: blur(0.5px); }
+}
+
+@keyframes forgeGalaxyNode {
+  0%, 100% {
+    opacity: 0.18;
+    transform: rotate(var(--node-angle)) translateX(var(--node-distance)) translateY(var(--node-offset)) scale(0.82);
+  }
+  50% {
+    opacity: 0.86;
+    transform: rotate(var(--node-angle)) translateX(var(--node-distance)) translateY(var(--node-offset)) scale(1.12);
+  }
+}
+
+@media (max-width: 900px) {
+  .ef-galaxy-layer {
+    right: -58vw;
+    top: 5rem;
+    width: 112vw;
+    opacity: 0.25;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
