@@ -272,9 +272,19 @@ const galaxyNodes = Array.from({ length: 22 }, (_, index) => ({
   delay: `${index * -150}ms`,
 }));
 
-export function InteractiveGalaxyLayer({ className = '' }: { className?: string }) {
+type InteractiveGalaxyLayerProps = {
+  className?: string;
+  variant?: 'fixed' | 'hero';
+};
+
+export function InteractiveGalaxyLayer({ className = '', variant = 'fixed' }: InteractiveGalaxyLayerProps) {
+  const placement = variant === 'fixed' ? 'fixed' : 'absolute';
+
   return (
-    <div className={`ef-galaxy-layer pointer-events-none fixed ${className}`} aria-hidden>
+    <div
+      className={`ef-galaxy-layer ef-galaxy-layer--${variant} pointer-events-none ${placement} ${className}`}
+      aria-hidden
+    >
       <div className="ef-galaxy-layer__halo" />
       <div className="ef-galaxy-layer__ring ef-galaxy-layer__ring--outer" />
       <div className="ef-galaxy-layer__ring ef-galaxy-layer__ring--inner" />

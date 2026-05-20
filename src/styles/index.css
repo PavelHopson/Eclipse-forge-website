@@ -1784,13 +1784,27 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 /* Interactive Galaxy — lightweight CSS rewrite inspired by Pavel's effects set. */
 .ef-galaxy-layer {
-  right: clamp(-22rem, -18vw, -8rem);
-  top: clamp(4rem, 12vh, 10rem);
   width: min(52vw, 720px);
   aspect-ratio: 1;
-  opacity: 0.46;
   contain: layout paint;
   isolation: isolate;
+  mix-blend-mode: screen;
+}
+
+.ef-galaxy-layer--fixed {
+  right: clamp(-22rem, -18vw, -8rem);
+  top: clamp(4rem, 12vh, 10rem);
+  z-index: 1;
+  opacity: 0.24;
+}
+
+.ef-galaxy-layer--hero {
+  right: clamp(-7rem, -4vw, 2rem);
+  top: clamp(4.5rem, 9vh, 7rem);
+  width: min(58vw, 780px);
+  z-index: 8;
+  opacity: 0.86;
+  filter: saturate(1.16) contrast(1.08);
 }
 
 .ef-galaxy-layer__halo,
@@ -1925,11 +1939,18 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 
 @media (max-width: 900px) {
-  .ef-galaxy-layer {
+  .ef-galaxy-layer--fixed {
     right: -58vw;
     top: 5rem;
     width: 112vw;
-    opacity: 0.25;
+    opacity: 0.14;
+  }
+
+  .ef-galaxy-layer--hero {
+    right: -42vw;
+    top: 6.5rem;
+    width: 118vw;
+    opacity: 0.42;
   }
 }
 

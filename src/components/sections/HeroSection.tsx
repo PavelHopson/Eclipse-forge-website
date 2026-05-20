@@ -8,6 +8,7 @@ import { MagneticButton } from '../ui/MagneticButton';
 import {
   ConstellationField,
   EclipseSilhouette,
+  InteractiveGalaxyLayer,
   OrbitalRing,
   ParticleField,
   SolarCorona,
@@ -333,6 +334,13 @@ export function HeroSection() {
                   transition={{ duration: 90, repeat: Infinity, ease: 'linear' }}
                 >
                   <BlackHoleCanvas className="h-full w-full rounded-full opacity-90" />
+                </motion.div>
+
+                <motion.div
+                  className="pointer-events-none absolute inset-0 z-[8]"
+                  style={{ scale: glowScale }}
+                >
+                  <InteractiveGalaxyLayer variant="hero" />
                 </motion.div>
 
                 <motion.div
