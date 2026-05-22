@@ -200,10 +200,17 @@ const localized = <T,>(ru: T, en: T): Localized<T> => ({ ru, en });
 const projectImage = (primary: string, secondary: string, alt: string, objectPosition = 'center'): ImageAsset => ({
   alt,
   objectPosition,
-  sources: [`/images/projects/${primary}.png`, `/images/projects/${secondary}.png`],
+  // Topaz-upscaled → downscaled WebP первым; старый PNG оставлен как fallback.
+  sources: [
+    `/images/projects/${primary}.webp`,
+    `/images/projects/${primary}.png`,
+    `/images/projects/${secondary}.png`,
+  ],
 });
 
 const founderSources = [
+  '/images/projects/founder-operator.webp',
+  '/images/projects/founder-portrait.webp',
   '/images/projects/founder-operator.png',
   '/images/projects/founder-portrait.png',
   '/images/ChatGPT Image 4 \u043c\u0430\u044f 2026 \u0433., 14_54_55.png',
@@ -211,25 +218,32 @@ const founderSources = [
 
 const founderDeskSources = [
   '/founder-portrait.png',
+  '/images/projects/founder-portrait.webp',
   '/images/projects/founder-portrait.png',
   '/images/ChatGPT Image 4 \u043c\u0430\u044f 2026 \u0433., 14_42_15.png',
 ];
 
 const founderSeatedSources = [
   '/founder-portrait.png',
+  '/images/projects/founder-portrait.webp',
   '/images/projects/founder-portrait.png',
   '/images/ChatGPT Image 4 \u043c\u0430\u044f 2026 \u0433., 14_56_29.png',
 ];
 
+// Вынесено в переменные (тип string[]), чтобы `as const` ниже не сделал sources
+// readonly-кортежем — ImageAsset.sources ожидает мутабельный string[].
+const heroPlateSources = ['/images/projects/eclipse-forge-cover.webp', '/images/projects/eclipse-forge-cover.png'];
+const brandLogoSources = ['/images/projects/logo.webp', '/images/projects/logo.png'];
+
 export const brandAssets = {
   heroPlate: {
     alt: 'Eclipse Forge brand plate',
-    sources: ['/images/projects/eclipse-forge-cover.png'],
+    sources: heroPlateSources,
     objectPosition: 'center',
   },
   brandLogo: {
     alt: 'Eclipse Forge logo',
-    sources: ['/images/projects/logo.png'],
+    sources: brandLogoSources,
     objectPosition: 'center',
   },
   founderAvatar: {
