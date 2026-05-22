@@ -177,7 +177,7 @@ export function FounderSection() {
                   alt={brandAssets.brandLogo.alt}
                   sources={brandAssets.brandLogo.sources}
                   loading="lazy"
-                  className="h-full max-h-[220px] w-full object-contain p-6"
+                  className="h-full w-full object-contain p-4"
                   style={{ objectPosition: brandAssets.brandLogo.objectPosition }}
                   fallback={
                     <div className="flex min-h-[180px] items-end bg-[radial-gradient(circle_at_top,rgba(117,140,255,0.16),transparent_58%),linear-gradient(180deg,#0c1117_0%,#07090d_100%)] p-6">
