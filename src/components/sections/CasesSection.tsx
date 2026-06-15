@@ -314,9 +314,11 @@ export function CasesSection() {
 
   const portfolioAnchors = [
     { href: '#featured-cases', label: copy.anchorLabels[0], count: featuredProjects.length },
-    { href: '#ai-products', label: copy.anchorLabels[1], count: portfolioCollections[0]?.projects.length ?? 0 },
-    { href: '#product-systems', label: copy.anchorLabels[2], count: portfolioCollections[1]?.projects.length ?? 0 },
-    { href: '#engineering-tools', label: copy.anchorLabels[3], count: portfolioCollections[2]?.projects.length ?? 0 },
+    ...portfolioCollections.map((collection) => ({
+      href: `#${collection.id}`,
+      label: collection.eyebrow,
+      count: collection.projects.length,
+    })),
   ];
 
   return (
