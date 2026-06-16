@@ -1,0 +1,38 @@
+name: Uptime monitor (eclipse-forge.ru)
+
+# Раз в 15 мин курлит все сайты домена. Любой не-200 -> воркфлоу падает
+# -> GitHub шлёт владельцу письмо. Внешний хост = ловит и падение VPS.
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Curl all eclipse-forge.ru endpoints
+        run: |
+          fail=0
+          check() {
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 "$1")
+            if [ "$code" = "200" ]; then
+              echo "ok    $1 ($code)"
+            else
+              echo "DOWN  $1 -> $code"
+              fail=1
+            fi
+          }
+          for s in cryptopulse shotforge text2image educator hub fitness interview rent coffee cinemate 2048 zefir rentkld valhalla dnd; do
+            check "https://$s.eclipse-forge.ru"
+          done
+          check "https://eclipse-forge.ru"
+          if [ "$fail" != "0" ]; then
+            echo "::error::One or more eclipse-forge.ru sites are DOWN"
+            exit 1
+          fi
+          echo "All 16 endpoints OK"
