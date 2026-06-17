@@ -204,12 +204,14 @@ const projectImage = (primary: string, secondary: string, alt: string, objectPos
 });
 
 const founderSources = [
+  '/images/projects/founder-portrait-suit.png',
   '/images/projects/founder-operator.png',
   '/images/projects/founder-portrait.png',
   '/images/ChatGPT Image 4 \u043c\u0430\u044f 2026 \u0433., 14_54_55.png',
 ];
 
 const founderDeskSources = [
+  '/images/projects/founder-operator-eclipse.png',
   '/founder-portrait.png',
   '/images/projects/founder-portrait.png',
   '/images/ChatGPT Image 4 \u043c\u0430\u044f 2026 \u0433., 14_42_15.png',
@@ -221,15 +223,25 @@ const founderSeatedSources = [
   '/images/ChatGPT Image 4 \u043c\u0430\u044f 2026 \u0433., 14_56_29.png',
 ];
 
+const heroPlateSources = [
+  '/images/projects/operator-desk-ambient.png',
+  '/images/projects/eclipse-forge-cover.png',
+];
+
+const brandLogoSources = [
+  '/images/projects/eclipse-forge-wordmark.png',
+  '/images/projects/logo.png',
+];
+
 export const brandAssets = {
   heroPlate: {
     alt: 'Eclipse Forge brand plate',
-    sources: ['/images/projects/eclipse-forge-cover.png'],
+    sources: heroPlateSources,
     objectPosition: 'center',
   },
   brandLogo: {
     alt: 'Eclipse Forge logo',
-    sources: ['/images/projects/logo.png'],
+    sources: brandLogoSources,
     objectPosition: 'center',
   },
   founderAvatar: {
