@@ -1,4 +1,4 @@
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { MotionConfig, motion, useScroll, useSpring } from 'framer-motion';
 import { SiteHeader } from '../components/layout/SiteHeader';
 import { CursorLight } from '../components/ui/CursorLight';
 import {
@@ -63,6 +63,7 @@ export function App() {
   const isConstruction = route === '/construction';
 
   return (
+    <MotionConfig reducedMotion="user">
     <div className="relative min-h-screen" style={{ background: 'var(--bg)', color: 'var(--text-1)' }}>
       <motion.div
         className="fixed left-0 right-0 top-0 z-50 h-px origin-left"
@@ -135,5 +136,6 @@ export function App() {
         </div>
       </footer>
     </div>
+    </MotionConfig>
   );
 }
