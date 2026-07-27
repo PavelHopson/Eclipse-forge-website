@@ -21,6 +21,7 @@ const footerCopy: Record<
     description: string;
     location: string;
     socialLabels: { telegram: string; channel: string; github: string; instagram: string };
+    libraryLabel: string;
   }
 > = {
   ru: {
@@ -32,6 +33,7 @@ const footerCopy: Record<
       github: 'GitHub',
       instagram: 'Instagram',
     },
+    libraryLabel: 'Библиотека инструментов',
   },
   en: {
     description: 'Systems for control, automation and AI execution. Built for products that need more than a front layer.',
@@ -42,6 +44,7 @@ const footerCopy: Record<
       github: 'GitHub',
       instagram: 'Instagram',
     },
+    libraryLabel: 'Tools library',
   },
 };
 
@@ -128,6 +131,15 @@ export function App() {
             </div>
 
             <div className="flex items-center gap-6 text-[10px] uppercase tracking-[0.2em]" style={{ color: 'var(--text-4)' }}>
+              <a
+                href="https://library.eclipse-forge.ru/"
+                target="_blank"
+                rel="noreferrer"
+                className="transition-colors hover:text-[var(--gold)]"
+              >
+                {copy.libraryLabel} ↗
+              </a>
+              <span className="h-3 w-px" style={{ background: 'var(--line)' }} />
               <span>{copy.location}</span>
               <span className="h-3 w-px" style={{ background: 'var(--line)' }} />
               <span>&copy; 2026</span>

@@ -15,6 +15,7 @@ const headerCopy: Record<
     openMenu: string;
     closeMenu: string;
     priceLabel: string;
+    libraryLabel: string;
   }
 > = {
   ru: {
@@ -29,6 +30,7 @@ const headerCopy: Record<
     openMenu: 'Открыть меню',
     closeMenu: 'Закрыть меню',
     priceLabel: 'Прайс',
+    libraryLabel: 'Библиотека',
   },
   en: {
     navItems: [
@@ -42,6 +44,7 @@ const headerCopy: Record<
     openMenu: 'Open menu',
     closeMenu: 'Close menu',
     priceLabel: 'Pricing',
+    libraryLabel: 'Library',
   },
 };
 
@@ -120,6 +123,19 @@ export function SiteHeader() {
                 />
               </a>
             ))}
+            <a
+              href="https://library.eclipse-forge.ru/"
+              target="_blank"
+              rel="noreferrer"
+              className="group relative inline-flex items-center transition-colors duration-300 hover:!text-[var(--text-1)]"
+              style={{ color: 'var(--gold)' }}
+            >
+              {copy.libraryLabel} ↗
+              <span
+                className="pointer-events-none absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 transition-transform duration-400 group-hover:scale-x-100"
+                style={{ background: 'linear-gradient(90deg, rgba(212,175,55,0.9), rgba(212,175,55,0.4))' }}
+              />
+            </a>
             <button
               type="button"
               onClick={() => setPriceOpen(true)}
@@ -206,6 +222,16 @@ export function SiteHeader() {
                     {item.label}
                   </a>
                 ))}
+                <a
+                  href="https://library.eclipse-forge.ru/"
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={closeMenu}
+                  className="rounded-xl px-4 py-4 text-sm uppercase tracking-[0.15em] transition-colors hover:bg-white/[0.03]"
+                  style={{ color: 'var(--gold)' }}
+                >
+                  {copy.libraryLabel} ↗
+                </a>
               </nav>
               <div className="mt-4 border-t pt-4" style={{ borderColor: 'var(--line)' }}>
                 <GlowButton href="#contact" onClick={closeMenu} className="w-full justify-center">

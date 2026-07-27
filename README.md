@@ -2,6 +2,9 @@
 
 Премиальный статический лендинг студии Eclipse Forge на `React + Vite + Tailwind CSS + Framer Motion`.
 
+Связан с кураторской [Eclipse Library](https://library.eclipse-forge.ru/): переход доступен
+из desktop header, mobile menu и footer, а библиотека возвращает пользователя на главный лендинг.
+
 ## Deploy: Cloudflare Pages
 
 Рекомендуемый хостинг: `Cloudflare Pages`.
