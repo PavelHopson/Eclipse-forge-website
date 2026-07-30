@@ -34,9 +34,12 @@ test('data ownership is explicit and unambiguous', () => {
   }
 });
 
-test('planned integrations do not masquerade as shipped capabilities', () => {
-  assert.ok(manifest.integrations.length > 0);
-  for (const integration of manifest.integrations) {
-    assert.equal(integration.maturity, 'planned');
-  }
+test('integration maturity matches the implemented control-plane slice', () => {
+  const chatAiGateway = manifest.integrations.find((integration) => integration.id === 'chat-ai-gateway');
+  assert.equal(chatAiGateway?.maturity, 'experimental');
+
+  const remaining = manifest.integrations.filter((integration) => integration.id !== 'chat-ai-gateway');
+  assert.ok(remaining.length > 0);
+  assert.ok(remaining.every((integration) => integration.maturity === 'planned'));
+  assert.equal(manifest.integrations.some((integration) => integration.maturity === 'available'), false);
 });

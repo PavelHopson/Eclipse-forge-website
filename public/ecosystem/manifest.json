@@ -128,7 +128,7 @@
       "from": "eclipse-chat",
       "to": "eclipse-ai-hub",
       "contract": "ai.v1",
-      "maturity": "planned",
+      "maturity": "experimental",
       "priority": "P0"
     },
     {

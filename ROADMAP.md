@@ -15,9 +15,10 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 
 ### P0: Eclipse Chat to Eclipse AI Hub
 
-- [ ] Define `ai.v1` OpenAPI contract and service scopes.
+- [x] Define the `ai.v1` OpenAPI contract and dedicated service-token boundary.
 - [ ] Add cost, latency, source and fallback telemetry.
-- [ ] Ship a canary path with a direct-provider rollback.
+- [x] Ship an opt-in canary provider with direct-provider fallback and immediate rollback.
+- [ ] Deploy the gateway and complete production health, fallback and token-rotation drills.
 
 ### P1: Webclaw to Library to AI Hub
 
