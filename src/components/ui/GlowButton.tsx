@@ -1,10 +1,14 @@
-import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
-import type { AnchorHTMLAttributes, ButtonHTMLAttributes, MouseEvent, ReactNode } from 'react';
+import { motion, useMotionTemplate, useMotionValue, type HTMLMotionProps } from 'framer-motion';
+import type { MouseEvent, ReactNode } from 'react';
 
 type BaseProps = { children: ReactNode; className?: string };
-type AnchorGlowButtonProps = BaseProps & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'className' | 'children'> & { href: string };
-type ButtonGlowButtonProps = BaseProps & Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className' | 'children'> & { href?: undefined };
+type AnchorGlowButtonProps = BaseProps & Omit<HTMLMotionProps<'a'>, 'className' | 'children'> & { href: string };
+type ButtonGlowButtonProps = BaseProps & Omit<HTMLMotionProps<'button'>, 'className' | 'children'> & { href?: undefined };
 type GlowButtonProps = AnchorGlowButtonProps | ButtonGlowButtonProps;
+
+function isAnchorGlowButton(props: GlowButtonProps): props is AnchorGlowButtonProps {
+  return typeof props.href === 'string';
+}
 
 const cls = [
   'relative isolate inline-flex items-center justify-center rounded-full overflow-hidden',
@@ -54,7 +58,7 @@ export function GlowButton(props: GlowButtonProps) {
     </>
   );
 
-  if ('href' in props && props.href) {
+  if (isAnchorGlowButton(props)) {
     const { href, children: _children, className: _className, onMouseMove, ...rest } = props;
     void _children;
     void _className;

@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion';
+import { motion, useMotionValue, useScroll, useSpring, useTransform, type Variants } from 'framer-motion';
 import { useEffect, useRef, type RefObject } from 'react';
 import { AssetImage } from '../ui/AssetImage';
 import { BlackHoleCanvas } from '../ui/BlackHoleCanvas';
@@ -143,12 +143,12 @@ function HeroPortraitFallback({ title, text }: { title: string; text: string }) 
   );
 }
 
-const reveal = {
+const reveal: Variants = {
   hidden: { opacity: 0, y: 32 },
   visible: (delay: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.9, delay, ease: [0.16, 1, 0.3, 1] },
+    transition: { duration: 0.9, delay, ease: [0.16, 1, 0.3, 1] as const },
   }),
 };
 

@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
+import type { ReactElement } from 'react';
 import { useLocale, type Locale } from '../../lib/locale';
 import { useTheme, type ThemeMode } from '../../lib/theme';
 
@@ -36,7 +37,7 @@ function AutoIcon({ size = 16 }: { size?: number }) {
   );
 }
 
-const MODE_META: Record<Locale, Record<ThemeMode, { label: string; Icon: (props: { size?: number }) => JSX.Element; hint: string }>> = {
+const MODE_META: Record<Locale, Record<ThemeMode, { label: string; Icon: (props: { size?: number }) => ReactElement; hint: string }>> = {
   ru: {
     auto: { label: 'АВТО', Icon: AutoIcon, hint: 'переключение по времени' },
     light: { label: 'СВЕТ', Icon: SunIcon, hint: 'всегда светлая тема' },

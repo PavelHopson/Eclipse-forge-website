@@ -5,7 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "audit:portfolio": "node scripts/audit-portfolio.mjs --root .. --output docs/portfolio-status.generated.md",
+    "validate:ecosystem": "node scripts/validate-ecosystem.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run validate:ecosystem && npm test && npm run typecheck",
+    "build": "npm run check && vite build",
     "preview": "vite preview"
   },
   "dependencies": {

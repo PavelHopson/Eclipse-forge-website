@@ -5,6 +5,25 @@
 Связан с кураторской [Eclipse Library](https://library.eclipse-forge.ru/): переход доступен
 из desktop header, mobile menu и footer, а библиотека возвращает пользователя на главный лендинг.
 
+## Ecosystem control plane
+
+Репозиторий публикует versioned registry экосистемы в `public/ecosystem/manifest.json`.
+Он описывает роли продуктов, владение данными и зрелость интеграций, не выдавая запланированные API за готовые.
+
+- Архитектура: [`docs/ecosystem-architecture.md`](docs/ecosystem-architecture.md)
+- Security и releases: [`docs/ecosystem-security-and-release-runbook.md`](docs/ecosystem-security-and-release-runbook.md)
+- Локальный health report: `docs/portfolio-status.generated.md` (генерируется командой ниже и не коммитится)
+
+```bash
+npm run audit:portfolio
+npm run validate:ecosystem
+npm test
+npm run typecheck
+npm run build
+```
+
+Portfolio audit читает только Git metadata и имена файлов. Он не читает значения секретов и не изменяет соседние репозитории.
+
 ## Deploy: Cloudflare Pages
 
 Рекомендуемый хостинг: `Cloudflare Pages`.

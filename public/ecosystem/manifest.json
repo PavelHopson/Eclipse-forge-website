@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 1,
+  "ecosystem": "eclipse-forge",
+  "updatedAt": "2026-07-30",
+  "controlPlane": "forge-landing",
+  "projects": [
+    {
+      "id": "forge-landing",
+      "name": "Eclipse Forge Landing",
+      "repository": "https://github.com/PavelHopson/Eclipse-forge-website",
+      "status": "live",
+      "role": "discovery-control-plane",
+      "capabilities": ["portfolio.discovery", "ecosystem.manifest"],
+      "ownsData": ["public-project-metadata"]
+    },
+    {
+      "id": "eclipse-chat",
+      "name": "Eclipse Chat",
+      "repository": "https://github.com/PavelHopson/eclipse-chat",
+      "status": "live",
+      "role": "collaboration-control-surface",
+      "capabilities": ["communication", "execution", "workspace-memory", "voice-video"],
+      "ownsData": ["identities", "workspaces", "messages", "tasks", "decisions"]
+    },
+    {
+      "id": "eclipse-library",
+      "name": "Eclipse Library",
+      "repository": "https://github.com/PavelHopson/eclipse-library",
+      "status": "live",
+      "role": "knowledge-registry",
+      "capabilities": ["knowledge.catalog", "source-verification", "project-recommendations"],
+      "ownsData": ["catalog-items", "source-verification", "recommendations"]
+    },
+    {
+      "id": "eclipse-ai-hub",
+      "name": "Eclipse AI Hub",
+      "repository": "https://github.com/PavelHopson/eclipse-ai-hub",
+      "status": "beta",
+      "role": "intelligence-gateway",
+      "capabilities": ["ai.complete", "ai.embed", "ai.evaluate", "rag.query"],
+      "ownsData": ["provider-configurations", "evaluation-results", "rag-indexes"]
+    },
+    {
+      "id": "hopson-sentinel",
+      "name": "Eclipse Hopson Sentinel",
+      "repository": "https://github.com/PavelHopson/eclipse-hopson-sentinel",
+      "status": "beta",
+      "role": "local-execution-node",
+      "capabilities": ["execution.local", "runtime.doctor", "voice.operator"],
+      "ownsData": ["local-runtime-config", "execution-approvals", "local-artifacts"]
+    },
+    {
+      "id": "eclipse-webclaw",
+      "name": "Eclipse Webclaw",
+      "repository": "https://github.com/PavelHopson/Eclipse-webclaw",
+      "status": "beta",
+      "role": "web-ingestion-layer",
+      "capabilities": ["web.fetch", "web.extract", "mcp.tools"],
+      "ownsData": ["fetch-jobs", "extraction-results"]
+    },
+    {
+      "id": "eclipse-dnd-forge",
+      "name": "Eclipse DnD Forge",
+      "repository": "https://github.com/PavelHopson/eclipse-dnd-forge",
+      "status": "prototype",
+      "role": "vertical-runtime",
+      "capabilities": ["campaign.runtime", "world.memory", "party.journal"],
+      "ownsData": ["campaigns", "characters", "world-state"]
+    },
+    {
+      "id": "finflow",
+      "name": "Finflow",
+      "repository": "https://github.com/PavelHopson/finflow",
+      "status": "beta",
+      "role": "vertical-runtime",
+      "capabilities": ["finance.ledger", "receipt.ocr", "finance.insights"],
+      "ownsData": ["financial-records", "receipt-documents", "budgets"]
+    },
+    {
+      "id": "eclipse-media",
+      "name": "Eclipse Media",
+      "repository": "https://github.com/PavelHopson/eclipse-media",
+      "status": "prototype",
+      "role": "media-job-runtime",
+      "capabilities": ["media.ingest", "media.transcode", "media.transcribe"],
+      "ownsData": ["media-jobs", "media-artifacts"]
+    },
+    {
+      "id": "shotforge",
+      "name": "Shotforge",
+      "repository": "https://github.com/PavelHopson/shotforge",
+      "status": "prototype",
+      "role": "media-client",
+      "capabilities": ["storyboard.generate", "shot.plan"],
+      "ownsData": ["storyboards", "shot-plans"]
+    },
+    {
+      "id": "text2image",
+      "name": "Text2Image",
+      "repository": "https://github.com/PavelHopson/Text2Image",
+      "status": "prototype",
+      "role": "media-client",
+      "capabilities": ["image.generate", "image.restore"],
+      "ownsData": ["generation-presets", "image-artifacts"]
+    },
+    {
+      "id": "educator-ai",
+      "name": "Educator AI",
+      "repository": "https://github.com/PavelHopson/Educator-AI",
+      "status": "prototype",
+      "role": "vertical-runtime",
+      "capabilities": ["learning.plan", "research.explain", "assessment.generate"],
+      "ownsData": ["learning-plans", "assessments"]
+    },
+    {
+      "id": "retry-http",
+      "name": "@pavelhopson/retry-http",
+      "repository": "https://github.com/PavelHopson/retry-http",
+      "status": "library",
+      "role": "shared-reliability-library",
+      "capabilities": ["http.retry"],
+      "ownsData": []
+    }
+  ],
+  "integrations": [
+    {
+      "id": "chat-ai-gateway",
+      "from": "eclipse-chat",
+      "to": "eclipse-ai-hub",
+      "contract": "ai.v1",
+      "maturity": "planned",
+      "priority": "P0"
+    },
+    {
+      "id": "library-ai-knowledge",
+      "from": "eclipse-library",
+      "to": "eclipse-ai-hub",
+      "contract": "knowledge.catalog.v1",
+      "maturity": "planned",
+      "priority": "P1"
+    },
+    {
+      "id": "webclaw-library-intake",
+      "from": "eclipse-webclaw",
+      "to": "eclipse-library",
+      "contract": "knowledge.candidate.v1",
+      "maturity": "planned",
+      "priority": "P1"
+    },
+    {
+      "id": "chat-sentinel-execution",
+      "from": "eclipse-chat",
+      "to": "hopson-sentinel",
+      "contract": "execution.v1",
+      "maturity": "planned",
+      "priority": "P1"
+    },
+    {
+      "id": "chat-dnd-workspace",
+      "from": "eclipse-dnd-forge",
+      "to": "eclipse-chat",
+      "contract": "workspace.module.v1",
+      "maturity": "planned",
+      "priority": "P2"
+    },
+    {
+      "id": "chat-finflow-workspace",
+      "from": "finflow",
+      "to": "eclipse-chat",
+      "contract": "workspace.module.v1",
+      "maturity": "planned",
+      "priority": "P2"
+    },
+    {
+      "id": "media-shared-runtime",
+      "from": "shotforge",
+      "to": "eclipse-media",
+      "contract": "media.jobs.v1",
+      "maturity": "planned",
+      "priority": "P2"
+    },
+    {
+      "id": "image-shared-runtime",
+      "from": "text2image",
+      "to": "eclipse-media",
+      "contract": "media.jobs.v1",
+      "maturity": "planned",
+      "priority": "P2"
+    }
+  ]
+}

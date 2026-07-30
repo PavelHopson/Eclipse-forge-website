@@ -5,9 +5,8 @@ import {
   useScroll,
   useSpring,
   useTransform,
-  type MouseEvent as ReactMouseEvent,
 } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, type MouseEvent as ReactMouseEvent } from 'react';
 import { type Project, type ProjectStatus, useSiteContent } from '../../data/content';
 import { revealScale, revealUp, stagger, viewport } from '../../lib/animation';
 import { useLocale, type Locale } from '../../lib/locale';

@@ -233,7 +233,7 @@ export function ConstellationField({ className = '' }: { className?: string }) {
         {lines.map((l, i) => (
           <motion.line
             key={i}
-            x1={`${l.x}%`} y1={`${l.y}%`} x2={`${l.x2}%`} y2={`${l.y2}%`}
+            x1={`${l.x1}%`} y1={`${l.y1}%`} x2={`${l.x2}%`} y2={`${l.y2}%`}
             stroke="var(--accent)" strokeWidth="0.15" opacity="0.15"
             initial={{ pathLength: 0, opacity: 0 }}
             whileInView={{ pathLength: 1, opacity: 0.15 }}

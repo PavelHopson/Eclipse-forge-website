@@ -7,3 +7,4 @@ vite.config.d.ts
 .vite-preview.log
 .vite-preview.err.log
 design-backups/
+docs/portfolio-status.generated.md
