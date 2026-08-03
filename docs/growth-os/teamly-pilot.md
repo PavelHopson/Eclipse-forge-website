@@ -157,3 +157,27 @@ Approval is action-specific and expires after the action. Timeout means denial.
 
 Continue the service only if it reduces reviewable production time without weakening
 evidence quality, cost control or approval boundaries.
+
+## Validation log
+
+### 2026-08-03: no-plan account
+
+Observed directly in the pilot account:
+
+- the account had `No Plan`, one team, no organization and no connected apps;
+- Teamly granted USD 0.50, of which USD 0.05 had been spent by the initial coordinator
+  interaction and USD 0.45 remained;
+- the public Eclipse Forge profile context and team name were saved successfully;
+- the agent catalog exposed 44 prebuilt specialists and four session slots;
+- `Cora Vance / Deep Research Analyst` was added as the closest available proxy for
+  the planned Claim Verifier;
+- adding the agent did not change the displayed USD 0.05 spend;
+- specialist execution was blocked by `Unlock your team`, showing USD 6 today, USD 23
+  after seven days and USD 29/month afterwards;
+- no prompt could be submitted because the send action remained disabled.
+
+Decision: the no-plan account supports configuration inspection but not a meaningful
+free workflow evaluation. Do not add the remaining eleven planned agents or start the
+intro week without a separate payment approval. The next valid test is a single bounded
+claim-verification task after checkout review, with a pre/post credit snapshot and no
+integrations.

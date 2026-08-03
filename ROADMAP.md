@@ -80,3 +80,6 @@ Every repository appears in the portfolio inventory, but only products with a st
   a weekly review template.
 - Added the Landing crawlability foundation: canonical and social metadata, WebSite
   and Person JSON-LD, `robots.txt`, `sitemap.xml`, `llms.txt` and regression tests.
+- Validated Teamly's no-plan boundary: profile and one research agent can be configured,
+  but specialist execution is locked behind the USD 6 intro week. No payment,
+  organization, integration or external action was initiated.
