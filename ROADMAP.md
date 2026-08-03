@@ -4,6 +4,7 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 
 ## Current status
 
+- [x] Establish Eclipse Forge OS and Agent Office as the flagship product program.
 - [x] Publish a machine-readable ecosystem manifest.
 - [x] Validate project identities, data ownership and integration references in CI.
 - [x] Add a read-only portfolio health auditor.
@@ -15,6 +16,26 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 - [ ] Implement approved research, content and metrics workflows in Eclipse AI Hub.
 - [ ] Move secret-bearing local files into an encrypted vault and rotate exposed credentials.
 - [ ] Review all dirty repositories manually; do not bulk-commit them.
+
+## Flagship: Eclipse Forge OS
+
+- **Product:** Eclipse Forge OS.
+- **Primary experience:** Agent Office.
+- **First office template:** Eclipse Growth OS.
+- **First workflow:** public URL or product question -> verified positioning audit ->
+  human-reviewed artifact -> measurable next experiment.
+- **Architecture:** Eclipse Chat control plane + Eclipse AI Hub execution + Eclipse
+  Library evidence + Sentinel local capabilities + Eclipse Media artifacts.
+- **Current claim:** internal product program. Do not market it as shipped until the
+  flagship readiness definition in `docs/eclipse-forge-os.md` is satisfied.
+
+### P0: first observable run
+
+- [ ] Define the `agents.v1` contract, threat model and data ownership invariants.
+- [ ] Build a fixture-backed Agent Office UI without touching production execution.
+- [ ] Implement bounded run lifecycle, cancellation and budget policy in AI Hub.
+- [ ] Add Market Researcher, Claim Verifier, Content Strategist and Metrics Analyst.
+- [ ] Demonstrate one evidence-backed positioning audit with human acceptance.
 
 ## Eclipse Growth OS sequence
 
@@ -75,6 +96,9 @@ Every repository appears in the portfolio inventory, but only products with a st
 
 ### 2026-08-03
 
+- Declared Eclipse Forge OS and its Agent Office the ecosystem flagship product program.
+  Growth OS becomes the first office template; Chat, AI Hub, Library, Sentinel and Media
+  remain independently deployable services connected by versioned contracts.
 - Established Eclipse Growth OS positioning, audience and project priorities, a
   public-data-only Teamly pilot contract, three machine-readable registry schemas and
   a weekly review template.

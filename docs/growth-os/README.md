@@ -4,6 +4,11 @@ Eclipse Growth OS is the evidence-led operating system for promoting Eclipse For
 Pavel Hopson's engineering brand, public repositories, products and commercial
 services. Its goal is qualified traffic and actions, not content volume.
 
+Growth OS is the first internal operating workflow for the ecosystem's flagship
+product program: [Eclipse Forge OS and its Agent Office](../eclipse-forge-os.md).
+Eclipse Forge OS is the product; Eclipse Growth OS is one office template running
+inside it.
+
 ## Positioning
 
 Working proposition:
