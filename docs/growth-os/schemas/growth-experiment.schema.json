@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eclipse-forge.ru/schemas/growth/growth-experiment.v1.json",
+  "title": "Eclipse Growth OS Experiment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "hypothesis", "audience", "offer", "landingPath", "cta", "channel", "primaryKpi", "successThreshold", "failureThreshold", "reviewDate", "status"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^experiment-[a-z0-9-]+$" },
+    "hypothesis": { "type": "string", "minLength": 1, "maxLength": 1500 },
+    "audience": { "type": "string", "minLength": 1 },
+    "offer": { "type": "string", "minLength": 1 },
+    "landingPath": { "type": "string", "pattern": "^/" },
+    "cta": { "type": "string", "minLength": 1 },
+    "channel": { "type": "string", "minLength": 1 },
+    "costCap": { "type": "number", "minimum": 0 },
+    "primaryKpi": { "type": "string", "minLength": 1 },
+    "guardrails": { "type": "array", "items": { "type": "string" } },
+    "successThreshold": { "type": "string", "minLength": 1 },
+    "failureThreshold": { "type": "string", "minLength": 1 },
+    "reviewDate": { "type": "string", "format": "date" },
+    "status": { "enum": ["proposed", "approved", "running", "stopped", "completed"] },
+    "decision": { "enum": ["stop", "iterate", "scale", "pending"] }
+  }
+}
