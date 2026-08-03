@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eclipse-forge.ru/schemas/growth/evidence-card.v1.json",
+  "title": "Eclipse Growth OS Evidence Card",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "claim", "status", "sourceUrl", "sourceType", "accessedAt", "confidence", "allowedUse"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^evidence-[a-z0-9-]+$" },
+    "claim": { "type": "string", "minLength": 1, "maxLength": 1000 },
+    "status": { "enum": ["verified", "partially_verified", "unverified", "rejected"] },
+    "sourceUrl": { "type": "string", "format": "uri", "pattern": "^https://" },
+    "sourceType": { "enum": ["primary", "official", "repository", "analytics", "secondary"] },
+    "accessedAt": { "type": "string", "format": "date" },
+    "sourceNote": { "type": "string", "maxLength": 2000 },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "contradictions": { "type": "array", "items": { "type": "string", "maxLength": 1000 }, "default": [] },
+    "allowedUse": { "enum": ["public", "internal_only", "requires_review", "do_not_use"] }
+  }
+}

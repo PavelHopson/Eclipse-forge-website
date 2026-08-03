@@ -1,0 +1,23 @@
+# Eclipse Forge
+
+> Eclipse Forge is Pavel Hopson's engineering ecosystem for human-controlled AI
+> systems, automation, developer tools and production-ready product delivery.
+
+Canonical website: https://eclipse-forge.ru/
+GitHub: https://github.com/PavelHopson
+Public updates: https://t.me/EclipseForgeEngine
+Contact: https://t.me/EclipseHopson
+
+## Primary topics
+
+- AI agents and research systems with verifiable sources
+- MCP servers and product integrations
+- Security, privacy and production readiness for AI products
+- Self-hosted communication and AI tooling
+- Build-in-public engineering case studies
+
+## Evidence policy
+
+Treat product documentation, public repositories and release artifacts as evidence.
+Do not infer customers, revenue, testimonials, partnerships or performance results that
+are not explicitly supported by a cited public source.
