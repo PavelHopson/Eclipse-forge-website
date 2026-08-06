@@ -11,9 +11,10 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 - [x] Document security, release and repository-lifecycle rules.
 - [x] Establish Eclipse Growth OS positioning, operating model and registry contracts.
 - [x] Add the Landing crawlability and AI-discovery foundation.
-- [ ] Run the public-data-only Teamly pilot and record its 30-day decision.
-- [ ] Implement Growth Command Room in Eclipse Chat after specification review.
-- [ ] Implement approved research, content and metrics workflows in Eclipse AI Hub.
+- [x] Close the Teamly no-plan evaluation without payment or integrations.
+- [x] Implement the first Growth Command Room review workflow in Eclipse Chat.
+- [x] Implement the bounded five-role Growth executor in Eclipse AI Hub.
+- [x] Define the Eclipse Forge OS business model and office expansion gates.
 - [ ] Move secret-bearing local files into an encrypted vault and rotate exposed credentials.
 - [ ] Review all dirty repositories manually; do not bulk-commit them.
 
@@ -31,11 +32,11 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 
 ### P0: first observable run
 
-- [ ] Define the `agents.v1` contract, threat model and data ownership invariants.
-- [ ] Build a fixture-backed Agent Office UI without touching production execution.
-- [ ] Implement bounded run lifecycle, cancellation and budget policy in AI Hub.
-- [ ] Add Market Researcher, Claim Verifier, Content Strategist and Metrics Analyst.
-- [ ] Demonstrate one evidence-backed positioning audit with human acceptance.
+- [x] Define the `agents.v1` contract, threat model and data ownership invariants.
+- [x] Build the first tenant-scoped Growth Command Room review surface.
+- [x] Implement bounded one-step execution, cancellation and per-user budget policy.
+- [x] Add Researcher, Strategist, Writer, Claim Auditor and Editor roles.
+- [ ] Demonstrate one evidence-backed positioning audit with human acceptance and metrics.
 
 ## Eclipse Growth OS sequence
 
@@ -56,9 +57,20 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 
 ### P2: owned orchestration
 
-- [ ] Add the Growth Command Room review queue and weekly decision log to Eclipse Chat.
-- [ ] Add Claim Verifier, Strategist, Writer and Metrics workflows to Eclipse AI Hub.
+- [x] Add the Growth Command Room review queue to Eclipse Chat.
+- [x] Add bounded Researcher, Strategist, Writer, Claim Auditor and Editor workflows to AI Hub.
+- [ ] Add the weekly decision log and qualified-action metrics to Eclipse Chat.
 - [ ] Route human-reviewed demo renders through Eclipse Media.
+
+### P3: business expansion
+
+- [ ] Validate one positioning promise against five real Eclipse Forge artifacts.
+- [x] Add a manual metadata-only `threads.signal.batch.v1` contract and safety test.
+- [ ] Add a reviewed fixture and local import preview for `threads.signal.batch.v1`.
+- [ ] Package the AI Opportunity Audit with explicit scope, exclusions and acceptance criteria.
+- [ ] Publish one sanitized observable-run demonstration after human acceptance.
+- [ ] Choose Research Office or Builder Office as the second commercial wedge from paid demand.
+- [ ] Add connector distribution only after capability pinning, poisoning/SSRF review and re-approval rules.
 
 ## Integration sequence
 
@@ -93,6 +105,21 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 Every repository appears in the portfolio inventory, but only products with a stable owner, contract and release path join the runtime graph. Incubators have 60 days to be promoted, merged or archived.
 
 ## Changelog
+
+### 2026-08-06
+
+- Defined the Eclipse Forge OS business model: initial ICP, office portfolio, progressive
+  revenue ladder, validation scorecard and stage gates from owned proof to recurring
+  platform. The acquisition loop keeps observable stages from high-volume content
+  workflows but explicitly rejects mass accounts, anti-detect tooling, unauthorized
+  scraping and autonomous publication.
+- Added a security boundary for future MCP/connectors: untrusted metadata, version/hash
+  pinning, approval invalidation on change, SSRF controls, scoped authentication and
+  toxic-flow review. No connector, OAuth scope or external action was enabled.
+- Added the bounded `threads.signal.batch.v1` JSON Schema and regression test. It accepts
+  at most twenty manually observed public signals, fixes the initial profile to Pavel's
+  personal engineering profile and intentionally has no post-body, credential or private
+  analytics field.
 
 ### 2026-08-03
 

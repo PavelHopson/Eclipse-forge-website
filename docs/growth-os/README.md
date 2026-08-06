@@ -51,6 +51,13 @@ Priority is reassessed in the weekly review using evidence, not posting frequenc
 7. **Distribution:** manual during the pilot; every link uses the agreed UTM taxonomy.
 8. **Measurement:** qualified actions feed the weekly review and backlog.
 
+For social discovery, the system adopts the useful part of “content factory” workflows:
+clear stages and measurable feedback. It rejects account farms, anti-detect browsers,
+unauthorized scraping and autonomous publishing. The first Threads loop uses manually
+reviewed public signals, no more than three approved drafts per week and one personal
+engineering profile; an official read-only API adapter is a later, separately reviewed
+capability.
+
 System ownership:
 
 | Component | Responsibility |
@@ -127,6 +134,9 @@ and claims that AI replaces an employee or guarantees income.
 - **Days 61-90:** scale only channels and offers that generate qualified actions;
   introduce narrowly scoped read-only integrations only after a separate review.
 
+The wider commercial thesis and office portfolio are documented in
+[Eclipse Forge OS business model](../eclipse-forge-os-business-model.md).
+
 ## Metrics
 
 Primary business outcomes:
@@ -161,4 +171,6 @@ Every review answers five questions:
 5. What is the single highest-value next action, with owner and deadline?
 
 Use [weekly-review.md](weekly-review.md) for the decision record. Machine-readable
-contracts live in [schemas](schemas).
+contracts live in [schemas](schemas), including the bounded, metadata-only
+[`threads.signal.batch.v1`](schemas/threads-signal-batch.schema.json) contract for the
+manual channel pilot.

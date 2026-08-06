@@ -30,6 +30,11 @@ database migration is implied by this decision.
 The product does not promise autonomous employees, guaranteed income or error-free AI.
 Its differentiator is observable, bounded and reversible execution.
 
+The commercial model, customer sequence, office portfolio and validation gates are
+defined in [Eclipse Forge OS business model](eclipse-forge-os-business-model.md). The
+platform expands through proven office templates and productized implementation, not by
+presenting all repositories as one undifferentiated “mega service”.
+
 ## Core audience
 
 The first audience is a technical founder, product owner or small team that wants to
@@ -192,6 +197,7 @@ Agent count, token volume and the amount of generated text are not success metri
 | P1 | S | Cost and token telemetry | AI Hub aggregates | Sensitive content enters telemetry | Store bounded aggregates and sanitized events |
 | P2 | L | Reusable office templates | Proven first workflow | Marketplace slop | Require owner, version, tests and capability manifest |
 | P2 | L | Media production office | Eclipse Media contract | Unreviewed generated media | Keep preview and human approval mandatory |
+| P2 | M | Reviewed connector packaging | Capability manifest and pinning | Tool poisoning, rug pulls, SSRF or toxic flows | Invalidate approval whenever tool metadata or schema changes |
 | P3 | XL | External and Sentinel capabilities | Isolation and scoped identities | Account or local-machine compromise | Introduce one read-only connector at a time |
 
 ## Product boundaries
