@@ -13,6 +13,7 @@ This directory is the single documentation source of truth for Eclipse Forge OS:
 | [Security and release runbook](security-and-release-runbook.md) | Release, rollback, secret and repository lifecycle rules |
 | [Growth OS](growth-os/README.md) | First Office template, Teamly record, metrics and machine-readable Growth contracts |
 | [Security Registry](security/README.md) | Security invariants, lethal-trifecta gate, risks and reviewed fixtures |
+| [Stage 0 execution packet](execution/stage-0/README.md) | First bounded objective, public evidence, analytics baseline, risk review and decision gate |
 
 New Eclipse Forge OS plans and contracts belong in this tree. Product-specific runtime
 documentation remains in the repository that owns the implementation.

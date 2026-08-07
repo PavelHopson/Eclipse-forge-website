@@ -26,11 +26,28 @@ test('Eclipse Forge OS documentation lives under one discoverable hub', async ()
     'security-and-release-runbook.md',
     'growth-os/README.md',
     'security/README.md',
+    'execution/stage-0/README.md',
   ];
 
   await Promise.all(required.map((path) => access(resolve(hubRoot, path))));
   const hubReadme = await readFile(resolve(hubRoot, 'README.md'), 'utf8');
   for (const path of required.slice(1)) assert.match(hubReadme, new RegExp(path.replaceAll('.', '\\.')));
+});
+
+test('Stage 0 execution packet exposes every decision input', async () => {
+  const stageRoot = resolve(hubRoot, 'execution/stage-0');
+  const required = [
+    'objective.md',
+    'public-evidence.md',
+    'analytics-baseline.md',
+    'risk-review.md',
+    'positioning-audit.md',
+    'decision.md',
+  ];
+
+  await Promise.all(required.map((path) => access(resolve(stageRoot, path))));
+  const stageReadme = await readFile(resolve(stageRoot, 'README.md'), 'utf8');
+  for (const path of required) assert.match(stageReadme, new RegExp(path.replaceAll('.', '\\.')));
 });
 
 test('relative Markdown links inside the Eclipse Forge OS hub resolve', async () => {

@@ -16,6 +16,7 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 - [x] Implement the bounded five-role Growth executor in Eclipse AI Hub.
 - [x] Define the Eclipse Forge OS business model and office expansion gates.
 - [x] Define the platform operating plan, provisional risk register and Security Invariant Registry.
+- [x] Prepare the Stage 0 public-evidence positioning audit packet and honest analytics baseline.
 - [ ] Move secret-bearing local files into an encrypted vault and rotate exposed credentials.
 - [ ] Review all dirty repositories manually; do not bulk-commit them.
 
@@ -38,6 +39,7 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 - [x] Implement bounded one-step execution, cancellation and per-user budget policy.
 - [x] Add Researcher, Strategist, Writer, Claim Auditor and Editor roles.
 - [ ] Demonstrate one evidence-backed positioning audit with human acceptance and metrics.
+- [x] Bound the first positioning-audit objective, evidence allowlist, risk review and human decision gate.
 - [x] Add `security.invariant.v1` and the draft public-only Growth Office fixture.
 - [ ] Map each Growth invariant to verified runtime regression-test evidence.
 
@@ -108,6 +110,14 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 Every repository appears in the portfolio inventory, but only products with a stable owner, contract and release path join the runtime graph. Incubators have 60 days to be promoted, merged or archived.
 
 ## Changelog
+
+### 2026-08-07 — Stage 0 execution packet
+
+- Prepared the first public-data-only Eclipse Growth Office objective with a five-role,
+  zero-tool, zero-external-action policy; added the allowlisted evidence inventory,
+  explicit `not_available` analytics baseline, UTM v1 contract, NIST SP 800-30 risk
+  review, draft positioning audit and human decision record. No account, OAuth,
+  publication, payment or production capability was enabled.
 
 ### 2026-08-07 — documentation hub
 
