@@ -3,11 +3,11 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
 const schemaUrl = new URL(
-  '../docs/security/security-invariant.schema.json',
+  '../docs/eclipse-forge-os/security/security-invariant.schema.json',
   import.meta.url,
 );
 const growthFixtureUrl = new URL(
-  '../docs/security/fixtures/growth-office.security-invariant.v1.json',
+  '../docs/eclipse-forge-os/security/fixtures/growth-office.security-invariant.v1.json',
   import.meta.url,
 );
 

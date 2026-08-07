@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
 const schemaUrl = new URL(
-  '../docs/growth-os/schemas/threads-signal-batch.schema.json',
+  '../docs/eclipse-forge-os/growth-os/schemas/threads-signal-batch.schema.json',
   import.meta.url,
 );
 

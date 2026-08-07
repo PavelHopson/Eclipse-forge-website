@@ -5,7 +5,7 @@ Pavel Hopson's engineering brand, public repositories, products and commercial
 services. Its goal is qualified traffic and actions, not content volume.
 
 Growth OS is the first internal operating workflow for the ecosystem's flagship
-product program: [Eclipse Forge OS and its Agent Office](../eclipse-forge-os.md).
+product program: [Eclipse Forge OS and its Agent Office](../README.md).
 Eclipse Forge OS is the product; Eclipse Growth OS is one office template running
 inside it.
 
@@ -135,7 +135,7 @@ and claims that AI replaces an employee or guarantees income.
   introduce narrowly scoped read-only integrations only after a separate review.
 
 The wider commercial thesis and office portfolio are documented in
-[Eclipse Forge OS business model](../eclipse-forge-os-business-model.md).
+[Eclipse Forge OS business model](../business-model.md).
 
 ## Metrics
 

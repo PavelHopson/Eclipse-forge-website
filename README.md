@@ -10,8 +10,9 @@
 Репозиторий публикует versioned registry экосистемы в `public/ecosystem/manifest.json`.
 Он описывает роли продуктов, владение данными и зрелость интеграций, не выдавая запланированные API за готовые.
 
-- Архитектура: [`docs/ecosystem-architecture.md`](docs/ecosystem-architecture.md)
-- Security и releases: [`docs/ecosystem-security-and-release-runbook.md`](docs/ecosystem-security-and-release-runbook.md)
+- Eclipse Forge OS: [`docs/eclipse-forge-os/`](docs/eclipse-forge-os/README.md)
+- Архитектура: [`docs/eclipse-forge-os/architecture.md`](docs/eclipse-forge-os/architecture.md)
+- Security и releases: [`docs/eclipse-forge-os/security-and-release-runbook.md`](docs/eclipse-forge-os/security-and-release-runbook.md)
 - Локальный health report: `docs/portfolio-status.generated.md` (генерируется командой ниже и не коммитится)
 
 ```bash

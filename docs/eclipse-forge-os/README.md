@@ -1,5 +1,22 @@
 # Eclipse Forge OS
 
+## Documentation hub
+
+This directory is the single documentation source of truth for Eclipse Forge OS:
+
+| Document | Purpose |
+| --- | --- |
+| [README](README.md) | Flagship product decision, Agent Office contract and readiness definition |
+| [Operating plan](operating-plan.md) | Delivery stages, owners, risk register, metrics and the current starting sequence |
+| [Business model](business-model.md) | Audiences, office portfolio, revenue ladder and commercial validation gates |
+| [Architecture](architecture.md) | Federated product topology, ownership and integration contracts |
+| [Security and release runbook](security-and-release-runbook.md) | Release, rollback, secret and repository lifecycle rules |
+| [Growth OS](growth-os/README.md) | First Office template, Teamly record, metrics and machine-readable Growth contracts |
+| [Security Registry](security/README.md) | Security invariants, lethal-trifecta gate, risks and reviewed fixtures |
+
+New Eclipse Forge OS plans and contracts belong in this tree. Product-specific runtime
+documentation remains in the repository that owns the implementation.
+
 ## Product decision
 
 **Eclipse Forge OS is the flagship product of the Eclipse Forge ecosystem.** It is a
@@ -31,12 +48,12 @@ The product does not promise autonomous employees, guaranteed income or error-fr
 Its differentiator is observable, bounded and reversible execution.
 
 The commercial model, customer sequence, office portfolio and validation gates are
-defined in [Eclipse Forge OS business model](eclipse-forge-os-business-model.md). The
+defined in [Eclipse Forge OS business model](business-model.md). The
 platform expands through proven office templates and productized implementation, not by
 presenting all repositories as one undifferentiated “mega service”.
 
 The ordered implementation program, risk register, stage gates and “start here” sequence
-are maintained in the [Eclipse Forge OS operating plan](eclipse-forge-os-operating-plan.md).
+are maintained in the [Eclipse Forge OS operating plan](operating-plan.md).
 
 ## Core audience
 

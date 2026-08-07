@@ -29,7 +29,7 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 - **Architecture:** Eclipse Chat control plane + Eclipse AI Hub execution + Eclipse
   Library evidence + Sentinel local capabilities + Eclipse Media artifacts.
 - **Current claim:** internal product program. Do not market it as shipped until the
-  flagship readiness definition in `docs/eclipse-forge-os.md` is satisfied.
+  flagship readiness definition in `docs/eclipse-forge-os/README.md` is satisfied.
 
 ### P0: first observable run
 
@@ -108,6 +108,13 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 Every repository appears in the portfolio inventory, but only products with a stable owner, contract and release path join the runtime graph. Incubators have 60 days to be promoted, merged or archived.
 
 ## Changelog
+
+### 2026-08-07 — documentation hub
+
+- Consolidated the flagship overview, operating plan, business model, architecture,
+  security/release runbook, Growth OS and Security Registry under the single
+  `docs/eclipse-forge-os/` source-of-truth directory. Updated internal references and
+  test paths; no contracts, policies or runtime behavior changed.
 
 ### 2026-08-07
 
