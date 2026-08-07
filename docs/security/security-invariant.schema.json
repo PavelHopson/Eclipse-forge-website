@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eclipse-forge.ru/schemas/security/security.invariant.v1.json",
+  "title": "Eclipse Forge OS Security Invariant",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "officeTemplate",
+    "officeVersion",
+    "owner",
+    "assessment",
+    "riskSignals",
+    "lethalTrifectaDecision",
+    "executionAllowed",
+    "invariants",
+    "threatEvents",
+    "reassessmentTriggers",
+    "status"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "security.invariant.v1" },
+    "id": { "type": "string", "pattern": "^security-invariant-[a-z0-9-]+$" },
+    "officeTemplate": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "officeVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "owner": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "assessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["purpose", "scope", "assessmentDate", "method", "constraints"],
+      "properties": {
+        "purpose": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "scope": { "type": "string", "minLength": 1, "maxLength": 1000 },
+        "assessmentDate": { "type": "string", "format": "date" },
+        "method": { "const": "nist-sp-800-30-qualitative" },
+        "constraints": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1, "maxLength": 500 } }
+      }
+    },
+    "riskSignals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["privateDataAccess", "untrustedContentAccess", "agentDirectedExternalCommunication", "mutationCapability", "persistentMemory", "productionAccess"],
+      "properties": {
+        "privateDataAccess": { "type": "boolean" },
+        "untrustedContentAccess": { "type": "boolean" },
+        "agentDirectedExternalCommunication": { "type": "boolean" },
+        "mutationCapability": { "type": "boolean" },
+        "persistentMemory": { "type": "boolean" },
+        "productionAccess": { "type": "boolean" }
+      }
+    },
+    "lethalTrifectaDecision": { "enum": ["not_present", "broken_by_design", "blocked"] },
+    "executionAllowed": { "type": "boolean" },
+    "invariants": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "statement", "enforcement", "evidence", "failureMode", "testIds"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^INV-[0-9]{3}$" },
+          "statement": { "type": "string", "minLength": 1, "maxLength": 500 },
+          "enforcement": { "type": "string", "minLength": 1, "maxLength": 500 },
+          "evidence": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1, "maxLength": 500 } },
+          "failureMode": { "const": "fail_closed" },
+          "testIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1, "maxLength": 200 } }
+        }
+      }
+    },
+    "threatEvents": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "sourceType", "event", "likelihood", "impact", "inherentRisk", "treatment", "residualRisk", "owner"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^EF-R[0-9]{2}$" },
+          "sourceType": { "enum": ["adversarial", "accidental", "structural", "environmental"] },
+          "event": { "type": "string", "minLength": 1, "maxLength": 1000 },
+          "likelihood": { "$ref": "#/$defs/riskLevel" },
+          "impact": { "$ref": "#/$defs/riskLevel" },
+          "inherentRisk": { "$ref": "#/$defs/riskLevel" },
+          "treatment": { "enum": ["mitigate", "transfer", "avoid", "accept"] },
+          "residualRisk": { "$ref": "#/$defs/riskLevel" },
+          "owner": { "type": "string", "minLength": 1, "maxLength": 120 }
+        }
+      }
+    },
+    "reassessmentTriggers": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "prompt_change",
+          "model_change",
+          "tool_change",
+          "memory_change",
+          "retrieval_change",
+          "connector_change",
+          "data_classification_change",
+          "security_incident",
+          "annual_review"
+        ]
+      }
+    },
+    "status": { "enum": ["draft", "reviewed", "approved", "retired"] },
+    "reviewedBy": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "reviewedAt": { "type": "string", "format": "date-time" }
+  },
+  "$defs": {
+    "riskLevel": { "enum": ["very_low", "low", "moderate", "high", "very_high"] }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "riskSignals": {
+            "properties": {
+              "privateDataAccess": { "const": true },
+              "untrustedContentAccess": { "const": true },
+              "agentDirectedExternalCommunication": { "const": true }
+            },
+            "required": ["privateDataAccess", "untrustedContentAccess", "agentDirectedExternalCommunication"]
+          }
+        },
+        "required": ["riskSignals"]
+      },
+      "then": {
+        "properties": {
+          "lethalTrifectaDecision": { "const": "blocked" },
+          "executionAllowed": { "const": false }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "status": { "const": "approved" } }, "required": ["status"] },
+      "then": { "required": ["reviewedBy", "reviewedAt"] }
+    }
+  ]
+}

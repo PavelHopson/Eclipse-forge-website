@@ -35,6 +35,9 @@ defined in [Eclipse Forge OS business model](eclipse-forge-os-business-model.md)
 platform expands through proven office templates and productized implementation, not by
 presenting all repositories as one undifferentiated “mega service”.
 
+The ordered implementation program, risk register, stage gates and “start here” sequence
+are maintained in the [Eclipse Forge OS operating plan](eclipse-forge-os-operating-plan.md).
+
 ## Core audience
 
 The first audience is a technical founder, product owner or small team that wants to

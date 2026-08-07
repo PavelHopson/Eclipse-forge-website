@@ -15,6 +15,7 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 - [x] Implement the first Growth Command Room review workflow in Eclipse Chat.
 - [x] Implement the bounded five-role Growth executor in Eclipse AI Hub.
 - [x] Define the Eclipse Forge OS business model and office expansion gates.
+- [x] Define the platform operating plan, provisional risk register and Security Invariant Registry.
 - [ ] Move secret-bearing local files into an encrypted vault and rotate exposed credentials.
 - [ ] Review all dirty repositories manually; do not bulk-commit them.
 
@@ -37,6 +38,8 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 - [x] Implement bounded one-step execution, cancellation and per-user budget policy.
 - [x] Add Researcher, Strategist, Writer, Claim Auditor and Editor roles.
 - [ ] Demonstrate one evidence-backed positioning audit with human acceptance and metrics.
+- [x] Add `security.invariant.v1` and the draft public-only Growth Office fixture.
+- [ ] Map each Growth invariant to verified runtime regression-test evidence.
 
 ## Eclipse Growth OS sequence
 
@@ -105,6 +108,18 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 Every repository appears in the portfolio inventory, but only products with a stable owner, contract and release path join the runtime graph. Incubators have 60 days to be promoted, merged or archived.
 
 ## Changelog
+
+### 2026-08-07
+
+- Added the unified Eclipse Forge OS operating plan: current state, complete product and
+  customer journeys, workstreams, NIST-inspired risk model, provisional EF-R01–EF-R06
+  register, four delivery stages, exit gates, scoreboard, responsibility model and the
+  exact first 72-hour sequence.
+- Added `security.invariant.v1`, a draft Growth Office fixture and regression tests. The
+  schema forces `executionAllowed=false` when private-data access, untrusted-content
+  access and agent-directed external communication coexist; approval requires an
+  independent reviewer and timestamp. No runtime permission, connector or external
+  action was added.
 
 ### 2026-08-06
 

@@ -21,6 +21,9 @@ surfaces on Landing.
 This document defines hypotheses to validate. It does not claim customers, revenue,
 retention or product-market fit that have not been observed.
 
+Execution order, owners, risk treatment and stage exit criteria are defined in the
+[Eclipse Forge OS operating plan](eclipse-forge-os-operating-plan.md).
+
 ## Product category and position
 
 Working category: **human-controlled AI operations workspace**.
