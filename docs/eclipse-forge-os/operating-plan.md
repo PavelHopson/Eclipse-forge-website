@@ -31,9 +31,11 @@ The program already has important working foundations:
 
 The material gaps are:
 
-- no platform-wide Security Invariant Registry or maintained risk register;
+- the Security Invariant Registry exists, but its controls are not yet mapped to every
+  runtime negative test;
 - no accepted end-to-end Growth run with attributable business measurement;
-- no analytics baseline and stable UTM contract;
+- the honest analytics baseline and UTM contract exist, but instrumentation is not yet
+  selected, privacy-reviewed or deployed;
 - no packaged AI Opportunity Audit with explicit scope and acceptance criteria;
 - no repeat-use evidence for a second Office or recurring platform pricing;
 - no production connector that has passed data, permission, retention and rollback gates.
@@ -281,13 +283,13 @@ highest-value action and one stop condition.
 
 ## Start here: next 72 hours
 
-1. Accept this operating plan as the program source of truth.
-2. Review the first Growth `security.invariant.v1` fixture and assign owners to EF-R01–R06.
+1. Review the [Stage 0 execution decision](execution/stage-0/decision.md).
+2. Map the first Growth `security.invariant.v1` fixture to runtime test evidence.
 3. Keep EF-R01 open until plaintext secrets are vaulted and potentially exposed values
    are rotated; do not index those paths.
-4. Choose one real positioning-audit objective: Eclipse Forge OS itself is the default.
-5. Capture the current analytics baseline, using `not_available` where tracking is absent.
-6. Run the bounded Growth workflow and review one artifact; do not publish it.
+4. Use the bounded Eclipse Forge OS objective and public evidence packet already prepared.
+5. Preserve the current `not_available` analytics baseline until a reviewed source exists.
+6. After human acceptance, run the bounded Growth workflow and review one artifact; do not publish it.
 7. Use the accepted/rejected result to finalize the AI Opportunity Audit offer and first
    landing experiment.
 

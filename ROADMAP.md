@@ -17,6 +17,7 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 - [x] Define the Eclipse Forge OS business model and office expansion gates.
 - [x] Define the platform operating plan, provisional risk register and Security Invariant Registry.
 - [x] Prepare the Stage 0 public-evidence positioning audit packet and honest analytics baseline.
+- [x] Consolidate the complete Eclipse Forge portfolio and documentation registry under the OS hub.
 - [ ] Move secret-bearing local files into an encrypted vault and rotate exposed credentials.
 - [ ] Review all dirty repositories manually; do not bulk-commit them.
 
@@ -110,6 +111,15 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 Every repository appears in the portfolio inventory, but only products with a stable owner, contract and release path join the runtime graph. Incubators have 60 days to be promoted, merged or archived.
 
 ## Changelog
+
+### 2026-08-07 — unified project documentation registry
+
+- Indexed 35 first-party repositories and one provenance-sensitive internal fork under
+  `docs/eclipse-forge-os/projects/`; recorded canonical documents, maturity evidence,
+  current Git branches/heads, dirty-tree counts, documentation gaps and one consolidated
+  P0-P3 backlog. Runtime-owned docs remain in their repositories to prevent duplicate
+  sources of truth. Star CRM, secret-bearing paths, external references and temporary
+  worktrees were excluded and no dirty repository was changed.
 
 ### 2026-08-07 — Stage 0 execution packet
 

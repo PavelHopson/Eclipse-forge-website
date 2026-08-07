@@ -27,11 +27,45 @@ test('Eclipse Forge OS documentation lives under one discoverable hub', async ()
     'growth-os/README.md',
     'security/README.md',
     'execution/stage-0/README.md',
+    'projects/README.md',
   ];
 
   await Promise.all(required.map((path) => access(resolve(hubRoot, path))));
   const hubReadme = await readFile(resolve(hubRoot, 'README.md'), 'utf8');
   for (const path of required.slice(1)) assert.match(hubReadme, new RegExp(path.replaceAll('.', '\\.')));
+});
+
+test('project registry exposes portfolio, documents, baseline, backlog and governance', async () => {
+  const projectsRoot = resolve(hubRoot, 'projects');
+  const required = [
+    'portfolio-registry.md',
+    'documentation-registry.md',
+    'workspace-baseline.md',
+    'consolidated-backlog.md',
+    'governance-source-map.md',
+  ];
+
+  await Promise.all(required.map((path) => access(resolve(projectsRoot, path))));
+  const projectsReadme = await readFile(resolve(projectsRoot, 'README.md'), 'utf8');
+  for (const path of required) assert.match(projectsReadme, new RegExp(path.replaceAll('.', '\\.')));
+});
+
+test('portfolio registry keeps every inventoried Eclipse repository discoverable', async () => {
+  const expectedProjects = [
+    'Eclipse Forge Landing', 'Eclipse Chat', 'Eclipse AI Hub', 'Eclipse Library',
+    'Hopson Sentinel', 'Eclipse Webclaw', 'Eclipse Media', 'retry-http',
+    'Eclipse DnD Forge', 'Finflow', 'Educator AI', 'CryptoPulse',
+    'Eclipse Valhalla', 'Smart Life Assistant', 'InterviewForge',
+    'Smart Fitness Booking Agent', 'Task Manager', 'Shotforge', 'Text2Image',
+    'ModelForge', 'AI Face Fusion Pro', 'StreamForge AI', 'Cinemate Movie Finder',
+    'Modern 2048', 'Dark Roast Coffee', 'Zefir Gift Landing',
+    'Eclipse Premium Rent', 'Rent KLD Redesign', 'AI Setup', 'eclipse-vpn',
+    'Business Data Platform', 'AdService', 'KmlApiApp',
+    'Lead Sniper CAT Analytics', 'WireGuard Telegram Bot', 'oh-my-claudecode',
+  ];
+  const portfolio = await readFile(resolve(hubRoot, 'projects/portfolio-registry.md'), 'utf8');
+
+  for (const project of expectedProjects) assert.match(portfolio, new RegExp(project.replaceAll('.', '\\.')));
 });
 
 test('Stage 0 execution packet exposes every decision input', async () => {
