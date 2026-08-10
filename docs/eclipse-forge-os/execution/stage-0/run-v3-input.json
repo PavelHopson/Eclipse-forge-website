@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "growth.run.input.v1",
+  "id": "growth-stage-0-positioning-audit-v3",
+  "input": {
+    "releaseName": "Eclipse Forge OS: reviewable AI workflows for product decisions",
+    "releaseSummary": "Produce an internal positioning artifact for one bounded Eclipse Forge OS experiment. The artifact leads to a planned AI Opportunity Audit and must preserve uncertainty about demand, outcomes and flagship readiness.",
+    "audience": "Technical founders and product owners in small teams evaluating whether a bounded AI workflow is worth piloting",
+    "channel": "blog",
+    "sourceUrls": [
+      "https://eclipse-forge.ru/",
+      "https://eclipse-forge.ru/ecosystem/manifest.json",
+      "https://github.com/PavelHopson/Eclipse-forge-website",
+      "https://github.com/PavelHopson/eclipse-chat",
+      "https://github.com/PavelHopson/eclipse-ai-hub",
+      "https://github.com/PavelHopson/eclipse-library",
+      "https://github.com/PavelHopson/eclipse-hopson-sentinel",
+      "https://github.com/PavelHopson/eclipse-media"
+    ],
+    "evidenceNotes": "Verified public snapshot: https://eclipse-forge.ru/ecosystem/manifest.json identifies Eclipse Forge as a multi-product engineering ecosystem and records product roles and maturity labels. https://github.com/PavelHopson/eclipse-chat contains the Growth review/control surface. https://github.com/PavelHopson/eclipse-ai-hub contains a bounded five-role Growth executor with server-owned role order, request limits, no tool access and a human approval boundary. Eclipse Forge OS is documented as an Agent Office product program, but end-to-end flagship readiness is not established. Demand, customers, revenue, PMF and outcome improvement are unvalidated; this is missing evidence, not evidence that demand cannot exist. The audience problem is a hypothesis to test. The planned first offer is AI Opportunity Audit. The intended CTA is Request an AI Opportunity Audit. The first KPI is qualified audit requests attributable to the tracked proposition; its baseline is not_available. Do not infer customers, revenue, demand, product readiness, replacement of a team or guaranteed outcomes from this packet."
+  },
+  "execution": {
+    "provider": "ollama",
+    "model": "qwen3:8b",
+    "maxRequests": 5,
+    "wallClockMinutes": 15,
+    "costCeilingUsd": 2,
+    "actualCost": "provider-dependent"
+  },
+  "policy": {
+    "externalActions": false,
+    "publishAllowed": false,
+    "toolsAllowed": false,
+    "sourceContentTrusted": false
+  }
+}

@@ -4,10 +4,10 @@
 
 | Field | Value |
 | --- | --- |
-| Decision ID | `growth-stage-0-decision-v2` |
+| Decision ID | `growth-stage-0-decision-v3` |
 | Date prepared | 2026-08-10 |
 | Owner / approver | Pavel Hopson |
-| Status | `v2_ready_for_owner_review` |
+| Status | `v3_failed_validation` |
 | External action authorized | no |
 | Production change authorized | no |
 | Teamly/OAuth/payment authorized | no |
@@ -70,9 +70,21 @@ invalidates it.
 
 ## Next owner action
 
-Review the preserved [v2 output](run-v2-output.json) and [v2 review](run-v2-review.md),
-then record `accept`, `request_changes` or `reject` for that exact artifact. Do not
-publish.
+Review the preserved [v3 attempt](run-v3-attempt.json) and [v3 review](run-v3-review.md).
+There is no artifact to accept or publish. The next decision is whether to design an
+additive typed Evidence Card input with Eclipse Chat compatibility review; a v4 model
+ceiling is a later, separate decision.
+
+## V3 run record
+
+- **Run:** `growth-stage-0-positioning-audit-v3`
+- **Authorization:** one bounded local typed-role calibration after the AI Hub `master`
+  implementation was approved
+- **Outcome:** `failed_validation`
+- **Model calls:** four attempted; three artifacts accepted
+- **Stopped at:** Claim Auditor source URL outside the allowlist
+- **Editor called:** no
+- **External action / publication:** no / no
 
 ## Rollback
 

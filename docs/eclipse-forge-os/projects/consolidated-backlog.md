@@ -8,7 +8,7 @@ and the gate that moves work between repositories.
 
 | Stage | State | Evidence | Exit decision |
 | --- | --- | --- | --- |
-| Stage 0 — control foundation | in progress | V1 changes requested; v2 completed with no truncation but failed role-isolation review | AI Hub enforces role-specific output contracts and runtime invariants have evidence owners |
+| Stage 0 — control foundation | in progress | V3 isolated typed roles and failed closed on an invalid source; no accepted artifact | Typed Evidence Cards bind claims to sources and runtime invariants have evidence owners |
 | Stage 1 — prove one useful Office | not started | No accepted measured artifact | One useful artifact plus one attributable qualified action or explicit stop |
 | Stage 2 — repeatability and willingness to pay | not started | No repeated paid workflow | Three calibrated runs and one bounded design-partner/pilot signal |
 | Stage 3 — second wedge | not started | No demand-based second Office decision | Shared primitives reduce work and the second Office has distinct paid pull |
@@ -19,7 +19,8 @@ and the gate that moves work between repositories.
 | --- | --- | --- | --- | --- | --- |
 | S | Decide the first Stage 0 artifact | Pavel | [Run review](../execution/stage-0/run-review.md) | `ready_for_approval` is mistaken for accepted | Done: v1 recorded as `request_changes`; not published |
 | M | Correct bounded output quality and run v2 | AI Hub + Growth owner | Owner-approved five-call ceiling | Shared DATA causes cross-role output contamination | Done: v2 preserved and reviewed; keep unapproved |
-| M | Enforce role-specific Growth output contracts | AI Hub owner | [V2 review](../execution/stage-0/run-v2-review.md) and approved existing AI Hub branch | Model copies other roles or treats planned offers as verified | Move role rules to server prompts, validate typed outputs and add contamination fixtures |
+| M | Enforce role-specific Growth output contracts | AI Hub owner | [V2 review](../execution/stage-0/run-v2-review.md) and approved `master` | Model copies other roles or treats planned offers as verified | Done in `da9a602`; v3 proved role isolation and fail-closed source validation |
+| L | Add typed Evidence Cards to Growth input | AI Hub + Chat owners | [V3 review](../execution/stage-0/run-v3-review.md) and compatibility decision | Allowlisted URL is mistaken for claim-level proof | Design additive claim ID/state/source/boundary contract, then update both validators before v4 |
 | M | Resolve `EF-R01` secret debt | Pavel + platform | User-selected encrypted vault and rotation access | Existing credentials remain reachable outside the public slice | Inventory names/locations without values, migrate, rotate and verify revocation |
 | M | Map Growth security invariants to runtime negative tests | Chat + AI Hub owners | Current invariant fixture | Paper control diverges from runtime | Link every invariant to an existing test or create a missing-test issue |
 | M | Review fifteen dirty repositories individually | Pavel + repository owner | [Workspace baseline](workspace-baseline.md) | User work is overwritten or bulk-committed | Decide preserve/commit/discard per repository; never bulk-stage |

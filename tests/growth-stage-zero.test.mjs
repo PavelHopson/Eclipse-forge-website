@@ -86,3 +86,22 @@ test('Stage 0 v2 preserves limits and remains unapproved after failed quality ga
   assert.match(artifact.final, /Request an AI Opportunity Audit/u);
   assert.match(artifact.final, /not_available/u);
 });
+
+test('Stage 0 v3 preserves the typed fail-closed calibration without a final artifact', async () => {
+  const input = JSON.parse(await readFile(resolve(stageRoot, 'run-v3-input.json'), 'utf8'));
+  const attempt = JSON.parse(await readFile(resolve(stageRoot, 'run-v3-attempt.json'), 'utf8'));
+
+  assert.equal(input.id, 'growth-stage-0-positioning-audit-v3');
+  assert.equal(input.execution.maxRequests, 5);
+  assert.equal(attempt.schemaVersion, 'growth.run.attempt.v1');
+  assert.equal(attempt.id, input.id);
+  assert.equal(attempt.status, 'failed_validation');
+  assert.equal(attempt.completedRequests, 3);
+  assert.equal(attempt.failedStep, 'claims');
+  assert.match(attempt.error, /outside the source allowlist/u);
+  assert.deepEqual(attempt.artifacts.map(({ step, role }) => [step, role]), expectedSteps.slice(0, 3));
+  assert.equal(attempt.artifacts.some(({ step }) => step === 'final'), false);
+
+  const expectedSchemas = ['growth.research.v1', 'growth.strategy.v1', 'growth.draft.v1'];
+  assert.deepEqual(attempt.artifacts.map(({ content }) => JSON.parse(content).schemaVersion), expectedSchemas);
+});

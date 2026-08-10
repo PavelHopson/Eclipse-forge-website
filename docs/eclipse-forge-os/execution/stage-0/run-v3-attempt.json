@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "growth.run.attempt.v1",
+  "id": "growth-stage-0-positioning-audit-v3",
+  "status": "failed_validation",
+  "createdAt": "2026-08-10T10:19:21.138Z",
+  "updatedAt": "2026-08-10T10:20:09.589Z",
+  "completedRequests": 3,
+  "failedStep": "claims",
+  "error": "claims[1].sourceUrls contains a URL outside the source allowlist",
+  "artifacts": [
+    {
+      "step": "research",
+      "role": "Researcher",
+      "content": "{\n  \"schemaVersion\": \"growth.research.v1\",\n  \"verifiedFacts\": [\n    {\n      \"claim\": \"Eclipse Forge OS представляет собой много продуктовую инженерную экосистему с определенными ролями продуктов и метками зрелости\",\n      \"sourceUrls\": [\n        \"https://eclipse-forge.ru/ecosystem/manifest.json\"\n      ],\n      \"evidenceBoundary\": \"Публичный снимок экосистемы Eclipse Forge\"\n    },\n    {\n      \"claim\": \"Eclipse Chat содержит интерфейс для обзора и контроля роста\",\n      \"sourceUrls\": [\n        \"https://github.com/PavelHopson/eclipse-chat\"\n      ],\n      \"evidenceBoundary\": \"Исходный код Eclipse Chat\"\n    },\n    {\n      \"claim\": \"Eclipse AI Hub содержит ограниченный пятиролевой исполнитель роста с серверным управлением порядком ролей, лимитами запросов, отсутствием доступа к инструментам и границей одобрения человеком\",\n      \"sourceUrls\": [\n        \"https://github.com/PavelHopson/eclipse-ai-hub\"\n      ],\n      \"evidenceBoundary\": \"Исходный код Eclipse AI Hub\"\n    },\n    {\n      \"claim\": \"Eclipse Forge OS документируется как программа продукта Agent Office\",\n      \"sourceUrls\": [\n        \"https://eclipse-forge.ru/\"\n      ],\n      \"evidenceBoundary\": \"Официальный сайт Eclipse Forge\"\n    },\n    {\n      \"claim\": \"Планируется первое предложение — аудит возможностей AI\",\n      \"sourceUrls\": [\n        \"https://eclipse-forge.ru/\"\n      ],\n      \"evidenceBoundary\": \"Официальный сайт Eclipse Forge\"\n    },\n    {\n      \"claim\": \"Первый KPI — количество квалифицированных запросов на аудит, связанных с отслеживаемым предложением, его базовая метка отсутствует\",\n      \"sourceUrls\": [\n        \"https://eclipse-forge.ru/\"\n      ],\n      \"evidenceBoundary\": \"Официальный сайт Eclipse Forge\"\n    }\n  ],\n  \"hypotheses\": [\n    {\n      \"claim\": \"Целевая аудитория — технические основатели и владельцы продуктов в малых командах, оценивающие ценность ограниченного AI-потока\",\n      \"testNeeded\": \"Проверка на основе запросов на аудит и обратной связи от целевой аудитории\"\n    }\n  ],\n  \"unknowns\": [\n    {\n      \"question\": \"Не подтверждено наличие спроса, клиентов, выручки, PMF и улучшения результатов\",\n      \"whyItMatters\": \"Отсутствие доказательств не означает отсутствие спроса, но требует тестирования гипотезы о проблеме аудитории\"\n    },\n    {\n      \"question\": \"Не подтверждено готовность флагшипа к запуску\",\n      \"whyItMatters\": \"Готовность флагшипа влияет на принятие решения о запуске и ожидаемых результатах\"\n    },\n    {\n      \"question\": \"Не подтверждено влияние продукта на замену команды или гарантированные результаты\",\n      \"whyItMatters\": \"Эти факторы критичны для оценки ценности и рисков внедрения продукта\"\n    }\n  ]\n}",
+      "createdAt": "2026-08-10T10:19:39.419Z"
+    },
+    {
+      "step": "strategy",
+      "role": "Strategist",
+      "content": "{\n  \"schemaVersion\": \"growth.strategy.v1\",\n  \"audience\": \"Technical founders and product owners in small teams evaluating whether a bounded AI workflow is worth piloting\",\n  \"problemHypothesis\": \"Technical founders and product owners in small teams are unsure if a bounded AI workflow can provide measurable value without requiring full-scale AI integration\",\n  \"proposition\": \"Eclipse Forge OS offers a bounded AI workflow that enables product decisions without full AI integration\",\n  \"offer\": \"Request an AI Opportunity Audit to identify AI-driven value in your workflow\",\n  \"cta\": \"Request an AI Opportunity Audit\",\n  \"kpi\": {\n    \"name\": \"Qualified audit requests attributable to the tracked proposition\",\n    \"baseline\": \"not_available\"\n  }\n}",
+      "createdAt": "2026-08-10T10:19:51.949Z"
+    },
+    {
+      "step": "draft",
+      "role": "Writer",
+      "content": "{\n  \"schemaVersion\": \"growth.draft.v1\",\n  \"title\": \"Eclipse Forge OS: Позиционирование ограниченного AI-потока\",\n  \"body\": \"Eclipse Forge OS — это экспериментальная программа, которая предлагает ограниченный AI-поток для поддержки решений по продукту. Мы фокусируемся на технических основателях и владельцах продуктов в малых командах, которые оценивают, стоит ли запускать ограниченный AI-поток. В отличие от полной интеграции AI, Eclipse Forge OS предлагает управляемый подход с четкими границами, включая серверное управление ролями, лимиты запросов и необходимость человеческого одобрения. Пока не подтверждено, что спрос, клиенты, выручка или PMF существуют, но это не значит, что они не могут появиться. Мы планируем начать с аудита возможностей AI, чтобы выявить ценность вашего потока.\",\n  \"evidenceBoundary\": \"Публичный снимок экосистемы Eclipse Forge и исходный код проектов\",\n  \"cta\": \"Request an AI Opportunity Audit\"\n}",
+      "createdAt": "2026-08-10T10:19:59.031Z"
+    }
+  ]
+}

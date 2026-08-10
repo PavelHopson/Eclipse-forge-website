@@ -20,6 +20,7 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 - [x] Consolidate the complete Eclipse Forge portfolio and documentation registry under the OS hub.
 - [x] Execute and preserve the first bounded local five-role Growth run; artifact review requests changes.
 - [x] Execute and preserve the corrected v2 run; token truncation is fixed, role isolation is not.
+- [x] Execute typed-role v3; three artifacts passed, Claim Auditor failed closed on an invalid source, and Editor did not run.
 - [ ] Move secret-bearing local files into an encrypted vault and rotate exposed credentials.
 - [ ] Review all dirty repositories manually; do not bulk-commit them.
 
@@ -113,6 +114,15 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 Every repository appears in the portfolio inventory, but only products with a stable owner, contract and release path join the runtime graph. Incubators have 60 days to be promoted, merged or archived.
 
 ## Changelog
+
+### 2026-08-10 — typed Growth v3 calibration
+
+- Ran the first local typed-role calibration against AI Hub commit `da9a602`. Four model
+  calls were attempted in 48,451 ms; three canonical role artifacts passed. Claim Auditor
+  referenced a URL outside the input allowlist, so validation stopped the workflow and
+  Editor was not called. The attempt is preserved as `failed_validation`, not as an
+  approvable run. Role isolation improved; claim-level grounding still needs additive
+  typed Evidence Cards and Chat compatibility review before any separately authorized v4.
 
 ### 2026-08-10 — second bounded Growth calibration
 

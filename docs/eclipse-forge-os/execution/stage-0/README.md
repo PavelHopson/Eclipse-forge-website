@@ -18,8 +18,12 @@ action.
 | [Run v2 input](run-v2-input.json) | Owner-requested corrections and production token ceilings |
 | [Run v2 output](run-v2-output.json) | Exact second five-role result, preserved without human edits |
 | [Run v2 review](run-v2-review.md) | Deterministic checks, role-contamination finding and next gate |
+| [Run v3 input](run-v3-input.json) | Evidence-only input for the first typed-role calibration |
+| [Run v3 attempt](run-v3-attempt.json) | Three accepted typed artifacts and the fail-closed Claim Auditor error |
+| [Run v3 review](run-v3-review.md) | Security result, semantic findings and Evidence Card gate |
 
 Current state: two local five-role runs are preserved. The owner requested changes to v1;
 v2 completed but its review also recommends `request_changes` because shared DATA caused
-cross-role output contamination. Neither artifact is approved. No publication,
-connector, OAuth, payment or production change is authorized by this packet.
+cross-role output contamination. V3 validated typed role isolation, then failed closed at
+Claim Auditor on an out-of-allowlist URL; no final artifact exists. Nothing is approved.
+No publication, connector, OAuth, payment or production change is authorized by this packet.
