@@ -18,6 +18,7 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 - [x] Define the platform operating plan, provisional risk register and Security Invariant Registry.
 - [x] Prepare the Stage 0 public-evidence positioning audit packet and honest analytics baseline.
 - [x] Consolidate the complete Eclipse Forge portfolio and documentation registry under the OS hub.
+- [x] Execute and preserve the first bounded local five-role Growth run; artifact review requests changes.
 - [ ] Move secret-bearing local files into an encrypted vault and rotate exposed credentials.
 - [ ] Review all dirty repositories manually; do not bulk-commit them.
 
@@ -111,6 +112,16 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 Every repository appears in the portfolio inventory, but only products with a stable owner, contract and release path join the runtime graph. Incubators have 60 days to be promoted, merged or archived.
 
 ## Changelog
+
+### 2026-08-10 — first bounded Growth run
+
+- Recorded Pavel's acceptance of the Stage 0 public-data-only objective and executed
+  Researcher, Strategist, Writer, Claim Auditor and Editor through AI Hub's server-owned
+  prompt builder with local Ollama `qwen3:8b`. Five of five calls completed in 356,440 ms
+  with zero tools, URL fetches, OAuth, publication or external mutations. The exact
+  `growth.run.v1` output is preserved as `ready_for_approval`; review recommends
+  `request_changes` because the Claim Auditor truncated and the final retained unsupported
+  wording. This is not yet a Chat JWT/workspace E2E proof and no artifact was approved.
 
 ### 2026-08-07 — unified project documentation registry
 

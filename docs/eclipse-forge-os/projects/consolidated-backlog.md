@@ -8,7 +8,7 @@ and the gate that moves work between repositories.
 
 | Stage | State | Evidence | Exit decision |
 | --- | --- | --- | --- |
-| Stage 0 — control foundation | in progress | Security Registry and public-data execution packet exist | Human accepts one bounded Growth run and runtime invariants have evidence owners |
+| Stage 0 — control foundation | in progress | Objective accepted; one local five-role run completed and review requests changes | Owner decides artifact disposition and runtime invariants have evidence owners |
 | Stage 1 — prove one useful Office | not started | No accepted measured artifact | One useful artifact plus one attributable qualified action or explicit stop |
 | Stage 2 — repeatability and willingness to pay | not started | No repeated paid workflow | Three calibrated runs and one bounded design-partner/pilot signal |
 | Stage 3 — second wedge | not started | No demand-based second Office decision | Shared primitives reduce work and the second Office has distinct paid pull |
@@ -17,8 +17,8 @@ and the gate that moves work between repositories.
 
 | Size | Item | Owner | Dependency | Main risk | Next action |
 | --- | --- | --- | --- | --- | --- |
-| S | Approve or revise Stage 0 positioning-audit run | Pavel | [Stage 0 decision](../execution/stage-0/decision.md) | Execution begins with an ambiguous audience or scope | Record `accept`, `request_changes` or `reject` |
-| M | Complete one five-role Growth run and human review | AI Hub + Chat + Pavel | Accepted objective and public evidence packet | Generated prose is mistaken for useful proof | Preserve role outputs, cost, editing time and final decision; do not publish |
+| S | Decide the first Stage 0 artifact | Pavel | [Run review](../execution/stage-0/run-review.md) | `ready_for_approval` is mistaken for accepted | Record `request_changes`, `accept_after_edit` or `reject`; do not publish |
+| M | Correct bounded output quality and run v2 | AI Hub + Growth owner | Owner requests changes and approves a new five-call ceiling | Truncation or unsupported wording survives review | Constrain Claim Auditor structure, validate completion and rerun as a new version |
 | M | Resolve `EF-R01` secret debt | Pavel + platform | User-selected encrypted vault and rotation access | Existing credentials remain reachable outside the public slice | Inventory names/locations without values, migrate, rotate and verify revocation |
 | M | Map Growth security invariants to runtime negative tests | Chat + AI Hub owners | Current invariant fixture | Paper control diverges from runtime | Link every invariant to an existing test or create a missing-test issue |
 | M | Review fifteen dirty repositories individually | Pavel + repository owner | [Workspace baseline](workspace-baseline.md) | User work is overwritten or bulk-committed | Decide preserve/commit/discard per repository; never bulk-stage |

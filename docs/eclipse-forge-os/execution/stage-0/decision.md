@@ -7,14 +7,14 @@
 | Decision ID | `growth-stage-0-decision-v1` |
 | Date prepared | 2026-08-07 |
 | Owner / approver | Pavel Hopson |
-| Status | `ready_for_human_review` |
+| Status | `accepted_for_bounded_run` |
 | External action authorized | no |
 | Production change authorized | no |
 | Teamly/OAuth/payment authorized | no |
 
-The evidence packet, baseline, risk review and draft positioning audit are complete
-enough for a human decision. The Growth Office AI run itself has not been executed and
-no artifact has been published.
+The evidence packet, baseline, risk review and draft positioning audit were accepted for
+one bounded run. Five local role calls completed on 2026-08-10; the resulting artifact is
+`ready_for_approval`, has not been owner-approved and has not been published.
 
 ## Decision options
 
@@ -22,18 +22,18 @@ no artifact has been published.
 - `request_changes`: identify the exact audience, problem, claim or limit to change;
 - `reject`: stop the positioning-audit experiment and record the reason.
 
-## Recommended decision
+## Accepted run decision
 
-`accept` the public-data-only internal run with the limits in
-[objective.md](objective.md). This creates the smallest useful proof while keeping
-private data, tools, external communication and production outside the execution path.
+The public-data-only internal run was accepted with the limits in
+[objective.md](objective.md). The execution result and quality decision are separate:
+[run-review.md](run-review.md) currently recommends `request_changes` for the artifact.
 
 ## Approval record
 
-- **Decision:** `pending`
-- **Decided by:** `pending`
-- **Decision date:** `pending`
-- **Reason:** `pending`
+- **Decision:** `accept`
+- **Decided by:** Pavel Hopson
+- **Decision date:** 2026-08-10
+- **Reason:** Proceed with the smallest public-data-only proof using the existing five-role Growth executor and the prepared evidence allowlist.
 - **Requested changes:** none recorded
 - **Accepted residual risks:** none recorded
 
@@ -41,12 +41,11 @@ An approval is valid only for `growth-stage-0-positioning-audit-v1` and the evid
 allowlist in [public-evidence.md](public-evidence.md). Any scope or capability change
 invalidates it.
 
-## Next action after approval
+## Next owner action
 
-Run one five-role internal Growth workflow, preserve each role output and model cost,
-then compare the resulting audit with [positioning-audit.md](positioning-audit.md).
-Record human editing time and an `accept`, `request_changes` or `reject` artifact
-decision. Do not publish.
+Review [run-review.md](run-review.md) and record `request_changes`, `accept_after_edit` or
+`reject` for the exact artifact. If edited, preserve a new version and actual human
+editing time. Do not publish.
 
 ## Rollback
 

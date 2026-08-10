@@ -77,6 +77,9 @@ test('Stage 0 execution packet exposes every decision input', async () => {
     'risk-review.md',
     'positioning-audit.md',
     'decision.md',
+    'run-input.json',
+    'run-output.json',
+    'run-review.md',
   ];
 
   await Promise.all(required.map((path) => access(resolve(stageRoot, path))));
