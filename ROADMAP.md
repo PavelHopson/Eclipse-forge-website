@@ -121,9 +121,11 @@ Every repository appears in the portfolio inventory, but only products with a st
 - Implemented and pushed the additive Evidence Card transport contract in Eclipse AI Hub
   `07dcd1b` and Eclipse Chat `512239c`. Card-enabled Researcher and Claim Auditor outputs
   bind claims to exact evidence IDs and allowlisted HTTPS sources; legacy inputs retain v1
-  schemas. Full tests, typechecks and builds passed in both repositories. Preserved the
-  compatibility, verification and rollback preview under Stage 0. No v4 model run,
-  connector, publication or production deployment was authorized.
+  schemas. Full tests, typechecks and builds passed in both repositories. Chat CI initially
+  exposed and then fixed a High transitive nanoid advisory in `7a859cb`; CI and Security
+  Gate are green, while its production job waits unapproved. AI Hub's existing workflow
+  auto-deployed `07dcd1b` without a manual gate, so adding production environment
+  protection is now P0. No v4 model run, connector or publication was authorized.
 
 ### 2026-08-10 — typed Growth v3 calibration
 
