@@ -4,17 +4,18 @@
 
 | Field | Value |
 | --- | --- |
-| Decision ID | `growth-stage-0-decision-v1` |
-| Date prepared | 2026-08-07 |
+| Decision ID | `growth-stage-0-decision-v2` |
+| Date prepared | 2026-08-10 |
 | Owner / approver | Pavel Hopson |
-| Status | `accepted_for_bounded_run` |
+| Status | `v2_ready_for_owner_review` |
 | External action authorized | no |
 | Production change authorized | no |
 | Teamly/OAuth/payment authorized | no |
 
 The evidence packet, baseline, risk review and draft positioning audit were accepted for
-one bounded run. Five local role calls completed on 2026-08-10; the resulting artifact is
-`ready_for_approval`, has not been owner-approved and has not been published.
+one bounded run. Five local role calls completed on 2026-08-10; the resulting v1 artifact
+was not accepted and has not been published. The owner requested the documented changes
+and authorized one separate v2 run under the same no-action boundary.
 
 ## Decision options
 
@@ -41,11 +42,37 @@ An approval is valid only for `growth-stage-0-positioning-audit-v1` and the evid
 allowlist in [public-evidence.md](public-evidence.md). Any scope or capability change
 invalidates it.
 
+## Artifact review record
+
+- **Artifact:** `growth-stage-0-positioning-audit-v1`
+- **Decision:** `request_changes`
+- **Decided by:** Pavel Hopson
+- **Decision date:** 2026-08-10
+- **Reason:** The Claim Auditor output was incomplete and the final artifact retained
+  unsupported or ambiguous wording, an unvalidated pain stated as fact, an internal CTA
+  and a KPI that could not yet be measured.
+- **Required changes:** preserve uncertainty, use the exact AI Opportunity Audit offer and
+  CTA, keep the first funnel baseline `not_available`, complete the material-claim audit,
+  and make the final positioning proposition directly reviewable.
+- **Publication authorized:** no
+
+## V2 run authorization
+
+- **Run:** `growth-stage-0-positioning-audit-v2`
+- **Decision:** `accept_for_bounded_run`
+- **Decided by:** Pavel Hopson
+- **Decision date:** 2026-08-10
+- **Ceiling:** five local model requests, 15 wall-clock minutes, production prompt-builder
+  token ceilings of 1,600 tokens per role and 2,000 tokens for Editor
+- **Capabilities:** no tools, URL fetching, OAuth, secrets, private data, external actions,
+  payment, publication or production writes
+- **Acceptance:** v2 remains unapproved until deterministic checks and human review finish
+
 ## Next owner action
 
-Review [run-review.md](run-review.md) and record `request_changes`, `accept_after_edit` or
-`reject` for the exact artifact. If edited, preserve a new version and actual human
-editing time. Do not publish.
+Review the preserved [v2 output](run-v2-output.json) and [v2 review](run-v2-review.md),
+then record `accept`, `request_changes` or `reject` for that exact artifact. Do not
+publish.
 
 ## Rollback
 

@@ -53,3 +53,36 @@ test('Stage 0 input stays public-only and excludes executable capabilities', asy
   }
   assert.doesNotMatch(source, /(?:api[_-]?key|client[_-]?secret|password|bearer)\s*[:=]/i);
 });
+
+test('Stage 0 v2 preserves limits and remains unapproved after failed quality gates', async () => {
+  const source = await readFile(resolve(stageRoot, 'run-v2-input.json'), 'utf8');
+  const input = JSON.parse(source);
+  const run = JSON.parse(await readFile(resolve(stageRoot, 'run-v2-output.json'), 'utf8'));
+
+  assert.equal(input.id, 'growth-stage-0-positioning-audit-v2');
+  assert.equal(input.execution.maxRequests, 5);
+  assert.equal(input.execution.wallClockMinutes, 15);
+  assert.equal(run.schemaVersion, 'growth.run.v1');
+  assert.equal(run.id, input.id);
+  assert.equal(run.status, 'ready_for_approval');
+  assert.equal(run.approval, null);
+  assert.equal(run.execution.completedRequests, 5);
+  assert.deepEqual(run.policy, input.policy);
+  assert.deepEqual(run.artifacts.map(({ step, role }) => [step, role]), expectedSteps);
+
+  const artifact = Object.fromEntries(run.artifacts.map(({ step, content }) => [step, content]));
+  const claimsComplete = /AUDIT_COMPLETE\W*$/u.test(artifact.claims);
+  const finalComplete = /FINAL_COMPLETE\W*$/u.test(artifact.final);
+  const finalAvoidsForbiddenWording = !/(?:доказательства эффективности|AI-командн(?:ый|ого) агент)/iu.test(
+    artifact.final,
+  );
+  const rolesStayIsolated = !/AUDIT_COMPLETE|FINAL_COMPLETE/u.test(artifact.research)
+    && !/FINAL_COMPLETE/u.test(artifact.claims);
+
+  assert.equal(claimsComplete, false);
+  assert.equal(finalComplete, true);
+  assert.equal(finalAvoidsForbiddenWording, false);
+  assert.equal(rolesStayIsolated, false);
+  assert.match(artifact.final, /Request an AI Opportunity Audit/u);
+  assert.match(artifact.final, /not_available/u);
+});

@@ -19,6 +19,7 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 - [x] Prepare the Stage 0 public-evidence positioning audit packet and honest analytics baseline.
 - [x] Consolidate the complete Eclipse Forge portfolio and documentation registry under the OS hub.
 - [x] Execute and preserve the first bounded local five-role Growth run; artifact review requests changes.
+- [x] Execute and preserve the corrected v2 run; token truncation is fixed, role isolation is not.
 - [ ] Move secret-bearing local files into an encrypted vault and rotate exposed credentials.
 - [ ] Review all dirty repositories manually; do not bulk-commit them.
 
@@ -112,6 +113,16 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 Every repository appears in the portfolio inventory, but only products with a stable owner, contract and release path join the runtime graph. Incubators have 60 days to be promoted, merged or archived.
 
 ## Changelog
+
+### 2026-08-10 — second bounded Growth calibration
+
+- Recorded the owner's `request_changes` decision for v1 and executed one separately
+  authorized v2 run through the same server-owned AI Hub builder and local Ollama
+  `qwen3:8b`. Five of five calls completed in 264,349 ms with production token ceilings
+  and no tools, URL fetches, connectors or external actions. Truncation was resolved, but
+  shared `evidenceNotes` caused Researcher, Claim Auditor and Editor responsibilities to
+  bleed into one another. V2 remains unapproved; the next gate is role-specific typed
+  output enforcement in AI Hub on an explicitly approved existing branch.
 
 ### 2026-08-10 — first bounded Growth run
 
