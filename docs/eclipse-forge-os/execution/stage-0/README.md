@@ -21,9 +21,12 @@ action.
 | [Run v3 input](run-v3-input.json) | Evidence-only input for the first typed-role calibration |
 | [Run v3 attempt](run-v3-attempt.json) | Three accepted typed artifacts and the fail-closed Claim Auditor error |
 | [Run v3 review](run-v3-review.md) | Security result, semantic findings and Evidence Card gate |
+| [Evidence Card contract preview](evidence-card-contract-preview.md) | Implemented additive runtime contract, compatibility, verification and next separate gates |
 
 Current state: two local five-role runs are preserved. The owner requested changes to v1;
 v2 completed but its review also recommends `request_changes` because shared DATA caused
 cross-role output contamination. V3 validated typed role isolation, then failed closed at
-Claim Auditor on an out-of-allowlist URL; no final artifact exists. Nothing is approved.
+Claim Auditor on an out-of-allowlist URL; no final artifact exists. The additive Evidence
+Card runtime contract is now implemented in AI Hub and Chat, but no v4 run is authorized.
+Nothing is approved.
 No publication, connector, OAuth, payment or production change is authorized by this packet.

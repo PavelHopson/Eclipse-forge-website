@@ -105,3 +105,15 @@ test('Stage 0 v3 preserves the typed fail-closed calibration without a final art
   const expectedSchemas = ['growth.research.v1', 'growth.strategy.v1', 'growth.draft.v1'];
   assert.deepEqual(attempt.artifacts.map(({ content }) => JSON.parse(content).schemaVersion), expectedSchemas);
 });
+
+test('Evidence Card contract preview preserves compatibility and the separate v4 gate', async () => {
+  const preview = await readFile(resolve(stageRoot, 'evidence-card-contract-preview.md'), 'utf8');
+
+  assert.match(preview, /07dcd1b/u);
+  assert.match(preview, /512239c/u);
+  assert.match(preview, /growth\.research\.v2/u);
+  assert.match(preview, /growth\.claims\.v2/u);
+  assert.match(preview, /without `evidenceCards` remain valid/u);
+  assert.match(preview, /No external action is approved/u);
+  assert.match(preview, /separate authorization before preparing or executing v4/u);
+});

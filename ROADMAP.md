@@ -21,6 +21,7 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 - [x] Execute and preserve the first bounded local five-role Growth run; artifact review requests changes.
 - [x] Execute and preserve the corrected v2 run; token truncation is fixed, role isolation is not.
 - [x] Execute typed-role v3; three artifacts passed, Claim Auditor failed closed on an invalid source, and Editor did not run.
+- [x] Implement additive typed Evidence Cards in Eclipse AI Hub and Eclipse Chat while preserving legacy Growth inputs.
 - [ ] Move secret-bearing local files into an encrypted vault and rotate exposed credentials.
 - [ ] Review all dirty repositories manually; do not bulk-commit them.
 
@@ -114,6 +115,15 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 Every repository appears in the portfolio inventory, but only products with a stable owner, contract and release path join the runtime graph. Incubators have 60 days to be promoted, merged or archived.
 
 ## Changelog
+
+### 2026-08-10 — Evidence Card runtime contract
+
+- Implemented and pushed the additive Evidence Card transport contract in Eclipse AI Hub
+  `07dcd1b` and Eclipse Chat `512239c`. Card-enabled Researcher and Claim Auditor outputs
+  bind claims to exact evidence IDs and allowlisted HTTPS sources; legacy inputs retain v1
+  schemas. Full tests, typechecks and builds passed in both repositories. Preserved the
+  compatibility, verification and rollback preview under Stage 0. No v4 model run,
+  connector, publication or production deployment was authorized.
 
 ### 2026-08-10 — typed Growth v3 calibration
 
