@@ -115,6 +115,13 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 Every repository appears in the portfolio inventory, but only products with a stable owner, contract and release path join the runtime graph. Incubators have 60 days to be promoted, merged or archived.
 
 ## Changelog
+### 2026-08-12 — Eclipse Forge visual system v1 and CryptoPulse asset repair
+
+- Published a versioned visual-system contract with `cinematic`, `product` and `operational`
+  intensity profiles so the brand can stay consistent without turning dense product UI into a landing page.
+- Self-hosted Outfit and Inter with their OFL licenses; the landing no longer makes a runtime request to Google Fonts.
+- Repaired the CryptoPulse card asset chain: a 161 KiB WebP is now primary and the existing valid PNG is a real fallback.
+- Added regression coverage for tokens, local fonts and both CryptoPulse assets.
 
 ### 2026-08-12 — interactive readiness pilot and bundle budget
 
