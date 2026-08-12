@@ -60,7 +60,7 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 
 ### P1: first validated funnel
 
-- [ ] Create the AI Project Production Readiness Checklist.
+- [x] Create and expose the AI Project Production Readiness Checklist without a signup wall.
 - [ ] Build and measure its landing funnel.
 - [ ] Package AI Opportunity Audit, Research Agent and MCP Server offers.
 - [ ] Calibrate Teamly agents on three public Eclipse Forge artifacts.
@@ -115,6 +115,15 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 Every repository appears in the portfolio inventory, but only products with a stable owner, contract and release path join the runtime graph. Incubators have 60 days to be promoted, merged or archived.
 
 ## Changelog
+### 2026-08-12 — first owned lead magnet
+
+- Added the public AI Project Production Readiness Checklist as an indexable Markdown asset and
+  a bilingual conversion section inside the main landing story.
+- The download requires no email or account; CTA language describes the exact artifact instead
+  of promising revenue, reach or guaranteed production readiness.
+- Updated `llms.txt`, sitemap freshness and social preview metadata. A 1200×630 PNG raster of the
+  existing branded SVG replaces SVG in OG/Twitter metadata; regression tests cover the change.
+- No analytics SDK, tracker, form backend or third-party UI dependency was added.
 
 ### 2026-08-10 — Evidence Card runtime contract
 
