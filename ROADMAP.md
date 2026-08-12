@@ -115,6 +115,16 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 Every repository appears in the portfolio inventory, but only products with a stable owner, contract and release path join the runtime graph. Incubators have 60 days to be promoted, merged or archived.
 
 ## Changelog
+
+### 2026-08-12 — interactive readiness pilot and bundle budget
+
+- Replaced the static readiness list with an accessible local self-check: explicit pressed states,
+  live progress, reset, keyboard focus and reduced-motion-safe feedback. It stores and sends no data.
+- Implemented the UI-pattern pilot as clean-room code on the existing Eclipse semantic tokens;
+  no Magic UI, SmoothUI, TweakCN code, installer or dependency was imported.
+- Split React, Framer Motion and the Construction route into cacheable chunks. The largest JavaScript
+  chunk dropped from about 574 KB to 215 KB; the production build now enforces a 500 KiB chunk budget.
+
 ### 2026-08-12 — first owned lead magnet
 
 - Added the public AI Project Production Readiness Checklist as an indexable Markdown asset and

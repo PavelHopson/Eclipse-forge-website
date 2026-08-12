@@ -10,7 +10,8 @@
     "test": "node --test tests/*.test.mjs",
     "typecheck": "tsc --build --pretty false --force",
     "check": "npm run validate:ecosystem && npm test && npm run typecheck",
-    "build": "npm run check && vite build",
+    "build": "npm run check && vite build && npm run check:bundle",
+    "check:bundle": "node scripts/check-bundle-budget.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

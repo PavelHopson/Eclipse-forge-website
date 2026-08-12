@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { MotionConfig, motion, useScroll, useSpring } from 'framer-motion';
 import { SiteHeader } from '../components/layout/SiteHeader';
 import { CursorLight } from '../components/ui/CursorLight';
@@ -12,8 +13,18 @@ import { BroadcastIcon, GitHubIcon, InstagramIcon, TelegramIcon } from '../compo
 import { contactDetails } from '../data/content';
 import { useLocale, type Locale } from '../lib/locale';
 import { useHashRoute, useScrollResetOnRoute } from '../lib/routing';
-import { ConstructionPage } from '../pages/ConstructionPage';
 import { LandingPage } from '../pages/LandingPage';
+
+const ConstructionPage = lazy(async () => {
+  const module = await import('../pages/ConstructionPage');
+  return { default: module.ConstructionPage };
+});
+
+function RouteLoading() {
+  return <main className="relative z-10 flex min-h-[60vh] items-center justify-center px-5" aria-busy="true" aria-live="polite">
+    <p className="type-meta" style={{ color: 'var(--text-3)' }}>Eclipse Forge loading</p>
+  </main>;
+}
 
 const footerCopy: Record<
   Locale,
@@ -93,7 +104,11 @@ export function App() {
 
       <SiteHeader />
 
-      {isConstruction ? <ConstructionPage /> : <LandingPage />}
+      {isConstruction ? (
+        <Suspense fallback={<RouteLoading />}>
+          <ConstructionPage />
+        </Suspense>
+      ) : <LandingPage />}
 
       <footer className="relative z-10 overflow-hidden border-t px-5 py-12 sm:px-8 lg:px-12 lg:py-16" style={{ borderColor: 'var(--line)' }}>
         <div className="absolute -bottom-16 right-[10%] hidden opacity-15 lg:block">

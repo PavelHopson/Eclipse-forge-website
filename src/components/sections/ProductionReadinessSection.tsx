@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { revealUp, stagger, viewport } from '../../lib/animation';
 import { useLocale, type Locale } from '../../lib/locale';
+import { ReadinessPulse } from '../ui/ReadinessPulse';
 
 const copy: Record<Locale, { eyebrow: string; title: string; accent: string; lead: string; button: string; note: string; checks: Array<{ title: string; text: string }> }> = {
   ru: {
@@ -56,12 +57,9 @@ export function ProductionReadinessSection() {
             </div>
           </motion.div>
 
-          <motion.ol variants={stagger} className="border-t lg:border-l lg:border-t-0" style={{ borderColor: 'var(--line)' }}>
-            {text.checks.map((item, index) => <motion.li key={item.title} variants={revealUp} className="grid grid-cols-[44px_1fr] gap-4 border-b px-6 py-5 last:border-b-0 sm:grid-cols-[56px_1fr] sm:px-9 sm:py-6" style={{ borderColor: 'var(--line)' }}>
-              <span className="font-mono text-xs" style={{ color: 'var(--gold)' }}>0{index + 1}</span>
-              <div><h3 className="font-display text-base" style={{ color: 'var(--text-1)' }}>{item.title}</h3><p className="mt-1 text-[13px] leading-6" style={{ color: 'var(--text-3)' }}>{item.text}</p></div>
-            </motion.li>)}
-          </motion.ol>
+          <motion.div variants={revealUp} className="border-t lg:border-l lg:border-t-0" style={{ borderColor: 'var(--line)' }}>
+            <ReadinessPulse items={text.checks} locale={locale} />
+          </motion.div>
         </div>
       </div>
     </motion.section>
