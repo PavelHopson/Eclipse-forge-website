@@ -101,7 +101,10 @@ deployments as part of this record.
 
 ## Next separate gates
 
-1. Design and review a low-cognitive-load Evidence Card editor in Eclipse Chat with safe
-   defaults, inline validation and no connector access.
-2. Map every Growth security invariant to a named runtime regression test.
-3. Ask the owner for separate authorization before preparing or executing v4.
+The reviewed Eclipse Chat editor was implemented in `f1336b7`. It defaults new cards to
+`hypothesis`, restricts `verified` provenance to the run's allowlisted HTTPS sources,
+requires a second action before removal and exposes no connector access. Desktop and
+390 px browser QA passed without horizontal overflow.
+
+1. Map every Growth security invariant to a named runtime regression test.
+2. Ask the owner for separate authorization before preparing or executing v4.

@@ -22,6 +22,7 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 - [x] Execute and preserve the corrected v2 run; token truncation is fixed, role isolation is not.
 - [x] Execute typed-role v3; three artifacts passed, Claim Auditor failed closed on an invalid source, and Editor did not run.
 - [x] Implement additive typed Evidence Cards in Eclipse AI Hub and Eclipse Chat while preserving legacy Growth inputs.
+- [x] Add the reviewed Evidence Card editor to Eclipse Chat with safe defaults and allowlisted provenance.
 - [x] Protect Eclipse AI Hub production deploys with a required reviewer, `master`-only policy and regression-tested workflow binding.
 - [ ] Move secret-bearing local files into an encrypted vault and rotate exposed credentials.
 - [ ] Review all dirty repositories manually; do not bulk-commit them.
@@ -116,6 +117,17 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 Every repository appears in the portfolio inventory, but only products with a stable owner, contract and release path join the runtime graph. Incubators have 60 days to be promoted, merged or archived.
 
 ## Changelog
+### 2026-08-13 — Eclipse Chat Evidence Card editor
+
+- Shipped Eclipse Chat `f1336b7` (`v1.7.49`): Growth drafts can optionally bind exact
+  claims to evidence state, boundary and an allowlisted HTTPS source. New cards default
+  to `hypothesis`; `verified` cards fail closed without provenance, and removal requires
+  a second explicit action.
+- Browser QA passed at 1280 px and 390 px with no horizontal overflow. Chat verification
+  passed 52 suites / 294 tests, workspace typecheck, production build and dependency audit
+  with zero vulnerabilities. No OAuth, connector, publication, payment or v4 execution
+  was enabled.
+
 ### 2026-08-13 — AI Hub production approval gate
 
 - Configured the existing AI Hub `production` environment with PavelHopson as required
