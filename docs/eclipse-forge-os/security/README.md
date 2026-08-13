@@ -9,6 +9,8 @@ templates. It does not grant execution permission.
   current public-data-only design boundary as a draft.
 - [Growth runtime test evidence](growth-runtime-test-evidence.md) maps every fixture test ID
   to an exact test or an explicit `MISSING-` backlog item.
+- [Growth independent-review packet](growth-invariant-review-packet.md) freezes the reviewed
+  SHAs, residual risks and owner checklist without self-approving the fixture.
 
 The schema blocks `executionAllowed=true` when private-data access, untrusted-content
 access and agent-directed external communication are all present. Consumers must still

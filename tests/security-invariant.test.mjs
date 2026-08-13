@@ -14,6 +14,10 @@ const growthEvidenceMapUrl = new URL(
   '../docs/eclipse-forge-os/security/growth-runtime-test-evidence.md',
   import.meta.url,
 );
+const growthReviewPacketUrl = new URL(
+  '../docs/eclipse-forge-os/security/growth-invariant-review-packet.md',
+  import.meta.url,
+);
 
 test('security invariant schema fails closed for the lethal trifecta', async () => {
   const schema = JSON.parse(await readFile(schemaUrl, 'utf8'));
@@ -67,4 +71,18 @@ test('every Growth invariant test id resolves to evidence or an explicit missing
     assert.equal(evidenceMap.includes(`| \`${testId}\` |`), true);
   }
   assert.match(evidenceMap, /No invariant record may move to `approved` while[\s\S]+`MISSING-`/);
+});
+
+test('Growth independent review packet stays pending and binds exact immutable evidence', async () => {
+  const fixture = JSON.parse(await readFile(growthFixtureUrl, 'utf8'));
+  const packet = await readFile(growthReviewPacketUrl, 'utf8');
+
+  assert.equal(fixture.status, 'draft');
+  assert.match(packet, /Decision status:\*\* `pending_independent_review`/);
+  assert.match(packet, /aa56478749246588e4af587584b7fd3b7b17f3dc/);
+  assert.match(packet, /09661beb3db5fd5dfb2ddcad84c82b2f29949c03/);
+  assert.match(packet, /8591e19a70ffd720e4b8d87232d0df3ecc897d8e/);
+  assert.match(packet, /process-local execution lease/);
+  assert.match(packet, /not PostgreSQL integration evidence/);
+  assert.match(packet, /must never be inferred from green CI/);
 });
