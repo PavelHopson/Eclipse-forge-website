@@ -116,6 +116,7 @@ test('Evidence Card contract preview preserves compatibility and the separate v4
   assert.match(preview, /without `evidenceCards` remain valid/u);
   assert.match(preview, /No external action is approved/u);
   assert.match(preview, /automatically deployed `07dcd1b`/u);
-  assert.match(preview, /waiting for PavelHopson's `production` environment/u);
+  assert.match(preview, /AI Hub commit `09661be` bound deploys/u);
+  assert.match(preview, /deploy run `31686020404` is waiting/u);
   assert.match(preview, /separate authorization before preparing or executing v4/u);
 });

@@ -22,6 +22,7 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 - [x] Execute and preserve the corrected v2 run; token truncation is fixed, role isolation is not.
 - [x] Execute typed-role v3; three artifacts passed, Claim Auditor failed closed on an invalid source, and Editor did not run.
 - [x] Implement additive typed Evidence Cards in Eclipse AI Hub and Eclipse Chat while preserving legacy Growth inputs.
+- [x] Protect Eclipse AI Hub production deploys with a required reviewer, `master`-only policy and regression-tested workflow binding.
 - [ ] Move secret-bearing local files into an encrypted vault and rotate exposed credentials.
 - [ ] Review all dirty repositories manually; do not bulk-commit them.
 
@@ -115,6 +116,15 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 Every repository appears in the portfolio inventory, but only products with a stable owner, contract and release path join the runtime graph. Incubators have 60 days to be promoted, merged or archived.
 
 ## Changelog
+### 2026-08-13 — AI Hub production approval gate
+
+- Configured the existing AI Hub `production` environment with PavelHopson as required
+  reviewer and a `master`-only deployment branch policy. Commit `09661be` binds the VPS
+  workflow to that environment and regression-tests the binding, read-only permissions,
+  timeout and strict SSH host verification. CI run `31686020409` passed; deploy run
+  `31686020404` is waiting without approval, proving that a normal push no longer mutates
+  the VPS automatically.
+
 ### 2026-08-12 — Eclipse Forge visual system v1 and CryptoPulse asset repair
 
 - Published a versioned visual-system contract with `cinematic`, `product` and `operational`

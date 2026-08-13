@@ -6,8 +6,8 @@ The additive Evidence Card transport contract is implemented and pushed. This re
 the reviewable preview of the change; it is not authorization for a v4 model run,
 production deployment, OAuth connection, publication or any other external action.
 The repository automation produced one unplanned consequence: AI Hub `master` auto-deployed
-after push because its workflow has no manual production gate. This is recorded below and
-must not be confused with owner approval.
+the original contract because its workflow had no manual production gate. This is recorded
+below and must not be confused with owner approval. The gap was closed in `09661be`.
 
 | Surface | Branch | Commit | State |
 | --- | --- | --- | --- |
@@ -22,8 +22,11 @@ must not be confused with owner approval.
   `nanoid < 3.3.17` advisory.
 - Chat commit `7a859cb` upgraded the transitive lockfile package to `3.3.17`; local and
   GitHub audit, CI, CodeQL, Gitleaks and SBOM gates passed.
-- Chat deploy run `31380980795` is waiting for PavelHopson's `production` environment
-  approval. It was not approved in this work session.
+- Chat deploy run `31380980795` was not approved and was later cancelled after waiting.
+- AI Hub commit `09661be` bound deploys to the protected `production` environment, added
+  PavelHopson as required reviewer, limited the deployment branch to `master` and added a
+  regression test. CI run `31686020409` passed; deploy run `31686020404` is waiting and
+  was not approved in this work session.
 
 ## What changed
 
@@ -91,16 +94,14 @@ No external action is approved by this record. A separately proposed v4 run woul
 
 Code rollback is a reviewed revert of `07dcd1b`, `512239c` and, only if dependency risk is
 accepted again, `7a859cb`; legacy inputs remain available even without rollback. AI Hub
-production rollback is now applicable because its workflow auto-deployed. Before any
-rollback push, preview the target SHA, health checks, expected downtime and the same
-auto-deploy side effect. Do not approve the waiting Chat production deployment as part of
-this record.
+production rollback remains applicable because the original workflow auto-deployed. Any
+future deploy or rollback now waits at the protected environment gate; preview the target
+SHA, health checks and expected downtime before approval. Do not approve waiting production
+deployments as part of this record.
 
 ## Next separate gates
 
 1. Design and review a low-cognitive-load Evidence Card editor in Eclipse Chat with safe
    defaults, inline validation and no connector access.
-2. Add a protected `production` environment/manual approval gate to the AI Hub deploy
-   workflow before the next `master` push.
-3. Map every Growth security invariant to a named runtime regression test.
-4. Ask the owner for separate authorization before preparing or executing v4.
+2. Map every Growth security invariant to a named runtime regression test.
+3. Ask the owner for separate authorization before preparing or executing v4.
