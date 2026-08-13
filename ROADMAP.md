@@ -50,7 +50,7 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 - [x] Bound the first positioning-audit objective, evidence allowlist, risk review and human decision gate.
 - [x] Add `security.invariant.v1` and the draft public-only Growth Office fixture.
 - [x] Map each Growth invariant to verified runtime regression-test evidence or an explicit missing-test backlog.
-- [x] Publish the first invariant-to-test evidence map; `INV-002/003` remain partial until four named negative tests land.
+- [x] Close the four named Growth negative-test gaps in Chat `aa56478`; all three invariants now have runtime evidence, while the fixture remains draft pending independent review.
 
 ## Eclipse Growth OS sequence
 
@@ -119,6 +119,15 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 Every repository appears in the portfolio inventory, but only products with a stable owner, contract and release path join the runtime graph. Incubators have 60 days to be promoted, merged or archived.
 
 ## Changelog
+### 2026-08-13 — Growth invariant negative tests
+
+- Eclipse Chat `aa56478` (`v1.7.50`) closed the four explicit runtime gaps: concurrent
+  budget exhaustion, duplicate step leases, tenant-scoped mutation lookup and human
+  approval/version enforcement. Chat now passes 55 suites / 298 tests.
+- Updated the evidence map and fixture IDs from `MISSING-` to exact named tests. All three
+  invariants are covered, but the fixture remains `draft`; neither coverage nor this record
+  authorizes v4, deployment approval or external actions.
+
 ### 2026-08-13 — Growth invariant runtime evidence map
 
 - Replaced prose-only fixture test references with stable IDs mapped to exact Eclipse Chat

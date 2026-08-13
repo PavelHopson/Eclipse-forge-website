@@ -2,9 +2,9 @@
 
 **Assessment date:** 2026-08-13
 
-**Scope:** Eclipse Chat `f1336b7`, Eclipse AI Hub `09661be`
+**Scope:** Eclipse Chat `aa56478`, Eclipse AI Hub `09661be`
 
-**Decision:** mapped with gaps; this record does not authorize v4 or production deployment.
+**Decision:** mapped and covered; this record does not authorize v4 or production deployment.
 
 This map turns the prose `security.invariant.v1` fixture into traceable repository evidence.
 `covered` means a named test exercises the negative boundary. `partial` means some enforcement
@@ -22,20 +22,21 @@ explicit backlog item, never evidence that a control passed.
 | `AIH-GROWTH-ORDER-001` | `INV-002` | covered | `eclipse-ai-hub/gateway/tests/gateway.test.mjs` — `isolates the Growth executor behind its own scope and fixed workflow` | The dedicated scope cannot skip the fixed next role. |
 | `CHAT-GROWTH-ORDER-001` | `INV-002` | covered | `eclipse-chat/apps/server/src/lib/growthRunContract.test.ts` — `creates a fail-closed draft and requires the fixed role order` | A direct execution artifact cannot be appended out of order. |
 | `CHAT-GROWTH-CANCEL-001` | `INV-002` | covered | `eclipse-chat/apps/server/src/ai/growthHub.test.ts` — `maps an explicit caller abort to a safe cancellation` | Caller cancellation propagates as a bounded safe error. |
-| `MISSING-CHAT-GROWTH-BUDGET-001` | `INV-002` | missing | `eclipse-chat/apps/server/src/lib/growthBudget.ts` | Add a concurrent exhaustion test proving the daily limit cannot be exceeded during create/update races. |
-| `MISSING-CHAT-GROWTH-CONCURRENCY-001` | `INV-002` | missing | `eclipse-chat/apps/server/src/routes/growthRuns.ts` | Add a route-level test proving two simultaneous clicks produce at most one provider request. |
+| `CHAT-GROWTH-BUDGET-001` | `INV-002` | covered | `eclipse-chat/apps/server/src/lib/growthBudget.test.ts` — `does not exceed the daily limit during concurrent first-use races` | Ten concurrent first-use attempts cannot consume more than the configured limit. |
+| `CHAT-GROWTH-CONCURRENCY-001` | `INV-002` | covered | `eclipse-chat/apps/server/src/lib/growthStepLease.test.ts` — `allows at most one provider request reservation per run` | The atomic run lease rejects duplicate provider-request reservations and owner-mismatched release. |
 | `CHAT-GROWTH-IMPORT-001` | `INV-003` | covered | `eclipse-chat/apps/server/tests/growth-runs.test.ts` — `normalizes safe links and removes the source approval claim` | Upstream approval is discarded at the Chat trust boundary. |
-| `CHAT-GROWTH-ROUTE-AUTH-001` | `INV-003` | partial | `eclipse-chat/apps/server/tests/growth-runs.test.ts` — `guards every endpoint and bounds imports and review mutations` | Every route has JWT and rate-limit guards; it does not prove database membership denial. |
-| `MISSING-CHAT-GROWTH-MEMBERSHIP-001` | `INV-003` | missing | `eclipse-chat/apps/server/src/routes/growthRuns.ts` | Add injected-route tests for non-member denial and cross-workspace run IDs on every mutation path. |
-| `MISSING-CHAT-GROWTH-APPROVAL-001` | `INV-003` | missing | `eclipse-chat/apps/server/src/routes/growthRuns.ts` | Add negative tests for missing `TASK_APPROVE`, stale version and absent `humanConfirmed`. |
+| `CHAT-GROWTH-ROUTE-AUTH-001` | `INV-003` | covered | `eclipse-chat/apps/server/tests/growth-runs.test.ts` — `guards every endpoint and bounds imports and review mutations` | Every route has JWT and bounded rate-limit guards. |
+| `CHAT-GROWTH-MEMBERSHIP-001` | `INV-003` | covered | `eclipse-chat/apps/server/tests/growth-routes-negative.test.ts` — `denies non-members and scopes mutation lookups to the requested workspace` | Non-members fail closed and cross-workspace run IDs cannot bypass the `{id, serverId}` predicate. |
+| `CHAT-GROWTH-APPROVAL-001` | `INV-003` | covered | `eclipse-chat/apps/server/tests/growth-routes-negative.test.ts` — `requires approval permission, human confirmation and the current version` | Missing permission or confirmation fails before mutation; stale versions return a conflict. |
 
 ## Invariant result
 
 | Invariant | Result | Residual risk | Exit condition |
 | --- | --- | --- | --- |
 | `INV-001` | covered | Low: adversarial corpus depth can grow, but both execution and storage fail closed today | Keep the four named tests green on prompt/schema changes. |
-| `INV-002` | partial | Moderate: implementation has budget and in-process duplicate guards, but their race boundaries lack focused tests | Close both `MISSING-CHAT-GROWTH-*` tests before v4. |
-| `INV-003` | partial | Moderate: approval reset and JWT are tested; tenant membership and human approval need route-level negative proof | Close membership and approval tests before v4. |
+| `INV-002` | covered | Low: the database remains the cross-process budget authority; the in-process lease intentionally protects only duplicate requests in one Chat process | Keep budget and lease tests green; reassess if execution becomes multi-process. |
+| `INV-003` | covered | Low: tenant, permission, confirmation and optimistic-version boundaries are covered at the route layer | Keep route negative tests green on authz or review changes. |
 
-The Growth Office fixture remains `draft`. No invariant record may move to `approved` while
-one of its referenced IDs starts with `MISSING-`.
+The Growth Office fixture remains `draft`: runtime test coverage is necessary but does not replace
+independent review. No invariant record may move to `approved` while one of its referenced IDs starts
+with `MISSING-`.

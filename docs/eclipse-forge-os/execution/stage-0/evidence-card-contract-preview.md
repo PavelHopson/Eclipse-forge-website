@@ -106,6 +106,6 @@ The reviewed Eclipse Chat editor was implemented in `f1336b7`. It defaults new c
 requires a second action before removal and exposes no connector access. Desktop and
 390 px browser QA passed without horizontal overflow.
 
-1. Close the four `MISSING-` route/budget/concurrency/approval tests recorded in the
-   [runtime evidence map](../../security/growth-runtime-test-evidence.md).
+1. Independently review the now-covered [runtime evidence map](../../security/growth-runtime-test-evidence.md);
+   test coverage alone does not change the fixture from `draft`.
 2. Ask the owner for separate authorization before preparing or executing v4.
