@@ -83,6 +83,8 @@ test('Growth independent review packet stays pending and binds exact immutable e
   assert.match(packet, /09661beb3db5fd5dfb2ddcad84c82b2f29949c03/);
   assert.match(packet, /8591e19a70ffd720e4b8d87232d0df3ecc897d8e/);
   assert.match(packet, /process-local execution lease/);
+  assert.match(packet, /one Supervisor program and no `numprocs`/);
   assert.match(packet, /not PostgreSQL integration evidence/);
+  assert.match(packet, /recommended only if the reviewer confirms the live deployment is/);
   assert.match(packet, /must never be inferred from green CI/);
 });

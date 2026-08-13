@@ -47,6 +47,10 @@ the wider repositories contain no vulnerability.
 replicas could both reserve the same run before the optimistic database write; only one result
 would persist, but both provider requests could consume time or money.
 
+The reviewed repository config `eclipse-chat/deploy/supervisor/eclipse-chat-server.conf` defines
+one Supervisor program and no `numprocs`, consistent with the intended single-process topology.
+This is repository evidence, not live SSH verification; production drift remains possible.
+
 **Current decision boundary:** do not describe the executor as multi-replica safe. Before a
 multi-process deployment or higher-cost provider is enabled, replace the lease with a database
 or Redis-backed expiring reservation and add a two-worker regression test.
@@ -83,7 +87,9 @@ The independent reviewer must verify each item rather than relying only on this 
 Choose exactly one and add reviewer name, UTC timestamp and rationale in a separate owner change:
 
 - `request_changes` — keep fixture `draft`; list required changes.
-- `reviewed_with_constraints` — acknowledge both Moderate findings and keep fixture non-approved.
+- `reviewed_with_constraints` — recommended only if the reviewer confirms the live deployment is
+  still single-process and accepts the low bounded budget until the PostgreSQL test exists; keep
+  the fixture non-approved.
 - `approved` — not recommended for this packet; approval requires an independent reviewer and a
   separate explicit v4/deployment decision. It must never be inferred from green CI.
 
