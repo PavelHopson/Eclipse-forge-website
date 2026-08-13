@@ -7,6 +7,8 @@ templates. It does not grant execution permission.
   invariants, evidence, negative tests, threat events and reassessment triggers.
 - [Growth Office fixture](fixtures/growth-office.security-invariant.v1.json) records the
   current public-data-only design boundary as a draft.
+- [Growth runtime test evidence](growth-runtime-test-evidence.md) maps every fixture test ID
+  to an exact test or an explicit `MISSING-` backlog item.
 
 The schema blocks `executionAllowed=true` when private-data access, untrusted-content
 access and agent-directed external communication are all present. Consumers must still

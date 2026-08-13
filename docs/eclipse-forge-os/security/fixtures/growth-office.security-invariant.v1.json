@@ -34,7 +34,10 @@
       ],
       "failureMode": "fail_closed",
       "testIds": [
-        "growth policy rejects tools and publication"
+        "AIH-GROWTH-POLICY-001",
+        "AIH-GROWTH-DATA-001",
+        "AIH-GROWTH-OUTPUT-001",
+        "CHAT-GROWTH-SCHEMA-001"
       ]
     },
     {
@@ -47,8 +50,11 @@
       ],
       "failureMode": "fail_closed",
       "testIds": [
-        "growth executor starts one role per request",
-        "growth request rejects exhausted budget"
+        "AIH-GROWTH-ORDER-001",
+        "CHAT-GROWTH-ORDER-001",
+        "CHAT-GROWTH-CANCEL-001",
+        "MISSING-CHAT-GROWTH-BUDGET-001",
+        "MISSING-CHAT-GROWTH-CONCURRENCY-001"
       ]
     },
     {
@@ -61,8 +67,10 @@
       ],
       "failureMode": "fail_closed",
       "testIds": [
-        "growth import resets upstream approval",
-        "growth endpoints require workspace membership"
+        "CHAT-GROWTH-IMPORT-001",
+        "CHAT-GROWTH-ROUTE-AUTH-001",
+        "MISSING-CHAT-GROWTH-MEMBERSHIP-001",
+        "MISSING-CHAT-GROWTH-APPROVAL-001"
       ]
     }
   ],

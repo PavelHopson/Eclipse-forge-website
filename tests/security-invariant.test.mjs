@@ -10,6 +10,10 @@ const growthFixtureUrl = new URL(
   '../docs/eclipse-forge-os/security/fixtures/growth-office.security-invariant.v1.json',
   import.meta.url,
 );
+const growthEvidenceMapUrl = new URL(
+  '../docs/eclipse-forge-os/security/growth-runtime-test-evidence.md',
+  import.meta.url,
+);
 
 test('security invariant schema fails closed for the lethal trifecta', async () => {
   const schema = JSON.parse(await readFile(schemaUrl, 'utf8'));
@@ -51,4 +55,16 @@ test('Growth Office fixture breaks the trifecta and keeps every invariant fail-c
   assert.equal(fixture.invariants.every((item) => item.failureMode === 'fail_closed'), true);
   assert.equal(fixture.invariants.every((item) => item.testIds.length > 0), true);
   assert.doesNotMatch(fixtureText, /(?:api[_-]?key|client[_-]?secret|bearer\s+[a-z0-9._-]+)/i);
+});
+
+test('every Growth invariant test id resolves to evidence or an explicit missing-test backlog', async () => {
+  const fixture = JSON.parse(await readFile(growthFixtureUrl, 'utf8'));
+  const evidenceMap = await readFile(growthEvidenceMapUrl, 'utf8');
+  const testIds = fixture.invariants.flatMap((item) => item.testIds);
+
+  assert.equal(new Set(testIds).size, testIds.length);
+  for (const testId of testIds) {
+    assert.equal(evidenceMap.includes(`| \`${testId}\` |`), true);
+  }
+  assert.match(evidenceMap, /No invariant record may move to `approved` while[\s\S]+`MISSING-`/);
 });

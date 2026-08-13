@@ -23,6 +23,7 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 - [x] Execute typed-role v3; three artifacts passed, Claim Auditor failed closed on an invalid source, and Editor did not run.
 - [x] Implement additive typed Evidence Cards in Eclipse AI Hub and Eclipse Chat while preserving legacy Growth inputs.
 - [x] Add the reviewed Evidence Card editor to Eclipse Chat with safe defaults and allowlisted provenance.
+- [x] Map every Growth security invariant to exact runtime evidence or an explicit missing-test backlog.
 - [x] Protect Eclipse AI Hub production deploys with a required reviewer, `master`-only policy and regression-tested workflow binding.
 - [ ] Move secret-bearing local files into an encrypted vault and rotate exposed credentials.
 - [ ] Review all dirty repositories manually; do not bulk-commit them.
@@ -48,7 +49,8 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 - [ ] Demonstrate one evidence-backed positioning audit with human acceptance and metrics.
 - [x] Bound the first positioning-audit objective, evidence allowlist, risk review and human decision gate.
 - [x] Add `security.invariant.v1` and the draft public-only Growth Office fixture.
-- [ ] Map each Growth invariant to verified runtime regression-test evidence.
+- [x] Map each Growth invariant to verified runtime regression-test evidence or an explicit missing-test backlog.
+- [x] Publish the first invariant-to-test evidence map; `INV-002/003` remain partial until four named negative tests land.
 
 ## Eclipse Growth OS sequence
 
@@ -117,6 +119,14 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 Every repository appears in the portfolio inventory, but only products with a stable owner, contract and release path join the runtime graph. Incubators have 60 days to be promoted, merged or archived.
 
 ## Changelog
+### 2026-08-13 — Growth invariant runtime evidence map
+
+- Replaced prose-only fixture test references with stable IDs mapped to exact Eclipse Chat
+  and Eclipse AI Hub tests. `INV-001` is covered; `INV-002` and `INV-003` remain partial
+  with four explicit `MISSING-` budget, concurrency, membership and approval tests.
+- Added a CI regression check requiring every fixture ID to resolve in the evidence map.
+  The fixture remains `draft`; the map explicitly forbids approval while `MISSING-` IDs remain.
+
 ### 2026-08-13 — Eclipse Chat Evidence Card editor
 
 - Shipped Eclipse Chat `f1336b7` (`v1.7.49`): Growth drafts can optionally bind exact
