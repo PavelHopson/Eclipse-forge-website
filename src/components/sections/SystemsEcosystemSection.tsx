@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import { type Project, useSiteContent } from '../../data/content';
 import { revealScale, revealUp, stagger, viewport } from '../../lib/animation';
 import { useLocale, type Locale } from '../../lib/locale';
+import { useMotionPreference } from '../../lib/motionPreference';
 import { AssetImage } from '../ui/AssetImage';
 import { ConstellationField, EclipseSilhouette, MiniEclipse, OrbitalRing, ParticleField } from '../ui/EclipseVisuals';
 
@@ -68,6 +69,7 @@ function EcosystemCard({
   openDemoLabel: string;
   openRepoLabel: string;
 }) {
+  const { ambientMotionEnabled } = useMotionPreference();
   const fileName = project.image?.sources?.[0]?.split('/').pop() ?? 'project-image.png';
   const primaryUrl = project.liveUrl ?? project.repoUrl;
   const primaryHoverLabel = project.liveUrl ? openDemoLabel : openRepoLabel;
@@ -77,7 +79,7 @@ function EcosystemCard({
         alt={project.image?.alt ?? `${project.title} preview`}
         sources={project.image?.sources}
         loading="lazy"
-        className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"
+        className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04] group-focus-within:scale-[1.04]"
         style={{ objectPosition: project.image?.objectPosition ?? 'center' }}
         fallback={<SystemsFallback project={project} hint={fallbackHint.replace('%file%', fileName)} />}
       />
@@ -86,7 +88,7 @@ function EcosystemCard({
         style={{ background: 'linear-gradient(to top, rgba(5,7,9,0.85), transparent)' }}
       />
       {primaryUrl ? (
-        <div className="pointer-events-none absolute inset-x-0 bottom-3 flex justify-center opacity-0 transition-opacity duration-400 group-hover:opacity-100">
+        <div className="pointer-events-none absolute inset-x-0 bottom-3 flex justify-center opacity-0 transition-opacity duration-400 group-hover:opacity-100 group-focus-within:opacity-100">
           <span
             className="inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] font-display uppercase tracking-[0.22em] backdrop-blur-md"
             style={{
@@ -106,8 +108,8 @@ function EcosystemCard({
   return (
     <motion.article variants={revealScale}>
       <motion.div
-        whileHover={{ y: -6 }}
-        whileTap={{ scale: 0.985 }}
+        whileHover={ambientMotionEnabled ? { y: -6 } : undefined}
+        whileTap={ambientMotionEnabled ? { scale: 0.985 } : undefined}
         transition={{ type: 'spring', stiffness: 280, damping: 26 }}
         className="group systems-card-shell relative flex h-full flex-col overflow-hidden rounded-[1.85rem] border"
       >
@@ -139,8 +141,16 @@ function EcosystemCard({
             <span className="font-display" style={{ color: 'var(--text-3)' }}>{project.systemType}</span>
           </div>
 
+          <h3 className="type-heading text-balance text-[clamp(1.35rem,2vw,1.8rem)] leading-[1.08]" style={{ color: 'var(--text-1)' }}>
+            {project.title}
+          </h3>
+
           <p className="type-body text-[13.5px] leading-relaxed sm:text-[14px]" style={{ color: 'var(--text-2)' }}>
             {project.description}
+          </p>
+
+          <p className="systems-proof-line rounded-2xl border px-4 py-3 text-[12.5px] leading-relaxed" style={{ color: 'var(--text-2)' }}>
+            {project.result}
           </p>
 
           <div className="mt-auto flex flex-wrap items-center gap-3">
@@ -149,7 +159,7 @@ function EcosystemCard({
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="systems-link-primary inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[12px] font-display tracking-[0.04em] transition-all duration-400"
+                className="systems-link-primary inline-flex min-h-11 items-center gap-2 rounded-full border px-4 py-2 text-[12px] font-display tracking-[0.04em] transition-all duration-400"
               >
                 {demoLabel}
                 <span aria-hidden>→</span>
@@ -160,7 +170,7 @@ function EcosystemCard({
                 href={project.repoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="systems-link-secondary inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[12px] font-display tracking-[0.04em] transition-all duration-400"
+                className="systems-link-secondary inline-flex min-h-11 items-center gap-2 rounded-full border px-4 py-2 text-[12px] font-display tracking-[0.04em] transition-all duration-400"
               >
                 {githubLabel}
                 <span aria-hidden>↗</span>

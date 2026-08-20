@@ -70,3 +70,24 @@ tokens, eclipse mark, grid, section reveal, focus/hover feedback и один amb
 Нельзя массово подключать Framer Motion/GSAP только ради единообразия. CSS transitions
 остаются предпочтительными для operational surfaces; новые зависимости проходят отдельный
 supply-chain и bundle review.
+
+## Reusable guidance для Eclipse Media
+
+Media использует профиль `product`, а не копирует cinematic Landing целиком.
+
+- Главный media artifact остаётся самым контрастным объектом; chrome, очередь и metadata
+  визуально отступают назад.
+- В одном viewport допускается один signal-light: progress, active job или selected artifact.
+  Gold обозначает primary action или подтверждённый результат, blue — состояние и навигацию.
+- Карточка artifact обязана без hover показывать имя, формат/источник, состояние и следующий
+  доступный action. Hover может усиливать preview, но не раскрывать единственный путь к действию.
+- Для длинных списков использовать спокойные горизонтальные строки; poster-композиция уместна
+  только для empty state, first-run или финального preview.
+- Motion: `forge-reveal`, `forge-focus`, `forge-feedback`; один `forge-orbit` допустим только в
+  пустом состоянии. Cursor trails, 3D tilt и scroll parallax вокруг progress/queue запрещены.
+- Keyboard focus эквивалентен hover, touch targets не меньше 44×44 px, mobile не зависит от
+  pointer position. При `prefers-reduced-motion` и ручной паузе все ambient/transform effects
+  становятся статичными без потери информации.
+- Любой внешний UI reference сначала проходит provenance, license, dependency/bundle,
+  accessibility, keyboard, reduced-motion и mobile gates. Skiper UI, AnimMaster, Oceon и
+  Vlipsy — только visual references; их код не переносится.
