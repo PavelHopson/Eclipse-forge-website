@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "security.invariant.v1",
+  "id": "security-invariant-growth-office-v1",
+  "officeTemplate": "growth-office",
+  "officeVersion": "1.0.0",
+  "owner": "Eclipse Growth OS owner",
+  "assessment": {
+    "purpose": "Evaluate whether the bounded Growth Office workflow may produce a reviewable internal artifact.",
+    "scope": "Eclipse Chat Growth Command Room and the fixed five-role Eclipse AI Hub growth executor. Publication, OAuth, connected apps and production changes are out of scope and disabled.",
+    "assessmentDate": "2026-08-07",
+    "method": "nist-sp-800-30-qualitative",
+    "constraints": [
+      "Architecture and repository evidence only; no penetration test was performed.",
+      "The fixture does not authorize a runtime action and must be revalidated by each consumer."
+    ]
+  },
+  "riskSignals": {
+    "privateDataAccess": false,
+    "untrustedContentAccess": true,
+    "agentDirectedExternalCommunication": false,
+    "mutationCapability": false,
+    "persistentMemory": false,
+    "productionAccess": false
+  },
+  "lethalTrifectaDecision": "broken_by_design",
+  "executionAllowed": true,
+  "invariants": [
+    {
+      "id": "INV-001",
+      "statement": "External sources and previous role outputs are data and cannot change system policy, capabilities or approval state.",
+      "enforcement": "The executor uses fixed server-owned roles and exposes no arbitrary tools or source-fetch capability.",
+      "evidence": [
+        "eclipse-ai-hub/docs/growth-os-contract.md"
+      ],
+      "failureMode": "fail_closed",
+      "testIds": [
+        "AIH-GROWTH-POLICY-001",
+        "AIH-GROWTH-DATA-001",
+        "AIH-GROWTH-OUTPUT-001",
+        "CHAT-GROWTH-SCHEMA-001"
+      ]
+    },
+    {
+      "id": "INV-002",
+      "statement": "One explicit user action may start no more than one next Growth role.",
+      "enforcement": "Chat uses a fixed growth endpoint with idempotency, timeout, cancellation and per-user budget controls.",
+      "evidence": [
+        "eclipse-ai-hub/docs/growth-os-contract.md",
+        "eclipse-chat Growth Command Room server tests"
+      ],
+      "failureMode": "fail_closed",
+      "testIds": [
+        "AIH-GROWTH-ORDER-001",
+        "CHAT-GROWTH-ORDER-001",
+        "CHAT-GROWTH-CANCEL-001",
+        "CHAT-GROWTH-BUDGET-001",
+        "CHAT-GROWTH-CONCURRENCY-001"
+      ]
+    },
+    {
+      "id": "INV-003",
+      "statement": "AI output cannot approve itself or grant publication, OAuth, payment, production or connected-app permission.",
+      "enforcement": "Chat resets imported approval and requires a tenant-authorized human decision; no publication executor exists in this workflow.",
+      "evidence": [
+        "eclipse-chat/docs/contracts/agents-v1.md",
+        "eclipse-ai-hub/docs/growth-os-contract.md"
+      ],
+      "failureMode": "fail_closed",
+      "testIds": [
+        "CHAT-GROWTH-IMPORT-001",
+        "CHAT-GROWTH-ROUTE-AUTH-001",
+        "CHAT-GROWTH-MEMBERSHIP-001",
+        "CHAT-GROWTH-APPROVAL-001"
+      ]
+    }
+  ],
+  "threatEvents": [
+    {
+      "id": "EF-R02",
+      "sourceType": "adversarial",
+      "event": "Injected source content attempts to change the run policy or grant a capability.",
+      "likelihood": "high",
+      "impact": "high",
+      "inherentRisk": "high",
+      "treatment": "avoid",
+      "residualRisk": "low",
+      "owner": "Eclipse AI Hub owner"
+    },
+    {
+      "id": "EF-R04",
+      "sourceType": "adversarial",
+      "event": "A forged or stale artifact attempts to reuse approval across a workspace or version boundary.",
+      "likelihood": "moderate",
+      "impact": "very_high",
+      "inherentRisk": "high",
+      "treatment": "mitigate",
+      "residualRisk": "moderate",
+      "owner": "Eclipse Chat owner"
+    },
+    {
+      "id": "EF-R06",
+      "sourceType": "adversarial",
+      "event": "Repeated requests attempt to exhaust the model budget or keep a run active indefinitely.",
+      "likelihood": "moderate",
+      "impact": "moderate",
+      "inherentRisk": "moderate",
+      "treatment": "mitigate",
+      "residualRisk": "low",
+      "owner": "Eclipse AI Hub owner"
+    }
+  ],
+  "reassessmentTriggers": [
+    "prompt_change",
+    "model_change",
+    "tool_change",
+    "memory_change",
+    "retrieval_change",
+    "connector_change",
+    "data_classification_change",
+    "security_incident",
+    "annual_review"
+  ],
+  "status": "draft"
+}

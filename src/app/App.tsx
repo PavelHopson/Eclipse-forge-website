@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { MotionConfig, motion, useScroll, useSpring } from 'framer-motion';
 import { SiteHeader } from '../components/layout/SiteHeader';
 import { CursorLight } from '../components/ui/CursorLight';
@@ -11,9 +12,20 @@ import { PriceListModal } from '../components/ui/PriceListModal';
 import { BroadcastIcon, GitHubIcon, InstagramIcon, TelegramIcon } from '../components/ui/SocialIcons';
 import { contactDetails } from '../data/content';
 import { useLocale, type Locale } from '../lib/locale';
+import { MotionPreferenceProvider, useMotionPreference } from '../lib/motionPreference';
 import { useHashRoute, useScrollResetOnRoute } from '../lib/routing';
-import { ConstructionPage } from '../pages/ConstructionPage';
 import { LandingPage } from '../pages/LandingPage';
+
+const ConstructionPage = lazy(async () => {
+  const module = await import('../pages/ConstructionPage');
+  return { default: module.ConstructionPage };
+});
+
+function RouteLoading() {
+  return <main className="relative z-10 flex min-h-[60vh] items-center justify-center px-5" aria-busy="true" aria-live="polite">
+    <p className="type-meta" style={{ color: 'var(--text-3)' }}>Eclipse Forge loading</p>
+  </main>;
+}
 
 const footerCopy: Record<
   Locale,
@@ -48,7 +60,7 @@ const footerCopy: Record<
   },
 };
 
-export function App() {
+function AppSurface() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
   const { locale } = useLocale();
@@ -64,9 +76,10 @@ export function App() {
   ];
 
   const isConstruction = route === '/construction';
+  const { ambientMotionEnabled } = useMotionPreference();
 
   return (
-    <MotionConfig reducedMotion="user">
+    <MotionConfig reducedMotion={ambientMotionEnabled ? 'user' : 'always'}>
     <div className="relative min-h-screen" style={{ background: 'var(--bg)', color: 'var(--text-1)' }}>
       <motion.div
         className="fixed left-0 right-0 top-0 z-50 h-px origin-left"
@@ -86,14 +99,18 @@ export function App() {
       <div className="flare" style={{ bottom: '30%', left: '10%', animationDelay: '4s' }} />
 
       <CursorLight />
-      <ParticleField count={36} className="z-[1] opacity-55" />
+      {ambientMotionEnabled ? <ParticleField count={36} className="z-[1] opacity-55" /> : null}
       <InteractiveGalaxyLayer className="z-[1]" />
 
       <PriceListModal />
 
       <SiteHeader />
 
-      {isConstruction ? <ConstructionPage /> : <LandingPage />}
+      {isConstruction ? (
+        <Suspense fallback={<RouteLoading />}>
+          <ConstructionPage />
+        </Suspense>
+      ) : <LandingPage />}
 
       <footer className="relative z-10 overflow-hidden border-t px-5 py-12 sm:px-8 lg:px-12 lg:py-16" style={{ borderColor: 'var(--line)' }}>
         <div className="absolute -bottom-16 right-[10%] hidden opacity-15 lg:block">
@@ -149,5 +166,13 @@ export function App() {
       </footer>
     </div>
     </MotionConfig>
+  );
+}
+
+export function App() {
+  return (
+    <MotionPreferenceProvider>
+      <AppSurface />
+    </MotionPreferenceProvider>
   );
 }

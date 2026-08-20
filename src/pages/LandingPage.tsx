@@ -8,6 +8,7 @@ import { HeroSection } from '../components/sections/HeroSection';
 import { HowItWorksSection } from '../components/sections/HowItWorksSection';
 import { MetricsSection } from '../components/sections/MetricsSection';
 import { ProcessSection } from '../components/sections/ProcessSection';
+import { ProductionReadinessSection } from '../components/sections/ProductionReadinessSection';
 import { ServicesSection } from '../components/sections/ServicesSection';
 import { SystemsEcosystemSection } from '../components/sections/SystemsEcosystemSection';
 import { SystemsNotSitesSection } from '../components/sections/SystemsNotSitesSection';
@@ -27,6 +28,7 @@ export function LandingPage() {
       <SystemsEcosystemSection />
       <EclipseDivider />
       <HowItWorksSection />
+      <ProductionReadinessSection />
       <ServicesSection />
       <ProcessSection />
       <EclipseDivider />

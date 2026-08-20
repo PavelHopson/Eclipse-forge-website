@@ -16,13 +16,20 @@ import {
 import { brandAssets, contactDetails, useSiteContent } from '../../data/content';
 import { revealWord, staggerWord } from '../../lib/animation';
 import { useLocale, type Locale } from '../../lib/locale';
+import { useMotionPreference } from '../../lib/motionPreference';
 
 function useMouseParallax(ref: RefObject<HTMLElement | null>) {
+  const { ambientMotionEnabled } = useMotionPreference();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
   useEffect(() => {
     // Skip entirely on touch devices and reduced-motion users
+    if (!ambientMotionEnabled) {
+      x.set(0);
+      y.set(0);
+      return;
+    }
     if (typeof window === 'undefined') return;
     if (window.matchMedia('(hover: none)').matches) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -60,7 +67,7 @@ function useMouseParallax(ref: RefObject<HTMLElement | null>) {
       el.removeEventListener('mousemove', handleMove);
       el.removeEventListener('mouseleave', handleLeave);
     };
-  }, [ref, x, y]);
+  }, [ambientMotionEnabled, ref, x, y]);
 
   return {
     x: useSpring(x, { stiffness: 80, damping: 22, mass: 0.6 }),
@@ -175,17 +182,18 @@ export function HeroSection() {
 
   const { locale } = useLocale();
   const copy = heroCopy[locale];
+  const { ambientMotionEnabled } = useMotionPreference();
   const { metrics } = useSiteContent();
 
   return (
     <section ref={ref} id="hero" className="relative min-h-screen overflow-hidden pb-16 pt-20 sm:pb-24 sm:pt-28 lg:flex lg:items-center lg:pb-0">
       {/* Layer 1: deep stars + grid (slowest) */}
-      <motion.div className="absolute inset-0 hero-depth-layer" style={{ y: bgY, x: starsX }} />
+      <motion.div className="absolute inset-0 hero-depth-layer" style={ambientMotionEnabled ? { y: bgY, x: starsX } : undefined} />
       <motion.div className="absolute inset-0 hero-grid-overlay" style={{ x: starsX, y: starsY }} />
       <div className="absolute inset-0 hero-vignette" />
 
       {/* Layer 2: atmospheric fog + volumetric light beams */}
-      <motion.div className="absolute inset-0 hero-fog-layer" style={{ x: fogX, y: fogY }} />
+      <motion.div className="absolute inset-0 hero-fog-layer" style={ambientMotionEnabled ? { x: fogX, y: fogY } : undefined} />
       <div className="hero-light-beam hero-light-beam--left" />
       <div className="hero-light-beam hero-light-beam--right" />
 
@@ -205,7 +213,7 @@ export function HeroSection() {
 
       {/* Layer 5: particles (fastest, closest to viewer) */}
       <motion.div className="absolute inset-0 pointer-events-none" style={{ x: particlesX, y: particlesY }}>
-        <ParticleField count={28} className="opacity-45" />
+        {ambientMotionEnabled ? <ParticleField count={28} className="opacity-45" /> : null}
       </motion.div>
 
       <motion.div
@@ -219,7 +227,7 @@ export function HeroSection() {
 
       <div className="relative z-10 mx-auto w-full max-w-[1320px] px-5 sm:px-8 lg:px-12">
         <div className="grid min-h-[86vh] items-center gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-8">
-          <motion.div style={{ y: textY }} className="relative">
+          <motion.div style={ambientMotionEnabled ? { y: textY } : undefined} className="relative">
             <motion.div custom={0.15} variants={reveal} initial="hidden" animate="visible">
               <div className="inline-flex items-center gap-3 rounded-full border px-5 py-2.5 hero-data-chip">
                 <span className="h-2 w-2 rounded-full hero-signal-dot" />
@@ -321,7 +329,7 @@ export function HeroSection() {
             </motion.div>
           </motion.div>
 
-          <motion.div style={{ y: visualY }} className="relative lg:pr-2">
+          <motion.div style={ambientMotionEnabled ? { y: visualY } : undefined} className="relative lg:pr-2">
             <div className="relative mx-auto flex max-w-[690px] justify-center lg:justify-end">
               <motion.div
                 className="hero-core-shell relative w-full max-w-[650px] min-h-[380px] sm:min-h-[520px] lg:min-h-[640px]"
@@ -330,8 +338,8 @@ export function HeroSection() {
                 <motion.div
                   className="absolute left-[55%] top-[51%] z-0 h-[80%] w-[80%] -translate-x-1/2 -translate-y-1/2"
                   style={{ scale: glowScale }}
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 90, repeat: Infinity, ease: 'linear' }}
+                  animate={ambientMotionEnabled ? { rotate: 360 } : { rotate: 0 }}
+                  transition={ambientMotionEnabled ? { duration: 90, repeat: Infinity, ease: 'linear' } : { duration: 0.15 }}
                 >
                   <BlackHoleCanvas className="h-full w-full rounded-full opacity-90" />
                 </motion.div>
@@ -345,8 +353,8 @@ export function HeroSection() {
 
                 <motion.div
                   className="pointer-events-none absolute left-[55%] top-[51%] z-10 -translate-x-1/2 -translate-y-1/2"
-                  animate={{ scale: [1, 1.06, 1], opacity: [0.7, 1, 0.7] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                  animate={ambientMotionEnabled ? { scale: [1, 1.06, 1], opacity: [0.7, 1, 0.7] } : { scale: 1, opacity: 0.8 }}
+                  transition={ambientMotionEnabled ? { duration: 6, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.15 }}
                 >
                   <SolarCorona size={520} rays={28} color="rgba(212,175,55,0.08)" />
                 </motion.div>

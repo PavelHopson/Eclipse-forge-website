@@ -5,13 +5,21 @@
 Связан с кураторской [Eclipse Library](https://library.eclipse-forge.ru/): переход доступен
 из desktop header, mobile menu и footer, а библиотека возвращает пользователя на главный лендинг.
 
+Канонический стиль экосистемы описан в
+[`docs/eclipse-forge-visual-system.md`](docs/eclipse-forge-visual-system.md). Versioned tokens
+публикуются как `/design-system/eclipse-forge.tokens.json`; downstream-проекты используют
+локальный snapshot и один из профилей `cinematic`, `product` или `operational`.
+Текущий rollout по проектам ведётся в
+[`docs/eclipse-forge-visual-adoption.md`](docs/eclipse-forge-visual-adoption.md).
+
 ## Ecosystem control plane
 
 Репозиторий публикует versioned registry экосистемы в `public/ecosystem/manifest.json`.
 Он описывает роли продуктов, владение данными и зрелость интеграций, не выдавая запланированные API за готовые.
 
-- Архитектура: [`docs/ecosystem-architecture.md`](docs/ecosystem-architecture.md)
-- Security и releases: [`docs/ecosystem-security-and-release-runbook.md`](docs/ecosystem-security-and-release-runbook.md)
+- Eclipse Forge OS: [`docs/eclipse-forge-os/`](docs/eclipse-forge-os/README.md)
+- Архитектура: [`docs/eclipse-forge-os/architecture.md`](docs/eclipse-forge-os/architecture.md)
+- Security и releases: [`docs/eclipse-forge-os/security-and-release-runbook.md`](docs/eclipse-forge-os/security-and-release-runbook.md)
 - Локальный health report: `docs/portfolio-status.generated.md` (генерируется командой ниже и не коммитится)
 
 ```bash
@@ -74,6 +82,9 @@ npm run dev
 ```
 
 ## Production build
+
+Outfit и Inter self-hosted в `public/fonts/`; лицензии OFL лежат рядом. Production не зависит
+от Google Fonts и не отправляет туда запросы браузера.
 
 ```bash
 npm run build

@@ -654,7 +654,11 @@ const portfolioCollectionDefinitions: LocalizedProjectCollectionDefinition[] = [
         tags: localized(['market data', 'AI-аналитика', 'парсинг новостей'], ['market data', 'AI analytics', 'news parsing']),
         liveUrl: 'https://cryptopulse.eclipse-forge.ru',
         repoUrl: 'https://github.com/PavelHopson/CryptoPulse',
-        image: projectImage('cryptopulse', 'cryptopulse-2077', 'CryptoPulse 2077 trading terminal preview', 'center top'),
+        image: {
+          alt: 'CryptoPulse 2077 trading terminal preview',
+          objectPosition: 'center top',
+          sources: ['/images/projects/cryptopulse.webp', '/images/projects/cryptopulse.png'],
+        },
       },
       {
         title: 'Task Manager',

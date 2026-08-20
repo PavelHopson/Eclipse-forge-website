@@ -64,7 +64,9 @@ export function RouteLink({ to, children, className, onClick, style, ...rest }: 
       event.preventDefault();
       const target = to.startsWith('/') ? `#${to}` : to;
       if (window.location.hash === target) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          || document.documentElement.dataset.ambientMotion === 'paused';
+        window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
         return;
       }
       window.location.hash = target;

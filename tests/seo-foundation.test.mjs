@@ -28,7 +28,17 @@ test('llms.txt identifies the brand and evidence boundary', async () => {
 
   assert.match(llms, /# Eclipse Forge/);
   assert.match(llms, /https:\/\/github\.com\/PavelHopson/);
+  assert.match(llms, /https:\/\/eclipse-forge\.ru\/guides\/ai-project-production-readiness\.md/);
   assert.match(llms, /Do not infer customers, revenue, testimonials/);
+});
+
+test('production readiness checklist is a public, actionable resource', async () => {
+  const guide = await read('public/guides/ai-project-production-readiness.md');
+
+  assert.match(guide, /## 1\. Ценность и границы/);
+  assert.match(guide, /## 4\. Security и permissions/);
+  assert.match(guide, /## Решение/);
+  assert.match(guide, /\[ \] Feature flag или rollback/);
 });
 
 test('document head exposes canonical, social and structured metadata', async () => {
@@ -36,8 +46,8 @@ test('document head exposes canonical, social and structured metadata', async ()
 
   assert.match(html, /<link rel="canonical" href="https:\/\/eclipse-forge\.ru\/" \/>/);
   assert.match(html, /<meta property="og:url" content="https:\/\/eclipse-forge\.ru\/" \/>/);
-  assert.match(html, /<meta property="og:image" content="https:\/\/eclipse-forge\.ru\/og-image\.svg" \/>/);
-  assert.match(html, /<meta name="twitter:image" content="https:\/\/eclipse-forge\.ru\/og-image\.svg" \/>/);
+  assert.match(html, /<meta property="og:image" content="https:\/\/eclipse-forge\.ru\/og-image\.png" \/>/);
+  assert.match(html, /<meta name="twitter:image" content="https:\/\/eclipse-forge\.ru\/og-image\.png" \/>/);
 
   const jsonLdMatch = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
   assert.ok(jsonLdMatch, 'JSON-LD must be present');

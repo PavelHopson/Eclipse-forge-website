@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eclipse-forge.ru/schemas/growth/threads.signal.batch.v1.json",
+  "title": "Eclipse Growth OS Threads Signal Batch",
+  "description": "Metadata-only manual inventory of public Threads signals. Post bodies, credentials and personal analytics are intentionally excluded.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "channel", "collectionMode", "collectedAt", "collector", "profileScope", "signals", "status"],
+  "properties": {
+    "schemaVersion": { "const": "threads.signal.batch.v1" },
+    "id": { "type": "string", "pattern": "^threads-batch-[a-z0-9-]+$" },
+    "channel": { "const": "threads" },
+    "collectionMode": { "const": "manual_public_only" },
+    "collectedAt": { "type": "string", "format": "date-time" },
+    "collector": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "profileScope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["owner", "profileType", "objective"],
+      "properties": {
+        "owner": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "profileType": { "const": "personal_engineering" },
+        "objective": { "type": "string", "minLength": 1, "maxLength": 300 }
+      }
+    },
+    "signals": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "sourceUrl", "sourceAccount", "observedAt", "topic", "audience", "hookPattern", "format", "relevance", "reviewStatus"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^threads-signal-[a-z0-9-]+$" },
+          "sourceUrl": { "type": "string", "format": "uri", "pattern": "^https://(www\\.)?threads\\.(net|com)/" },
+          "sourceAccount": { "type": "string", "minLength": 1, "maxLength": 120 },
+          "observedAt": { "type": "string", "format": "date-time" },
+          "topic": { "enum": ["production_ai", "observable_agents", "build_in_public"] },
+          "audience": { "type": "string", "minLength": 1, "maxLength": 200 },
+          "hookPattern": { "type": "string", "minLength": 1, "maxLength": 300 },
+          "format": { "enum": ["text", "image", "carousel", "video", "thread"] },
+          "relevance": { "type": "integer", "minimum": 0, "maximum": 2 },
+          "publicEngagementSnapshot": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "likes": { "type": "integer", "minimum": 0 },
+              "replies": { "type": "integer", "minimum": 0 },
+              "reposts": { "type": "integer", "minimum": 0 },
+              "quotes": { "type": "integer", "minimum": 0 }
+            }
+          },
+          "evidenceNote": { "type": "string", "maxLength": 500 },
+          "reviewStatus": { "enum": ["observed", "reviewed", "rejected"] },
+          "rejectionReason": { "type": "string", "maxLength": 500 }
+        }
+      }
+    },
+    "status": { "enum": ["draft", "ready_for_human_review", "accepted", "rejected"] },
+    "reviewedBy": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "reviewedAt": { "type": "string", "format": "date-time" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "enum": ["accepted", "rejected"] } }, "required": ["status"] },
+      "then": { "required": ["reviewedBy", "reviewedAt"] }
+    }
+  ]
+}

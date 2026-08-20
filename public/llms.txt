@@ -5,6 +5,7 @@
 
 Canonical website: https://eclipse-forge.ru/
 GitHub: https://github.com/PavelHopson
+Production readiness checklist: https://eclipse-forge.ru/guides/ai-project-production-readiness.md
 Public updates: https://t.me/EclipseForgeEngine
 Contact: https://t.me/EclipseHopson
 

@@ -4,17 +4,54 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 
 ## Current status
 
+- [x] Establish Eclipse Forge OS and Agent Office as the flagship product program.
 - [x] Publish a machine-readable ecosystem manifest.
 - [x] Validate project identities, data ownership and integration references in CI.
 - [x] Add a read-only portfolio health auditor.
 - [x] Document security, release and repository-lifecycle rules.
 - [x] Establish Eclipse Growth OS positioning, operating model and registry contracts.
 - [x] Add the Landing crawlability and AI-discovery foundation.
-- [ ] Run the public-data-only Teamly pilot and record its 30-day decision.
-- [ ] Implement Growth Command Room in Eclipse Chat after specification review.
-- [ ] Implement approved research, content and metrics workflows in Eclipse AI Hub.
+- [x] Close the Teamly no-plan evaluation without payment or integrations.
+- [x] Implement the first Growth Command Room review workflow in Eclipse Chat.
+- [x] Implement the bounded five-role Growth executor in Eclipse AI Hub.
+- [x] Define the Eclipse Forge OS business model and office expansion gates.
+- [x] Define the platform operating plan, provisional risk register and Security Invariant Registry.
+- [x] Prepare the Stage 0 public-evidence positioning audit packet and honest analytics baseline.
+- [x] Consolidate the complete Eclipse Forge portfolio and documentation registry under the OS hub.
+- [x] Execute and preserve the first bounded local five-role Growth run; artifact review requests changes.
+- [x] Execute and preserve the corrected v2 run; token truncation is fixed, role isolation is not.
+- [x] Execute typed-role v3; three artifacts passed, Claim Auditor failed closed on an invalid source, and Editor did not run.
+- [x] Implement additive typed Evidence Cards in Eclipse AI Hub and Eclipse Chat while preserving legacy Growth inputs.
+- [x] Add the reviewed Evidence Card editor to Eclipse Chat with safe defaults and allowlisted provenance.
+- [x] Map every Growth security invariant to exact runtime evidence or an explicit missing-test backlog.
+- [x] Protect Eclipse AI Hub production deploys with a required reviewer, `master`-only policy and regression-tested workflow binding.
 - [ ] Move secret-bearing local files into an encrypted vault and rotate exposed credentials.
 - [ ] Review all dirty repositories manually; do not bulk-commit them.
+
+## Flagship: Eclipse Forge OS
+
+- **Product:** Eclipse Forge OS.
+- **Primary experience:** Agent Office.
+- **First office template:** Eclipse Growth OS.
+- **First workflow:** public URL or product question -> verified positioning audit ->
+  human-reviewed artifact -> measurable next experiment.
+- **Architecture:** Eclipse Chat control plane + Eclipse AI Hub execution + Eclipse
+  Library evidence + Sentinel local capabilities + Eclipse Media artifacts.
+- **Current claim:** internal product program. Do not market it as shipped until the
+  flagship readiness definition in `docs/eclipse-forge-os/README.md` is satisfied.
+
+### P0: first observable run
+
+- [x] Define the `agents.v1` contract, threat model and data ownership invariants.
+- [x] Build the first tenant-scoped Growth Command Room review surface.
+- [x] Implement bounded one-step execution, cancellation and per-user budget policy.
+- [x] Add Researcher, Strategist, Writer, Claim Auditor and Editor roles.
+- [ ] Demonstrate one evidence-backed positioning audit with human acceptance and metrics.
+- [x] Bound the first positioning-audit objective, evidence allowlist, risk review and human decision gate.
+- [x] Add `security.invariant.v1` and the draft public-only Growth Office fixture.
+- [x] Map each Growth invariant to verified runtime regression-test evidence or an explicit missing-test backlog.
+- [x] Close the four named Growth negative-test gaps in Chat `aa56478`; all three invariants now have runtime evidence, while the fixture remains draft pending independent review.
+- [x] Prepare an immutable independent-review packet with exact SHAs, residual risks and an owner decision checklist; do not self-approve the fixture.
 
 ## Eclipse Growth OS sequence
 
@@ -28,16 +65,27 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 
 ### P1: first validated funnel
 
-- [ ] Create the AI Project Production Readiness Checklist.
+- [x] Create and expose the AI Project Production Readiness Checklist without a signup wall.
 - [ ] Build and measure its landing funnel.
 - [ ] Package AI Opportunity Audit, Research Agent and MCP Server offers.
 - [ ] Calibrate Teamly agents on three public Eclipse Forge artifacts.
 
 ### P2: owned orchestration
 
-- [ ] Add the Growth Command Room review queue and weekly decision log to Eclipse Chat.
-- [ ] Add Claim Verifier, Strategist, Writer and Metrics workflows to Eclipse AI Hub.
+- [x] Add the Growth Command Room review queue to Eclipse Chat.
+- [x] Add bounded Researcher, Strategist, Writer, Claim Auditor and Editor workflows to AI Hub.
+- [ ] Add the weekly decision log and qualified-action metrics to Eclipse Chat.
 - [ ] Route human-reviewed demo renders through Eclipse Media.
+
+### P3: business expansion
+
+- [ ] Validate one positioning promise against five real Eclipse Forge artifacts.
+- [x] Add a manual metadata-only `threads.signal.batch.v1` contract and safety test.
+- [ ] Add a reviewed fixture and local import preview for `threads.signal.batch.v1`.
+- [ ] Package the AI Opportunity Audit with explicit scope, exclusions and acceptance criteria.
+- [ ] Publish one sanitized observable-run demonstration after human acceptance.
+- [ ] Choose Research Office or Builder Office as the second commercial wedge from paid demand.
+- [ ] Add connector distribution only after capability pinning, poisoning/SSRF review and re-approval rules.
 
 ## Integration sequence
 
@@ -72,11 +120,189 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 Every repository appears in the portfolio inventory, but only products with a stable owner, contract and release path join the runtime graph. Incubators have 60 days to be promoted, merged or archived.
 
 ## Changelog
+### 2026-08-19 — motion governor and responsive QA
+
+- Добавлен единый motion governor: пользовательская пауза сохраняется локально и работает
+  вместе с системным `prefers-reduced-motion` без отключения значимой обратной связи.
+- Hero canvas приостанавливается вне viewport и в скрытой вкладке, снижает DPR и число частиц
+  на мобильных устройствах, а при размонтировании освобождает listeners и animation frame.
+- Локальный Edge QA пройден на desktop 1440px и точном mobile viewport 390px: horizontal
+  overflow отсутствует, мобильный brand mark сокращён до `EF`, motion toggle работает.
+- Проверки: 29/29 tests, typecheck и production build с bundle budget. Production deploy не выполнялся.
+
+### 2026-08-13 — Growth invariant independent-review packet
+
+- Frozen the exact Chat/AI Hub commits and CI runs under review, confirmed that no authz
+  guard was weakened and documented two Moderate residual risks: process-local execution
+  leases and the absence of a real-PostgreSQL concurrency test for the budget counter.
+- Added an owner checklist and fail-closed `pending_independent_review` decision. The fixture
+  remains `draft`; no deployment, v4 run or external capability was authorized.
+
+### 2026-08-13 — Growth invariant negative tests
+
+- Eclipse Chat `aa56478` (`v1.7.50`) closed the four explicit runtime gaps: concurrent
+  budget exhaustion, duplicate step leases, tenant-scoped mutation lookup and human
+  approval/version enforcement. Chat now passes 55 suites / 298 tests.
+- Updated the evidence map and fixture IDs from `MISSING-` to exact named tests. All three
+  invariants are covered, but the fixture remains `draft`; neither coverage nor this record
+  authorizes v4, deployment approval or external actions.
+
+### 2026-08-13 — Growth invariant runtime evidence map
+
+- Replaced prose-only fixture test references with stable IDs mapped to exact Eclipse Chat
+  and Eclipse AI Hub tests. `INV-001` is covered; `INV-002` and `INV-003` remain partial
+  with four explicit `MISSING-` budget, concurrency, membership and approval tests.
+- Added a CI regression check requiring every fixture ID to resolve in the evidence map.
+  The fixture remains `draft`; the map explicitly forbids approval while `MISSING-` IDs remain.
+
+### 2026-08-13 — Eclipse Chat Evidence Card editor
+
+- Shipped Eclipse Chat `f1336b7` (`v1.7.49`): Growth drafts can optionally bind exact
+  claims to evidence state, boundary and an allowlisted HTTPS source. New cards default
+  to `hypothesis`; `verified` cards fail closed without provenance, and removal requires
+  a second explicit action.
+- Browser QA passed at 1280 px and 390 px with no horizontal overflow. Chat verification
+  passed 52 suites / 294 tests, workspace typecheck, production build and dependency audit
+  with zero vulnerabilities. No OAuth, connector, publication, payment or v4 execution
+  was enabled.
+
+### 2026-08-13 — AI Hub production approval gate
+
+- Configured the existing AI Hub `production` environment with PavelHopson as required
+  reviewer and a `master`-only deployment branch policy. Commit `09661be` binds the VPS
+  workflow to that environment and regression-tests the binding, read-only permissions,
+  timeout and strict SSH host verification. CI run `31686020409` passed; deploy run
+  `31686020404` is waiting without approval, proving that a normal push no longer mutates
+  the VPS automatically.
+
+### 2026-08-12 — Eclipse Forge visual system v1 and CryptoPulse asset repair
+
+- Published a versioned visual-system contract with `cinematic`, `product` and `operational`
+  intensity profiles so the brand can stay consistent without turning dense product UI into a landing page.
+- Self-hosted Outfit and Inter with their OFL licenses; the landing no longer makes a runtime request to Google Fonts.
+- Repaired the CryptoPulse card asset chain: a 161 KiB WebP is now primary and the existing valid PNG is a real fallback.
+- Added regression coverage for tokens, local fonts and both CryptoPulse assets.
+
+### 2026-08-12 — interactive readiness pilot and bundle budget
+
+- Replaced the static readiness list with an accessible local self-check: explicit pressed states,
+  live progress, reset, keyboard focus and reduced-motion-safe feedback. It stores and sends no data.
+- Implemented the UI-pattern pilot as clean-room code on the existing Eclipse semantic tokens;
+  no Magic UI, SmoothUI, TweakCN code, installer or dependency was imported.
+- Split React, Framer Motion and the Construction route into cacheable chunks. The largest JavaScript
+  chunk dropped from about 574 KB to 215 KB; the production build now enforces a 500 KiB chunk budget.
+
+### 2026-08-12 — first owned lead magnet
+
+- Added the public AI Project Production Readiness Checklist as an indexable Markdown asset and
+  a bilingual conversion section inside the main landing story.
+- The download requires no email or account; CTA language describes the exact artifact instead
+  of promising revenue, reach or guaranteed production readiness.
+- Updated `llms.txt`, sitemap freshness and social preview metadata. A 1200×630 PNG raster of the
+  existing branded SVG replaces SVG in OG/Twitter metadata; regression tests cover the change.
+- No analytics SDK, tracker, form backend or third-party UI dependency was added.
+
+### 2026-08-10 — Evidence Card runtime contract
+
+- Implemented and pushed the additive Evidence Card transport contract in Eclipse AI Hub
+  `07dcd1b` and Eclipse Chat `512239c`. Card-enabled Researcher and Claim Auditor outputs
+  bind claims to exact evidence IDs and allowlisted HTTPS sources; legacy inputs retain v1
+  schemas. Full tests, typechecks and builds passed in both repositories. Chat CI initially
+  exposed and then fixed a High transitive nanoid advisory in `7a859cb`; CI and Security
+  Gate are green, while its production job waits unapproved. AI Hub's existing workflow
+  auto-deployed `07dcd1b` without a manual gate, so adding production environment
+  protection is now P0. No v4 model run, connector or publication was authorized.
+
+### 2026-08-10 — typed Growth v3 calibration
+
+- Ran the first local typed-role calibration against AI Hub commit `da9a602`. Four model
+  calls were attempted in 48,451 ms; three canonical role artifacts passed. Claim Auditor
+  referenced a URL outside the input allowlist, so validation stopped the workflow and
+  Editor was not called. The attempt is preserved as `failed_validation`, not as an
+  approvable run. Role isolation improved; claim-level grounding still needs additive
+  typed Evidence Cards and Chat compatibility review before any separately authorized v4.
+
+### 2026-08-10 — second bounded Growth calibration
+
+- Recorded the owner's `request_changes` decision for v1 and executed one separately
+  authorized v2 run through the same server-owned AI Hub builder and local Ollama
+  `qwen3:8b`. Five of five calls completed in 264,349 ms with production token ceilings
+  and no tools, URL fetches, connectors or external actions. Truncation was resolved, but
+  shared `evidenceNotes` caused Researcher, Claim Auditor and Editor responsibilities to
+  bleed into one another. V2 remains unapproved; the next gate is role-specific typed
+  output enforcement in AI Hub on an explicitly approved existing branch.
+
+### 2026-08-10 — first bounded Growth run
+
+- Recorded Pavel's acceptance of the Stage 0 public-data-only objective and executed
+  Researcher, Strategist, Writer, Claim Auditor and Editor through AI Hub's server-owned
+  prompt builder with local Ollama `qwen3:8b`. Five of five calls completed in 356,440 ms
+  with zero tools, URL fetches, OAuth, publication or external mutations. The exact
+  `growth.run.v1` output is preserved as `ready_for_approval`; review recommends
+  `request_changes` because the Claim Auditor truncated and the final retained unsupported
+  wording. This is not yet a Chat JWT/workspace E2E proof and no artifact was approved.
+
+### 2026-08-07 — unified project documentation registry
+
+- Indexed 35 first-party repositories and one provenance-sensitive internal fork under
+  `docs/eclipse-forge-os/projects/`; recorded canonical documents, maturity evidence,
+  current Git branches/heads, dirty-tree counts, documentation gaps and one consolidated
+  P0-P3 backlog. Runtime-owned docs remain in their repositories to prevent duplicate
+  sources of truth. Star CRM, secret-bearing paths, external references and temporary
+  worktrees were excluded and no dirty repository was changed.
+
+### 2026-08-07 — Stage 0 execution packet
+
+- Prepared the first public-data-only Eclipse Growth Office objective with a five-role,
+  zero-tool, zero-external-action policy; added the allowlisted evidence inventory,
+  explicit `not_available` analytics baseline, UTM v1 contract, NIST SP 800-30 risk
+  review, draft positioning audit and human decision record. No account, OAuth,
+  publication, payment or production capability was enabled.
+
+### 2026-08-07 — documentation hub
+
+- Consolidated the flagship overview, operating plan, business model, architecture,
+  security/release runbook, Growth OS and Security Registry under the single
+  `docs/eclipse-forge-os/` source-of-truth directory. Updated internal references and
+  test paths; no contracts, policies or runtime behavior changed.
+
+### 2026-08-07
+
+- Added the unified Eclipse Forge OS operating plan: current state, complete product and
+  customer journeys, workstreams, NIST-inspired risk model, provisional EF-R01–EF-R06
+  register, four delivery stages, exit gates, scoreboard, responsibility model and the
+  exact first 72-hour sequence.
+- Added `security.invariant.v1`, a draft Growth Office fixture and regression tests. The
+  schema forces `executionAllowed=false` when private-data access, untrusted-content
+  access and agent-directed external communication coexist; approval requires an
+  independent reviewer and timestamp. No runtime permission, connector or external
+  action was added.
+
+### 2026-08-06
+
+- Defined the Eclipse Forge OS business model: initial ICP, office portfolio, progressive
+  revenue ladder, validation scorecard and stage gates from owned proof to recurring
+  platform. The acquisition loop keeps observable stages from high-volume content
+  workflows but explicitly rejects mass accounts, anti-detect tooling, unauthorized
+  scraping and autonomous publication.
+- Added a security boundary for future MCP/connectors: untrusted metadata, version/hash
+  pinning, approval invalidation on change, SSRF controls, scoped authentication and
+  toxic-flow review. No connector, OAuth scope or external action was enabled.
+- Added the bounded `threads.signal.batch.v1` JSON Schema and regression test. It accepts
+  at most twenty manually observed public signals, fixes the initial profile to Pavel's
+  personal engineering profile and intentionally has no post-body, credential or private
+  analytics field.
 
 ### 2026-08-03
 
+- Declared Eclipse Forge OS and its Agent Office the ecosystem flagship product program.
+  Growth OS becomes the first office template; Chat, AI Hub, Library, Sentinel and Media
+  remain independently deployable services connected by versioned contracts.
 - Established Eclipse Growth OS positioning, audience and project priorities, a
   public-data-only Teamly pilot contract, three machine-readable registry schemas and
   a weekly review template.
 - Added the Landing crawlability foundation: canonical and social metadata, WebSite
   and Person JSON-LD, `robots.txt`, `sitemap.xml`, `llms.txt` and regression tests.
+- Validated Teamly's no-plan boundary: profile and one research agent can be configured,
+  but specialist execution is locked behind the USD 6 intro week. No payment,
+  organization, integration or external action was initiated.
