@@ -10,6 +10,7 @@ import { useRef, type MouseEvent as ReactMouseEvent } from 'react';
 import { type Project, type ProjectStatus, useSiteContent } from '../../data/content';
 import { revealScale, revealUp, stagger, viewport } from '../../lib/animation';
 import { useLocale, type Locale } from '../../lib/locale';
+import { useMotionPreference } from '../../lib/motionPreference';
 import { AssetImage } from '../ui/AssetImage';
 import { ConstellationField, EclipseSilhouette, OrbitalRing, ParticleField } from '../ui/EclipseVisuals';
 import { SectionHeading } from '../ui/SectionHeading';
@@ -36,6 +37,8 @@ const casesCopy: Record<
     placeholderHint: string;
     liveLabel: string;
     signalLabel: string;
+    resultLabel: string;
+    stackLabel: string;
     demoLabel: string;
     githubLabel: string;
     openDemoLabel: string;
@@ -57,6 +60,8 @@ const casesCopy: Record<
     placeholderHint: 'Добавь скриншот в `public/images/projects`, и карточка подхватит его автоматически.',
     liveLabel: 'демо активно',
     signalLabel: 'сигнал',
+    resultLabel: 'Результат',
+    stackLabel: 'Основа',
     demoLabel: 'Открыть демо',
     githubLabel: 'GitHub',
     openDemoLabel: 'Открыть демо',
@@ -83,6 +88,8 @@ const casesCopy: Record<
     placeholderHint: 'Add a screenshot into `public/images/projects` and the card will pick it up automatically.',
     liveLabel: 'demo live',
     signalLabel: 'signal',
+    resultLabel: 'Outcome',
+    stackLabel: 'Built with',
     demoLabel: 'Open demo',
     githubLabel: 'GitHub',
     openDemoLabel: 'Open demo',
@@ -143,6 +150,7 @@ function ProjectCard({
   const isLarge = (featured && index === 0) || isLastOdd;
   const primaryUrl = project.liveUrl ?? project.repoUrl;
   const primaryHoverLabel = project.liveUrl ? copy.openDemoLabel : copy.openRepoLabel;
+  const { ambientMotionEnabled } = useMotionPreference();
 
   const cardRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
@@ -162,6 +170,7 @@ function ProjectCard({
   const spotlight = useMotionTemplate`radial-gradient(420px circle at ${cursorX} ${cursorY}, rgba(245, 233, 196, 0.14), rgba(212, 175, 55, 0.04) 40%, transparent 70%)`;
 
   const handlePointerMove = (event: ReactMouseEvent<HTMLDivElement>) => {
+    if (!ambientMotionEnabled) return;
     const rect = cardRef.current?.getBoundingClientRect();
     if (!rect) return;
     mouseX.set((event.clientX - rect.left) / rect.width - 0.5);
@@ -179,11 +188,15 @@ function ProjectCard({
         ref={cardRef}
         onMouseMove={handlePointerMove}
         onMouseLeave={handlePointerLeave}
-        whileHover={{ y: -6 }}
-        whileTap={{ scale: 0.985 }}
+        whileHover={ambientMotionEnabled ? { y: -6 } : undefined}
+        whileTap={ambientMotionEnabled ? { scale: 0.985 } : undefined}
         transition={{ type: 'spring', stiffness: 280, damping: 26 }}
-        style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-        className="group relative flex h-full flex-col overflow-hidden rounded-[1.9rem] border transition-all duration-500 case-card-shell perspective-card"
+        style={{
+          rotateX: ambientMotionEnabled ? rotateX : 0,
+          rotateY: ambientMotionEnabled ? rotateY : 0,
+          transformStyle: ambientMotionEnabled ? 'preserve-3d' : 'flat',
+        }}
+        className={`group relative flex h-full flex-col overflow-hidden rounded-[1.9rem] border transition-all duration-500 case-card-shell perspective-card ${isLarge ? 'case-card-shell--wide' : ''}`}
       >
         <motion.div
           className="pointer-events-none absolute inset-0 z-[5] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
@@ -204,13 +217,13 @@ function ProjectCard({
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`${primaryHoverLabel}: ${project.title}`}
-            className="relative block aspect-[3/2] w-full overflow-hidden"
+            className="case-card-media relative block aspect-[3/2] w-full overflow-hidden"
           >
             <AssetImage
               alt={project.image?.alt ?? `${project.title} preview`}
               sources={project.image?.sources}
               loading="lazy"
-              className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"
+              className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04] group-focus-within:scale-[1.04]"
               style={{ objectPosition: project.image?.objectPosition ?? 'center' }}
               fallback={<PlaceholderVisual project={project} hint={copy.placeholderHint} />}
             />
@@ -222,10 +235,10 @@ function ProjectCard({
               className="pointer-events-none absolute right-4 top-4 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.22em] backdrop-blur-md"
               style={{ ...statusStyle, background: 'rgba(5,7,9,0.55)' }}
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-current opacity-80" />
+              <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-current opacity-80" />
               {copy.statusLabels[project.status]}
             </div>
-            <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center opacity-0 transition-opacity duration-400 group-hover:opacity-100">
+            <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center opacity-0 transition-opacity duration-400 group-hover:opacity-100 group-focus-within:opacity-100">
               <span
                 className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-display uppercase tracking-[0.22em] backdrop-blur-md"
                 style={{
@@ -240,12 +253,12 @@ function ProjectCard({
             </div>
           </a>
         ) : (
-          <div className="relative aspect-[3/2] w-full overflow-hidden">
+          <div className="case-card-media relative aspect-[3/2] w-full overflow-hidden">
             <AssetImage
               alt={project.image?.alt ?? `${project.title} preview`}
               sources={project.image?.sources}
               loading="lazy"
-              className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"
+              className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04] group-focus-within:scale-[1.04]"
               style={{ objectPosition: project.image?.objectPosition ?? 'center' }}
               fallback={<PlaceholderVisual project={project} hint={copy.placeholderHint} />}
             />
@@ -257,7 +270,7 @@ function ProjectCard({
               className="pointer-events-none absolute right-4 top-4 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.22em] backdrop-blur-md"
               style={{ ...statusStyle, background: 'rgba(5,7,9,0.55)' }}
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-current opacity-80" />
+              <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-current opacity-80" />
               {copy.statusLabels[project.status]}
             </div>
           </div>
@@ -269,9 +282,37 @@ function ProjectCard({
             <span className="font-display" style={{ color: 'var(--text-3)' }}>{project.systemType}</span>
           </div>
 
+          <h4 className="type-heading text-balance text-[clamp(1.55rem,2.4vw,2.35rem)] leading-[1.05]" style={{ color: 'var(--text-1)' }}>
+            {project.title}
+          </h4>
+
           <p className="type-body text-[14px] leading-relaxed sm:text-[15px]" style={{ color: 'var(--text-2)' }}>
             {project.description}
           </p>
+
+          <dl className="case-proof-grid grid gap-px overflow-hidden rounded-2xl border sm:grid-cols-2">
+            <div className="case-proof-item px-4 py-4">
+              <dt className="type-meta mb-2" style={{ color: 'var(--gold)' }}>{copy.resultLabel}</dt>
+              <dd className="text-[13px] leading-relaxed" style={{ color: 'var(--text-2)' }}>{project.result}</dd>
+            </div>
+            <div className="case-proof-item px-4 py-4">
+              <dt className="type-meta mb-2" style={{ color: 'var(--accent)' }}>{copy.signalLabel}</dt>
+              <dd className="text-[13px] leading-relaxed" style={{ color: 'var(--text-2)' }}>{project.signal}</dd>
+            </div>
+          </dl>
+
+          <div aria-label={copy.stackLabel} className="flex flex-wrap gap-2">
+            {project.tech.slice(0, 4).map((technology) => (
+              <span key={technology} className="case-tech-pill rounded-full border px-3 py-1.5 text-[10px] tracking-[0.08em]">
+                {technology}
+              </span>
+            ))}
+            {project.tech.length > 4 ? (
+              <span className="case-tech-pill rounded-full border px-3 py-1.5 text-[10px] tracking-[0.08em]">
+                +{project.tech.length - 4}
+              </span>
+            ) : null}
+          </div>
 
           <div className="mt-auto flex flex-wrap items-center gap-3">
             {project.liveUrl ? (
@@ -279,7 +320,7 @@ function ProjectCard({
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-[12px] font-display tracking-[0.04em] transition-all duration-400 case-link-primary"
+                className="inline-flex min-h-11 items-center gap-2 rounded-full border px-5 py-2.5 text-[12px] font-display tracking-[0.04em] transition-all duration-400 case-link-primary"
               >
                 {copy.demoLabel}
                 <span aria-hidden>→</span>
@@ -290,7 +331,7 @@ function ProjectCard({
                 href={project.repoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-[12px] font-display tracking-[0.04em] transition-all duration-400 case-link-secondary"
+                className="inline-flex min-h-11 items-center gap-2 rounded-full border px-5 py-2.5 text-[12px] font-display tracking-[0.04em] transition-all duration-400 case-link-secondary"
               >
                 {copy.githubLabel}
                 <span aria-hidden>↗</span>
@@ -346,7 +387,7 @@ export function CasesSection() {
             {allProjects.length} {copy.visibleSystems}
           </span>
           {portfolioAnchors.map((anchor) => (
-            <a key={anchor.href} href={anchor.href} className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[10px] uppercase tracking-[0.22em] transition-all duration-300 case-anchor-chip">
+            <a key={anchor.href} href={anchor.href} className="inline-flex min-h-11 items-center gap-2 rounded-full border px-4 py-2 text-[10px] uppercase tracking-[0.22em] transition-all duration-300 case-anchor-chip">
               <span>{anchor.label}</span>
               <span style={{ color: 'var(--accent)' }}>{anchor.count}</span>
             </a>

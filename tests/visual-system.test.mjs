@@ -41,3 +41,27 @@ test('ships an optimized CryptoPulse image with a real PNG fallback', async () =
   assert.ok(webp.size > 10_000, 'optimized CryptoPulse image must be non-empty');
   assert.ok(webp.size < png.size, 'optimized CryptoPulse image must be smaller than PNG fallback');
 });
+
+test('project showcase exposes identity, outcome and evidence without hover', async () => {
+  const cases = await read('src/components/sections/CasesSection.tsx');
+  const ecosystem = await read('src/components/sections/SystemsEcosystemSection.tsx');
+
+  assert.match(cases, /\{project\.title\}/);
+  assert.match(cases, /\{project\.result\}/);
+  assert.match(cases, /\{project\.signal\}/);
+  assert.match(cases, /useMotionPreference/);
+  assert.match(cases, /group-focus-within:opacity-100/);
+  assert.match(ecosystem, /\{project\.title\}/);
+  assert.match(ecosystem, /\{project\.result\}/);
+  assert.match(ecosystem, /useMotionPreference/);
+});
+
+test('records the bounded UI pilot and reusable Media contract', async () => {
+  const pilot = await read('docs/ui-reference-pilot-2026-08-20.md');
+  const contract = await read('docs/eclipse-forge-visual-system.md');
+
+  assert.match(pilot, /reject integration/i);
+  assert.match(pilot, /prefers-reduced-motion/);
+  assert.match(contract, /Reusable guidance для Eclipse Media/);
+  assert.match(contract, /Skiper UI, AnimMaster, Oceon и\s+Vlipsy/);
+});

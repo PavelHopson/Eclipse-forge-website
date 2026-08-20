@@ -11,6 +11,7 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 - [x] Document security, release and repository-lifecycle rules.
 - [x] Establish Eclipse Growth OS positioning, operating model and registry contracts.
 - [x] Add the Landing crawlability and AI-discovery foundation.
+- [x] Strengthen the project showcase and publish the bounded UI-reference/Media visual contract.
 - [x] Close the Teamly no-plan evaluation without payment or integrations.
 - [x] Implement the first Growth Command Room review workflow in Eclipse Chat.
 - [x] Implement the bounded five-role Growth executor in Eclipse AI Hub.
@@ -120,6 +121,19 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 Every repository appears in the portfolio inventory, but only products with a stable owner, contract and release path join the runtime graph. Incubators have 60 days to be promoted, merged or archived.
 
 ## Changelog
+### 2026-08-20 — project showcase and UI reference gate
+
+- Made every project card pass the 3-second scan without relying on cover artwork or hover:
+  project identity, outcome, evidence and primary stack are now explicit, and wide featured
+  cases use an editorial desktop rhythm that collapses cleanly on mobile.
+- Bound pointer tilt/lift to the shared system and user motion governor; added keyboard focus
+  parity and retained explicit actions on touch layouts.
+- Rejected Vengeance UI integration after a documented MIT/provenance review because the
+  candidate components did not pass keyboard, reduced-motion and mobile gates. No upstream
+  code, registry package or dependency was copied. Skiper UI, AnimMaster, Oceon and Vlipsy
+  remain reference-only.
+- Added reusable `product`-profile guidance for Eclipse Media without changing its repository.
+
 ### 2026-08-19 — motion governor and responsive QA
 
 - Добавлен единый motion governor: пользовательская пауза сохраняется локально и работает
