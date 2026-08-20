@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useMotionPreference } from '../../lib/motionPreference';
 
 /**
  * Real-time black hole spaghettification simulation on Canvas 2D.
@@ -33,13 +34,15 @@ interface Particle {
   size: number;
 }
 
-const PARTICLE_COUNT = 420;
+const DESKTOP_PARTICLE_COUNT = 420;
+const MOBILE_PARTICLE_COUNT = 180;
 const MAX_TRAIL = 14;
 const BH_MASS = 9000;
 const EH_RADIUS = 28;
 const GLOW_FALLOFF = 0.32;
 
 export function BlackHoleCanvas({ className = '' }: { className?: string }) {
+  const { ambientMotionEnabled } = useMotionPreference();
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -50,7 +53,9 @@ export function BlackHoleCanvas({ className = '' }: { className?: string }) {
 
     let w = 0, h = 0;
     let cx = 0, cy = 0;
-    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    const mobileProfile = window.matchMedia('(max-width: 767px), (pointer: coarse)').matches;
+    const particleCount = mobileProfile ? MOBILE_PARTICLE_COUNT : DESKTOP_PARTICLE_COUNT;
+    const dpr = Math.min(mobileProfile ? 1.5 : 2, window.devicePixelRatio || 1);
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
@@ -68,7 +73,7 @@ export function BlackHoleCanvas({ className = '' }: { className?: string }) {
     ro.observe(canvas);
 
     // ── Pre-allocate particle pool ────────────────────────────────
-    const pool: Particle[] = new Array(PARTICLE_COUNT);
+    const pool: Particle[] = new Array(particleCount);
 
     const respawn = (p: Particle, scatterInitial = false) => {
       const angle = Math.random() * Math.PI * 2;
@@ -91,7 +96,7 @@ export function BlackHoleCanvas({ className = '' }: { className?: string }) {
       p.size = 0.7 + Math.random() * 1.8;
     };
 
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
+    for (let i = 0; i < particleCount; i++) {
       const p: Particle = {
         x: 0, y: 0, vx: 0, vy: 0,
         trailX: new Float32Array(MAX_TRAIL),
@@ -106,12 +111,25 @@ export function BlackHoleCanvas({ className = '' }: { className?: string }) {
 
     // ── Render loop ────────────────────────────────────────────────
     let frameId = 0;
-    let paused = false;
+    let inViewport = true;
+    let paused = document.hidden;
 
-    const visibilityHandler = () => { paused = document.hidden; };
+    const resumeIfNeeded = () => {
+      paused = document.hidden || !inViewport;
+      if (ambientMotionEnabled && !paused && frameId === 0) {
+        frameId = requestAnimationFrame(step);
+      }
+    };
+    const visibilityHandler = () => resumeIfNeeded();
     document.addEventListener('visibilitychange', visibilityHandler);
+    const intersectionObserver = new IntersectionObserver(([entry]) => {
+      inViewport = entry?.isIntersecting ?? true;
+      resumeIfNeeded();
+    }, { rootMargin: '160px 0px' });
+    intersectionObserver.observe(canvas);
 
     const step = () => {
+      frameId = 0;
       if (!paused) {
         // Motion blur — slight translucent bg preserves trails
         ctx.globalCompositeOperation = 'source-over';
@@ -121,7 +139,7 @@ export function BlackHoleCanvas({ className = '' }: { className?: string }) {
         // Particles rendered additively so overlaps get hot
         ctx.globalCompositeOperation = 'lighter';
 
-        for (let i = 0; i < PARTICLE_COUNT; i++) {
+        for (let i = 0; i < particleCount; i++) {
           const p = pool[i];
           const dx = cx - p.x;
           const dy = cy - p.y;
@@ -239,7 +257,7 @@ export function BlackHoleCanvas({ className = '' }: { className?: string }) {
         ctx.stroke();
       }
 
-      frameId = requestAnimationFrame(step);
+      if (ambientMotionEnabled && !paused) frameId = requestAnimationFrame(step);
     };
 
     step();
@@ -247,9 +265,10 @@ export function BlackHoleCanvas({ className = '' }: { className?: string }) {
     return () => {
       cancelAnimationFrame(frameId);
       document.removeEventListener('visibilitychange', visibilityHandler);
+      intersectionObserver.disconnect();
       ro.disconnect();
     };
-  }, []);
+  }, [ambientMotionEnabled]);
 
   return (
     <canvas

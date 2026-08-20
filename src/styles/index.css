@@ -1739,6 +1739,16 @@ button, a { -webkit-tap-highlight-color: transparent; }
 /* Mobile: reduce hero top padding on very small screens */
 @media (max-width: 480px) {
   html { scroll-padding-top: 4rem; }
+  .site-brand-label {
+    overflow: visible;
+    font-size: 0;
+    letter-spacing: 0;
+  }
+  .site-brand-label::after {
+    content: 'EF';
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+  }
 
   /* Tighten large typography on narrow viewports */
   .type-display {
@@ -1989,6 +1999,60 @@ button, a { -webkit-tap-highlight-color: transparent; }
   html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+.motion-toggle {
+  display: inline-flex;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg-card) 72%, transparent);
+  color: var(--text-3);
+  font: 600 0.72rem/1 var(--font-mono);
+  cursor: pointer;
+  transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+.motion-toggle:hover:not(:disabled),
+.motion-toggle[aria-pressed='true'] {
+  border-color: color-mix(in srgb, var(--accent-warm) 52%, var(--line));
+  color: var(--gold);
+  background: color-mix(in srgb, var(--bg-card) 88%, var(--accent-warm) 5%);
+}
+
+.motion-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.motion-toggle:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+html[data-ambient-motion='paused'] .gradient-mesh,
+html[data-ambient-motion='paused'] .eclipse-ring,
+html[data-ambient-motion='paused'] .eclipse-core,
+html[data-ambient-motion='paused'] .fog-layer::before,
+html[data-ambient-motion='paused'] .fog-layer::after,
+html[data-ambient-motion='paused'] .flare,
+html[data-ambient-motion='paused'] .animated-divider::before,
+html[data-ambient-motion='paused'] .hero-fog-layer,
+html[data-ambient-motion='paused'] .hero-light-beam,
+html[data-ambient-motion='paused'] .ambient-nebula,
+html[data-ambient-motion='paused'] .divider-traveler,
+html[data-ambient-motion='paused'] .hero-signal-dot,
+html[data-ambient-motion='paused'] .ef-galaxy-layer__halo,
+html[data-ambient-motion='paused'] .ef-galaxy-layer__corona,
+html[data-ambient-motion='paused'] .ef-galaxy-layer__ring,
+html[data-ambient-motion='paused'] .ef-galaxy-layer__streams span,
+html[data-ambient-motion='paused'] .ef-galaxy-layer__nodes span {
+  animation-play-state: paused !important;
 }

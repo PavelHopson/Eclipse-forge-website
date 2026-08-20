@@ -5,6 +5,8 @@ import { usePriceModal } from '../../lib/priceModal';
 import { useTheme } from '../../lib/theme';
 import { GlowButton } from '../ui/GlowButton';
 import { LanguageToggle } from '../ui/LanguageToggle';
+import { MotionToggle } from '../ui/MotionToggle';
+import { useMotionPreference } from '../../lib/motionPreference';
 import { ThemeToggle } from '../ui/ThemeToggle';
 
 const headerCopy: Record<
@@ -58,6 +60,7 @@ export function SiteHeader() {
   const { setOpen: setPriceOpen } = usePriceModal();
   const copy = headerCopy[locale];
   const isLight = theme === 'light';
+  const { ambientMotionEnabled } = useMotionPreference();
 
   useMotionValueEvent(scrollY, 'change', (latest) => setIsScrolled(latest > 20));
   const closeMenu = () => setIsMenuOpen(false);
@@ -89,8 +92,8 @@ export function SiteHeader() {
           <a href="#hero" className="group flex min-w-0 items-center gap-3" onClick={closeMenu}>
             <motion.span
               className="relative flex h-3.5 w-3.5 shrink-0 items-center justify-center"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 24, repeat: Infinity, ease: 'linear' }}
+              animate={ambientMotionEnabled ? { rotate: 360 } : { rotate: 0 }}
+              transition={ambientMotionEnabled ? { duration: 24, repeat: Infinity, ease: 'linear' } : { duration: 0.15 }}
             >
               <span
                 className="absolute inset-0 rounded-full"
@@ -102,7 +105,7 @@ export function SiteHeader() {
               />
             </motion.span>
             <span
-              className="truncate font-display text-[0.72rem] font-medium uppercase tracking-[0.3em] transition-colors duration-400 group-hover:text-[var(--text-1)]"
+              className="site-brand-label truncate font-display text-[0.72rem] font-medium uppercase tracking-[0.3em] transition-colors duration-400 group-hover:text-[var(--text-1)]"
               style={{ color: 'var(--text-2)' }}
             >
               Eclipse Forge
@@ -152,10 +155,12 @@ export function SiteHeader() {
 
           <div className="flex items-center gap-2 sm:gap-3">
             <LanguageToggle compact />
-            <div className="sm:hidden">
+            <div className="flex items-center gap-2 sm:hidden">
+              <MotionToggle />
               <ThemeToggle compact />
             </div>
-            <div className="hidden sm:block">
+            <div className="hidden items-center gap-2 sm:flex">
+              <MotionToggle />
               <ThemeToggle />
             </div>
             <div className="hidden sm:block">

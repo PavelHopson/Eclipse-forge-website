@@ -12,6 +12,7 @@ import { PriceListModal } from '../components/ui/PriceListModal';
 import { BroadcastIcon, GitHubIcon, InstagramIcon, TelegramIcon } from '../components/ui/SocialIcons';
 import { contactDetails } from '../data/content';
 import { useLocale, type Locale } from '../lib/locale';
+import { MotionPreferenceProvider, useMotionPreference } from '../lib/motionPreference';
 import { useHashRoute, useScrollResetOnRoute } from '../lib/routing';
 import { LandingPage } from '../pages/LandingPage';
 
@@ -59,7 +60,7 @@ const footerCopy: Record<
   },
 };
 
-export function App() {
+function AppSurface() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
   const { locale } = useLocale();
@@ -75,9 +76,10 @@ export function App() {
   ];
 
   const isConstruction = route === '/construction';
+  const { ambientMotionEnabled } = useMotionPreference();
 
   return (
-    <MotionConfig reducedMotion="user">
+    <MotionConfig reducedMotion={ambientMotionEnabled ? 'user' : 'always'}>
     <div className="relative min-h-screen" style={{ background: 'var(--bg)', color: 'var(--text-1)' }}>
       <motion.div
         className="fixed left-0 right-0 top-0 z-50 h-px origin-left"
@@ -97,7 +99,7 @@ export function App() {
       <div className="flare" style={{ bottom: '30%', left: '10%', animationDelay: '4s' }} />
 
       <CursorLight />
-      <ParticleField count={36} className="z-[1] opacity-55" />
+      {ambientMotionEnabled ? <ParticleField count={36} className="z-[1] opacity-55" /> : null}
       <InteractiveGalaxyLayer className="z-[1]" />
 
       <PriceListModal />
@@ -164,5 +166,13 @@ export function App() {
       </footer>
     </div>
     </MotionConfig>
+  );
+}
+
+export function App() {
+  return (
+    <MotionPreferenceProvider>
+      <AppSurface />
+    </MotionPreferenceProvider>
   );
 }

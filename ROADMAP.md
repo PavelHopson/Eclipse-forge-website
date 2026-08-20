@@ -120,6 +120,16 @@ This roadmap covers ecosystem discovery and shared contracts. Product-specific d
 Every repository appears in the portfolio inventory, but only products with a stable owner, contract and release path join the runtime graph. Incubators have 60 days to be promoted, merged or archived.
 
 ## Changelog
+### 2026-08-19 — motion governor and responsive QA
+
+- Добавлен единый motion governor: пользовательская пауза сохраняется локально и работает
+  вместе с системным `prefers-reduced-motion` без отключения значимой обратной связи.
+- Hero canvas приостанавливается вне viewport и в скрытой вкладке, снижает DPR и число частиц
+  на мобильных устройствах, а при размонтировании освобождает listeners и animation frame.
+- Локальный Edge QA пройден на desktop 1440px и точном mobile viewport 390px: horizontal
+  overflow отсутствует, мобильный brand mark сокращён до `EF`, motion toggle работает.
+- Проверки: 29/29 tests, typecheck и production build с bundle budget. Production deploy не выполнялся.
+
 ### 2026-08-13 — Growth invariant independent-review packet
 
 - Frozen the exact Chat/AI Hub commits and CI runs under review, confirmed that no authz
