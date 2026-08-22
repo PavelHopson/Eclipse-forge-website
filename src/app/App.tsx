@@ -80,7 +80,7 @@ function AppSurface() {
 
   return (
     <MotionConfig reducedMotion={ambientMotionEnabled ? 'user' : 'always'}>
-    <div className="relative min-h-screen" style={{ background: 'var(--bg)', color: 'var(--text-1)' }}>
+    <div className="relative min-h-screen" data-visual-profile="cinematic-editorial" style={{ background: 'var(--bg)', color: 'var(--text-1)' }}>
       <motion.div
         className="fixed left-0 right-0 top-0 z-50 h-px origin-left"
         style={{ scaleX, background: 'linear-gradient(90deg, var(--accent), var(--accent-warm))' }}
