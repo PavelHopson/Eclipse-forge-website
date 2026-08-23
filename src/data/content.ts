@@ -487,6 +487,31 @@ const featuredProjectDefinitions: LocalizedProjectDefinition[] = [
     repoUrl: 'https://github.com/PavelHopson/SmartLifeAssistant',
     image: projectImage('smart-life-assistant', 'smartlifeassistant', 'Smart Life Assistant product preview', 'center top'),
   },
+  {
+    title: 'NØRTHBOUND — Scroll Cinema Study',
+    systemType: localized('ИНТЕРАКТИВНАЯ РЕКОНСТРУКЦИЯ', 'INTERACTIVE RECONSTRUCTION'),
+    status: 'reference',
+    description: localized(
+      'Атрибутированная техническая реконструкция кинематографического scroll-опыта Андрея Мея: три видео становятся одной управляемой прокруткой историей — от последнего поезда до подводных титров.',
+      'An attributed technical reconstruction of Andrei Mei’s cinematic scroll experience: three films become one scroll-controlled story, from the last train to underwater titles.',
+    ),
+    tech: ['Vanilla JS', 'GSAP', 'ScrollTrigger', 'HTML5 Video', 'Canvas', 'Web Audio'],
+    result: localized(
+      'Самостоятельный браузерный фильм с инерционным скраббингом, reverse-scroll, главами и reduced-motion режимом.',
+      'A standalone browser film with inertial scrubbing, reverse scroll, chapters and a reduced-motion mode.',
+    ),
+    signal: localized(
+      '3 локальных видео, 1 RAF-контур, 1635vh режиссуры и обязательная проверка desktop/mobile.',
+      '3 local films, 1 RAF loop, 1635vh of directed pacing and mandatory desktop/mobile QA.',
+    ),
+    tags: localized(
+      ['scroll-cinema', 'motion engineering', 'атрибутированный study'],
+      ['scroll cinema', 'motion engineering', 'attributed study'],
+    ),
+    ecosystemTags: localized(['интерактив', 'видео', 'creative development'], ['interactive', 'video', 'creative development']),
+    liveUrl: '/cases/northbound-study/index.html',
+    image: projectImage('northbound-study', 'northbound-scroll-cinema', 'Nørthbound cinematic train experience preview', 'center center'),
+  },
 ];
 
 const portfolioCollectionDefinitions: LocalizedProjectCollectionDefinition[] = [
