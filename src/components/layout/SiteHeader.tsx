@@ -89,7 +89,7 @@ export function SiteHeader() {
           className="mx-auto flex max-w-[1400px] items-center justify-between rounded-full border px-4 py-3 sm:px-5"
           style={{ boxShadow: isScrolled ? shadowScrolled : 'none' }}
         >
-          <a href="#hero" className="group flex min-w-0 items-center gap-3" onClick={closeMenu}>
+          <a href="#hero" className="group flex min-h-11 min-w-0 items-center gap-3" onClick={closeMenu}>
             <motion.span
               className="relative flex h-3.5 w-3.5 shrink-0 items-center justify-center"
               animate={ambientMotionEnabled ? { rotate: 360 } : { rotate: 0 }}
@@ -117,7 +117,7 @@ export function SiteHeader() {
               <a
                 key={item.href}
                 href={item.href}
-                className="group relative inline-flex items-center transition-colors duration-300 hover:!text-[var(--text-1)]"
+                className="group relative inline-flex min-h-11 items-center transition-colors duration-300 hover:!text-[var(--text-1)]"
               >
                 {item.label}
                 <span
@@ -130,7 +130,7 @@ export function SiteHeader() {
               href="https://library.eclipse-forge.ru/"
               target="_blank"
               rel="noreferrer"
-              className="group relative inline-flex items-center transition-colors duration-300 hover:!text-[var(--text-1)]"
+              className="group relative inline-flex min-h-11 items-center transition-colors duration-300 hover:!text-[var(--text-1)]"
               style={{ color: 'var(--gold)' }}
             >
               {copy.libraryLabel} ↗
@@ -142,7 +142,7 @@ export function SiteHeader() {
             <button
               type="button"
               onClick={() => setPriceOpen(true)}
-              className="group relative inline-flex items-center transition-colors duration-300 hover:!text-[var(--text-1)]"
+              className="group relative inline-flex min-h-11 items-center transition-colors duration-300 hover:!text-[var(--text-1)]"
               style={{ color: 'var(--gold)' }}
             >
               {copy.priceLabel}
@@ -173,7 +173,7 @@ export function SiteHeader() {
               type="button"
               aria-label={isMenuOpen ? copy.closeMenu : copy.openMenu}
               onClick={() => setIsMenuOpen((open) => !open)}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border md:hidden"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border md:hidden"
               style={{ borderColor: 'var(--line)', color: 'var(--text-2)' }}
             >
               <span className="relative h-4 w-4">

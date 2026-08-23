@@ -56,6 +56,21 @@ test('project showcase exposes identity, outcome and evidence without hover', as
   assert.match(ecosystem, /useMotionPreference/);
 });
 
+test('editorial hero keeps the Eclipse anchor and accessible primary paths', async () => {
+  const [hero, styles] = await Promise.all([
+    read('src/components/sections/HeroSection.tsx'),
+    read('src/styles/index.css'),
+  ]);
+
+  assert.match(hero, /eclipse-editorial-hero/);
+  assert.match(hero, /hero-editorial-eclipse/);
+  assert.match(hero, /href="#contact"/);
+  assert.match(hero, /href="#cases"/);
+  assert.match(hero, /useMotionPreference/);
+  assert.match(styles, /\.hero-editorial-cta\s*\{[\s\S]*min-height:\s*52px/);
+  assert.match(styles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.hero-editorial-corona/);
+});
+
 test('records the bounded UI pilot and reusable Media contract', async () => {
   const pilot = await read('docs/ui-reference-pilot-2026-08-20.md');
   const contract = await read('docs/eclipse-forge-visual-system.md');

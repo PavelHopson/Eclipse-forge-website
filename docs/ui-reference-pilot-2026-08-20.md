@@ -42,3 +42,22 @@ identity, outcome and evidence; focus parity; static mobile presentation; govern
 Reusable guidance for Eclipse Media lives in
 [`eclipse-forge-visual-system.md`](eclipse-forge-visual-system.md#reusable-guidance-для-eclipse-media).
 It is a design contract only; this pilot makes no changes in the Media repository.
+
+## Editorial portfolio reference — 2026-08-23
+
+`andrey-may-pf.netlify.app` was reviewed as a visual reference for editorial hierarchy only.
+No source, assets, layout measurements or motion implementation were copied: the public page
+does not provide a reusable-code license in the reviewed experience. The useful principle was
+the reduction to one oversized statement, one visual anchor and an early project proof.
+
+The Landing adaptation keeps the Eclipse Forge identity and implementation:
+
+- the single anchor is a circular black eclipse with a warm-gold corona, orbital geometry and
+  restrained system telemetry;
+- Outfit/Inter, the canonical tokens and the existing motion governor remain authoritative;
+- the founder portrait and metric cards no longer compete with the hero message;
+- the project showcase follows the hero directly, so evidence no longer waits behind four
+  positioning sections;
+- primary and secondary actions remain visible, keyboard-focusable and at least 44px tall;
+- touch layouts receive a static, cropped eclipse composition rather than pointer parallax;
+- `prefers-reduced-motion` and the manual ambient-motion pause freeze the new CSS effects.
