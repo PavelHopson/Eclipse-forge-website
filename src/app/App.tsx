@@ -38,7 +38,7 @@ const footerCopy: Record<
 > = {
   ru: {
     description: 'Системы для контроля, автоматизации и AI-исполнения. Для продуктов, которым нужен не только фронтовый слой.',
-    location: 'Калининград',
+    location: 'По всему миру',
     socialLabels: {
       telegram: 'Telegram',
       channel: 'Канал',
@@ -49,7 +49,7 @@ const footerCopy: Record<
   },
   en: {
     description: 'Systems for control, automation and AI execution. Built for products that need more than a front layer.',
-    location: 'Kaliningrad',
+    location: 'Worldwide',
     socialLabels: {
       telegram: 'Telegram',
       channel: 'Channel',

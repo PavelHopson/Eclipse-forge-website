@@ -81,9 +81,9 @@ const metricConfigs = [
 
 const metricsCopy: Record<Locale, { eyebrow: string; title: string; subtitle: string }> = {
   ru: {
-    eyebrow: 'Телеметрия',
+    eyebrow: 'Результаты',
     title: 'Цифры, за которыми стоит исполнение.',
-    subtitle: '24/7 процессы, проверки в релизе, инженерное ядро. Эти числа не маркетинг — это рабочая телеметрия.',
+    subtitle: 'Процессы работают круглосуточно, а каждый релиз проходит проверку. Эти цифры подтверждены работой продуктов.',
   },
   en: {
     eyebrow: 'Telemetry',

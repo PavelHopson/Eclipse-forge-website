@@ -1,5 +1,5 @@
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocale, type Locale } from '../../lib/locale';
 import { usePriceModal } from '../../lib/priceModal';
 import { useTheme } from '../../lib/theme';
@@ -28,7 +28,7 @@ const headerCopy: Record<
       { label: 'Процесс', href: '#process' },
       { label: 'Контакт', href: '#contact' },
     ],
-    cta: 'Открыть запрос',
+    cta: 'Обсудить задачу',
     openMenu: 'Открыть меню',
     closeMenu: 'Закрыть меню',
     priceLabel: 'Прайс',
@@ -53,6 +53,7 @@ const headerCopy: Record<
 export function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const reduceMotion = useReducedMotion();
   const { scrollY } = useScroll();
   const { theme } = useTheme();
@@ -64,6 +65,24 @@ export function SiteHeader() {
 
   useMotionValueEvent(scrollY, 'change', (latest) => setIsScrolled(latest > 20));
   const closeMenu = () => setIsMenuOpen(false);
+
+  useEffect(() => {
+    if (!isMenuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      setIsMenuOpen(false);
+      menuButtonRef.current?.focus();
+    };
+
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isMenuOpen]);
 
   const bgScrolled = isLight ? 'rgba(245, 242, 235, 0.9)' : 'rgba(5, 7, 10, 0.88)';
   const bgIdle = isLight ? 'rgba(255, 255, 255, 0.55)' : 'rgba(255, 255, 255, 0.02)';
@@ -89,7 +108,12 @@ export function SiteHeader() {
           className="mx-auto flex max-w-[1400px] items-center justify-between rounded-full border px-4 py-3 sm:px-5"
           style={{ boxShadow: isScrolled ? shadowScrolled : 'none' }}
         >
-          <a href="#hero" className="group flex min-h-11 min-w-0 items-center gap-3" onClick={closeMenu}>
+          <a
+            href="#hero"
+            aria-label="Eclipse Forge"
+            className="group flex min-h-11 min-w-0 items-center gap-3"
+            onClick={closeMenu}
+          >
             <motion.span
               className="relative flex h-3.5 w-3.5 shrink-0 items-center justify-center"
               animate={ambientMotionEnabled ? { rotate: 360 } : { rotate: 0 }}
@@ -105,6 +129,7 @@ export function SiteHeader() {
               />
             </motion.span>
             <span
+              aria-hidden
               className="site-brand-label truncate font-display text-[0.72rem] font-medium uppercase tracking-[0.3em] transition-colors duration-400 group-hover:text-[var(--text-1)]"
               style={{ color: 'var(--text-2)' }}
             >
@@ -112,7 +137,7 @@ export function SiteHeader() {
             </span>
           </a>
 
-          <nav className="hidden items-center gap-6 text-sm md:flex" style={{ color: 'var(--text-3)' }}>
+          <nav className="hidden items-center gap-6 text-sm min-[1360px]:flex" style={{ color: 'var(--text-3)' }}>
             {copy.navItems.map((item) => (
               <a
                 key={item.href}
@@ -170,10 +195,13 @@ export function SiteHeader() {
             </div>
 
             <button
+              ref={menuButtonRef}
               type="button"
               aria-label={isMenuOpen ? copy.closeMenu : copy.openMenu}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-navigation"
               onClick={() => setIsMenuOpen((open) => !open)}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border md:hidden"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border min-[1360px]:hidden"
               style={{ borderColor: 'var(--line)', color: 'var(--text-2)' }}
             >
               <span className="relative h-4 w-4">
@@ -189,11 +217,12 @@ export function SiteHeader() {
       <AnimatePresence>
         {isMenuOpen ? (
           <motion.div
+            id="mobile-navigation"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.18 }}
-            className="fixed inset-0 z-30 px-4 pb-6 pt-24 backdrop-blur-md md:hidden"
+            className="fixed inset-0 z-30 px-4 pb-6 pt-24 backdrop-blur-md min-[1360px]:hidden"
             style={{ background: isLight ? 'rgba(245, 242, 235, 0.85)' : 'rgba(5,7,10,0.7)' }}
           >
             <motion.div

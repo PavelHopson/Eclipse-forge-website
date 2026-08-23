@@ -39,7 +39,7 @@ const ORDER_COPY: Record<Locale, OrderCardCopy> = {
     volume: 'Объём',
     volumeValue: '12 м³',
     address: 'Адрес объекта',
-    addressValue: 'Калининград, ул. Куйбышева, 87',
+    addressValue: 'ул. Центральная, 87',
     window: 'Окно доставки',
     windowValue: 'Сегодня · 14:30–15:30',
     amount: 'Сумма',
@@ -60,7 +60,7 @@ const ORDER_COPY: Record<Locale, OrderCardCopy> = {
     volume: 'Volume',
     volumeValue: '12 m³',
     address: 'Site address',
-    addressValue: 'Kaliningrad, Kuybysheva 87',
+    addressValue: 'Centralnaya St., 87',
     window: 'Delivery window',
     windowValue: 'Today · 14:30–15:30',
     amount: 'Amount',
@@ -170,11 +170,11 @@ type AiQualifyCopy = {
 const AI_COPY: Record<Locale, AiQualifyCopy> = {
   ru: {
     label: 'AI quality',
-    raw: '«Нужен бетон м300 кубов 12 на завтра примерно после обеда на куйбышева 87 калининград, оплата по счёту»',
+    raw: '«Нужен бетон м300 кубов 12 на завтра примерно после обеда на Центральную 87, оплата по счёту»',
     parsed: [
       { k: 'material', v: 'Бетон М-300, B22.5' },
       { k: 'volume_m3', v: '12' },
-      { k: 'address', v: 'Калининград, ул. Куйбышева, 87' },
+      { k: 'address', v: 'ул. Центральная, 87' },
       { k: 'window', v: '2026-05-13 · 14:30–15:30' },
       { k: 'payment', v: 'по счёту' },
     ],
@@ -182,11 +182,11 @@ const AI_COPY: Record<Locale, AiQualifyCopy> = {
   },
   en: {
     label: 'AI quality',
-    raw: '"Need concrete m300 12 cubes by tomorrow around afternoon at kuybysheva 87 kaliningrad pay by invoice"',
+    raw: '"Need concrete m300 12 cubes by tomorrow around afternoon at Centralnaya St. 87, pay by invoice"',
     parsed: [
       { k: 'material', v: 'Concrete M-300, B22.5' },
       { k: 'volume_m3', v: '12' },
-      { k: 'address', v: 'Kaliningrad, Kuybysheva 87' },
+      { k: 'address', v: 'Centralnaya St., 87' },
       { k: 'window', v: '2026-05-13 · 14:30–15:30' },
       { k: 'payment', v: 'invoice' },
     ],

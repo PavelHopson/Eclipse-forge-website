@@ -139,7 +139,7 @@ const COPY: Record<Locale, ConstructionCopy> = {
     },
     workflow: {
       eyebrow: 'Workflow',
-      title: 'Контур исполнения целиком.',
+      title: 'Весь процесс в одной системе.',
       description:
         'Каждый узел — это либо AI-операция, либо операторская точка, либо автоматическое действие. Ничто не теряется между ними, потому что между ними нет ручной передачи.',
       nodes: [
@@ -152,7 +152,7 @@ const COPY: Record<Locale, ConstructionCopy> = {
         { title: 'Execution Tracking', meta: 'real-time status' },
         { title: 'AI Report', meta: 'daily summary · alerts' },
       ],
-      footer: 'AI · automation · operator panel · documents · execution — один контур, ни одного ручного звена.',
+      footer: 'ИИ · автоматизация · рабочая панель · документы · выполнение — всё в одной системе без ручной передачи задач.',
     },
     modules: {
       eyebrow: 'Модули',
@@ -194,11 +194,11 @@ const COPY: Record<Locale, ConstructionCopy> = {
     cta: {
       eyebrow: 'Контакт',
       title: 'Если ваши заказы живут в звонках и таблицах —',
-      titleAccent: 'соберём контур, который превратит это в процесс.',
+      titleAccent: 'соберём систему, которая превратит это в понятный процесс.',
       description:
         'Начнём с разбора реальной операции: где утекает время и контроль, что можно автоматизировать сразу, а что — на следующем шаге.',
       primary: 'Написать в Telegram',
-      secondary: 'Открыть запрос',
+      secondary: 'Обсудить задачу',
     },
   },
   en: {

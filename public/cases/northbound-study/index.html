@@ -1,17 +1,17 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#050607" />
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'" />
-    <meta name="description" content="NØRTHBOUND — a credited technical reconstruction study of Andrei Mei's cinematic scroll experience." />
-    <meta property="og:title" content="NØRTHBOUND — The Last Train North" />
-    <meta property="og:description" content="A cinematic scroll experiment beyond the final signal." />
+    <meta name="description" content="NØRTHBOUND: кинематографическая история о последнем поезде на север, которой управляет прокрутка." />
+    <meta property="og:title" content="NØRTHBOUND: Последний поезд на север" />
+    <meta property="og:description" content="Три видео складываются в одну непрерывную историю." />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="hero-v2.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <title>NØRTHBOUND — The Last Train North</title>
+    <title>NØRTHBOUND: Последний поезд на север</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="preload" href="assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="assets/fonts/instrument-serif-italic-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -19,56 +19,56 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <a class="skip-link" href="#story">Enter the story</a>
+    <a class="skip-link" href="#story">Перейти к истории</a>
 
     <div class="preloader" id="preloader" role="status" aria-live="polite">
       <div class="preloader__backdrop" aria-hidden="true"></div>
       <div class="preloader__veil" aria-hidden="true"></div>
       <div class="preloader__content">
         <p class="preloader__brand">NØRTHBOUND</p>
-        <p class="preloader__status">LOADING THE LAST DEPARTURE</p>
+        <p class="preloader__status">ГОТОВИМ ПОЕЗД К ОТПРАВЛЕНИЮ</p>
         <div class="preloader__meter" aria-hidden="true"><span id="preloaderBar"></span></div>
         <p class="preloader__number" aria-hidden="true"><span id="preloaderNumber">00</span><span>—100</span></p>
       </div>
     </div>
 
-    <header class="topbar" aria-label="Project navigation">
-      <a class="topbar__identity" href="#departure" aria-label="Nørthbound, return to departure">
+    <header class="topbar" aria-label="Навигация по истории">
+      <a class="topbar__identity" href="#departure" aria-label="Nørthbound, вернуться к отправлению">
         <span>NØRTHBOUND</span>
-        <small>23:40 / LAST DEPARTURE</small>
+        <small>23:40 / ПОСЛЕДНИЙ РЕЙС</small>
       </a>
       <div class="topbar__actions">
-        <span class="study-label">RECONSTRUCTION STUDY</span>
-        <a class="topbar__link topbar__link--optional" href="https://panda-orchid-barn.pagey.site/" target="_blank" rel="noopener noreferrer">SOURCE ↗</a>
-        <a class="topbar__link topbar__link--optional" href="https://andrey-may-pf.netlify.app/" target="_blank" rel="noopener noreferrer">PORTFOLIO</a>
-        <button class="sound-toggle" id="soundToggle" type="button" aria-label="Turn sound on" aria-pressed="false">
-          <span class="sound-toggle__dot" aria-hidden="true"></span><span id="soundLabel">SOUND OFF</span>
+        <span class="study-label">КИНЕМАТОГРАФИЧЕСКИЙ ВЕБ-КЕЙС</span>
+        <a class="topbar__link topbar__link--optional" href="/">ECLIPSE FORGE</a>
+        <a class="topbar__link topbar__link--optional" href="https://library.eclipse-forge.ru/#guide/cinematic-scroll-video-storytelling" target="_blank" rel="noopener noreferrer">КАК ЭТО СДЕЛАНО</a>
+        <button class="sound-toggle" id="soundToggle" type="button" aria-label="Включить звук" aria-pressed="false">
+          <span class="sound-toggle__dot" aria-hidden="true"></span><span id="soundLabel">ЗВУК ВЫКЛ.</span>
         </button>
       </div>
     </header>
 
     <main class="story" id="story">
       <div class="cinematic-stage" id="stage">
-        <div class="media-stack" aria-label="Cinematic journey">
+        <div class="media-stack" aria-label="Кинематографическое путешествие">
           <div class="video-layer video-layer--departure" id="departureLayer">
-            <video id="departureVideo" muted playsinline preload="auto" poster="assets/posters/departure.jpg" aria-label="A dark red train waits at a snowy station, then departs">
+            <video id="departureVideo" muted playsinline preload="auto" poster="assets/posters/departure.jpg" aria-label="Тёмно-красный поезд ждёт на снежной станции и отправляется в путь">
               <source src="assets/video/start_train.web.mp4" type="video/mp4" />
-              Your browser cannot play the departure film.
+              Браузер не может воспроизвести видео отправления.
             </video>
           </div>
           <div class="video-layer video-layer--carriage" id="carriageLayer">
-            <video id="carriageVideo" muted playsinline preload="auto" poster="assets/posters/carriage.jpg" aria-label="Inside a warm train carriage, the camera moves toward a snowstorm">
+            <video id="carriageVideo" muted playsinline preload="auto" poster="assets/posters/carriage.jpg" aria-label="Камера проходит через тёплый вагон к снежной буре за окном">
               <source src="assets/video/carriage.web.mp4" type="video/mp4" />
-              Your browser cannot play the carriage film.
+              Браузер не может воспроизвести видео вагона.
             </video>
           </div>
           <div class="video-layer video-layer--final" id="finalLayer">
-            <video id="finalVideo" muted playsinline preload="auto" poster="assets/posters/final.jpg" aria-label="The train crosses a tunnel, the aurora, ice, and descends underwater">
+            <video id="finalVideo" muted playsinline preload="auto" poster="assets/posters/final.jpg" aria-label="Поезд проходит тоннель, северное сияние, лёд и погружается под воду">
               <source src="assets/video/final.web.mp4" type="video/mp4" />
-              Your browser cannot play the final film.
+              Браузер не может воспроизвести финальное видео.
             </video>
           </div>
-          <div class="media-fallback" id="mediaFallback" role="img" aria-label="Snow at a night station"><p>THE LAST TRAIN NORTH</p></div>
+          <div class="media-fallback" id="mediaFallback" role="img" aria-label="Снег на ночной станции"><p>ПОСЛЕДНИЙ ПОЕЗД НА СЕВЕР</p></div>
         </div>
 
         <div class="cold-grade" aria-hidden="true"></div>
@@ -81,58 +81,57 @@
 
         <section class="hero scene-copy is-visible" id="heroCopy" aria-labelledby="heroTitle">
           <div class="hero__title-wrap">
-            <h1 class="hero__title" id="heroTitle"><span class="hero__sans">NØRTHBOUND</span><em>The last train north.</em></h1>
-            <p class="hero__dek">A cinematic scroll experiment<br />beyond the final signal.</p>
+            <h1 class="hero__title" id="heroTitle"><span class="hero__sans">NØRTHBOUND</span><em>Последний поезд на север.</em></h1>
+            <p class="hero__dek">Три видео складываются<br />в одну непрерывную историю.</p>
           </div>
-          <div class="hero__scroll" id="scrollPrompt" aria-hidden="true"><span>SCROLL TO DEPART</span><i></i></div>
-          <div class="corner-caption corner-caption--left"><span>CHAPTER 01</span><strong>DEPARTURE</strong></div>
+          <div class="hero__scroll" id="scrollPrompt" aria-hidden="true"><span>ЛИСТАЙТЕ, ЧТОБЫ НАЧАТЬ</span><i></i></div>
+          <div class="corner-caption corner-caption--left"><span>ГЛАВА 01</span><strong>ОТПРАВЛЕНИЕ</strong></div>
           <div class="corner-caption corner-caption--right"><span>00 / 06</span></div>
         </section>
 
         <section class="intertitle intertitle--one scene-copy" id="intertitleOne">
-          <div class="intertitle__body"><p class="display-sans">THE TRAIN LEFT ON TIME.</p><p class="display-serif">Nothing after that felt real.</p></div>
-          <p class="micro-note"><span>01:17</span><span>THE CITY DISAPPEARED BEHIND THE SNOW</span></p>
+          <div class="intertitle__body"><p class="display-sans">ПОЕЗД УШЁЛ ПО РАСПИСАНИЮ.</p><p class="display-serif">После этого реальность стала другой.</p></div>
+          <p class="micro-note"><span>01:17</span><span>ГОРОД ИСЧЕЗ ЗА СНЕГОМ</span></p>
         </section>
 
         <section class="intertitle intertitle--two scene-copy" id="intertitleTwo">
-          <div class="intertitle__body"><p class="display-sans display-sans--stacked"><span>SOME JOURNEYS</span><span>DON’T TAKE YOU SOMEWHERE.</span></p><p class="display-serif">They take something away from you.</p></div>
+          <div class="intertitle__body"><p class="display-sans display-sans--stacked"><span>НЕКОТОРЫЕ ПОЕЗДКИ</span><span>НЕ ПРИВОДЯТ К МЕСТУ.</span></p><p class="display-serif">Они оставляют что-то позади.</p></div>
         </section>
 
         <section class="intertitle intertitle--three scene-copy" id="intertitleThree">
-          <div class="intertitle__body"><p class="display-sans display-sans--stacked storm-lines"><span>NO SIGNAL.</span><span>NO VOICES.</span><span>NO WAY BACK.</span></p><p class="display-serif">Only the storm,<br />pressing <span class="snow-word">closer.</span></p></div>
-          <p class="micro-note"><span>WHITEOUT</span><span>COORDINATES UNKNOWN</span></p>
+          <div class="intertitle__body"><p class="display-sans display-sans--stacked storm-lines"><span>НЕТ СВЯЗИ.</span><span>НЕТ ГОЛОСОВ.</span><span>НЕТ ПУТИ НАЗАД.</span></p><p class="display-serif">Только метель<br />становится <span class="snow-word">ближе.</span></p></div>
+          <p class="micro-note"><span>МЕТЕЛЬ</span><span>КООРДИНАТЫ НЕИЗВЕСТНЫ</span></p>
         </section>
 
         <section class="tunnel-copy scene-copy" id="tunnelCopy">
-          <p class="tunnel-copy__label"><span>LIMINAL PASSAGE</span><span>03:17 / LOCATION UNKNOWN</span></p>
-          <div class="tunnel-copy__body"><p class="display-sans">NOT EVERY TUNNEL</p><p class="display-serif">leads somewhere.</p><p class="tunnel-copy__aside">THE SPACE BETWEEN<br />WAS NEVER EMPTY</p></div>
+          <p class="tunnel-copy__label"><span>ПЕРЕХОД</span><span>03:17 / МЕСТО НЕИЗВЕСТНО</span></p>
+          <div class="tunnel-copy__body"><p class="display-sans">НЕ КАЖДЫЙ ТОННЕЛЬ</p><p class="display-serif">куда-то ведёт.</p><p class="tunnel-copy__aside">ПРОСТРАНСТВО МЕЖДУ<br />НИКОГДА НЕ БЫЛО ПУСТЫМ</p></div>
         </section>
 
-        <div class="chapter-caption chapter-caption--carriage" id="carriageCaption" aria-hidden="true"><span>CHAPTER 02</span><strong>THE CARRIAGE</strong></div>
-        <div class="chapter-caption chapter-caption--beyond" id="beyondCaption" aria-hidden="true"><span>CHAPTER 05</span><strong>BEYOND THE MAP</strong></div>
+        <div class="chapter-caption chapter-caption--carriage" id="carriageCaption" aria-hidden="true"><span>ГЛАВА 02</span><strong>ВАГОН</strong></div>
+        <div class="chapter-caption chapter-caption--beyond" id="beyondCaption" aria-hidden="true"><span>ГЛАВА 05</span><strong>ЗА ПРЕДЕЛАМИ КАРТЫ</strong></div>
 
         <section class="credits scene-copy" id="credits">
-          <div class="credits__eyebrow">THE JOURNEY ENDS<br />WHERE THE MAP CANNOT FOLLOW</div>
-          <div class="credits__title"><h2>NØRTHBOUND</h2><p>THE LAST TRAIN NORTH</p></div>
-          <div class="credits__byline"><p>A CINEMATIC SCROLL EXPERIMENT<br />BY ANDREI MEI</p><p class="credits__roles">AI / CODE / DIRECTION<br />2026</p></div>
+          <div class="credits__eyebrow">ПУТЕШЕСТВИЕ ЗАКАНЧИВАЕТСЯ ТАМ,<br />ГДЕ ЗАКАНЧИВАЕТСЯ КАРТА</div>
+          <div class="credits__title"><h2>NØRTHBOUND</h2><p>ПОСЛЕДНИЙ ПОЕЗД НА СЕВЕР</p></div>
+          <div class="credits__byline"><p>КИНЕМАТОГРАФИЧЕСКАЯ ИСТОРИЯ<br />С УПРАВЛЕНИЕМ ПРОКРУТКОЙ</p><p class="credits__roles">ECLIPSE FORGE<br />2026</p></div>
           <div class="credits__links">
-            <a href="https://andrey-may-pf.netlify.app/" target="_blank" rel="noopener noreferrer"><span>VIEW ORIGINAL PORTFOLIO</span><i aria-hidden="true">↗</i></a>
-            <a href="https://t.me/andreymei_web" target="_blank" rel="noopener noreferrer"><span>ANDREI MEI / TELEGRAM</span><i aria-hidden="true">↗</i></a>
-            <a href="https://github.com/PavelHopson/eclipse-library/blob/master/guides/cinematic-scroll-video-storytelling.md" target="_blank" rel="noopener noreferrer"><span>READ THE RECONSTRUCTION GUIDE</span><i aria-hidden="true">↗</i></a>
+            <a href="/" target="_self"><span>ВЕРНУТЬСЯ НА САЙТ ECLIPSE FORGE</span><i aria-hidden="true">↗</i></a>
+            <a href="https://library.eclipse-forge.ru/#guide/cinematic-scroll-video-storytelling" target="_blank" rel="noopener noreferrer"><span>ПРОЧИТАТЬ ГАЙД ПО СОЗДАНИЮ</span><i aria-hidden="true">↗</i></a>
           </div>
-          <p class="credits__availability">ATTRIBUTED TECHNICAL RECONSTRUCTION<br />FOR ECLIPSE FORGE LIBRARY</p>
-          <button class="return-link" id="returnToTop" type="button"><span>SCROLL BACK TO DEPART AGAIN</span><i aria-hidden="true">↑</i></button>
+          <p class="credits__availability">ТРИ ВИДЕО, ОДНА ВРЕМЕННАЯ ШКАЛА<br />И ПЛАВНЫЕ ПЕРЕХОДЫ МЕЖДУ СЦЕНАМИ</p>
+          <button class="return-link" id="returnToTop" type="button"><span>ВЕРНУТЬСЯ К НАЧАЛУ</span><i aria-hidden="true">↑</i></button>
         </section>
 
-        <nav class="chapter-nav" id="chapterNav" aria-label="Story chapters">
+        <nav class="chapter-nav" id="chapterNav" aria-label="Главы истории">
           <div class="chapter-nav__track" aria-hidden="true"><i id="chapterProgress"></i></div>
           <ol>
-            <li><button type="button" data-scroll-to="departure" aria-label="Go to chapter 1, Departure"><span>01</span><b></b><em>DEPARTURE</em></button></li>
-            <li><button type="button" data-scroll-to="carriage" aria-label="Go to chapter 2, Carriage"><span>02</span><b></b><em>CARRIAGE</em></button></li>
-            <li><button type="button" data-scroll-to="whiteout" aria-label="Go to chapter 3, Whiteout"><span>03</span><b></b><em>WHITEOUT</em></button></li>
-            <li><button type="button" data-scroll-to="passage" aria-label="Go to chapter 4, Passage"><span>04</span><b></b><em>PASSAGE</em></button></li>
-            <li><button type="button" data-scroll-to="aurora" aria-label="Go to chapter 5, Aurora"><span>05</span><b></b><em>AURORA</em></button></li>
-            <li><button type="button" data-scroll-to="beneath" aria-label="Go to chapter 6, Beneath"><span>06</span><b></b><em>BENEATH</em></button></li>
+            <li><button type="button" data-scroll-to="departure" aria-label="Перейти к главе 1, Отправление"><span>01</span><b></b><em>ОТПРАВЛЕНИЕ</em></button></li>
+            <li><button type="button" data-scroll-to="carriage" aria-label="Перейти к главе 2, Вагон"><span>02</span><b></b><em>ВАГОН</em></button></li>
+            <li><button type="button" data-scroll-to="whiteout" aria-label="Перейти к главе 3, Метель"><span>03</span><b></b><em>МЕТЕЛЬ</em></button></li>
+            <li><button type="button" data-scroll-to="passage" aria-label="Перейти к главе 4, Тоннель"><span>04</span><b></b><em>ТОННЕЛЬ</em></button></li>
+            <li><button type="button" data-scroll-to="aurora" aria-label="Перейти к главе 5, Сияние"><span>05</span><b></b><em>СИЯНИЕ</em></button></li>
+            <li><button type="button" data-scroll-to="beneath" aria-label="Перейти к главе 6, Подо льдом"><span>06</span><b></b><em>ПОДО ЛЬДОМ</em></button></li>
           </ol>
         </nav>
 
@@ -157,7 +156,7 @@
       </div>
     </main>
 
-    <noscript><div class="no-script"><p>NØRTHBOUND</p><h1>THE LAST TRAIN NORTH</h1><p>This scroll-driven film requires JavaScript. Enable it to travel beyond the final signal.</p></div></noscript>
+    <noscript><div class="no-script"><p>NØRTHBOUND</p><h1>ПОСЛЕДНИЙ ПОЕЗД НА СЕВЕР</h1><p>Для управления фильмом через прокрутку нужен JavaScript. Включите его и перезагрузите страницу.</p></div></noscript>
     <script src="vendor/gsap.min.js"></script>
     <script src="vendor/ScrollTrigger.min.js"></script>
     <script src="script.js"></script>

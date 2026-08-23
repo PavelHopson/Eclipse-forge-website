@@ -1,98 +1,62 @@
-# Design QA — NØRTHBOUND Scroll Cinema Study
+# Design QA — NØRTHBOUND и разделители лендинга
 
-Date: 2026-08-23
-Reference: https://panda-orchid-barn.pagey.site/
-Local route: `/cases/northbound-study/index.html`
+Дата: 2026-08-23
+Локальный маршрут кейса: `/cases/northbound-study/index.html`
 
-## Scope and attribution
+## Проверенный объём
 
-This is an attributed technical reconstruction study. Original concept, AI / code / direction:
-Andrei Mei. The landing card is explicitly marked `Reference`; the microsite links to the original
-source and retains the original author credits. It is not presented as original Eclipse Forge art direction.
+- русская версия NØRTHBOUND;
+- три локальных MP4 и переходы между ними;
+- desktop `1440×900` и mobile `390×844`;
+- шесть разделителей лендинга с семью фазами затмения;
+- понятность текстов, отсутствие горизонтального переполнения и ошибок консоли.
 
-## Evidence captured
+## Визуальное сравнение
 
-- reference opening, story states and mobile opening under
-  `C:/Users/garaa/Documents/Codex/2026-08-22/eclipse-forge/qa/northbound-reference/captures/`;
-- local desktop, mobile and 4K captures under
-  `C:/Users/garaa/Documents/Codex/2026-08-22/eclipse-forge/qa/northbound-reference/local-captures/`;
-- same-viewport opening comparison: `local-captures/opening-source-local.jpg`;
-- local keyframe sheet: `local-captures/local-keyframes.jpg`;
-- mobile opening/credits sheet: `local-captures/mobile-keyframes.jpg`;
-- machine-readable regression output produced by `verify-local.mjs`.
+Эталон и реализация снимались при одинаковых размерах окна. Эталонный хост не отдал удалённые MP4 в автоматическом браузере, поэтому для него достоверно использован первый экран; все динамические состояния реализации проверены по локальным исходным видео и отдельным контрольным кадрам.
 
-The second automated source pass could not force remote cross-origin video seeking and therefore
-fell back to the source poster on later states. Those captures were not treated as frame-accurate
-evidence. The initial live captures, the three supplied local master videos and their ffprobe/contact
-sheet inspection were used for the remaining media-state comparison.
+Артефакты находятся в `qa/northbound-russian-pass/`:
 
-## Visual comparison
+- `comparison-opening-preview.jpg` — одинаковый desktop viewport;
+- `verified-story-preview.jpg` — отправление, вагон, метель, тоннель, сияние, лёд и титры;
+- `phases-preview.jpg` — граница из фаз на desktop и mobile;
 
-| State | Result | Notes |
-|---|---|---|
-| Opening `1920×1080` | Pass | Same train frame, centered editorial lockup, serif continuation, dark hero field and safe-area UI. |
-| Intertitle 1 | Pass | Darkness, restrained uppercase copy and icy serif hierarchy preserved. |
-| Carriage | Pass | Warm footage remains free of large headline copy. |
-| Whiteout | Pass | Interior disappears; blur, desaturation, canvas streaks and edge frost peak late. |
-| Tunnel | Pass | Copy is gated to tunnel time and multiplied by flash proximity. |
-| Aurora | Pass | Large copy and chapter rail are suppressed so the footage owns the payoff. |
-| Exterior pullback | Pass | Only the small chapter caption is permitted. |
-| Ice / underwater | Pass | Cold grade, refraction and snow-to-bubble mode change are present. |
-| Credits | Pass | Credits render only after actual final video time passes 35.15 s. |
-| Mobile `390×844` | Pass | Live video, readable lockup, compact chapter counter, 0 px horizontal overflow. |
-| 4K `3840×2160` | Pass | Poster composition remains centered and type stays inside the frame. |
+## Видео и переходы
 
-Intentional difference: the local study adds a quiet `RECONSTRUCTION STUDY` / `SOURCE` disclosure
-in the desktop top bar and changes the final guide link to the Eclipse Library. It does not copy
-Pagey banner or Umami analytics.
+| Этап | Проверка |
+|---|---|
+| Отправление | первый ролик проходит от `0.08` до `3.78` из `3.83` секунды |
+| Вагон и метель | второй ролик используется от тёплого интерьера до `5.91` из `6.73` секунды, затем удерживается переходный хвост |
+| Финал | третий ролик проходит тоннель `11.73`, смену пространства `22.22`, лёд `31.07` и титры `35.64` из `36.13` секунды |
+| Переходы | сохранены закрытие кадра поездом, световая щель, раскрытие вагона, метель, белый переход и вход в финальный ролик |
 
-## Functional regression
+Все три видео в Edge имеют `readyState >= 1`, `error: null`; failed requests и console errors отсутствуют.
 
-Final `verify-local.mjs` result:
+## Лендинг
 
-- console errors/warnings: `0`;
-- non-expected failed requests: `0`;
-- first departure frame: `0.62 s`;
-- sound default: `OFF`;
-- credits frame reached: `35.57 s`;
-- credits opacity at bottom: `1`;
-- return-to-departure: `scrollY 0`, video `0.62 s`, hero `1`, prompt `1`;
-- mobile overflow: `0 px`;
-- reduced-motion scene height: `844 px` at an `844 px` viewport;
-- reduced-motion weather canvas: disabled;
-- analytics/page-builder scripts: absent;
-- HTTP Range request for the 23.9 MB production video: `206`, exact 1024-byte response.
+- найдено 6 разделителей между секциями;
+- каждый содержит 7 фаз затмения;
+- фазы видимы на `1440×900` и `390×844`;
+- horizontal overflow: `0 px` на обоих размерах;
+- анимации учитывают системный reduced-motion и ручную паузу фонового движения.
 
-## Accessibility and failure states
+## Тексты и доступность
 
-- semantic header/main/sections/nav/buttons and video fallback text are present;
-- skip link, visible focus, live chapter announcement and 44 px controls are present;
-- sound requires explicit interaction and `aria-pressed` stays synchronized;
-- no pointer-only core action: chapters, credits links and return are buttons/anchors;
-- final pointer interception bug was reproduced, fixed and regression-tested;
-- reduced motion keeps all chapters/copy and replaces heavy synchronized motion with bounded media playback;
-- `<noscript>` and poster-based media fallback are present.
+- кейс, навигация, главы, подсказки, кнопка звука и титры переведены на русский;
+- удалены атмосферные команды и технический жаргон из основных действий;
+- карточка NØRTHBOUND представлена как интерактивный видео-кейс;
+- сохранены skip link, keyboard focus, подписи видео, `noscript`, muted-старт и явное включение звука.
 
-## Security and privacy pass
+## Проверки сборки и безопасности
 
-- strict meta CSP for same-origin scripts, media, fonts and images;
-- `object-src 'none'`, `base-uri 'self'`, `form-action 'self'`;
-- external links use `noopener noreferrer`;
-- no credentials, browser storage, cookies, trackers or user data;
-- media and vendor files are local; no cross-origin hotlink dependency at runtime;
-- no new npm dependency was added; existing pinned GSAP files were copied into the isolated case.
+- production build: успешно;
+- tests: `33/33`;
+- TypeScript: успешно;
+- bundle budget: все JS chunks меньше `500 KiB`;
+- секреты, ключи, пользовательские данные, storage и trackers не добавлены;
+- внешние действия отсутствуют, media и vendor-файлы остаются локальными;
+- CSP и `noopener noreferrer` сохранены.
 
-`frame-ancestors 'none'` must be supplied as an HTTP response header at deployment because browsers
-ignore that directive in a meta CSP. It is intentionally omitted from the meta tag to keep the console clean.
-
-## Build gates
-
-- `npm run check`: 32/32 tests, ecosystem validation and TypeScript pass;
-- `npm run build`: Vite production build pass;
-- bundle budget: every JavaScript chunk below 500 KiB;
-- every production asset is below Cloudflare Pages' 25 MiB file limit;
-- the films are isolated static assets and are not included in the landing JavaScript bundle.
-
-## Final result
+## Итог
 
 passed

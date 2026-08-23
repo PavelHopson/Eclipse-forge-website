@@ -397,7 +397,7 @@ const featuredProjectDefinitions: LocalizedProjectDefinition[] = [
     systemType: localized('ПРЕМИАЛЬНАЯ СИСТЕМА БРОНИРОВАНИЯ', 'PREMIUM BOOKING SYSTEM'),
     status: 'live',
     description: localized(
-      'Премиальная booking-система для аренды люксовых авто, где landing работает как контур конверсии: визуальный авторитет, логика выбора и направляемый сценарий брони работают как единый продукт.',
+      'Премиальная система бронирования люксовых авто: главная страница помогает выбрать автомобиль и оформить бронь, а визуальное доверие, логика выбора и последовательные шаги работают как единый продукт.',
       'A premium booking system for luxury car rental that treats the landing page as a conversion system: visual authority, selection logic and a guided reservation flow work as one product.',
     ),
     tech: ['React 19', 'TypeScript', 'Tailwind', 'Framer Motion', 'Zustand'],
@@ -428,7 +428,7 @@ const featuredProjectDefinitions: LocalizedProjectDefinition[] = [
     ),
     tech: ['Rust', 'Axum', 'Tokio', 'MCP', 'Docker', 'TLS Fingerprinting'],
     result: localized(
-      'Data extraction engine для AI-агентов: меньше сырого HTML, больше готового сигнала.',
+      'Движок сбора данных для AI-агентов: меньше сырого HTML, больше готовых структурированных данных.',
       'A data extraction engine for AI agents: less raw HTML, more ready signal.',
     ),
     signal: localized(
@@ -489,11 +489,11 @@ const featuredProjectDefinitions: LocalizedProjectDefinition[] = [
   },
   {
     title: 'NØRTHBOUND — Scroll Cinema Study',
-    systemType: localized('ИНТЕРАКТИВНАЯ РЕКОНСТРУКЦИЯ', 'INTERACTIVE RECONSTRUCTION'),
-    status: 'reference',
+    systemType: localized('ИНТЕРАКТИВНЫЙ ВИДЕО-КЕЙС', 'INTERACTIVE VIDEO CASE'),
+    status: 'live',
     description: localized(
-      'Атрибутированная техническая реконструкция кинематографического scroll-опыта Андрея Мея: три видео становятся одной управляемой прокруткой историей — от последнего поезда до подводных титров.',
-      'An attributed technical reconstruction of Andrei Mei’s cinematic scroll experience: three films become one scroll-controlled story, from the last train to underwater titles.',
+      'Кинематографическая история, которой зритель управляет прокруткой: три видео соединяются в один путь — от последнего поезда до финала подо льдом.',
+      'A cinematic story controlled by scrolling: three films become one journey, from the last train to the finale beneath the ice.',
     ),
     tech: ['Vanilla JS', 'GSAP', 'ScrollTrigger', 'HTML5 Video', 'Canvas', 'Web Audio'],
     result: localized(
@@ -501,12 +501,12 @@ const featuredProjectDefinitions: LocalizedProjectDefinition[] = [
       'A standalone browser film with inertial scrubbing, reverse scroll, chapters and a reduced-motion mode.',
     ),
     signal: localized(
-      '3 локальных видео, 1 RAF-контур, 1635vh режиссуры и обязательная проверка desktop/mobile.',
+      '3 локальных видео, один плавный цикл анимации, 1635vh управляемого темпа и проверка на компьютере и телефоне.',
       '3 local films, 1 RAF loop, 1635vh of directed pacing and mandatory desktop/mobile QA.',
     ),
     tags: localized(
-      ['scroll-cinema', 'motion engineering', 'атрибутированный study'],
-      ['scroll cinema', 'motion engineering', 'attributed study'],
+      ['scroll-cinema', 'motion engineering', 'интерактивный кейс'],
+      ['scroll cinema', 'motion engineering', 'interactive case'],
     ),
     ecosystemTags: localized(['интерактив', 'видео', 'creative development'], ['interactive', 'video', 'creative development']),
     liveUrl: '/cases/northbound-study/index.html',
@@ -520,7 +520,7 @@ const portfolioCollectionDefinitions: LocalizedProjectCollectionDefinition[] = [
     eyebrow: localized('AI-экосистема', 'AI ecosystem'),
     title: localized('Продуктовые интерфейсы вокруг AI-процессов', 'Product surfaces built around AI workflows'),
     description: localized(
-      'Не отдельные промпты, а полные контуры: orchestration провайдеров, structured output, retries, local models и интерфейсы, которые удерживают пользователя внутри системы.',
+      'Не набор отдельных промптов, а целостные системы: выбор провайдеров, структурированные ответы, повторные попытки, локальные модели и понятные интерфейсы.',
       'Not single prompts, but complete flows: provider orchestration, structured output, retries, local models and interfaces that keep the user inside the system.',
     ),
     projects: [
@@ -731,7 +731,7 @@ const portfolioCollectionDefinitions: LocalizedProjectCollectionDefinition[] = [
   {
     id: 'engineering-tools',
     eyebrow: localized('Инфраструктура и tooling', 'Infrastructure and tooling'),
-    title: localized('Переиспользуемые контуры управления за продуктами', 'Reusable control layers behind the products'),
+    title: localized('Переиспользуемые системы управления продуктами', 'Reusable control layers behind the products'),
     description: localized(
       'Библиотеки, боты и куски автоматизации, которые показывают, как команда мыслит там, где заканчивается видимый интерфейс: надёжность, переносимость, деплой и переиспользование.',
       'Libraries, bots and automation pieces that show how the team thinks once the visible interface ends: reliability, portability, deployment and reuse.',
@@ -799,7 +799,7 @@ const serviceEntryPointDefinitions: LocalizedServiceEntryPointDefinition[] = [
     title: localized('AI-система автоматизации', 'AI automation system'),
     cue: '01 / orchestration',
     description: localized(
-      'Когда команда всё ещё двигает задачи через чаты, таблицы и ручной follow-up, мы превращаем эту логику в AI-assisted контур исполнения.',
+      'Когда команда всё ещё двигает задачи через чаты, таблицы и ручные напоминания, мы превращаем эту работу в понятный процесс с ИИ-помощником.',
       'When a team still moves tasks through chats, spreadsheets and manual follow-up, we turn that logic into an AI-assisted execution flow.',
     ),
     audience: localized('Для фаундеров и операторов, уставших от повторяющихся решений.', 'For founders and operators drowning in repeated decisions.'),
@@ -809,7 +809,7 @@ const serviceEntryPointDefinitions: LocalizedServiceEntryPointDefinition[] = [
     title: localized('SaaS MVP или внутренняя платформа', 'SaaS MVP or internal platform'),
     cue: '02 / product core',
     description: localized(
-      'Когда продукт больше, чем набор экранов, мы строим контур управления, поток данных и интерфейс для операторов, который делает его полезным каждый день.',
+      'Когда продукт больше, чем набор экранов, мы строим систему управления, поток данных и рабочий интерфейс, которым удобно пользоваться каждый день.',
       'When the product is more than screens, we build the control layer, data flow and operator-facing interface that make it usable day to day.',
     ),
     audience: localized('Для SaaS-фаундеров, ops-heavy продуктов и внутренних команд.', 'For SaaS founders, ops-heavy products and internal teams.'),
@@ -894,7 +894,7 @@ const founderProfileDefinition: LocalizedFounderProfileDefinition = {
   summary: localized(
     [
       'Павел Хопсон — основатель Eclipse Forge. Я не делаю интерфейсы ради интерфейсов. Я собираю системы, которые забирают ручную рутину, фиксируют процесс и становятся рабочей частью бизнеса.',
-      'Если задача живёт между чатами, таблицами, людьми и постоянным ручным контролем, я превращаю это в управляемый контур: что система видит, как принимает решение и где доводит действие до результата.',
+      'Если задача живёт между чатами, таблицами, людьми и постоянным ручным контролем, я превращаю её в управляемую систему: что она видит, как принимает решение и как доводит действие до результата.',
     ],
     [
       'Pavel Hopson is the founder of Eclipse Forge. I do not build interfaces for the sake of interfaces. I build systems that remove manual routine, fix the process and become a working part of the business.',
@@ -904,7 +904,7 @@ const founderProfileDefinition: LocalizedFounderProfileDefinition = {
   pillars: localized(
     [
       'AI-системы и operator flows, где модель не отвечает в чате, а реально исполняет работу',
-      'Automation-контуры, которые снимают ручную маршрутизацию, follow-up и повторяющиеся проверки',
+      'Системы автоматизации, которые убирают ручное распределение задач, напоминания и повторяющиеся проверки',
       'SaaS MVP и внутренние платформы, где за UI уже есть состояние, правила и рабочая логика',
       'Продукты, в которых интерфейс не украшение, а управляемая поверхность для дорогого процесса',
     ],
@@ -917,7 +917,7 @@ const founderProfileDefinition: LocalizedFounderProfileDefinition = {
   ),
   stats: localized(
     [
-      { value: 'AI + automation + SaaS', label: 'один системный контур' },
+      { value: 'AI + automation + SaaS', label: 'одна связная система' },
       { value: 'UI + runtime + data', label: 'не только фронтовый слой' },
       { value: 'Процесс -> система', label: 'главная логика работы' },
     ],
@@ -955,7 +955,7 @@ const contactPromptDefinitions: LocalizedContactPromptDefinition[] = [
 const contactFlowDefinition: LocalizedContactFlowDefinition = {
   primaryCta: localized('Написать в Telegram', 'Message on Telegram'),
   secondaryCta: localized('Открыть email', 'Open email'),
-  status: localized(['канал запроса открыт', 'сигнал готов', 'Павел отвечает лично'], ['request channel open', 'signal ready', 'Pavel replies personally']),
+  status: localized(['Принимаю новые проекты', 'Готов обсудить задачу', 'Павел отвечает лично'], ['Accepting new projects', 'Ready to discuss the task', 'Pavel replies personally']),
 };
 
 const priceListDefinition: {

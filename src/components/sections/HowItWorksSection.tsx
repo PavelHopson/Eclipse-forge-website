@@ -18,34 +18,34 @@ const COPY: Record<Locale, Copy> = {
     title: 'Хаос на входе.',
     titleAccent: 'Решение на выходе.',
     description:
-      'Каждая система Eclipse Forge построена по одному и тому же контуру: события заходят, ядро принимает решение, исполнение замыкает цикл. Без человека, который сидит между этапами.',
+      'Каждая система Eclipse Forge работает по понятной схеме: получает данные, принимает решение и выполняет действие. Ручной перенос между этапами не нужен.',
     steps: [
       {
         index: '01',
-        phase: 'INPUT',
+        phase: 'ЗАПРОС',
         title: 'Анализ',
         description:
-          'Сбор сигналов из чатов, форм, API, событий. Нормализация, контекст, исторические данные — всё, что нужно для решения.',
-        signal: 'хаос → структурированный сигнал',
+          'Собираем данные из чатов, форм, API и событий. Приводим их к единому виду, добавляем контекст и историю.',
+        signal: 'разрозненные данные → понятная задача',
       },
       {
         index: '02',
-        phase: 'CORE',
+        phase: 'ЛОГИКА',
         title: 'Решение',
         description:
-          'AI-ядро + правила + проверки качества. Маршрутизация задач между LLM, fallback-цепочки, retry-safe вызовы и guardrails.',
-        signal: 'сигнал → действие с обоснованием',
+          'AI-модель работает вместе с правилами и проверками качества. Система выбирает подходящую модель, повторяет безопасные запросы и обрабатывает ошибки.',
+        signal: 'задача → проверенное решение',
       },
       {
         index: '03',
-        phase: 'OUTPUT',
+        phase: 'РЕЗУЛЬТАТ',
         title: 'Действие',
         description:
-          'Выполнение через инструменты, API, очереди. Запись результата, метрик, телеметрии. Цикл замыкается — никто не нажимает следующую кнопку.',
-        signal: 'действие → зафиксированный результат',
+          'Система выполняет действие через инструменты и API, сохраняет результат и показатели. Переходить между этапами вручную не нужно.',
+        signal: 'действие → сохранённый результат',
       },
     ],
-    flow: { input: 'INPUT', core: 'CORE', output: 'OUTPUT' },
+    flow: { input: 'ЗАПРОС', core: 'ЛОГИКА', output: 'РЕЗУЛЬТАТ' },
     bottomNote: 'Каждый этап наблюдаем. Каждое решение фиксируется. Цикл повторяется без участия оператора.',
   },
   en: {
@@ -138,11 +138,11 @@ export function HowItWorksSection() {
               <div className="flex items-center gap-2">
                 <span className="h-2 w-2 rounded-full hero-signal-dot" />
                 <span className="font-display text-sm tracking-tight" style={{ color: 'var(--text-1)' }}>
-                  events · API · streams
+                  {locale === 'ru' ? 'события · API · данные' : 'events · API · streams'}
                 </span>
               </div>
               <div className="mt-3 space-y-1">
-                {['chat → signal', 'form → record', 'event → trigger'].map((line) => (
+                {(locale === 'ru' ? ['чат → задача', 'форма → запись', 'событие → запуск'] : ['chat → signal', 'form → record', 'event → trigger']).map((line) => (
                   <p key={line} className="text-[10.5px] uppercase tracking-[0.18em]" style={{ color: 'var(--text-4)' }}>
                     {line}
                   </p>
@@ -167,10 +167,10 @@ export function HowItWorksSection() {
               </p>
               <CoreOrb />
               <p className="relative mt-3 font-display text-base tracking-tight" style={{ color: 'var(--text-1)' }}>
-                AI engine + rules
+                {locale === 'ru' ? 'AI-модель + правила' : 'AI engine + rules'}
               </p>
               <p className="relative mt-1 text-[10.5px] uppercase tracking-[0.2em]" style={{ color: 'var(--text-4)' }}>
-                routing · guardrails · retries
+                {locale === 'ru' ? 'выбор модели · проверки · повторы' : 'routing · guardrails · retries'}
               </p>
             </div>
 
@@ -185,11 +185,11 @@ export function HowItWorksSection() {
               <div className="flex items-center gap-2">
                 <span className="h-2 w-2 rounded-full hero-signal-dot" />
                 <span className="font-display text-sm tracking-tight" style={{ color: 'var(--text-1)' }}>
-                  action · record · metric
+                  {locale === 'ru' ? 'действие · запись · показатель' : 'action · record · metric'}
                 </span>
               </div>
               <div className="mt-3 space-y-1">
-                {['action → tool', 'result → store', 'metric → board'].map((line) => (
+                {(locale === 'ru' ? ['действие → инструмент', 'результат → хранилище', 'показатель → отчёт'] : ['action → tool', 'result → store', 'metric → board']).map((line) => (
                   <p key={line} className="text-[10.5px] uppercase tracking-[0.18em]" style={{ color: 'var(--text-4)' }}>
                     {line}
                   </p>

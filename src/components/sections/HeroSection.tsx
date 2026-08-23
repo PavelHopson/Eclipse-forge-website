@@ -90,11 +90,11 @@ const heroCopy: Record<
       'Проектирую AI-операторов, SaaS и автоматизацию для процессов, где ручной контроль уже стал узким местом.',
     primaryCta: 'Обсудить задачу',
     secondaryCta: 'Смотреть системы',
-    availability: 'канал запроса открыт',
-    location: 'Калининград · Worldwide',
-    edition: 'Selected systems / 2026',
-    systemLabel: 'Orbital sync 99.74%',
-    scrollLabel: 'Войти в орбиту',
+    availability: 'Принимаю новые проекты',
+    location: 'Работаю по всему миру',
+    edition: 'Избранные проекты / 2026',
+    systemLabel: 'Системы работают и измеряются',
+    scrollLabel: 'Листайте, чтобы посмотреть проекты',
   },
   en: {
     eyebrow: 'AI systems engineering / Eclipse Forge',
@@ -105,22 +105,28 @@ const heroCopy: Record<
       'I design AI operators, SaaS and automation for processes where manual control has already become the bottleneck.',
     primaryCta: 'Discuss your task',
     secondaryCta: 'Explore systems',
-    availability: 'request channel open',
-    location: 'Kaliningrad · Worldwide',
-    edition: 'Selected systems / 2026',
-    systemLabel: 'Orbital sync 99.74%',
-    scrollLabel: 'Enter the orbit',
+    availability: 'Accepting new projects',
+    location: 'Available worldwide',
+    edition: 'Selected projects / 2026',
+    systemLabel: 'Systems are monitored',
+    scrollLabel: 'Scroll to explore projects',
   },
 };
 
-const reveal: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: (delay: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.78, delay, ease: [0.16, 1, 0.3, 1] as const },
-  }),
-};
+function createReveal(motionEnabled: boolean): Variants {
+  return {
+    hidden: { opacity: 0, y: motionEnabled ? 24 : 0 },
+    visible: (delay: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: motionEnabled ? 0.78 : 0.15,
+        delay: motionEnabled ? delay : Math.min(delay, 0.05),
+        ease: [0.16, 1, 0.3, 1] as const,
+      },
+    }),
+  };
+}
 
 export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -128,6 +134,7 @@ export function HeroSection() {
   const { ambientMotionEnabled } = useMotionPreference();
   const { metrics } = useSiteContent();
   const copy = heroCopy[locale];
+  const reveal = createReveal(ambientMotionEnabled);
   const pointer = useEditorialParallax(sectionRef);
   const eclipseX = useTransform(pointer.x, [-0.5, 0.5], [-20, 20]);
   const eclipseY = useTransform(pointer.y, [-0.5, 0.5], [-14, 14]);
@@ -142,7 +149,7 @@ export function HeroSection() {
         className="absolute inset-0 opacity-25"
         style={ambientMotionEnabled ? { x: starsX, y: starsY } : undefined}
       >
-        <ConstellationField />
+        <ConstellationField animate={ambientMotionEnabled} />
       </motion.div>
       {ambientMotionEnabled ? <ParticleField count={14} className="opacity-30" /> : null}
 
@@ -164,6 +171,11 @@ export function HeroSection() {
         </motion.div>
 
         <div className="hero-editorial-stage relative flex flex-1 items-center py-8 sm:py-10 lg:py-12">
+          <div className="hero-editorial-wordmark" aria-hidden>
+            <span>Eclipse</span>
+            <span>Forge</span>
+          </div>
+
           <motion.div
             aria-hidden
             className="hero-editorial-visual pointer-events-none absolute"
@@ -172,16 +184,43 @@ export function HeroSection() {
             <div className="hero-editorial-orbit hero-editorial-orbit--outer" />
             <div className="hero-editorial-orbit hero-editorial-orbit--inner" />
             <div className="hero-editorial-eclipse">
-              <span className="hero-editorial-corona" />
-              <span className="hero-editorial-disc" />
-              <span className="hero-editorial-diamond" />
+              <span className="hero-editorial-sun" />
+              <span className="hero-editorial-rays hero-editorial-rays--far" />
+              <span className="hero-editorial-rays hero-editorial-rays--near" />
+              <span className="hero-editorial-corona hero-editorial-corona--outer" />
+              <span className="hero-editorial-corona hero-editorial-corona--inner" />
+              <span className="hero-editorial-chromosphere" />
+              <span className="hero-editorial-baileys" />
+              <span className="hero-editorial-prominence hero-editorial-prominence--one" />
+              <span className="hero-editorial-prominence hero-editorial-prominence--two" />
+              <span className="hero-editorial-prominence hero-editorial-prominence--three" />
+              <span className="hero-editorial-disc">
+                <span className="hero-editorial-lunar-surface" />
+              </span>
+              <span className="hero-editorial-diamond">
+                <span className="hero-editorial-flare hero-editorial-flare--horizontal" />
+                <span className="hero-editorial-flare hero-editorial-flare--vertical" />
+              </span>
             </div>
             <div className="hero-editorial-ring hero-editorial-ring--outer">
-              <OrbitalRing size={640} dotCount={3} duration={72} color="rgba(212,175,55,0.46)" />
+              <OrbitalRing
+                size={640}
+                dotCount={3}
+                duration={72}
+                color="rgba(212,175,55,0.46)"
+                animate={ambientMotionEnabled}
+              />
             </div>
             <div className="hero-editorial-ring hero-editorial-ring--inner">
-              <OrbitalRing size={500} dotCount={2} duration={54} color="rgba(107,163,255,0.34)" />
+              <OrbitalRing
+                size={500}
+                dotCount={2}
+                duration={54}
+                color="rgba(107,163,255,0.34)"
+                animate={ambientMotionEnabled}
+              />
             </div>
+            <span className="hero-editorial-reflection" />
             <span className="hero-editorial-telemetry hero-editorial-telemetry--top">{copy.systemLabel}</span>
           </motion.div>
 

@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useMotionPreference } from '../../lib/motionPreference';
 
 /* ═══════════════════════════════════════════════════════════
    ECLIPSE SILHOUETTE — dark disc with glowing corona
@@ -19,43 +20,22 @@ export function EclipseSilhouette({
 }) {
   return (
     <motion.div
-      className={`pointer-events-none ${className}`}
-      style={{ width: size, height: size }}
+      aria-hidden="true"
+      className={`ef-eclipse-silhouette${animate ? ' ef-eclipse-silhouette--animated' : ''} pointer-events-none ${className}`}
+      style={{
+        width: size,
+        height: size,
+        '--ef-silhouette-corona': coronaColor,
+        '--ef-silhouette-spread': `${coronaSpread}px`,
+      } as CSSProperties}
       animate={animate ? { scale: [1, 1.03, 1], opacity: [0.8, 1, 0.8] } : undefined}
       transition={animate ? { duration: 6, repeat: Infinity, ease: 'easeInOut' } : undefined}
     >
-      <svg width={size} height={size} viewBox="0 0 120 120">
-        <defs>
-          {/* Corona glow */}
-          <radialGradient id={`corona-${size}`} cx="50%" cy="50%" r="50%">
-            <stop offset="60%" stopColor="transparent" />
-            <stop offset="75%" stopColor={coronaColor} />
-            <stop offset="90%" stopColor={coronaColor.replace(/[\d.]+\)$/, '0.05)')} />
-            <stop offset="100%" stopColor="transparent" />
-          </radialGradient>
-          {/* Inner shadow for depth */}
-          <radialGradient id={`depth-${size}`} cx="45%" cy="40%" r="50%">
-            <stop offset="0%" stopColor="rgba(20,28,40,1)" />
-            <stop offset="100%" stopColor="rgba(5,7,10,1)" />
-          </radialGradient>
-          <filter id={`blur-${size}`}>
-            <feGaussianBlur stdDeviation={coronaSpread / 8} />
-          </filter>
-        </defs>
-        {/* Corona outer glow */}
-        <circle cx="60" cy="60" r="58" fill={`url(#corona-${size})`} filter={`url(#blur-${size})`} />
-        {/* Corona ring */}
-        <circle cx="60" cy="60" r="46" fill="none" stroke={coronaColor} strokeWidth="0.5" opacity="0.6" />
-        {/* Eclipse disc (moon) */}
-        <circle cx="60" cy="60" r="38" fill={`url(#depth-${size})`} />
-        {/* Diamond ring effect — bright point at edge */}
-        <circle cx="92" cy="42" r="2.5" fill="white" opacity="0.7">
-          {animate && (
-            <animate attributeName="opacity" values="0.4;0.9;0.4" dur="4s" repeatCount="indefinite" />
-          )}
-        </circle>
-        <circle cx="92" cy="42" r="6" fill="white" opacity="0.08" filter={`url(#blur-${size})`} />
-      </svg>
+      <span className="ef-eclipse-silhouette__rays" />
+      <span className="ef-eclipse-silhouette__corona" />
+      <span className="ef-eclipse-silhouette__chromosphere" />
+      <span className="ef-eclipse-silhouette__disc" />
+      <span className="ef-eclipse-silhouette__diamond" />
     </motion.div>
   );
 }
@@ -89,24 +69,13 @@ export function MiniEclipse({
    ═══════════════════════════════════════════════════════════ */
 export function EclipseDivider({ className = '' }: { className?: string }) {
   return (
-    <div className={`relative flex items-center justify-center py-8 ${className}`}>
-      <div
-        className="absolute inset-x-0 top-1/2 h-px"
-        style={{
-          background:
-            'linear-gradient(90deg, transparent, var(--line) 18%, rgba(212,175,55,0.22) 32%, var(--line) 46%, transparent 50%, var(--line) 54%, rgba(212,175,55,0.22) 68%, var(--line) 82%, transparent)',
-        }}
-      />
-      <div
-        aria-hidden
-        className="divider-traveler absolute top-1/2 h-1 w-1 -translate-y-1/2 rounded-full"
-        style={{
-          background: 'rgba(212,175,55,0.95)',
-          boxShadow: '0 0 12px rgba(212,175,55,0.85), 0 0 24px rgba(212,175,55,0.45)',
-        }}
-      />
-      <div className="relative z-10" style={{ background: 'var(--bg)', padding: '0 1rem' }}>
-        <MiniEclipse size={32} />
+    <div aria-hidden="true" className={`ef-eclipse-divider ${className}`}>
+      <span className="ef-eclipse-divider__track" />
+      <span className="divider-traveler ef-eclipse-divider__traveler" />
+      <span className="ef-eclipse-divider__lens ef-eclipse-divider__lens--outer" />
+      <span className="ef-eclipse-divider__lens ef-eclipse-divider__lens--inner" />
+      <div className="ef-eclipse-divider__stage">
+        <EclipsePhases className="eclipse-divider-phases" />
       </div>
     </div>
   );
@@ -121,20 +90,22 @@ export function OrbitalRing({
   duration = 20,
   color = 'var(--accent)',
   className = '',
+  animate = true,
 }: {
   size?: number;
   dotCount?: number;
   duration?: number;
   color?: string;
   className?: string;
+  animate?: boolean;
 }) {
   const r = size / 2 - 6;
   return (
     <motion.div
       className={`pointer-events-none ${className}`}
       style={{ width: size, height: size }}
-      animate={{ rotate: 360 }}
-      transition={{ duration, repeat: Infinity, ease: 'linear' }}
+      animate={animate ? { rotate: 360 } : { rotate: 0 }}
+      transition={animate ? { duration, repeat: Infinity, ease: 'linear' } : { duration: 0.15 }}
     >
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
         {/* Orbit path */}
@@ -207,7 +178,13 @@ export function ParticleField({ count = 20, className = '' }: { count?: number; 
 /* ═══════════════════════════════════════════════════════════
    CONSTELLATION LINES — connecting dots with lines
    ═══════════════════════════════════════════════════════════ */
-export function ConstellationField({ className = '' }: { className?: string }) {
+export function ConstellationField({
+  className = '',
+  animate = true,
+}: {
+  className?: string;
+  animate?: boolean;
+}) {
   const [points] = useState(() =>
     Array.from({ length: 12 }).map(() => ({
       x: 5 + Math.random() * 90,
@@ -235,10 +212,11 @@ export function ConstellationField({ className = '' }: { className?: string }) {
             key={i}
             x1={`${l.x1}%`} y1={`${l.y1}%`} x2={`${l.x2}%`} y2={`${l.y2}%`}
             stroke="var(--accent)" strokeWidth="0.15" opacity="0.15"
-            initial={{ pathLength: 0, opacity: 0 }}
-            whileInView={{ pathLength: 1, opacity: 0.15 }}
+            initial={animate ? { pathLength: 0, opacity: 0 } : false}
+            animate={animate ? undefined : { pathLength: 1, opacity: 0.15 }}
+            whileInView={animate ? { pathLength: 1, opacity: 0.15 } : undefined}
             viewport={{ once: true }}
-            transition={{ duration: 1.5, delay: i * 0.1 }}
+            transition={animate ? { duration: 1.5, delay: i * 0.1 } : { duration: 0.15 }}
           />
         ))}
         {points.map((p, i) => (
@@ -246,10 +224,11 @@ export function ConstellationField({ className = '' }: { className?: string }) {
             key={i}
             cx={`${p.x}%`} cy={`${p.y}%`} r={p.size * 0.3}
             fill="var(--accent)"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 0.4 }}
+            initial={animate ? { opacity: 0 } : false}
+            animate={animate ? undefined : { opacity: 0.4 }}
+            whileInView={animate ? { opacity: 0.4 } : undefined}
             viewport={{ once: true }}
-            transition={{ delay: 0.5 + i * 0.08 }}
+            transition={animate ? { delay: 0.5 + i * 0.08 } : { duration: 0.15 }}
           />
         ))}
       </svg>
@@ -286,10 +265,17 @@ export function InteractiveGalaxyLayer({ className = '', variant = 'fixed' }: In
       aria-hidden
     >
       <div className="ef-galaxy-layer__halo" />
+      <div className="ef-galaxy-layer__jets" />
       <div className="ef-galaxy-layer__ring ef-galaxy-layer__ring--outer" />
       <div className="ef-galaxy-layer__ring ef-galaxy-layer__ring--inner" />
-      <div className="ef-galaxy-layer__core" />
+      <div className="ef-galaxy-layer__accretion ef-galaxy-layer__accretion--far" />
+      <div className="ef-galaxy-layer__accretion ef-galaxy-layer__accretion--near" />
+      <div className="ef-galaxy-layer__lensing ef-galaxy-layer__lensing--upper" />
+      <div className="ef-galaxy-layer__lensing ef-galaxy-layer__lensing--lower" />
       <div className="ef-galaxy-layer__corona" />
+      <div className="ef-galaxy-layer__core">
+        <span className="ef-galaxy-layer__photon" />
+      </div>
       <div className="ef-galaxy-layer__streams">
         {galaxyStreams.map((stream) => (
           <span
@@ -327,51 +313,33 @@ export function InteractiveGalaxyLayer({ className = '', variant = 'fixed' }: In
    ECLIPSE PHASES — row of eclipse phases for decoration
    ═══════════════════════════════════════════════════════════ */
 export function EclipsePhases({ className = '' }: { className?: string }) {
-  const phases = [
-    { clip: 'circle(50% at 50% 50%)', moon: '25%' },   // partial start
-    { clip: 'circle(50% at 50% 50%)', moon: '38%' },   // more covered
-    { clip: 'circle(50% at 50% 50%)', moon: '50%' },   // half
-    { clip: 'circle(50% at 50% 50%)', moon: '65%' },   // mostly covered
-    { clip: 'circle(50% at 50% 50%)', moon: '50%' },   // total — moon centered
-    { clip: 'circle(50% at 50% 50%)', moon: '35%' },   // coming out
-    { clip: 'circle(50% at 50% 50%)', moon: '22%' },   // partial end
-  ];
+  const { ambientMotionEnabled } = useMotionPreference();
+  const phaseOffsets = [-17, -11, -5.5, 0, 5.5, 11, 17];
 
   return (
-    <div className={`flex items-center justify-center gap-4 sm:gap-6 ${className}`}>
-      {phases.map((_, i) => {
-        const sz = 28;
-        const moonOffset = -14 + i * (28 / (phases.length - 1));
-        const isTotal = i === 3;
+    <div aria-hidden="true" className={`ef-eclipse-phases ${className}`}>
+      {phaseOffsets.map((moonOffset, index) => {
+        const isTotal = index === Math.floor(phaseOffsets.length / 2);
         return (
           <motion.div
-            key={i}
-            initial={{ opacity: 0, scale: 0.5 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            key={moonOffset}
+            initial={ambientMotionEnabled ? { opacity: 0, scale: 0.7 } : false}
+            animate={ambientMotionEnabled ? undefined : { opacity: 1, scale: 1 }}
+            whileInView={ambientMotionEnabled ? { opacity: 1, scale: 1 } : undefined}
             viewport={{ once: true }}
-            transition={{ delay: i * 0.08, duration: 0.5 }}
-            className="relative"
-            style={{ width: sz, height: sz }}
+            transition={ambientMotionEnabled
+              ? { delay: index * 0.065, duration: 0.5, ease: [0.16, 1, 0.3, 1] }
+              : { duration: 0.12 }}
+            className={`ef-eclipse-phase${isTotal ? ' ef-eclipse-phase--total' : ''}`}
+            style={{ '--phase-shift': `${moonOffset}px`, '--phase-index': index } as CSSProperties}
           >
-            <svg width={sz} height={sz} viewBox="0 0 28 28">
-              {/* Sun glow */}
-              <circle cx="14" cy="14" r="13" fill="none"
-                stroke={isTotal ? 'rgba(245,166,35,0.4)' : 'rgba(107,163,255,0.15)'}
-                strokeWidth="0.5" />
-              {/* Sun disc */}
-              <circle cx="14" cy="14" r="10" fill="rgba(107,163,255,0.08)" />
-              {/* Moon disc covering the sun */}
-              <circle cx={14 + moonOffset} cy="14" r="10" fill="var(--bg)" />
-              {/* Corona on total eclipse */}
-              {isTotal && (
-                <>
-                  <circle cx="14" cy="14" r="12" fill="none"
-                    stroke="rgba(245,166,35,0.3)" strokeWidth="1" />
-                  <circle cx="14" cy="14" r="13.5" fill="none"
-                    stroke="rgba(245,166,35,0.1)" strokeWidth="0.5" />
-                </>
-              )}
-            </svg>
+            <span className="ef-eclipse-phase__corona" />
+            <span className="ef-eclipse-phase__mask">
+              <span className="ef-eclipse-phase__sun" />
+              <span className="ef-eclipse-phase__moon" />
+            </span>
+            <span className="ef-eclipse-phase__orbit" />
+            {isTotal ? <span className="ef-eclipse-phase__diamond" /> : null}
           </motion.div>
         );
       })}

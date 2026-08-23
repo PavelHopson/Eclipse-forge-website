@@ -1,26 +1,21 @@
 /*
- * NØRTHBOUND — credited technical reconstruction study.
- * Original art direction and public reference: Andrei Mei.
- * This file deliberately keeps the complete edit surface in CONFIG.
+ * NØRTHBOUND: scroll-controlled cinematic case for Eclipse Forge.
+ * The complete edit surface is kept in CONFIG.
  */
 
 const CONFIG = {
-  links: {
-    source: "https://panda-orchid-barn.pagey.site/",
-    portfolio: "https://andrey-may-pf.netlify.app/",
-    telegram: "https://t.me/andreymei_web",
-  },
+
   videos: {
     departure: {
       path: "assets/video/start_train.web.mp4",
-      mediaDuration: 3.813,
-      pausedFrame: 0.62,
-      start: 0.62,
+      mediaDuration: 3.831,
+      pausedFrame: 0.08,
+      start: 0.08,
       doorsClosed: 1.55,
-      end: 1.58,
-      motionThreshold: 0.09,
-      motionEnd: 0.62,
-      physicalWipeAt: 0.79,
+      end: 3.78,
+      motionThreshold: 0.055,
+      motionEnd: 0.84,
+      physicalWipeAt: 0.84,
     },
     carriage: {
       path: "assets/video/carriage.web.mp4",
@@ -35,7 +30,7 @@ const CONFIG = {
     final: {
       path: "assets/video/final.web.mp4",
       mediaDuration: 36.113,
-      start: 1.72,
+      start: 0.08,
       tunnelLine: 6.55,
       tunnelSerif: 7.7,
       tunnelOut: 11.9,
@@ -52,7 +47,7 @@ const CONFIG = {
       end: 35.72,
       flashes: [2.65,3.4,4.45,5.25,6.55,7.2,7.7,8.3,8.75,9.25,9.75,10.25,10.55,11.1,11.9,12.3],
       scrollMap: [
-        { progress: 0, time: 1.72 }, { progress: .235, time: 11.55 },
+        { progress: 0, time: .08 }, { progress: .235, time: 11.55 },
         { progress: .265, time: 12.5 }, { progress: .285, time: 12.95 },
         { progress: .4, time: 18.9 }, { progress: .42, time: 19.35 },
         { progress: .55, time: 22.55 }, { progress: .65, time: 25.45 },
@@ -76,12 +71,12 @@ const CONFIG = {
   motion: { scrollLerp: 1.7, videoLerp: 3.3, finalVideoLerp: 1.15, seekIntervalMs: 30, seekEpsilon: .008 },
   audio: { masterVolume: .26, fadeSeconds: .9, wind: .16, rail: .12, drone: .1 },
   chapters: [
-    { key: "departure", label: "DEPARTURE", color: "#681c29" },
-    { key: "carriage", label: "CARRIAGE", color: "#b6905f" },
-    { key: "whiteout", label: "WHITEOUT", color: "#e6e8e4" },
-    { key: "passage", label: "PASSAGE", color: "#777d82" },
-    { key: "aurora", label: "AURORA", color: "#a8cfe0" },
-    { key: "beneath", label: "BENEATH", color: "#a8c5cf" },
+    { key: "departure", label: "ОТПРАВЛЕНИЕ", color: "#681c29" },
+    { key: "carriage", label: "ВАГОН", color: "#b6905f" },
+    { key: "whiteout", label: "МЕТЕЛЬ", color: "#e6e8e4" },
+    { key: "passage", label: "ТОННЕЛЬ", color: "#777d82" },
+    { key: "aurora", label: "СИЯНИЕ", color: "#a8cfe0" },
+    { key: "beneath", label: "ПОДО ЛЬДОМ", color: "#a8c5cf" },
   ],
 };
 
@@ -203,8 +198,8 @@ function render(progress) {
   const p = scene.local;
   const is = (key) => scene.key === key;
   const departureOpacity = is("departure") ? 1 : is("interludeOne") ? 1 - smooth(p, 0, .2) : 0;
-  const carriageOpacity = is("interludeOne") ? smooth(p, .68, .985) : ["carriage","interludeTwo","whiteout","interludeThree"].includes(scene.key) ? 1 : 0;
-  const finalOpacity = is("interludeThree") ? smooth(p, .82, .995) : ["final","credits"].includes(scene.key) ? 1 : 0;
+  const carriageOpacity = is("interludeOne") ? smooth(p, .68, .985) : is("interludeThree") ? 1 - smooth(p, .68, .96) : ["carriage","interludeTwo","whiteout"].includes(scene.key) ? 1 : 0;
+  const finalOpacity = is("interludeThree") ? smooth(p, .68, .96) : ["final","credits"].includes(scene.key) ? 1 : 0;
 
   setLayer(els.departureLayer, departureOpacity);
   setLayer(els.carriageLayer, carriageOpacity);
@@ -212,7 +207,7 @@ function render(progress) {
 
   let departureTime = CONFIG.videos.departure.pausedFrame;
   if (is("departure") && p > CONFIG.videos.departure.motionThreshold) {
-    departureTime = lerp(CONFIG.videos.departure.start, CONFIG.videos.departure.end, smooth(p, .09, .62));
+    departureTime = lerp(CONFIG.videos.departure.start, CONFIG.videos.departure.end, smooth(p, .055, .84));
   }
   let carriageTime = CONFIG.videos.carriage.start;
   if (is("carriage")) carriageTime = lerp(CONFIG.videos.carriage.start, CONFIG.videos.carriage.interiorEnd, p);
@@ -231,10 +226,10 @@ function render(progress) {
 
   const depVibe = is("departure") ? Math.sin(performance.now() * .014) * smooth(p, .12, .5) * .07 : 0;
   setVideoStyle(els.departureLayer, {
-    brightness: lerp(.84, .45, is("departure") ? smooth(p, .72, .96) : 1),
-    contrast: lerp(1.08, .72, is("departure") ? smooth(p, .72, .96) : 1),
-    saturation: lerp(.78, .38, is("departure") ? smooth(p, .72, .96) : 1),
-    blur: is("departure") ? lerp(0, CONFIG.transitions.departureBlur, smooth(p, .79, .98)) : 0,
+    brightness: lerp(.84, .45, is("departure") ? smooth(p, .84, .97) : 1),
+    contrast: lerp(1.08, .72, is("departure") ? smooth(p, .84, .97) : 1),
+    saturation: lerp(.78, .38, is("departure") ? smooth(p, .84, .97) : 1),
+    blur: is("departure") ? lerp(0, CONFIG.transitions.departureBlur, smooth(p, .84, .985)) : 0,
     scale: is("departure") ? lerp(1.025, 1.08, p) : 1.03,
     x: depVibe, y: 0,
   });
@@ -279,7 +274,7 @@ function render(progress) {
   const creditsAllowed = is("credits") && els.finalVideo.currentTime >= 35.15;
   setOpacity(els.credits, creditsAllowed ? smooth(p, .02, .2) : 0);
 
-  const wipe = is("departure") ? smooth(p, .79, .985) : 0;
+  const wipe = is("departure") ? smooth(p, .84, .985) : 0;
   els.trainWipe.style.opacity = String(is("departure") ? 1 : 0);
   els.trainWipe.style.transform = `translate3d(${lerp(118,-7,wipe)}%,0,0) skewX(-2deg)`;
   const slit = is("interludeOne") ? windowOpacity(p, .68, .77, .95, 1) : 0;
@@ -313,10 +308,10 @@ function updateReducedMotionPlayback(scene) {
   reducedSceneKey = scene.key;
   [els.departureVideo, els.carriageVideo, els.finalVideo].forEach((video) => video.pause());
   const ranges = {
-    departure: [els.departureVideo, .62, 1.58], interludeOne: [els.departureVideo, 1.58, 1.58],
+    departure: [els.departureVideo, .08, 3.78], interludeOne: [els.departureVideo, 3.78, 3.78],
     carriage: [els.carriageVideo, .08, 3.72], interludeTwo: [els.carriageVideo, 3.2, 3.75],
     whiteout: [els.carriageVideo, 3.75, 6.65], interludeThree: [els.carriageVideo, 6.55, 6.65],
-    final: [els.finalVideo, 1.72, 35.5], credits: [els.finalVideo, 35.5, 35.72],
+    final: [els.finalVideo, .08, 35.5], credits: [els.finalVideo, 35.5, 35.72],
   };
   const [video, start, end] = ranges[scene.key];
   seekVideo(video, start, true);
@@ -342,7 +337,7 @@ function updateChapters(progress, finalTime, scene) {
   if (index !== currentChapter) {
     currentChapter = index;
     els.mobileChapter.textContent = String(index + 1).padStart(2, "0");
-    els.chapterAnnouncer.textContent = `Chapter ${index + 1}: ${chapter.label}`;
+    els.chapterAnnouncer.textContent = `Глава ${index + 1}: ${chapter.label}`;
     document.querySelectorAll("[data-scroll-to]").forEach((button, buttonIndex) => {
       if (buttonIndex === index) button.setAttribute("aria-current", "step"); else button.removeAttribute("aria-current");
     });
@@ -438,8 +433,8 @@ els.soundToggle.addEventListener("click", async () => {
   await audio.context.resume(); audio.enabled = !audio.enabled;
   audio.master.gain.setTargetAtTime(audio.enabled ? CONFIG.audio.masterVolume : 0, audio.context.currentTime, CONFIG.audio.fadeSeconds / 3);
   els.soundToggle.setAttribute("aria-pressed", String(audio.enabled));
-  els.soundToggle.setAttribute("aria-label", audio.enabled ? "Turn sound off" : "Turn sound on");
-  els.soundLabel.textContent = audio.enabled ? "SOUND ON" : "SOUND OFF";
+  els.soundToggle.setAttribute("aria-label", audio.enabled ? "Выключить звук" : "Включить звук");
+  els.soundLabel.textContent = audio.enabled ? "ЗВУК ВКЛ." : "ЗВУК ВЫКЛ.";
 });
 
 let targetProgress = 0; let renderedProgress = 0; let lastFrame = performance.now();
