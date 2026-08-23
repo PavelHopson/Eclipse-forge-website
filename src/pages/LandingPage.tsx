@@ -18,13 +18,14 @@ export function LandingPage() {
   return (
     <main className="relative z-10">
       <HeroSection />
+      <CasesSection />
+      <EclipseDivider />
       <SystemsNotSitesSection />
       <EclipseDivider />
       <FounderSection />
       <EclipseDivider />
       <AboutSection />
       <BusinessImpactSection />
-      <CasesSection />
       <SystemsEcosystemSection />
       <EclipseDivider />
       <HowItWorksSection />

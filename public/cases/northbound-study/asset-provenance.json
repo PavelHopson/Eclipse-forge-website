@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-23",
+  "project": "NØRTHBOUND — attributed technical reconstruction study",
+  "originalReference": "https://panda-orchid-barn.pagey.site/",
+  "originalCredit": "Andrei Mei — AI / code / direction",
+  "rightsConfirmation": {
+    "status": "confirmed-by-user",
+    "confirmedAt": "2026-08-23",
+    "scope": "Use and redistribution of the user-provided and reference-derived media assets in this Eclipse Forge case."
+  },
+  "redistributionGate": "cleared by user confirmation on 2026-08-23",
+  "components": [
+    {
+      "path": "vendor/gsap.min.js",
+      "bytes": 72925,
+      "sha256": "c3a03a345e45bc954cd48c43f11572891f5dca7a5d99348d5bc14753a728618c",
+      "source": "EclipseForgeLanding/node_modules/gsap/dist/gsap.min.js",
+      "package": "gsap@3.15.0",
+      "license": "Standard no-charge license — https://gsap.com/standard-license"
+    },
+    {
+      "path": "vendor/ScrollTrigger.min.js",
+      "bytes": 44573,
+      "sha256": "2be0336fa42e32f61ddca732137bd45bc2eaedb8eaf1b539e114ed0fa01c1d22",
+      "source": "EclipseForgeLanding/node_modules/gsap/dist/ScrollTrigger.min.js",
+      "package": "gsap@3.15.0",
+      "license": "Standard no-charge license — https://gsap.com/standard-license"
+    },
+    {
+      "path": "assets/video/start_train.web.mp4",
+      "bytes": 9174862,
+      "sha256": "b1f78488dd3be1c666e0827c5f29948dfb6c35a37fbb120ef2bcd1ded1e9059d",
+      "source": "user-provided 32d768a5.mp4 / public reference",
+      "license": "use and redistribution confirmed by user on 2026-08-23"
+    },
+    {
+      "path": "assets/video/carriage.web.mp4",
+      "bytes": 13361366,
+      "sha256": "5306b4820c1d9c984131447d05626a7b1e075b5fbd4f9dd16bc9618f39f16b4b",
+      "source": "user-provided 66004973.mp4 / public reference",
+      "license": "use and redistribution confirmed by user on 2026-08-23"
+    },
+    {
+      "path": "assets/video/final.web.mp4",
+      "bytes": 23895726,
+      "sha256": "0aff52471033cfff55ccde960ec57296f0f651ccfd17d14807fd520c9a61f7b1",
+      "source": "user-provided 3dc452c3.mp4 / public reference",
+      "license": "use and redistribution confirmed by user on 2026-08-23",
+      "transformation": "Production derivative: H.264 1080p30, CRF 24, GOP 30, faststart; optimized below Cloudflare Pages' 25 MiB per-asset limit."
+    },
+    {
+      "path": "assets/fonts/manrope-latin.woff2",
+      "bytes": 24836,
+      "sha256": "a30ddcd349703aff7464c34bef3fffdff405ee50c113440d7c8693c02d210972",
+      "source": "https://panda-orchid-barn.pagey.site/assets/fonts/manrope-latin.woff2",
+      "license": "use and redistribution confirmed by user on 2026-08-23"
+    },
+    {
+      "path": "assets/fonts/instrument-serif-italic-latin.woff2",
+      "bytes": 22128,
+      "sha256": "5a51946dfffa82972bc98745359c46761515641fda557c25116459a9f83da4a7",
+      "source": "https://panda-orchid-barn.pagey.site/assets/fonts/instrument-serif-italic-latin.woff2",
+      "license": "use and redistribution confirmed by user on 2026-08-23"
+    },
+    {
+      "path": "assets/posters/departure.jpg",
+      "bytes": 616750,
+      "sha256": "e4f3f61b88fe71c6c934b3fc612dda839c91980bb34a02696636c2d5a7365cb1",
+      "source": "https://panda-orchid-barn.pagey.site/assets/posters/departure.jpg",
+      "license": "use and redistribution confirmed by user on 2026-08-23"
+    },
+    {
+      "path": "assets/posters/carriage.jpg",
+      "bytes": 268219,
+      "sha256": "f8b71f7f3c09df49a2756a541725dc60ed1f7b5efd7e329e4d8366e74ee48da8",
+      "source": "https://panda-orchid-barn.pagey.site/assets/posters/carriage.jpg",
+      "license": "use and redistribution confirmed by user on 2026-08-23"
+    },
+    {
+      "path": "assets/posters/final.jpg",
+      "bytes": 167150,
+      "sha256": "5493b98c1c0b874ee64349026dd509347a74366d832764cee8ab28c51a8c33ee",
+      "source": "https://panda-orchid-barn.pagey.site/assets/posters/final.jpg",
+      "license": "use and redistribution confirmed by user on 2026-08-23"
+    },
+    {
+      "path": "assets/posters/underwater.jpg",
+      "bytes": 111016,
+      "sha256": "a0f39d5f38fe268158521b7e87ca832328b3f134ed94cca885d4cca9cd38e659",
+      "source": "https://panda-orchid-barn.pagey.site/assets/posters/underwater.jpg",
+      "license": "use and redistribution confirmed by user on 2026-08-23"
+    },
+    {
+      "path": "hero-v2.png",
+      "bytes": 2161741,
+      "sha256": "6017d29b6f08b53133d49e802fd472dbc66bf542f1e3bbc4448503822a592317",
+      "source": "https://panda-orchid-barn.pagey.site/hero-v2.png",
+      "license": "use and redistribution confirmed by user on 2026-08-23"
+    },
+    {
+      "path": "favicon.svg",
+      "bytes": 290,
+      "sha256": "9d0dc320f4b92eceb2fc84fdb811155a0db2bf240e39e2d146885e0a518956e2",
+      "source": "https://panda-orchid-barn.pagey.site/favicon.svg",
+      "license": "use and redistribution confirmed by user on 2026-08-23"
+    }
+  ]
+}

@@ -91,3 +91,27 @@ Media использует профиль `product`, а не копирует ci
 - Любой внешний UI reference сначала проходит provenance, license, dependency/bundle,
   accessibility, keyboard, reduced-motion и mobile gates. Skiper UI, AnimMaster, Oceon и
   Vlipsy — только visual references; их код не переносится.
+
+## Матрица характера продуктов v2
+
+Общие tokens не означают одинаковую композицию. Каждый продукт получает один основной
+характер и один поддерживающий приём; декоративные эффекты не переносятся между продуктами
+автоматически.
+
+| Продукт | Основной характер | Поддерживающий приём | Ограничение |
+|---|---|---|---|
+| Eclipse Forge Landing | Editorial + oversized type | Lightweight 3D | только полировка существующей композиции |
+| Eclipse Library | Bento knowledge system | Editorial hierarchy | без тяжёлого 3D вокруг каталога |
+| Eclipse Chat | Minimal operational UI | selective Liquid Glass | glass только для временных overlays |
+| Eclipse AI Hub | Bento workspace | restrained Y2K signals | neon не конкурирует с данными |
+| Eclipse DnD Forge | Editorial fantasy | Lightweight 3D | depth только на world/campaign surfaces |
+| Hopson Sentinel | Minimal operational UI | precise futurist signals | без decorative parallax |
+| Eclipse Media | Production Bento | Lightweight spatial depth | артефакт важнее chrome |
+| Shotforge | Editorial studio | Lightweight spatial depth | motion поддерживает story flow |
+| Text2Image | Minimal studio | restrained Y2K signals | без повсеместного glass |
+| Educator-AI | Editorial learning | Bento modules | ясность обучения важнее wow-effects |
+| Growth OS | Bento operations | Editorial reports | approvals и KPI всегда первичны |
+| Animation Lab | Y2K showcase | Liquid Glass + 3D demos | отдельная песочница, не шаблон продукта |
+
+Neo-Brutalism остаётся ограниченным приёмом для промо-экспериментов, DnD handouts и
+специальных коллекций Library. Он не становится базовой темой экосистемы.

@@ -65,7 +65,7 @@ export function ThemeToggle({ compact = false }: { compact?: boolean }) {
       onClick={cycle}
       title={title}
       aria-label={title}
-      className="relative inline-flex items-center gap-2 rounded-full border px-3 py-2 text-[11px] font-medium uppercase tracking-[0.18em] transition-colors duration-300"
+      className="relative inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border px-3 py-2 text-[11px] font-medium uppercase tracking-[0.18em] transition-colors duration-300"
       style={{
         borderColor: 'var(--line)',
         color: 'var(--text-2)',
