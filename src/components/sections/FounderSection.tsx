@@ -2,7 +2,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { AssetImage } from '../ui/AssetImage';
 import { ConstellationField, EclipseSilhouette, OrbitalRing, ParticleField } from '../ui/EclipseVisuals';
-import { brandAssets, useSiteContent } from '../../data/content';
+import { useSiteContent } from '../../data/content';
 import { revealUp, stagger, viewport } from '../../lib/animation';
 import { useLocale, type Locale } from '../../lib/locale';
 
@@ -12,7 +12,6 @@ const founderCopy: Record<
     fallbackTitle: string;
     fallbackText: string;
     status: string;
-    plateFallback: string;
     noteTitle: string;
     noteText: string;
     modeLabel: string;
@@ -22,30 +21,67 @@ const founderCopy: Record<
   }
 > = {
   ru: {
-    fallbackTitle: 'сигнал основателя',
+    fallbackTitle: 'Обращение основателя',
     fallbackText: 'Слот портрета готов. Положи `founder-portrait.png` в `public`, чтобы заменить fallback-рамку.',
-    status: 'основатель на линии',
-    plateFallback: 'Eclipse Forge / системы > интерфейсы',
+    status: 'Павел на связи',
     noteTitle: 'Рабочий принцип',
     noteText: 'Лучшие задачи здесь начинаются там, где у бизнеса уже есть ручной процесс, который пора превратить в управляемую систему.',
     modeLabel: 'подход',
     modeValue: 'system before surface',
-    surfaceLabel: 'контур',
+    surfaceLabel: 'состав решения',
     surfaceValue: 'UI + логика + исполнение',
   },
   en: {
-    fallbackTitle: 'Founder signal',
+    fallbackTitle: 'Eclipse Forge founder',
     fallbackText: 'Portrait slot is ready. Drop `founder-portrait.png` into `public` to replace the fallback frame.',
     status: 'founder online',
-    plateFallback: 'Eclipse Forge / systems > interfaces',
     noteTitle: 'Working principle',
     noteText: 'The best projects here begin when a business already has a manual process that needs to become a controllable system.',
     modeLabel: 'approach',
     modeValue: 'system before surface',
-    surfaceLabel: 'contour',
+    surfaceLabel: 'solution',
     surfaceValue: 'UI + logic + execution',
   },
 };
+
+function FounderBrandLockup({ locale }: { locale: Locale }) {
+  const descriptor = locale === 'ru'
+    ? 'Инженерия автономных систем'
+    : 'Autonomous systems engineering';
+
+  return (
+    <div
+      className="founder-brand-lockup"
+      role="img"
+      aria-label={`Eclipse Forge — ${descriptor}`}
+    >
+      <div aria-hidden="true" className="founder-brand-lockup__visual">
+        <span className="founder-brand-lockup__grid" />
+        <span className="founder-brand-lockup__scan" />
+        <span className="founder-brand-lockup__index">EF / SIGNAL 01</span>
+
+        <span className="founder-brand-lockup__mark">
+          <span className="founder-brand-lockup__rays" />
+          <span className="founder-brand-lockup__corona" />
+          <span className="founder-brand-lockup__orbit" />
+          <span className="founder-brand-lockup__core" />
+          <span className="founder-brand-lockup__flare" />
+        </span>
+
+        <span className="founder-brand-lockup__wordmark">
+          <span>Eclipse</span>
+          <span>Forge</span>
+        </span>
+        <span className="founder-brand-lockup__descriptor">{descriptor}</span>
+
+        <span className="founder-brand-lockup__footer">
+          <span>AI · PRODUCT · AUTOMATION</span>
+          <span>2026</span>
+        </span>
+      </div>
+    </div>
+  );
+}
 
 function PortraitFallback({ title, text }: { title: string; text: string }) {
   return (
@@ -172,21 +208,8 @@ export function FounderSection() {
             </motion.div>
 
             <div className="grid gap-4 sm:grid-cols-[1.05fr_0.95fr]">
-              <div className="flex items-center justify-center overflow-hidden rounded-[1.7rem] border founder-panel" style={{ background: '#000' }}>
-                <AssetImage
-                  alt={brandAssets.brandLogo.alt}
-                  sources={brandAssets.brandLogo.sources}
-                  loading="lazy"
-                  className="h-full w-full object-contain p-4"
-                  style={{ objectPosition: brandAssets.brandLogo.objectPosition }}
-                  fallback={
-                    <div className="flex min-h-[180px] items-end bg-[radial-gradient(circle_at_top,rgba(117,140,255,0.16),transparent_58%),linear-gradient(180deg,#0c1117_0%,#07090d_100%)] p-6">
-                      <p className="type-meta" style={{ color: 'var(--text-3)' }}>
-                        {copy.plateFallback}
-                      </p>
-                    </div>
-                  }
-                />
+              <div className="founder-brand-card rounded-[1.7rem] border">
+                <FounderBrandLockup locale={locale} />
               </div>
 
               <div className="rounded-[1.7rem] border p-5 founder-panel">

@@ -17,10 +17,10 @@ const META_BY_LOCALE: Record<Locale, LocaleMeta> = {
   ru: {
     lang: 'ru',
     title: 'Eclipse Forge — системы, контроль, AI-операторы',
-    description: 'Eclipse Forge создаёт AI-операторов, системы автоматизации, SaaS-продукты и контуры управления для сложных процессов.',
+    description: 'Eclipse Forge создаёт ИИ-помощников, системы автоматизации, SaaS-продукты и понятные панели управления сложными процессами.',
     ogLocale: 'ru_RU',
     twitterTitle: 'Eclipse Forge — системы, контроль, AI-операторы',
-    twitterDescription: 'AI-операторы, автоматизация, продуктовые системы и контуры управления для сложных процессов.',
+    twitterDescription: 'ИИ-помощники, автоматизация, продуктовые системы и понятное управление сложными процессами.',
   },
   en: {
     lang: 'en',

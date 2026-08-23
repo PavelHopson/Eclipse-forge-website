@@ -3,6 +3,7 @@
   "schemaVersion": "eclipse-forge.visual-system.v1",
   "name": "Eclipse Forge",
   "principle": "Cinematic systems engineering",
+  "visualDirection": "Editorial Eclipse Cinema",
   "colors": {
     "dark": {
       "background": "#05070A",

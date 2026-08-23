@@ -32,7 +32,7 @@ const aboutCopy: Record<
       { label: 'AI-исполнение', detail: 'multi-provider routing' },
     ],
     metricsLine: '958+ тестов · флагманские системы · переиспользуемый tooling',
-    phasesLine: 'от сигнала → к полной системной гравитации',
+    phasesLine: 'от первой идеи → к работающей системе',
   },
   en: {
     eyebrow: 'Positioning',
