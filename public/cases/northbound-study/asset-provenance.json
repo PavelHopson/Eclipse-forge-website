@@ -43,10 +43,11 @@
     },
     {
       "path": "assets/video/final.web.mp4",
-      "bytes": 48475170,
-      "sha256": "ed4168729e322db8f1befa6db77576eec98188995fdbd5af864366380d22e626",
+      "bytes": 23895726,
+      "sha256": "0aff52471033cfff55ccde960ec57296f0f651ccfd17d14807fd520c9a61f7b1",
       "source": "user-provided 3dc452c3.mp4 / public reference",
-      "license": "use and redistribution confirmed by user on 2026-08-23"
+      "license": "use and redistribution confirmed by user on 2026-08-23",
+      "transformation": "Production derivative: H.264 1080p30, CRF 24, GOP 30, faststart; optimized below Cloudflare Pages' 25 MiB per-asset limit."
     },
     {
       "path": "assets/fonts/manrope-latin.woff2",

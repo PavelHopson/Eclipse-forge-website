@@ -61,7 +61,7 @@ Final `verify-local.mjs` result:
 - reduced-motion scene height: `844 px` at an `844 px` viewport;
 - reduced-motion weather canvas: disabled;
 - analytics/page-builder scripts: absent;
-- HTTP Range request for the 48 MB final video: `206`, exact 1024-byte response.
+- HTTP Range request for the 23.9 MB production video: `206`, exact 1024-byte response.
 
 ## Accessibility and failure states
 
@@ -90,7 +90,8 @@ ignore that directive in a meta CSP. It is intentionally omitted from the meta t
 - `npm run check`: 32/32 tests, ecosystem validation and TypeScript pass;
 - `npm run build`: Vite production build pass;
 - bundle budget: every JavaScript chunk below 500 KiB;
-- the large films are isolated static assets and are not included in the landing JavaScript bundle.
+- every production asset is below Cloudflare Pages' 25 MiB file limit;
+- the films are isolated static assets and are not included in the landing JavaScript bundle.
 
 ## Final result
 
