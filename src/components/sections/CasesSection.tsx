@@ -1,18 +1,11 @@
-import {
-  motion,
-  useMotionTemplate,
-  useMotionValue,
-  useScroll,
-  useSpring,
-  useTransform,
-} from 'framer-motion';
-import { useRef, type MouseEvent as ReactMouseEvent } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 import { type Project, type ProjectStatus, useSiteContent } from '../../data/content';
-import { revealScale, revealUp, stagger, viewport } from '../../lib/animation';
+import { revealUp, stagger, viewport } from '../../lib/animation';
 import { useLocale, type Locale } from '../../lib/locale';
 import { useMotionPreference } from '../../lib/motionPreference';
 import { AssetImage } from '../ui/AssetImage';
-import { ConstellationField, EclipseSilhouette, OrbitalRing, ParticleField } from '../ui/EclipseVisuals';
+import { ConstellationField, EclipseSilhouette, ParticleField } from '../ui/EclipseVisuals';
 import { SectionHeading } from '../ui/SectionHeading';
 
 const statusStyles: Record<ProjectStatus, { color: string; borderColor: string; background: string }> = {
@@ -30,12 +23,17 @@ const casesCopy: Record<
     headingTitle: string;
     headingDescription: string;
     visibleSystems: string;
-    anchorLabels: string[];
+    flagshipAnchor: string;
+    indexAnchor: string;
     featuredEyebrow: string;
     featuredTitle: string;
     featuredDescription: string;
+    indexEyebrow: string;
+    indexTitle: string;
+    indexDescription: string;
+    flagshipLabel: string;
+    indexedLabel: string;
     placeholderHint: string;
-    liveLabel: string;
     signalLabel: string;
     resultLabel: string;
     stackLabel: string;
@@ -43,30 +41,35 @@ const casesCopy: Record<
     githubLabel: string;
     openDemoLabel: string;
     openRepoLabel: string;
-    projectsLabel: string;
     statusLabels: Record<ProjectStatus, string>;
   }
 > = {
   ru: {
     headingEyebrow: 'Избранные системы',
-    headingTitle: 'Флагманы — и инженерное поле вокруг.',
+    headingTitle: 'Четыре флагмана. Остальное — без витринного шума.',
     headingDescription:
-      'Не просто что собрано, а что меняется после запуска: где уходит ручная рутина, где появляется контроль, как система начинает работать вместо человека.',
-    visibleSystems: 'видимых систем',
-    anchorLabels: ['Флагманы', 'AI-системы', 'Продуктовые системы', 'Инструменты'],
-    featuredEyebrow: 'Флагманские системы',
-    featuredTitle: 'Шесть систем — и один кинематографический кейс.',
-    featuredDescription: 'Рабочие продукты дополнены интерактивным русским видео-кейсом.',
-    placeholderHint: 'Добавь скриншот в `public/images/projects`, и карточка подхватит его автоматически.',
-    liveLabel: 'демо активно',
-    signalLabel: 'результат',
-    resultLabel: 'Результат',
-    stackLabel: 'Основа',
-    demoLabel: 'Открыть демо',
-    githubLabel: 'GitHub',
-    openDemoLabel: 'Открыть демо',
+      'Каждая большая сцена показывает отдельный режим работы: дисциплина, AI-оператор, премиальный booking и инфраструктура данных. Полный каталог собран ниже в компактный инженерный индекс.',
+    visibleSystems: 'систем в каталоге',
+    flagshipAnchor: '4 флагмана',
+    indexAnchor: 'System Index',
+    featuredEyebrow: 'Flagship sequence / 01—04',
+    featuredTitle: 'Четыре продукта — четыре разных характера.',
+    featuredDescription:
+      'Живые интерфейсы, проверяемые результаты и прямые точки входа. Никаких одинаковых карточек ради заполнения сетки.',
+    indexEyebrow: 'System Index',
+    indexTitle: 'Остальные системы — одной точной картой.',
+    indexDescription:
+      'Все проекты остаются на странице: статус, назначение, результат, технический сигнал и ссылки видны сразу.',
+    flagshipLabel: 'флагманские сцены',
+    indexedLabel: 'систем в индексе',
+    placeholderHint: 'Визуал системы готовится к публикации.',
+    signalLabel: 'Инженерный сигнал',
+    resultLabel: 'Что меняется',
+    stackLabel: 'Технологическая основа',
+    demoLabel: 'Открыть систему',
+    githubLabel: 'Исходный код',
+    openDemoLabel: 'Открыть систему',
     openRepoLabel: 'Открыть репозиторий',
-    projectsLabel: 'проектов',
     statusLabels: {
       live: 'Live',
       beta: 'Beta',
@@ -77,24 +80,30 @@ const casesCopy: Record<
   },
   en: {
     headingEyebrow: 'Selected systems',
-    headingTitle: 'Flagships, and the engineering field around them.',
+    headingTitle: 'Four flagships. Everything else, without showroom noise.',
     headingDescription:
-      'Not just what was built, but what changes after launch: less manual routine, more control, and a system that starts doing the work.',
-    visibleSystems: 'visible systems',
-    anchorLabels: ['Flagships', 'AI systems', 'Product systems', 'Tooling'],
-    featuredEyebrow: 'Flagship systems',
-    featuredTitle: 'Six systems, and one cinematic laboratory.',
-    featuredDescription: 'Working execution systems are joined by an attributed scroll-cinema study.',
-    placeholderHint: 'Add a screenshot into `public/images/projects` and the card will pick it up automatically.',
-    liveLabel: 'demo live',
-    signalLabel: 'signal',
-    resultLabel: 'Outcome',
-    stackLabel: 'Built with',
-    demoLabel: 'Open demo',
-    githubLabel: 'GitHub',
-    openDemoLabel: 'Open demo',
+      'Each large scene represents a distinct operating mode: discipline, AI operations, premium booking and data infrastructure. The full catalogue becomes a compact engineering index below.',
+    visibleSystems: 'systems in the catalogue',
+    flagshipAnchor: '4 flagships',
+    indexAnchor: 'System Index',
+    featuredEyebrow: 'Flagship sequence / 01—04',
+    featuredTitle: 'Four products, four distinct characters.',
+    featuredDescription:
+      'Real interfaces, verifiable outcomes and direct entry points. No repeated cards used merely to fill a grid.',
+    indexEyebrow: 'System Index',
+    indexTitle: 'Every other system, on one precise map.',
+    indexDescription:
+      'Every project stays visible: status, purpose, outcome, engineering signal and links are available at a glance.',
+    flagshipLabel: 'flagship scenes',
+    indexedLabel: 'systems in the index',
+    placeholderHint: 'The system visual is being prepared for publication.',
+    signalLabel: 'Engineering signal',
+    resultLabel: 'What changes',
+    stackLabel: 'Technical foundation',
+    demoLabel: 'Open system',
+    githubLabel: 'Source code',
+    openDemoLabel: 'Open system',
     openRepoLabel: 'Open repository',
-    projectsLabel: 'projects',
     statusLabels: {
       live: 'Live',
       beta: 'Beta',
@@ -105,358 +114,279 @@ const casesCopy: Record<
   },
 };
 
-function PlaceholderVisual({ project, hint }: { project: Project; hint: string }) {
+function ProjectFallback({ project, hint }: { project: Project; hint: string }) {
   return (
-    <div className="relative flex h-full min-h-[260px] items-center justify-center overflow-hidden rounded-[1.7rem] case-visual-placeholder">
-      <div className="absolute inset-0 case-placeholder-grid" />
-      <div className="absolute inset-0 opacity-35">
+    <div className="flagship-scene__fallback relative flex h-full min-h-[300px] items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 case-placeholder-grid opacity-60" />
+      <div className="absolute inset-0 opacity-30">
         <ConstellationField />
       </div>
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-80">
-        <OrbitalRing size={220} dotCount={3} duration={42} color="var(--accent-warm)" />
-      </div>
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <EclipseSilhouette size={150} coronaColor="rgba(157, 196, 255, 0.14)" />
-      </div>
-      <div className="absolute inset-x-5 bottom-5 rounded-2xl border px-4 py-4 case-placeholder-panel">
-        <p className="type-meta mb-2" style={{ color: 'var(--gold)' }}>
-          {project.systemType}
-        </p>
-        <p className="font-display text-lg tracking-tight" style={{ color: 'var(--text-1)' }}>
-          {project.title}
-        </p>
-        <p className="mt-2 text-sm leading-relaxed" style={{ color: 'var(--text-3)' }}>
-          {hint}
-        </p>
+      <EclipseSilhouette size={150} coronaColor="rgba(212, 175, 55, 0.2)" />
+      <div className="absolute inset-x-5 bottom-5 border-l pl-4" style={{ borderColor: 'var(--gold)' }}>
+        <p className="type-meta" style={{ color: 'var(--gold)' }}>{project.systemType}</p>
+        <p className="mt-2 text-sm" style={{ color: 'var(--text-3)' }}>{hint}</p>
       </div>
     </div>
   );
 }
 
-function ProjectCard({
-  project,
-  index,
-  featured = false,
-  isLastOdd = false,
-  copy,
-}: {
-  project: Project;
-  index: number;
-  featured?: boolean;
-  isLastOdd?: boolean;
-  copy: (typeof casesCopy)[Locale];
-}) {
-  const statusStyle = statusStyles[project.status];
-  const isLarge = (featured && index === 0) || isLastOdd;
-  const primaryUrl = project.liveUrl ?? project.repoUrl;
-  const primaryHoverLabel = project.liveUrl ? copy.openDemoLabel : copy.openRepoLabel;
+function ProjectLinks({ project, copy, compact = false }: { project: Project; copy: (typeof casesCopy)[Locale]; compact?: boolean }) {
+  return (
+    <div className={compact ? 'system-index__links' : 'flagship-scene__links'}>
+      {project.liveUrl ? (
+        <a
+          href={project.liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${copy.openDemoLabel}: ${project.title}`}
+          className={compact ? 'system-index__link system-index__link--primary' : 'flagship-scene__link flagship-scene__link--primary'}
+        >
+          {copy.demoLabel}
+          <span aria-hidden>↗</span>
+        </a>
+      ) : null}
+      {project.repoUrl ? (
+        <a
+          href={project.repoUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${copy.openRepoLabel}: ${project.title}`}
+          className={compact ? 'system-index__link' : 'flagship-scene__link'}
+        >
+          {copy.githubLabel}
+          <span aria-hidden>↗</span>
+        </a>
+      ) : null}
+    </div>
+  );
+}
+
+function FlagshipScene({ project, index, copy }: { project: Project; index: number; copy: (typeof casesCopy)[Locale] }) {
   const { ambientMotionEnabled } = useMotionPreference();
-
-  const cardRef = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const smoothX = useSpring(mouseX, { stiffness: 220, damping: 26 });
-  const smoothY = useSpring(mouseY, { stiffness: 220, damping: 26 });
-  const rotateX = useSpring(useTransform(smoothY, [-0.5, 0.5], [2.4, -2.4]), {
-    stiffness: 180,
-    damping: 24,
-  });
-  const rotateY = useSpring(useTransform(smoothX, [-0.5, 0.5], [-3.2, 3.2]), {
-    stiffness: 180,
-    damping: 24,
-  });
-  const cursorX = useTransform(smoothX, [-0.5, 0.5], ['18%', '82%']);
-  const cursorY = useTransform(smoothY, [-0.5, 0.5], ['12%', '88%']);
-  const spotlight = useMotionTemplate`radial-gradient(420px circle at ${cursorX} ${cursorY}, rgba(245, 233, 196, 0.14), rgba(212, 175, 55, 0.04) 40%, transparent 70%)`;
-
-  const handlePointerMove = (event: ReactMouseEvent<HTMLDivElement>) => {
-    if (!ambientMotionEnabled) return;
-    const rect = cardRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    mouseX.set((event.clientX - rect.left) / rect.width - 0.5);
-    mouseY.set((event.clientY - rect.top) / rect.height - 0.5);
-  };
-
-  const handlePointerLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-  };
+  const statusStyle = statusStyles[project.status];
+  const primaryUrl = project.liveUrl ?? project.repoUrl;
+  const primaryLabel = project.liveUrl ? copy.openDemoLabel : copy.openRepoLabel;
+  const sceneNumber = String(index + 1).padStart(2, '0');
+  const sceneClass = index % 2 === 1 ? 'flagship-scene flagship-scene--reverse' : 'flagship-scene';
+  const media = (
+    <>
+      <AssetImage
+        alt={project.image?.alt ?? `${project.title} preview`}
+        sources={project.image?.sources}
+        loading="lazy"
+        className="flagship-scene__image h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.025] group-focus-within:scale-[1.025]"
+        style={{ objectPosition: project.image?.objectPosition ?? 'center' }}
+        fallback={<ProjectFallback project={project} hint={copy.placeholderHint} />}
+      />
+      <div className="flagship-scene__media-scrim" aria-hidden />
+      <span className="flagship-scene__media-index" aria-hidden>{sceneNumber}</span>
+      <span className="flagship-scene__media-type">{project.systemType}</span>
+      {primaryUrl ? (
+        <span className="flagship-scene__media-action">
+          {primaryLabel}
+          <span aria-hidden>↗</span>
+        </span>
+      ) : null}
+    </>
+  );
 
   return (
-    <motion.article variants={revealScale} className={isLarge ? 'lg:col-span-2' : ''}>
-      <motion.div
-        ref={cardRef}
-        onMouseMove={handlePointerMove}
-        onMouseLeave={handlePointerLeave}
-        whileHover={ambientMotionEnabled ? { y: -6 } : undefined}
-        whileTap={ambientMotionEnabled ? { scale: 0.985 } : undefined}
-        transition={{ type: 'spring', stiffness: 280, damping: 26 }}
-        style={{
-          rotateX: ambientMotionEnabled ? rotateX : 0,
-          rotateY: ambientMotionEnabled ? rotateY : 0,
-          transformStyle: ambientMotionEnabled ? 'preserve-3d' : 'flat',
-        }}
-        className={`group relative flex h-full flex-col overflow-hidden rounded-[1.9rem] border transition-all duration-500 case-card-shell perspective-card ${isLarge ? 'case-card-shell--wide' : ''}`}
-      >
-        <motion.div
-          className="pointer-events-none absolute inset-0 z-[5] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-          style={{ background: spotlight }}
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute -inset-px rounded-[1.95rem] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-          style={{
-            background:
-              'linear-gradient(135deg, rgba(212,175,55,0.22), transparent 30%, transparent 70%, rgba(212,175,55,0.16))',
-          }}
-        />
-
+    <motion.article
+      variants={revealUp}
+      className={sceneClass}
+      data-scene={sceneNumber}
+      initial={ambientMotionEnabled ? 'hidden' : false}
+      whileInView={ambientMotionEnabled ? 'visible' : undefined}
+      viewport={viewport}
+    >
+      <div className="flagship-scene__media group">
         {primaryUrl ? (
           <a
             href={primaryUrl}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`${primaryHoverLabel}: ${project.title}`}
-            className="case-card-media relative block aspect-[3/2] w-full overflow-hidden"
+            aria-label={`${primaryLabel}: ${project.title}`}
+            className="flagship-scene__media-link"
           >
-            <AssetImage
-              alt={project.image?.alt ?? `${project.title} preview`}
-              sources={project.image?.sources}
-              loading="lazy"
-              className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04] group-focus-within:scale-[1.04]"
-              style={{ objectPosition: project.image?.objectPosition ?? 'center' }}
-              fallback={<PlaceholderVisual project={project} hint={copy.placeholderHint} />}
-            />
-            <div
-              className="pointer-events-none absolute inset-x-0 bottom-0 h-24"
-              style={{ background: 'linear-gradient(to top, rgba(5,7,9,0.85), transparent)' }}
-            />
-            <div
-              className="pointer-events-none absolute right-4 top-4 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.22em] backdrop-blur-md"
-              style={{ ...statusStyle, background: 'rgba(5,7,9,0.55)' }}
-            >
-              <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-current opacity-80" />
-              {copy.statusLabels[project.status]}
-            </div>
-            <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center opacity-0 transition-opacity duration-400 group-hover:opacity-100 group-focus-within:opacity-100">
-              <span
-                className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-display uppercase tracking-[0.22em] backdrop-blur-md"
-                style={{
-                  borderColor: 'rgba(212,175,55,0.35)',
-                  background: 'rgba(5,7,9,0.7)',
-                  color: 'rgba(245,233,196,0.95)',
-                }}
-              >
-                {primaryHoverLabel}
-                <span aria-hidden>↗</span>
-              </span>
-            </div>
+            {media}
           </a>
         ) : (
-          <div className="case-card-media relative aspect-[3/2] w-full overflow-hidden">
-            <AssetImage
-              alt={project.image?.alt ?? `${project.title} preview`}
-              sources={project.image?.sources}
-              loading="lazy"
-              className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04] group-focus-within:scale-[1.04]"
-              style={{ objectPosition: project.image?.objectPosition ?? 'center' }}
-              fallback={<PlaceholderVisual project={project} hint={copy.placeholderHint} />}
-            />
-            <div
-              className="pointer-events-none absolute inset-x-0 bottom-0 h-24"
-              style={{ background: 'linear-gradient(to top, rgba(5,7,9,0.85), transparent)' }}
-            />
-            <div
-              className="pointer-events-none absolute right-4 top-4 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.22em] backdrop-blur-md"
-              style={{ ...statusStyle, background: 'rgba(5,7,9,0.55)' }}
-            >
-              <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-current opacity-80" />
-              {copy.statusLabels[project.status]}
-            </div>
-          </div>
+          <div className="flagship-scene__media-link">{media}</div>
         )}
+      </div>
 
-        <div className="relative flex flex-1 flex-col gap-5 px-6 py-6 sm:px-7 sm:py-7">
-          <div className="flex items-center justify-between gap-3 text-[10px] uppercase tracking-[0.24em]" style={{ color: 'var(--text-4)' }}>
-            <span className="font-display">#{String(index + 1).padStart(2, '0')}</span>
-            <span className="font-display" style={{ color: 'var(--text-3)' }}>{project.systemType}</span>
+      <div className="flagship-scene__content">
+        <div className="flagship-scene__meta">
+          <span>EF / {sceneNumber}</span>
+          <span className="flagship-scene__status" style={statusStyle}>
+            <span aria-hidden />
+            {copy.statusLabels[project.status]}
+          </span>
+        </div>
+
+        <h4 className="flagship-scene__title">{project.title}</h4>
+        <p className="flagship-scene__description">{project.description}</p>
+
+        <dl className="flagship-scene__proof">
+          <div>
+            <dt>{copy.resultLabel}</dt>
+            <dd>{project.result}</dd>
           </div>
-
-          <h4 className="type-heading text-balance text-[clamp(1.55rem,2.4vw,2.35rem)] leading-[1.05]" style={{ color: 'var(--text-1)' }}>
-            {project.title}
-          </h4>
-
-          <p className="type-body text-[14px] leading-relaxed sm:text-[15px]" style={{ color: 'var(--text-2)' }}>
-            {project.description}
-          </p>
-
-          <dl className="case-proof-grid grid gap-px overflow-hidden rounded-2xl border sm:grid-cols-2">
-            <div className="case-proof-item px-4 py-4">
-              <dt className="type-meta mb-2" style={{ color: 'var(--gold)' }}>{copy.resultLabel}</dt>
-              <dd className="text-[13px] leading-relaxed" style={{ color: 'var(--text-2)' }}>{project.result}</dd>
-            </div>
-            <div className="case-proof-item px-4 py-4">
-              <dt className="type-meta mb-2" style={{ color: 'var(--accent)' }}>{copy.signalLabel}</dt>
-              <dd className="text-[13px] leading-relaxed" style={{ color: 'var(--text-2)' }}>{project.signal}</dd>
-            </div>
-          </dl>
-
-          <div aria-label={copy.stackLabel} className="flex flex-wrap gap-2">
-            {project.tech.slice(0, 4).map((technology) => (
-              <span key={technology} className="case-tech-pill rounded-full border px-3 py-1.5 text-[10px] tracking-[0.08em]">
-                {technology}
-              </span>
-            ))}
-            {project.tech.length > 4 ? (
-              <span className="case-tech-pill rounded-full border px-3 py-1.5 text-[10px] tracking-[0.08em]">
-                +{project.tech.length - 4}
-              </span>
-            ) : null}
+          <div>
+            <dt>{copy.signalLabel}</dt>
+            <dd>{project.signal}</dd>
           </div>
+        </dl>
 
-          <div className="mt-auto flex flex-wrap items-center gap-3">
-            {project.liveUrl ? (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex min-h-11 items-center gap-2 rounded-full border px-5 py-2.5 text-[12px] font-display tracking-[0.04em] transition-all duration-400 case-link-primary"
-              >
-                {copy.demoLabel}
-                <span aria-hidden>→</span>
-              </a>
-            ) : null}
-            {project.repoUrl ? (
-              <a
-                href={project.repoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex min-h-11 items-center gap-2 rounded-full border px-5 py-2.5 text-[12px] font-display tracking-[0.04em] transition-all duration-400 case-link-secondary"
-              >
-                {copy.githubLabel}
-                <span aria-hidden>↗</span>
-              </a>
-            ) : null}
+        <div className="flagship-scene__stack" aria-label={copy.stackLabel}>
+          {project.tech.slice(0, 5).map((technology) => <span key={technology}>{technology}</span>)}
+          {project.tech.length > 5 ? <span>+{project.tech.length - 5}</span> : null}
+        </div>
+
+        <ProjectLinks project={project} copy={copy} />
+      </div>
+    </motion.article>
+  );
+}
+
+function SystemIndexRow({ project, index, copy }: { project: Project; index: number; copy: (typeof casesCopy)[Locale] }) {
+  const statusStyle = statusStyles[project.status];
+
+  return (
+    <li className="system-index__row">
+      <article className="system-index__item">
+        <div className="system-index__identity">
+          <span className="system-index__number">{String(index + 5).padStart(2, '0')}</span>
+          <div>
+            <p className="system-index__type">{project.systemType}</p>
+            <h4>{project.title}</h4>
           </div>
         </div>
-      </motion.div>
-    </motion.article>
+
+        <div className="system-index__proof">
+          <p>{project.result}</p>
+          <p>{project.signal}</p>
+        </div>
+
+        <div className="system-index__meta">
+          <span className="system-index__status" style={statusStyle}>
+            <span aria-hidden />
+            {copy.statusLabels[project.status]}
+          </span>
+          <div className="system-index__stack" aria-label={copy.stackLabel}>
+            {project.tech.slice(0, 2).map((technology) => <span key={technology}>{technology}</span>)}
+            {project.tech.length > 2 ? <span>+{project.tech.length - 2}</span> : null}
+          </div>
+        </div>
+
+        <ProjectLinks project={project} copy={copy} compact />
+      </article>
+    </li>
   );
 }
 
 export function CasesSection() {
   const { locale } = useLocale();
   const copy = casesCopy[locale];
-  const { allProjects, featuredProjects, portfolioCollections } = useSiteContent();
+  const { ambientMotionEnabled } = useMotionPreference();
+  const { allProjects, featuredProjects } = useSiteContent();
+  const flagshipProjects = featuredProjects.slice(0, 4);
+  const flagshipTitles = new Set(flagshipProjects.map((project) => project.title));
+  const indexedProjects = allProjects.filter((project) => !flagshipTitles.has(project.title));
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] });
-  const progressWidth = useTransform(scrollYProgress, [0.05, 0.55], ['0%', '100%']);
-
-  const portfolioAnchors = [
-    { href: '#featured-cases', label: copy.anchorLabels[0], count: featuredProjects.length },
-    { href: '#ai-products', label: copy.anchorLabels[1], count: portfolioCollections[0]?.projects.length ?? 0 },
-    { href: '#product-systems', label: copy.anchorLabels[2], count: portfolioCollections[1]?.projects.length ?? 0 },
-    { href: '#engineering-tools', label: copy.anchorLabels[3], count: portfolioCollections[2]?.projects.length ?? 0 },
-  ];
+  const progressWidth = useTransform(scrollYProgress, [0.04, 0.7], ['0%', '100%']);
 
   return (
-    <section ref={sectionRef} id="cases" className="section-shell relative overflow-hidden py-16 sm:py-24 lg:py-36">
-      <div className="absolute inset-0 case-atmosphere-bg" />
-      <div className="absolute inset-0 opacity-40">
-        <ParticleField count={18} />
+    <section ref={sectionRef} id="cases" className="section-shell showcase-v2 relative overflow-hidden py-16 sm:py-24 lg:py-32">
+      <div className="case-atmosphere-bg absolute inset-0" />
+      <div className="absolute inset-0 opacity-30">
+        <ParticleField count={12} />
       </div>
 
       <motion.div
         className="absolute left-0 top-0 h-px origin-left"
         style={{
-          width: progressWidth,
-          background: 'linear-gradient(90deg, transparent, rgba(212,175,55,0.7), rgba(107,163,255,0.4), transparent)',
+          width: ambientMotionEnabled ? progressWidth : '100%',
+          background: 'linear-gradient(90deg, transparent, rgba(212,175,55,0.72), rgba(107,163,255,0.42), transparent)',
         }}
       />
 
       <div className="relative z-10 mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
-        <motion.div variants={revealUp} initial="hidden" whileInView="visible" viewport={viewport} className="animated-divider">
+        <motion.div
+          variants={revealUp}
+          initial={ambientMotionEnabled ? 'hidden' : false}
+          whileInView={ambientMotionEnabled ? 'visible' : undefined}
+          viewport={viewport}
+          className="animated-divider"
+        >
           <SectionHeading eyebrow={copy.headingEyebrow} title={copy.headingTitle} />
           <p className="mt-5 max-w-3xl type-body text-[15px] sm:text-base" style={{ color: 'var(--text-3)' }}>
             {copy.headingDescription}
           </p>
         </motion.div>
 
-        <motion.div variants={revealUp} initial="hidden" whileInView="visible" viewport={viewport} className="mt-8 flex flex-wrap items-center gap-2.5">
-          <span className="rounded-full border px-4 py-2 text-[10px] uppercase tracking-[0.24em] case-anchor-chip">
-            {allProjects.length} {copy.visibleSystems}
-          </span>
-          {portfolioAnchors.map((anchor) => (
-            <a key={anchor.href} href={anchor.href} className="inline-flex min-h-11 items-center gap-2 rounded-full border px-4 py-2 text-[10px] uppercase tracking-[0.22em] transition-all duration-300 case-anchor-chip">
-              <span>{anchor.label}</span>
-              <span style={{ color: 'var(--accent)' }}>{anchor.count}</span>
-            </a>
-          ))}
-        </motion.div>
+        <motion.nav
+          variants={revealUp}
+          initial={ambientMotionEnabled ? 'hidden' : false}
+          whileInView={ambientMotionEnabled ? 'visible' : undefined}
+          viewport={viewport}
+          aria-label={copy.headingEyebrow}
+          className="showcase-v2__nav"
+        >
+          <span>{allProjects.length} {copy.visibleSystems}</span>
+          <a href="#flagship-systems">{copy.flagshipAnchor} <strong>{flagshipProjects.length}</strong></a>
+          <a href="#system-index">{copy.indexAnchor} <strong>{indexedProjects.length}</strong></a>
+        </motion.nav>
 
-        <div id="featured-cases" className="mt-12 sm:mt-14">
-          <motion.div variants={revealUp} initial="hidden" whileInView="visible" viewport={viewport} className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-3xl">
-              <p className="type-meta mb-4" style={{ color: 'var(--gold)' }}>
-                {copy.featuredEyebrow}
-              </p>
-              <h3 className="type-heading text-2xl sm:text-3xl" style={{ color: 'var(--text-1)' }}>
-                {copy.featuredTitle}
-              </h3>
+        <div id="flagship-systems" className="showcase-v2__flagships">
+          <motion.div
+            variants={revealUp}
+            initial={ambientMotionEnabled ? 'hidden' : false}
+            whileInView={ambientMotionEnabled ? 'visible' : undefined}
+            viewport={viewport}
+            className="showcase-v2__intro"
+          >
+            <div>
+              <p className="type-meta" style={{ color: 'var(--gold)' }}>{copy.featuredEyebrow}</p>
+              <h3>{copy.featuredTitle}</h3>
             </div>
-            <p className="max-w-xl text-[14px] leading-relaxed sm:text-[15px]" style={{ color: 'var(--text-3)' }}>
-              {copy.featuredDescription}
-            </p>
+            <p>{copy.featuredDescription}</p>
           </motion.div>
 
-          <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={viewport} className="perspective-container mt-6 grid grid-cols-1 gap-5 lg:grid-cols-2">
-            {featuredProjects.map((project, index) => (
-              <ProjectCard
-                key={project.title}
-                project={project}
-                index={index}
-                featured
-                copy={copy}
-                isLastOdd={index === featuredProjects.length - 1 && featuredProjects.length % 2 !== 0}
-              />
+          <div className="showcase-v2__sequence">
+            {flagshipProjects.map((project, index) => (
+              <FlagshipScene key={project.title} project={project} index={index} copy={copy} />
             ))}
-          </motion.div>
+          </div>
         </div>
 
-        {portfolioCollections.map((collection) => (
-          <div key={collection.id} id={collection.id} className="mt-16 sm:mt-20">
-            <motion.div variants={revealUp} initial="hidden" whileInView="visible" viewport={viewport} className="border-t pt-6 sm:pt-8" style={{ borderColor: 'var(--line)' }}>
-              <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-                <div className="max-w-3xl">
-                  <p className="type-meta mb-4" style={{ color: 'var(--gold)' }}>
-                    {collection.eyebrow}
-                  </p>
-                  <h3 className="type-heading text-2xl sm:text-3xl" style={{ color: 'var(--text-1)' }}>
-                    {collection.title}
-                  </h3>
-                  <p className="mt-4 max-w-2xl text-[14px] leading-relaxed sm:text-[15px]" style={{ color: 'var(--text-3)' }}>
-                    {collection.description}
-                  </p>
-                </div>
-                <div className="inline-flex self-start rounded-full border px-4 py-2 text-[10px] uppercase tracking-[0.24em] case-anchor-chip">
-                  {collection.projects.length} {copy.projectsLabel}
-                </div>
-              </div>
-            </motion.div>
+        <motion.div
+          id="system-index"
+          variants={stagger}
+          initial={ambientMotionEnabled ? 'hidden' : false}
+          whileInView={ambientMotionEnabled ? 'visible' : undefined}
+          viewport={viewport}
+          className="system-index"
+        >
+          <motion.div variants={revealUp} className="system-index__header">
+            <div>
+              <p className="type-meta" style={{ color: 'var(--gold)' }}>{copy.indexEyebrow}</p>
+              <h3>{copy.indexTitle}</h3>
+              <p>{copy.indexDescription}</p>
+            </div>
+            <dl className="system-index__counts">
+              <div><dt>{copy.flagshipLabel}</dt><dd>{flagshipProjects.length}</dd></div>
+              <div><dt>{copy.indexedLabel}</dt><dd>{indexedProjects.length}</dd></div>
+            </dl>
+          </motion.div>
 
-            <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={viewport} className="perspective-container mt-6 grid grid-cols-1 gap-5 lg:grid-cols-2">
-              {collection.projects.map((project, index) => (
-                <ProjectCard
-                  key={project.title}
-                  project={project}
-                  index={index}
-                  copy={copy}
-                  isLastOdd={index === collection.projects.length - 1 && collection.projects.length % 2 !== 0}
-                />
-              ))}
-            </motion.div>
-          </div>
-        ))}
+          <motion.ol variants={revealUp} className="system-index__list">
+            {indexedProjects.map((project, index) => (
+              <SystemIndexRow key={project.title} project={project} index={index} copy={copy} />
+            ))}
+          </motion.ol>
+        </motion.div>
       </div>
     </section>
   );

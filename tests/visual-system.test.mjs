@@ -43,18 +43,23 @@ test('ships an optimized CryptoPulse image with a real PNG fallback', async () =
   assert.ok(webp.size < png.size, 'optimized CryptoPulse image must be smaller than PNG fallback');
 });
 
-test('project showcase exposes identity, outcome and evidence without hover', async () => {
+test('project showcase gives four flagships distinct scenes and keeps the full catalogue in a compact index', async () => {
   const cases = await read('src/components/sections/CasesSection.tsx');
-  const ecosystem = await read('src/components/sections/SystemsEcosystemSection.tsx');
+  const landing = await read('src/pages/LandingPage.tsx');
+  const styles = await read('src/styles/index.css');
 
   assert.match(cases, /\{project\.title\}/);
   assert.match(cases, /\{project\.result\}/);
   assert.match(cases, /\{project\.signal\}/);
   assert.match(cases, /useMotionPreference/);
-  assert.match(cases, /group-focus-within:opacity-100/);
-  assert.match(ecosystem, /\{project\.title\}/);
-  assert.match(ecosystem, /\{project\.result\}/);
-  assert.match(ecosystem, /useMotionPreference/);
+  assert.match(cases, /featuredProjects\.slice\(0, 4\)/);
+  assert.match(cases, /allProjects\.filter/);
+  assert.match(cases, /id="system-index"/);
+  assert.match(cases, /className="system-index__list"/);
+  assert.doesNotMatch(cases, /whileHover=\{ambientMotionEnabled \? \{ y:/);
+  assert.doesNotMatch(landing, /<SystemsEcosystemSection/);
+  assert.match(styles, /\.flagship-scene__media-link:focus-visible/);
+  assert.match(styles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.flagship-scene__image/);
 });
 
 test('editorial hero keeps the Eclipse anchor and accessible primary paths', async () => {

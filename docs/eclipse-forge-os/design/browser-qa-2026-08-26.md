@@ -48,9 +48,31 @@ The orbital eclipse was moved below the mobile dock after the first screenshot p
 Instagram and metadata stay readable. The mobile footer heading was reduced from six visual
 lines to four without changing the message or CTA priority.
 
+## Showcase 2.0 follow-up
+
+The project wall was replaced with four authored flagship scenes and one compact System Index.
+The separate ecosystem card grid was removed from the Landing composition because it repeated
+six systems already represented in the catalogue.
+
+| Check | Result | Evidence |
+| --- | --- | --- |
+| Catalogue completeness | PASS | `4` flagship scenes plus `14` index rows preserve all `18` unique projects |
+| Real product evidence | PASS FOR FLAGSHIPS | Valhalla, Sentinel, Premium Rent and Claw use their real product assets rather than generic placeholders |
+| Desktop composition | PASS | `1440 × 1000`; four `1304 px` scenes, `0 px` horizontal overflow, Cases height `7056 px` |
+| Mobile composition | PASS | `390 × 844` override (`375 px` content viewport); `335 px` scenes and index rows, `0 px` horizontal overflow |
+| Touch targets | PASS | flagship CTAs and compact index actions are `44 px` high |
+| Evidence visibility | PASS | title, status, outcome, engineering signal and links are visible without hover |
+| Keyboard focus | PASS FOR CHANGED SURFACE | Tab reaches index actions; focus state changes border, background and text to Eclipse gold |
+| Motion governor | PASS | paused mode renders headers at `opacity: 1` / `transform: none`; running mode remains available through the shared control |
+| Runtime console | PASS | zero error entries in the desktop and mobile runs |
+
+The changed section removes pointer-follow tilt, spring lift and repeated decorative card shells.
+New continuous effects were not added; reveal motion uses the shared preference governor and the
+image interaction is limited to a compositor-friendly scale on real links.
+
 ## Decision
 
 The changed Landing surfaces pass responsive and runtime smoke. The project remains `pilot`
-under `eclipse-forge.design-gate.v1` because live product imagery, exact case-number evidence,
-selective reveal pacing, remaining generic blur cleanup, complete state evidence and a manual
-keyboard walkthrough are not yet closed.
+under `eclipse-forge.design-gate.v1` because complete imagery across every referenced project,
+exact case-number evidence, selective reveal pacing outside the changed showcase, remaining generic
+blur cleanup, complete state evidence and a full-page manual keyboard walkthrough are not yet closed.
