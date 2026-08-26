@@ -1,11 +1,12 @@
 # Eclipse Forge visual adoption matrix
 
-> Rollout-план для `eclipse-forge.visual-system.v1`. Он не утверждает, что все проекты уже
-> синхронизированы: `adopted` ставится только после кода, browser QA и regression evidence.
+> Rollout-план для `eclipse-forge.visual-system.v1` и `eclipse-forge.design-gate.v1`.
+> `adopted` ставится только после кода, browser QA, regression evidence и полного
+> 25-сигнального anti-slop review. Предыдущий visual-only статус не переносится автоматически.
 
 | Проект | Профиль | Статус | Первый безопасный этап |
 |---|---|---|---|
-| Eclipse Forge Landing | cinematic | adopted | Канонические tokens, typography, orbit/reveal/parallax |
+| Eclipse Forge Landing | cinematic | pilot | Закрыть live-screenshot, repeated reveal и generic blur findings нового Design Gate |
 | Eclipse Library | product | pilot | Tokens, self-hosted fonts, eclipse hero, calm reveal и hover |
 | Eclipse Chat | operational | pilot | Tokens, focus/status motion, без постоянного parallax |
 | Eclipse AI Hub | product | pilot | Tokens, model states, один ambient anchor в discovery |
@@ -22,8 +23,23 @@
 ## Gate
 
 Для перевода `planned → adopted` нужны: semantic-token mapping, responsive screenshots,
-keyboard/focus pass, reduced-motion pass, performance delta и запись в roadmap проекта.
+keyboard/focus pass, reduced-motion pass, performance delta, live product evidence,
+truthfulness/provenance review, все 25 anti-slop решений и запись в roadmap проекта.
 Нельзя массово импортировать код или animation dependencies из Landing.
+
+Канонический gate и первая волна:
+
+- [`Eclipse Design Gate`](eclipse-forge-os/design/README.md);
+- [`AI Hub + Chat + Library profiles`](eclipse-forge-os/design/first-wave.md);
+- [`Landing evidence`](eclipse-forge-os/design/evidence/eclipse-forge-landing.json).
+
+## Design Gate rollout — 2026-08-26
+
+Landing публикует machine-readable gate, CI validator и первый честный evidence manifest.
+Старые несourced hero metrics заменены значениями из public runtime registry; heading
+gradients и hover elevation на ключевых неинтерактивных surfaces удалены. Landing остаётся
+`pilot`, пока current product screenshots, generic blur cleanup и selective reveal pass не
+получат browser evidence.
 
 ## Pilot evidence — 2026-08-12
 

@@ -240,7 +240,7 @@ export function CtaSection() {
           </p>
           <h2 className="type-display text-[clamp(2.15rem,4.3vw,4rem)]">
             {copy.title}
-            <span className="block text-gradient-hero">{copy.titleAccent}</span>
+            <span className="block" style={{ color: 'var(--gold)' }}>{copy.titleAccent}</span>
           </h2>
           <p className="mt-6 type-body text-[15px] leading-relaxed sm:text-[16px]" style={{ color: 'var(--text-3)' }}>
             {copy.description}

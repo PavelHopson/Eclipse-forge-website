@@ -61,7 +61,7 @@ export function ProcessSection() {
               {copy.eyebrow}
             </motion.p>
             <motion.h2 variants={revealUp} className="type-display mb-8 text-[clamp(2rem,4vw,3.5rem)]">
-              <span className="text-gradient">{copy.titleTop}</span>
+              <span style={{ color: 'var(--gold)' }}>{copy.titleTop}</span>
               <br />
               <span style={{ color: 'var(--text-4)' }}>{copy.titleBottom}</span>
             </motion.h2>
@@ -81,16 +81,13 @@ export function ProcessSection() {
           </div>
 
           <div className="flex flex-col gap-6">
-            {processSteps.map((step, index) => (
+            {processSteps.map((step) => (
               <motion.div
                 key={step.index}
                 variants={revealUp}
-                whileHover={{ x: 8, borderColor: 'rgba(107,163,255,0.15)' }}
-                className="group relative overflow-hidden rounded-2xl border p-8 transition-all duration-500"
+                className="relative overflow-hidden rounded-2xl border p-8"
                 style={{ borderColor: 'var(--line)', background: 'var(--bg-card)' }}
               >
-                <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: 'radial-gradient(ellipse at 0% 50%, rgba(107,163,255,0.03) 0%, transparent 60%)' }} />
-
                 <div className="relative flex gap-6 sm:gap-8">
                   <div className="shrink-0">
                     <span className="block font-display text-5xl font-extralight transition-colors duration-700 lg:text-6xl" style={{ color: 'var(--text-4)' }}>
@@ -108,10 +105,6 @@ export function ProcessSection() {
                   </div>
                 </div>
 
-                <div
-                  className="absolute bottom-0 left-0 h-px w-0 transition-all duration-700 group-hover:w-full"
-                  style={{ background: `linear-gradient(90deg, var(--accent), ${index % 2 === 0 ? 'var(--accent-warm)' : 'transparent'})` }}
-                />
               </motion.div>
             ))}
           </div>

@@ -86,7 +86,7 @@ export function AboutSection() {
               <span className="mx-2" style={{ color: 'var(--text-4)' }}>
                 →
               </span>
-              <span className="block text-gradient">{copy.titleAccent}</span>
+              <span className="block" style={{ color: 'var(--gold)' }}>{copy.titleAccent}</span>
             </motion.h2>
             <motion.div variants={revealUp} className="space-y-4">
               <p className="type-body text-[15px] leading-relaxed sm:text-[16px]" style={{ color: 'var(--text-2)' }}>
@@ -106,8 +106,7 @@ export function AboutSection() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.15 * index, ease: [0.16, 1, 0.3, 1] }}
-                whileHover={{ x: 8, borderColor: 'rgba(107,163,255,0.2)' }}
-                className="group flex items-center justify-between rounded-xl border px-6 py-5 transition-colors duration-400"
+                className="flex items-center justify-between rounded-xl border px-6 py-5"
                 style={{ borderColor: 'var(--line)', background: 'var(--surface-1)' }}
               >
                 <div className="flex items-center gap-4">

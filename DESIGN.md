@@ -66,6 +66,10 @@ Eclipse Forge — это:
 
 ## Visual System
 
+Обязательный cross-project quality contract: `docs/eclipse-forge-os/design/README.md`.
+Этот документ описывает характер Landing; Design Gate определяет доказательства, anti-slop
+review и условия adoption для всех продуктов.
+
 ### Color Direction
 
 Базовый dark theme:
@@ -87,8 +91,8 @@ Eclipse Forge — это:
 - `--accent-warm: #B45309`
 
 Правила:
-- главный акцент — холодный синий
-- тёплый янтарный используется как вторичный контраст
+- главный акцент и подтверждённый результат — тёплый gold
+- холодный синий используется как signal, focus и навигационное состояние
 - акценты не должны спорить
 - нельзя скатываться в фиолетовую AI-эстетику по умолчанию
 - цвет должен поддерживать ощущение премиальной инженерии
@@ -186,6 +190,9 @@ Secondary CTA:
 Не как:
 - случайный decorative panel
 
+Неподвижный информационный блок не поднимается на hover. Elevation и directional motion
+разрешены только активируемой поверхности с эквивалентным keyboard focus.
+
 ### Theme Toggle
 
 Light theme — не вторичный режим “для галочки”.
@@ -220,7 +227,7 @@ Light theme — не вторичный режим “для галочки”.
 
 ## Motion
 
-Motion здесь обязателен, но только осмысленный.
+Motion здесь допустим и осмыслен, но не является условием качества статического кадра.
 
 Допустимо:
 - kinetic word reveal
@@ -233,6 +240,7 @@ Motion здесь обязателен, но только осмысленный
 - noisy perpetual animation
 - motion, мешающий чтению
 - дешёвые bounce / spring ради show-off
+- одинаковый reveal каждой секции
 
 Принцип:
 - motion creates presence, not spectacle
@@ -325,3 +333,6 @@ Copy не должен звучать как:
 - кейсы читаются как evidence, а не как шум
 - motion усиливает hierarchy
 - без эффектов сайт всё равно остаётся сильным
+- публичные цифры имеют видимый versioned source
+- flagship cases показывают current product screenshot или явно маркируются как concept
+- все 25 сигналов Eclipse Design Gate имеют решение и evidence

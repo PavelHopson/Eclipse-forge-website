@@ -24,6 +24,7 @@ test('Eclipse Forge OS documentation lives under one discoverable hub', async ()
     'business-model.md',
     'architecture.md',
     'security-and-release-runbook.md',
+    'design/README.md',
     'growth-os/README.md',
     'security/README.md',
     'execution/stage-0/README.md',

@@ -119,7 +119,7 @@ export function BusinessImpactSection() {
           </motion.p>
           <motion.h2 variants={revealUp} className="type-display text-[clamp(2.15rem,4.6vw,4.2rem)]">
             {copy.title}
-            <span className="block text-gradient-hero">{copy.titleAccent}</span>
+            <span className="block" style={{ color: 'var(--gold)' }}>{copy.titleAccent}</span>
           </motion.h2>
           <motion.p
             variants={revealUp}
@@ -135,13 +135,8 @@ export function BusinessImpactSection() {
             <motion.article
               key={card.index}
               variants={revealUp}
-              whileHover={{ y: -6 }}
-              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              className="group relative overflow-hidden rounded-[1.9rem] border p-6 services-card sm:p-7"
+              className="relative overflow-hidden rounded-[1.9rem] border p-6 services-card sm:p-7"
             >
-              <div className="pointer-events-none absolute inset-0 services-card-glow opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-              <div className="pointer-events-none absolute inset-x-10 top-0 h-px opacity-0 transition-opacity duration-500 group-hover:opacity-100 services-edge-glow" />
-
               <div className="relative">
                 <div className="mb-5 flex items-center justify-between gap-4">
                   <span className="inline-flex rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.22em] services-chip">

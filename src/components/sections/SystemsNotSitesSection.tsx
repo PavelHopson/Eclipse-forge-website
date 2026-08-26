@@ -211,7 +211,7 @@ export function SystemsNotSitesSection() {
             <span className="block" style={{ color: 'var(--text-4)' }}>
               {copy.title}
             </span>
-            <span className="block text-gradient-hero">{copy.titleAccent}</span>
+            <span className="block" style={{ color: 'var(--gold)' }}>{copy.titleAccent}</span>
           </motion.h2>
           <motion.p
             variants={revealUp}

@@ -66,6 +66,8 @@ export interface ProcessStep {
 export interface Metric {
   value: string;
   label: string;
+  sourceLabel: string;
+  sourceHref: string;
 }
 
 export interface ContactPrompt {
@@ -179,6 +181,8 @@ interface LocalizedSystemsEcosystemIntroDefinition {
 interface LocalizedMetricDefinition {
   value: string;
   label: Localized<string>;
+  sourceLabel: Localized<string>;
+  sourceHref: string;
 }
 
 interface LocalizedContactPromptDefinition {
@@ -883,9 +887,24 @@ const processStepDefinitions: LocalizedProcessStepDefinition[] = [
 ];
 
 const metricDefinitions: LocalizedMetricDefinition[] = [
-  { value: '6', label: localized('production-систем в работе 24/7', 'production systems running 24/7') },
-  { value: '958+', label: localized('автоматических проверок в релизе', 'automated checks per release') },
-  { value: '22K', label: localized('строк Rust в core-движке извлечения', 'Rust lines in core extraction engine') },
+  {
+    value: '13',
+    label: localized('продуктов и библиотек в публичном runtime-реестре', 'products and libraries in the public runtime registry'),
+    sourceLabel: localized('Открыть реестр', 'Open registry'),
+    sourceHref: '/ecosystem/manifest.json',
+  },
+  {
+    value: '3',
+    label: localized('системы имеют подтверждённый статус live', 'systems have a verified live status'),
+    sourceLabel: localized('Проверить статусы', 'Verify statuses'),
+    sourceHref: '/ecosystem/manifest.json',
+  },
+  {
+    value: '1',
+    label: localized('версионированный визуальный контракт экосистемы', 'versioned visual contract for the ecosystem'),
+    sourceLabel: localized('Посмотреть контракт', 'View contract'),
+    sourceHref: '/design-system/eclipse-forge.tokens.json',
+  },
 ];
 
 const founderProfileDefinition: LocalizedFounderProfileDefinition = {
@@ -1235,7 +1254,12 @@ const siteContentByLocale: Record<Locale, SiteContent> = Object.fromEntries(
       portfolioCollections,
       serviceEntryPoints: serviceEntryPointDefinitions.map((entry) => materializeService(locale, entry)),
       processSteps: processStepDefinitions.map((step) => materializeStep(locale, step)),
-      metrics: metricDefinitions.map((metric) => ({ value: metric.value, label: metric.label[locale] })),
+      metrics: metricDefinitions.map((metric) => ({
+        value: metric.value,
+        label: metric.label[locale],
+        sourceLabel: metric.sourceLabel[locale],
+        sourceHref: metric.sourceHref,
+      })),
       founderProfile: materializeFounderProfile(locale, founderProfileDefinition),
       systemsEcosystemIntro: {
         eyebrow: systemsEcosystemIntroDefinition.eyebrow[locale],

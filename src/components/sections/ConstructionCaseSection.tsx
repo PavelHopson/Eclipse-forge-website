@@ -82,7 +82,7 @@ export function ConstructionCaseSection() {
             </p>
             <h2 className="type-display text-[clamp(2rem,4vw,3.8rem)] leading-[1.04]">
               <span className="block">{copy.title}</span>
-              <span className="block text-gradient-hero">{copy.titleAccent}</span>
+              <span className="block" style={{ color: 'var(--gold)' }}>{copy.titleAccent}</span>
             </h2>
             <p
               className="mt-6 type-body max-w-xl text-[15px] leading-relaxed sm:text-[17px]"

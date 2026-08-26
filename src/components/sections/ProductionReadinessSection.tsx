@@ -48,7 +48,7 @@ export function ProductionReadinessSection() {
             <div className="absolute inset-0 opacity-60" style={{ background: 'radial-gradient(circle at 15% 10%, rgba(212,175,55,.12), transparent 45%)' }} />
             <div className="relative">
               <p className="type-meta" style={{ color: 'var(--gold)' }}>{text.eyebrow}</p>
-              <h2 className="type-display mt-6 text-[clamp(2rem,4vw,3.6rem)]"><span style={{ color: 'var(--text-1)' }}>{text.title}</span><span className="block text-gradient-hero">{text.accent}</span></h2>
+              <h2 className="type-display mt-6 text-[clamp(2rem,4vw,3.6rem)]"><span style={{ color: 'var(--text-1)' }}>{text.title}</span><span className="block" style={{ color: 'var(--gold)' }}>{text.accent}</span></h2>
               <p className="mt-6 max-w-lg type-body text-[14px] leading-7 sm:text-[16px]" style={{ color: 'var(--text-3)' }}>{text.lead}</p>
             </div>
             <div className="relative mt-8">

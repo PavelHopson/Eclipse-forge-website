@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schemaVersion": "eclipse-forge.design-gate.v1",
+  "visualSystemVersion": "eclipse-forge.visual-system.v1",
+  "name": "Eclipse Design Gate",
+  "principle": "One shared quality bar, distinct product character",
+  "profiles": {
+    "cinematic": "Public storytelling with one dominant visual anchor and static-first content.",
+    "product": "Artifact-first workspaces with one restrained ambient anchor.",
+    "operational": "Dense task surfaces where state, evidence and the next safe action dominate."
+  },
+  "gateStatuses": ["planned", "pilot", "adopted", "blocked"],
+  "evidenceStatuses": ["pass", "justified", "needs-change", "pending", "not-applicable"],
+  "requiredChecks": [
+    { "id": "three-second-test", "label": "Purpose, state and primary action are clear without instructions." },
+    { "id": "primary-action", "label": "One action is visually primary and competing actions are quieter." },
+    { "id": "real-product-evidence", "label": "Public product claims include a live screenshot, artifact or labeled prototype evidence." },
+    { "id": "state-coverage", "label": "Loading, empty, error, success, disabled and focus states are covered when applicable." },
+    { "id": "responsive", "label": "Desktop and mobile evidence exists with no page-level overflow." },
+    { "id": "keyboard-focus", "label": "The primary path works by keyboard and has visible focus." },
+    { "id": "reduced-motion", "label": "Reduced motion removes spatial motion while preserving feedback." },
+    { "id": "motion-control", "label": "Auto-playing motion longer than five seconds has a visible pause control." },
+    { "id": "performance", "label": "The project records a bundle or performance delta for the changed surface." },
+    { "id": "provenance-license", "label": "External references, assets, fonts and dependencies have recorded provenance and licenses." },
+    { "id": "security-truthfulness", "label": "No secrets, unsafe rendering, fake proof or unsupported production claims are introduced." }
+  ],
+  "motionTiers": {
+    "removeWhenReduced": ["parallax", "large-translation", "large-scale", "3d-spin", "scroll-hijacking", "motion-path"],
+    "softenWhenReduced": ["small-translation", "section-reveal", "modal-enter"],
+    "keep": ["opacity", "color", "focus", "loading", "essential-state-feedback"],
+    "reducedFadeMaxMs": 200
+  },
+  "antiSlopSignals": [
+    { "id": "AS-01", "category": "layout", "signal": "Three equal-weight cards in a row", "decision": "justify", "evidence": "Explain why all three choices deserve equal priority or introduce hierarchy." },
+    { "id": "AS-02", "category": "surface", "signal": "Shadow under every block", "decision": "justify", "evidence": "Shadow must communicate elevation or interaction." },
+    { "id": "AS-03", "category": "surface", "signal": "One radius applied to every object", "decision": "justify", "evidence": "Radius follows component role and nesting." },
+    { "id": "AS-04", "category": "color", "signal": "Default purple-blue AI gradient", "decision": "change", "evidence": "Use the owned Eclipse gold/signal palette or document a product-specific semantic need." },
+    { "id": "AS-05", "category": "effects", "signal": "Blurred colored blobs used as background filler", "decision": "change", "evidence": "Use owned eclipse geometry or remove the filler." },
+    { "id": "AS-06", "category": "type", "signal": "Inter or Geist used as an undifferentiated display face", "decision": "justify", "evidence": "Use the product display type or explain the operational exception." },
+    { "id": "AS-07", "category": "type", "signal": "Gradient inside a heading", "decision": "change", "evidence": "Prefer solid hierarchy; reserve material gradients for non-text visual objects." },
+    { "id": "AS-08", "category": "icons", "signal": "Emoji used instead of a product icon", "decision": "change", "evidence": "Use the established icon family or a text label." },
+    { "id": "AS-09", "category": "icons", "signal": "Icon attached to every item without meaning", "decision": "change", "evidence": "Each icon must improve recognition or state communication." },
+    { "id": "AS-10", "category": "type", "signal": "Heading and supporting copy have the same weight", "decision": "change", "evidence": "Demonstrate a readable hierarchy at desktop and mobile sizes." },
+    { "id": "AS-11", "category": "actions", "signal": "Two adjacent actions are equally bright", "decision": "change", "evidence": "Choose one primary action and make the alternative quieter." },
+    { "id": "AS-12", "category": "layout", "signal": "Long paragraphs are centered", "decision": "change", "evidence": "Long-form copy uses a readable left-aligned measure." },
+    { "id": "AS-13", "category": "layout", "signal": "Every section uses identical spacing", "decision": "justify", "evidence": "Spacing reflects narrative or task rhythm." },
+    { "id": "AS-14", "category": "surface", "signal": "Translucent white border on every card", "decision": "change", "evidence": "Borders communicate ownership, state or grouping." },
+    { "id": "AS-15", "category": "layout", "signal": "Equal-block bento grid used by default", "decision": "justify", "evidence": "Information architecture determines block weight." },
+    { "id": "AS-16", "category": "content", "signal": "Generic three-step how-it-works row", "decision": "justify", "evidence": "Steps must reflect the real product workflow." },
+    { "id": "AS-17", "category": "content", "signal": "Three pricing tiers with the middle highlighted by default", "decision": "justify", "evidence": "Packaging is backed by a real offer and user choice model." },
+    { "id": "AS-18", "category": "trust", "signal": "Testimonials use invented names or repeated avatars", "decision": "block", "evidence": "Use consented, attributable proof or omit the section." },
+    { "id": "AS-19", "category": "trust", "signal": "Trusted-by claim has no real logos", "decision": "block", "evidence": "Use verified relationships or remove the claim." },
+    { "id": "AS-20", "category": "trust", "signal": "Round achievement numbers have no source", "decision": "block", "evidence": "Link the source, derive the number from a versioned registry or remove it." },
+    { "id": "AS-21", "category": "content", "signal": "FAQ answers questions with no user or search evidence", "decision": "justify", "evidence": "Record the support, sales or search source for each question group." },
+    { "id": "AS-22", "category": "interaction", "signal": "Non-interactive block lifts on hover", "decision": "change", "evidence": "Hover affordance is reserved for something the user can activate." },
+    { "id": "AS-23", "category": "motion", "signal": "Every section animates into view", "decision": "change", "evidence": "Motion marks meaningful transitions, not template repetition." },
+    { "id": "AS-24", "category": "navigation", "signal": "Footer contains dead or placeholder links", "decision": "block", "evidence": "Every visible link resolves or is removed." },
+    { "id": "AS-25", "category": "trust", "signal": "Public product page contains no live product screenshot", "decision": "block", "evidence": "Show a current product surface or label the work explicitly as a concept." }
+  ]
+}

@@ -10,7 +10,6 @@ import { MetricsSection } from '../components/sections/MetricsSection';
 import { ProcessSection } from '../components/sections/ProcessSection';
 import { ProductionReadinessSection } from '../components/sections/ProductionReadinessSection';
 import { ServicesSection } from '../components/sections/ServicesSection';
-import { SystemsEcosystemSection } from '../components/sections/SystemsEcosystemSection';
 import { SystemsNotSitesSection } from '../components/sections/SystemsNotSitesSection';
 import { EclipseDivider } from '../components/ui/EclipseVisuals';
 
@@ -26,7 +25,6 @@ export function LandingPage() {
       <EclipseDivider />
       <AboutSection />
       <BusinessImpactSection />
-      <SystemsEcosystemSection />
       <EclipseDivider />
       <HowItWorksSection />
       <ProductionReadinessSection />

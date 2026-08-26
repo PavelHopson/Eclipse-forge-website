@@ -39,3 +39,28 @@ test('explicit smooth scrolling respects reduced and manually paused motion', as
   assert.match(routing, /dataset\.ambientMotion === 'paused'/);
   assert.match(routing, /behavior: reduced \? 'auto' : 'smooth'/);
 });
+
+test('orbital header and event-horizon footer share the governed motion contract', async () => {
+  const [header, app, styles] = await Promise.all([
+    readFile(new URL('src/components/layout/SiteHeader.tsx', root), 'utf8'),
+    readFile(new URL('src/app/App.tsx', root), 'utf8'),
+    readFile(new URL('src/styles/index.css', root), 'utf8'),
+  ]);
+
+  assert.match(header, /useTransform\(scrollYProgress, \[0, 1\], \[0, 360\]\)/);
+  assert.match(header, /site-command-mark__tracker/);
+  assert.match(app, /event-horizon-footer__eclipse/);
+  assert.match(app, /initial=\{ambientMotionEnabled \?/);
+  assert.match(styles, /html\[data-ambient-motion='paused'\][\s\S]*\.event-horizon-footer__orbit/);
+  assert.match(styles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.event-horizon-footer__signal/);
+
+  const orbitKeyframes = [
+    styles.match(/@keyframes siteCommandIgnition[\s\S]*?\n}/)?.[0] ?? '',
+    styles.match(/@keyframes eventHorizonOrbit[\s\S]*?\n}/)?.[0] ?? '',
+    styles.match(/@keyframes eventHorizonOrbitReverse[\s\S]*?\n}/)?.[0] ?? '',
+    styles.match(/@keyframes eventHorizonSignal[\s\S]*?\n}/)?.[0] ?? '',
+  ].join('\n');
+
+  assert.doesNotMatch(orbitKeyframes, /filter:|box-shadow:|background-position:|\b(?:top|left|width|height):/);
+  assert.match(orbitKeyframes, /transform:/);
+});
