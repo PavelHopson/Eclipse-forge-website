@@ -1,4 +1,4 @@
-import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll } from 'framer-motion';
+import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { useLocale, type Locale } from '../../lib/locale';
 import { usePriceModal } from '../../lib/priceModal';
@@ -55,13 +55,14 @@ export function SiteHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const reduceMotion = useReducedMotion();
-  const { scrollY } = useScroll();
+  const { scrollY, scrollYProgress } = useScroll();
   const { theme } = useTheme();
   const { locale } = useLocale();
   const { setOpen: setPriceOpen } = usePriceModal();
   const copy = headerCopy[locale];
   const isLight = theme === 'light';
   const { ambientMotionEnabled } = useMotionPreference();
+  const orbitRotation = useTransform(scrollYProgress, [0, 1], [0, 360]);
 
   useMotionValueEvent(scrollY, 'change', (latest) => setIsScrolled(latest > 20));
   const closeMenu = () => setIsMenuOpen(false);
@@ -84,12 +85,6 @@ export function SiteHeader() {
     };
   }, [isMenuOpen]);
 
-  const bgScrolled = isLight ? 'rgba(245, 242, 235, 0.9)' : 'rgba(5, 7, 10, 0.88)';
-  const bgIdle = isLight ? 'rgba(255, 255, 255, 0.55)' : 'rgba(255, 255, 255, 0.02)';
-  const borderScrolled = isLight ? 'rgba(7, 7, 10, 0.08)' : '#1C232B';
-  const borderIdle = isLight ? 'rgba(7, 7, 10, 0.04)' : '#1C232B40';
-  const shadowScrolled = isLight ? '0 6px 24px rgba(7, 7, 10, 0.06), 0 2px 8px rgba(7, 7, 10, 0.04)' : '0 0 40px rgba(0, 0, 0, 0.3)';
-
   return (
     <>
       <motion.header
@@ -98,36 +93,25 @@ export function SiteHeader() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
       >
-        <motion.div
-          animate={
-            isScrolled
-              ? { backgroundColor: bgScrolled, borderColor: borderScrolled, backdropFilter: 'blur(20px)' }
-              : { backgroundColor: bgIdle, borderColor: borderIdle, backdropFilter: 'blur(8px)' }
-          }
-          transition={{ duration: 0.3 }}
-          className="mx-auto flex max-w-[1400px] items-center justify-between rounded-full border px-4 py-3 sm:px-5"
-          style={{ boxShadow: isScrolled ? shadowScrolled : 'none' }}
+        <div
+          className={`site-command-bar mx-auto flex max-w-[1400px] items-center justify-between rounded-full px-4 py-3 sm:px-5${isScrolled ? ' is-scrolled' : ''}`}
         >
+          <span aria-hidden className="site-command-bar__surface site-command-bar__surface--idle" />
+          <span aria-hidden className="site-command-bar__surface site-command-bar__surface--scrolled" />
           <a
             href="#hero"
             aria-label="Eclipse Forge"
-            className="group flex min-h-11 min-w-0 items-center gap-3"
+            className="site-command-brand group relative z-[1] flex min-h-11 min-w-0 items-center gap-3"
             onClick={closeMenu}
           >
-            <motion.span
-              className="relative flex h-3.5 w-3.5 shrink-0 items-center justify-center"
-              animate={ambientMotionEnabled ? { rotate: 360 } : { rotate: 0 }}
-              transition={ambientMotionEnabled ? { duration: 24, repeat: Infinity, ease: 'linear' } : { duration: 0.15 }}
-            >
-              <span
-                className="absolute inset-0 rounded-full"
-                style={{ background: 'rgba(212,175,55,0.85)', boxShadow: '0 0 12px rgba(212,175,55,0.5)' }}
-              />
-              <span
-                className="absolute inset-[2px] rounded-full"
-                style={{ background: 'var(--bg)' }}
-              />
-            </motion.span>
+            <span aria-hidden className="site-command-mark">
+              <span className="site-command-mark__corona" />
+              <span className="site-command-mark__disc" />
+              <span className="site-command-mark__flare" />
+              <motion.span className="site-command-mark__tracker" style={{ rotate: orbitRotation }}>
+                <span />
+              </motion.span>
+            </span>
             <span
               aria-hidden
               className="site-brand-label truncate font-display text-[0.72rem] font-medium uppercase tracking-[0.3em] transition-colors duration-400 group-hover:text-[var(--text-1)]"
@@ -137,7 +121,7 @@ export function SiteHeader() {
             </span>
           </a>
 
-          <nav className="hidden items-center gap-6 text-sm min-[1360px]:flex" style={{ color: 'var(--text-3)' }}>
+          <nav className="site-command-nav relative z-[1] hidden items-center gap-6 text-sm min-[1360px]:flex" style={{ color: 'var(--text-3)' }}>
             {copy.navItems.map((item) => (
               <a
                 key={item.href}
@@ -178,7 +162,7 @@ export function SiteHeader() {
             </button>
           </nav>
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="relative z-[1] flex items-center gap-2 sm:gap-3">
             <LanguageToggle compact />
             <div className="flex items-center gap-2 sm:hidden">
               <MotionToggle />
@@ -211,7 +195,7 @@ export function SiteHeader() {
               </span>
             </button>
           </div>
-        </motion.div>
+        </div>
       </motion.header>
 
       <AnimatePresence>

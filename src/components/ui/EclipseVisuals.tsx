@@ -12,7 +12,7 @@ export function EclipseSilhouette({
   className = '',
   animate = true,
 }: {
-  size?: number;
+  size?: number | string;
   coronaColor?: string;
   coronaSpread?: number;
   className?: string;

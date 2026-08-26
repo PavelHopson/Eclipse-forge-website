@@ -29,6 +29,25 @@ The browser pass verified the manual pause path. Automated motion contract tests
 system preference listener, JS/canvas gating, off-screen pause and non-smooth fallback.
 A captured OS-emulated reduced-motion walkthrough remains part of the final adoption set.
 
+## Orbital shell follow-up
+
+The header/footer motion pilot was repeated after the initial gate pass:
+
+| Check | Result | Evidence |
+| --- | --- | --- |
+| Desktop shell | PASS | `1440 × 900`; header controls remain inside the viewport and the footer CTA/dock stay readable |
+| Mobile shell | PASS | `390 × 844` override (`375 px` content viewport); document and scroll widths match |
+| Touch targets | PASS | visible mobile header controls are `44 px` high; footer CTAs are `48–49.5 px`; social targets are `45.8 px` |
+| Motion governor | PASS | footer orbit transforms change only while `data-ambient-motion=running` and pause through the shared control |
+| Mobile menu | PASS | menu opens with `aria-expanded=true`; Escape closes it and restores focus to the menu button |
+| Focus treatment | PASS | footer primary action exposes a visible `2 px` focus outline |
+| Console | PASS WITH NOTE | no runtime errors; Framer Motion reports its existing reduced-motion/configuration notices in the development build |
+| Motion cost | PASS | new continuous keyframes use only `transform`/`opacity`; regression coverage rejects layout, filter and shadow animation |
+
+The orbital eclipse was moved below the mobile dock after the first screenshot pass so that
+Instagram and metadata stay readable. The mobile footer heading was reduced from six visual
+lines to four without changing the message or CTA priority.
+
 ## Decision
 
 The changed Landing surfaces pass responsive and runtime smoke. The project remains `pilot`

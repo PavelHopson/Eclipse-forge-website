@@ -10,6 +10,7 @@ import {
 } from '../components/ui/EclipseVisuals';
 import { PriceListModal } from '../components/ui/PriceListModal';
 import { BroadcastIcon, GitHubIcon, InstagramIcon, TelegramIcon } from '../components/ui/SocialIcons';
+import { GlowButton } from '../components/ui/GlowButton';
 import { contactDetails } from '../data/content';
 import { useLocale, type Locale } from '../lib/locale';
 import { MotionPreferenceProvider, useMotionPreference } from '../lib/motionPreference';
@@ -30,15 +31,25 @@ function RouteLoading() {
 const footerCopy: Record<
   Locale,
   {
+    eyebrow: string;
+    title: string;
     description: string;
     location: string;
+    status: string;
+    primaryCta: string;
+    secondaryCta: string;
     socialLabels: { telegram: string; channel: string; github: string; instagram: string };
     libraryLabel: string;
   }
 > = {
   ru: {
+    eyebrow: 'Финальная орбита / следующий запуск',
+    title: 'Есть процесс, который должен работать сам?',
     description: 'Системы для контроля, автоматизации и AI-исполнения. Для продуктов, которым нужен не только фронтовый слой.',
     location: 'По всему миру',
+    status: 'Канал связи открыт',
+    primaryCta: 'Обсудить систему',
+    secondaryCta: 'Вернуться к проектам',
     socialLabels: {
       telegram: 'Telegram',
       channel: 'Канал',
@@ -48,8 +59,13 @@ const footerCopy: Record<
     libraryLabel: 'Библиотека инструментов',
   },
   en: {
+    eyebrow: 'Final orbit / next launch',
+    title: 'Have a process that should run itself?',
     description: 'Systems for control, automation and AI execution. Built for products that need more than a front layer.',
     location: 'Worldwide',
+    status: 'Signal channel open',
+    primaryCta: 'Discuss the system',
+    secondaryCta: 'Return to projects',
     socialLabels: {
       telegram: 'Telegram',
       channel: 'Channel',
@@ -112,53 +128,79 @@ function AppSurface() {
         </Suspense>
       ) : <LandingPage />}
 
-      <footer className="relative z-10 overflow-hidden border-t px-5 py-12 sm:px-8 lg:px-12 lg:py-16" style={{ borderColor: 'var(--line)' }}>
-        <div className="absolute -bottom-16 right-[10%] hidden opacity-15 lg:block">
-          <EclipseSilhouette size={180} coronaColor="rgba(117,140,255,0.12)" animate={false} />
-        </div>
-        <div className="relative mx-auto max-w-[1400px]">
-          <div className="grid items-start gap-8 sm:grid-cols-[1fr_auto_auto]">
-            <div>
-              <div className="mb-4 flex items-center gap-3">
-                <span className="h-2 w-2 rounded-full" style={{ background: 'var(--accent)', opacity: 0.5 }} />
-                <span className="font-display text-sm font-medium uppercase tracking-[0.2em]" style={{ color: 'var(--text-2)' }}>
-                  Eclipse Forge
-                </span>
+      <footer className="event-horizon-footer relative z-10 overflow-hidden border-t" style={{ borderColor: 'var(--line)' }} aria-labelledby="footer-title">
+        <div aria-hidden className="event-horizon-footer__grid" />
+        <motion.div
+          aria-hidden
+          className="event-horizon-footer__eclipse"
+          initial={ambientMotionEnabled ? { opacity: 0, y: 22 } : false}
+          whileInView={ambientMotionEnabled ? { opacity: 1, y: 0 } : undefined}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <span className="event-horizon-footer__orbit event-horizon-footer__orbit--outer" />
+          <span className="event-horizon-footer__orbit event-horizon-footer__orbit--inner" />
+          <span className="event-horizon-footer__signal"><i /></span>
+          <EclipseSilhouette size="clamp(240px, 34vw, 420px)" coronaColor="rgba(212,175,55,0.2)" coronaSpread={54} animate={false} />
+        </motion.div>
+
+        <div aria-hidden className="event-horizon-footer__wordmark">ECLIPSE FORGE</div>
+
+        <div className="event-horizon-footer__shell relative mx-auto max-w-[1400px] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
+          <motion.div
+            className="relative z-[2] max-w-[760px]"
+            initial={ambientMotionEnabled ? { opacity: 0, y: 18 } : false}
+            whileInView={ambientMotionEnabled ? { opacity: 1, y: 0 } : undefined}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="event-horizon-footer__eyebrow">
+              <span aria-hidden />
+              {copy.eyebrow}
+            </div>
+            <h2 id="footer-title" className="event-horizon-footer__title font-display">
+              {copy.title}
+            </h2>
+            <p className="event-horizon-footer__description">{copy.description}</p>
+            <div className="event-horizon-footer__actions">
+              <GlowButton href={contactDetails.telegramDmUrl} target="_blank" rel="noreferrer">
+                {copy.primaryCta}
+              </GlowButton>
+              <a className="event-horizon-footer__secondary" href="#cases">
+                {copy.secondaryCta} <span aria-hidden>↑</span>
+              </a>
+            </div>
+          </motion.div>
+
+          <div className="event-horizon-footer__dock relative z-[2]">
+            <div className="event-horizon-footer__identity">
+              <span className="event-horizon-footer__status-dot" aria-hidden />
+              <div>
+                <strong>Eclipse Forge</strong>
+                <span>{copy.status}</span>
               </div>
-              <p className="max-w-xs text-[13px] leading-relaxed" style={{ color: 'var(--text-4)' }}>
-                {copy.description}
-              </p>
             </div>
 
-            <div className="flex items-center gap-4">
+            <nav className="event-horizon-footer__socials" aria-label={locale === 'ru' ? 'Социальные ссылки' : 'Social links'}>
               {socialLinks.map((item) => (
                 <a
                   key={item.label}
                   href={item.href}
                   target="_blank"
                   rel="noreferrer"
-                  aria-label={item.label}
-                  title={item.label}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border text-[10px] font-display font-medium uppercase tracking-[0.1em] transition-all duration-400 hover:border-[var(--accent-dim)] hover:text-[var(--accent)] hover:shadow-[0_0_20px_rgba(107,163,255,0.08)]"
-                  style={{ borderColor: 'var(--line)', color: 'var(--text-4)' }}
+                  className="event-horizon-footer__social"
                 >
-                  <item.Icon size={16} />
+                  <item.Icon size={15} />
+                  <span>{item.label}</span>
                 </a>
               ))}
-            </div>
+            </nav>
 
-            <div className="flex items-center gap-6 text-[10px] uppercase tracking-[0.2em]" style={{ color: 'var(--text-4)' }}>
-              <a
-                href="https://library.eclipse-forge.ru/"
-                target="_blank"
-                rel="noreferrer"
-                className="transition-colors hover:text-[var(--gold)]"
-              >
+            <div className="event-horizon-footer__meta">
+              <a href="https://library.eclipse-forge.ru/" target="_blank" rel="noreferrer">
                 {copy.libraryLabel} ↗
               </a>
-              <span className="h-3 w-px" style={{ background: 'var(--line)' }} />
               <span>{copy.location}</span>
-              <span className="h-3 w-px" style={{ background: 'var(--line)' }} />
               <span>&copy; 2026</span>
             </div>
           </div>
