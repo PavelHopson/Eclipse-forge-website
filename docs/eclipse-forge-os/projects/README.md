@@ -17,6 +17,7 @@ a person answer four questions without searching the whole workspace:
 | [Workspace baseline](workspace-baseline.md) | Read-only Git branch, head and dirty-state snapshot from 2026-08-07 |
 | [Consolidated backlog](consolidated-backlog.md) | Portfolio-wide P0-P3 sequence, dependencies, risks and next actions |
 | [Governance source map](governance-source-map.md) | Global policies and cross-project sources of truth |
+| [Eclipse Design Gate](../design/README.md) | Shared visual quality, anti-slop review and first-wave profiles |
 
 ## Source-of-truth rule
 

@@ -3,6 +3,11 @@
 > Канонический визуальный и motion-контракт экосистемы. Источник истины — этот репозиторий,
 > а machine-readable tokens публикуются из `public/design-system/eclipse-forge.tokens.json`.
 
+Обязательный quality/evidence слой определён в
+[`Eclipse Design Gate`](eclipse-forge-os/design/README.md), а machine-readable anti-slop
+контракт — в
+[`eclipse-forge.design-gate.json`](../public/design-system/eclipse-forge.design-gate.json).
+
 ## Идея бренда
 
 `Cinematic systems engineering`: глубокая тёмная среда, точная инженерная структура,
@@ -26,6 +31,9 @@ Lumen-подобных референсов берутся только общи
 - `prefers-reduced-motion` обязателен, touch/mobile не получают mouse parallax.
 - обязательный preloader запрещён: первое содержательное сообщение и CTA видны сразу;
 - cinematic depth строится как progressive enhancement, а статический CSS/SVG-кадр является базой.
+- градиент не используется внутри заголовка; смысловой акцент задаётся одним solid color;
+- hover lift разрешён только элементу, который действительно можно активировать;
+- публичные числа имеют видимый источник, а concept imagery явно отделена от live product evidence.
 
 ## Профили интенсивности
 
@@ -58,6 +66,11 @@ tokens, eclipse mark, grid, section reveal, focus/hover feedback и один amb
 | `forge-focus` | keyboard focus | 2 px blue/gold ring, без задержки |
 | `forge-feedback` | success/error/selection | 120–220 ms, без layout shift |
 
+Для reduced motion primitives делятся на три уровня: parallax, крупные перемещения,
+масштабирование, 3D/spin и scroll hijacking удаляются; малые reveal заменяются opacity до
+200 ms; focus, color, loading и essential state feedback сохраняются. Любой auto-playing
+motion дольше пяти секунд имеет видимую ручную паузу.
+
 ## Tokens
 
 Канонические значения лежат в
@@ -73,6 +86,8 @@ tokens, eclipse mark, grid, section reveal, focus/hover feedback и один amb
 4. Проверить loading, empty, error, success, disabled и focus states.
 5. Проверить desktop, mobile, keyboard и `prefers-reduced-motion`.
 6. Зафиксировать screenshot baseline и performance delta.
+7. Заполнить все 25 решений `antiSlopReview` и приложить live product evidence.
+8. Проверить provenance/license и truthfulness; fake proof и dead links блокируют adoption.
 
 Нельзя массово подключать Framer Motion/GSAP только ради единообразия. CSS transitions
 остаются предпочтительными для operational surfaces; новые зависимости проходят отдельный

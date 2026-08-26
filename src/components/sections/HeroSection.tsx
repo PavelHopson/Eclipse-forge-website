@@ -298,8 +298,17 @@ export function HeroSection() {
                 <dt className="text-[10px] uppercase tracking-[0.16em]" style={{ color: 'var(--text-4)' }}>
                   0{index + 1} / {metric.label}
                 </dt>
-                <dd className="mt-1 font-display text-xl font-medium tracking-tight sm:text-2xl" style={{ color: 'var(--text-1)' }}>
-                  {metric.value}
+                <dd className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
+                  <span className="font-display text-xl font-medium tracking-tight sm:text-2xl" style={{ color: 'var(--text-1)' }}>
+                    {metric.value}
+                  </span>
+                  <a
+                    href={metric.sourceHref}
+                    className="inline-flex min-h-11 items-center border-b text-[9px] uppercase tracking-[0.14em] transition-colors hover:text-[var(--gold)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                    style={{ color: 'var(--text-4)', borderColor: 'var(--line)', outlineColor: 'var(--gold)' }}
+                  >
+                    {metric.sourceLabel} ↗
+                  </a>
                 </dd>
               </div>
             ))}

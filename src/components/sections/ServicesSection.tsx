@@ -72,13 +72,8 @@ export function ServicesSection() {
             <motion.article
               key={service.title}
               variants={revealUp}
-              whileHover={{ y: -8 }}
-              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              className="group relative overflow-hidden rounded-[1.9rem] border p-6 services-card"
+              className="relative overflow-hidden rounded-[1.9rem] border p-6 services-card"
             >
-              <div className="pointer-events-none absolute inset-0 services-card-glow opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-              <div className="pointer-events-none absolute inset-x-10 top-0 h-px opacity-0 transition-opacity duration-500 group-hover:opacity-100 services-edge-glow" />
-
               <div className="relative">
                 <div className="mb-5 inline-flex rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.22em] services-chip">
                   {service.cue}

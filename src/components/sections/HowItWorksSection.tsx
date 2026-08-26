@@ -112,7 +112,7 @@ export function HowItWorksSection() {
           </motion.p>
           <motion.h2 variants={revealUp} className="type-display text-[clamp(2.1rem,4.8vw,4.4rem)]">
             {copy.title}
-            <span className="block text-gradient-hero">{copy.titleAccent}</span>
+            <span className="block" style={{ color: 'var(--gold)' }}>{copy.titleAccent}</span>
           </motion.h2>
           <motion.p
             variants={revealUp}
@@ -205,9 +205,7 @@ export function HowItWorksSection() {
             <motion.div
               key={step.index}
               variants={revealUp}
-              whileHover={{ y: -3, borderColor: 'rgba(107,163,255,0.2)' }}
-              transition={{ type: 'spring', stiffness: 280, damping: 26 }}
-              className="group relative overflow-hidden rounded-[1.6rem] border p-6 sm:p-7"
+              className="relative overflow-hidden rounded-[1.6rem] border p-6 sm:p-7"
               style={{ borderColor: 'var(--line)', background: 'var(--bg-card)' }}
             >
               <div className="flex items-center gap-3">
@@ -230,10 +228,6 @@ export function HowItWorksSection() {
                   {step.signal}
                 </span>
               </div>
-              <div
-                className="absolute bottom-0 left-0 h-px w-0 transition-all duration-700 group-hover:w-full"
-                style={{ background: 'linear-gradient(90deg, var(--accent), var(--accent-warm))' }}
-              />
             </motion.div>
           ))}
         </div>

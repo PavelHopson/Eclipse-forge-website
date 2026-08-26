@@ -380,7 +380,7 @@ function ConstructionHero({ copy }: { copy: ConstructionCopy }) {
               <span className="block" style={{ color: 'var(--text-1)' }}>
                 {copy.hero.title}
               </span>
-              <span className="mt-1 block text-gradient-hero">{copy.hero.titleAccent}</span>
+              <span className="mt-1 block" style={{ color: 'var(--gold)' }}>{copy.hero.titleAccent}</span>
             </h1>
             <p
               className="mt-7 type-body max-w-xl text-[15px] leading-relaxed sm:text-[17px]"
@@ -659,7 +659,7 @@ function ConstructionModules({ copy }: { copy: ConstructionCopy }) {
             <motion.article
               key={module.name}
               variants={revealUp}
-              className="group relative overflow-hidden rounded-[1.5rem] border p-6 transition-all duration-500 hover:-translate-y-1"
+              className="relative overflow-hidden rounded-[1.5rem] border p-6"
               style={{ borderColor: 'var(--line)', background: 'var(--bg-card)' }}
             >
               <div className="flex items-center justify-between gap-3">
@@ -677,10 +677,6 @@ function ConstructionModules({ copy }: { copy: ConstructionCopy }) {
               <p className="mt-2 text-[13.5px] leading-relaxed" style={{ color: 'var(--text-3)' }}>
                 {module.description}
               </p>
-              <div
-                className="absolute bottom-0 left-0 h-px w-0 transition-all duration-700 group-hover:w-full"
-                style={{ background: 'linear-gradient(90deg, var(--gold), var(--accent-warm))' }}
-              />
             </motion.article>
           ))}
         </div>
@@ -798,7 +794,7 @@ function ConstructionCta({ copy }: { copy: ConstructionCopy }) {
         </motion.p>
         <motion.h2 variants={revealUp} className="type-display mx-auto max-w-3xl text-[clamp(2rem,4.4vw,4rem)] leading-[1.04]">
           {copy.cta.title}
-          <span className="mt-1 block text-gradient-hero">{copy.cta.titleAccent}</span>
+          <span className="mt-1 block" style={{ color: 'var(--gold)' }}>{copy.cta.titleAccent}</span>
         </motion.h2>
         <motion.p
           variants={revealUp}

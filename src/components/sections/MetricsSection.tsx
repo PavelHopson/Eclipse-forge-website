@@ -74,21 +74,21 @@ function ProgressRing({ value, max, size = 80, strokeWidth = 3 }: { value: numbe
 }
 
 const metricConfigs = [
-  { numericValue: 6, max: 8, suffix: '', accent: false },
-  { numericValue: 958, max: 1000, suffix: '+', accent: true },
-  { numericValue: 22, max: 30, suffix: 'K', accent: false },
+  { numericValue: 13, max: 16, suffix: '', accent: false },
+  { numericValue: 3, max: 5, suffix: '', accent: true },
+  { numericValue: 1, max: 1, suffix: '', accent: false },
 ];
 
 const metricsCopy: Record<Locale, { eyebrow: string; title: string; subtitle: string }> = {
   ru: {
-    eyebrow: 'Результаты',
-    title: 'Цифры, за которыми стоит исполнение.',
-    subtitle: 'Процессы работают круглосуточно, а каждый релиз проходит проверку. Эти цифры подтверждены работой продуктов.',
+    eyebrow: 'Проверяемая база',
+    title: 'Показатели со ссылкой на источник.',
+    subtitle: 'Каждое число на этой поверхности связано с публичным версионированным реестром или контрактом.',
   },
   en: {
-    eyebrow: 'Telemetry',
-    title: 'Numbers backed by execution.',
-    subtitle: '24/7 processes, release checks, engineering core. These are not marketing numbers — they are working telemetry.',
+    eyebrow: 'Verifiable baseline',
+    title: 'Numbers linked to their source.',
+    subtitle: 'Every number on this surface points to a public versioned registry or contract.',
   },
 };
 
@@ -114,15 +114,8 @@ export function MetricsSection() {
         <SolarCorona size={500} rays={32} color="rgba(107,163,255,0.04)" />
       </div>
 
-      <div className="pointer-events-none absolute inset-0">
-        <div
-          className="absolute left-1/2 top-1/2 h-[400px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[200px]"
-          style={{ background: 'radial-gradient(ellipse, rgba(107,163,255,0.04) 0%, transparent 70%)' }}
-        />
-      </div>
-
       <div className="absolute right-8 top-8 hidden opacity-25 lg:block">
-        <EclipseSilhouette size={80} coronaColor="rgba(140,124,255,0.16)" />
+        <EclipseSilhouette size={80} coronaColor="rgba(212,175,55,0.16)" />
       </div>
 
       <div className="relative mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
@@ -130,7 +123,7 @@ export function MetricsSection() {
           {copy.eyebrow}
         </motion.p>
         <motion.h2 variants={revealUp} className="type-display mb-6 text-center text-[clamp(1.8rem,3.5vw,3rem)]">
-          <span className="text-gradient">{copy.title}</span>
+          <span style={{ color: 'var(--text-1)' }}>{copy.title}</span>
         </motion.h2>
         <motion.p
           variants={revealUp}
@@ -149,12 +142,9 @@ export function MetricsSection() {
               <motion.div
                 key={metric.label}
                 variants={revealUp}
-                className="group relative overflow-hidden rounded-2xl border p-8 text-center transition-all duration-500 lg:p-10"
+                className="relative overflow-hidden rounded-2xl border p-8 text-center lg:p-10"
                 style={{ borderColor: 'var(--line)', background: 'var(--bg-card)' }}
-                whileHover={{ y: -4, borderColor: 'rgba(107,163,255,0.15)' }}
               >
-                <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(107,163,255,0.04) 0%, transparent 70%)' }} />
-
                 <div className="relative mb-6 flex justify-center">
                   <ProgressRing value={config.numericValue} max={config.max} size={90} strokeWidth={3} />
                 </div>
@@ -173,9 +163,14 @@ export function MetricsSection() {
                   <p className="text-[12px] uppercase tracking-[0.15em]" style={{ color: 'var(--text-3)' }}>
                     {metric.label}
                   </p>
+                  <a
+                    href={metric.sourceHref}
+                    className="mt-5 inline-flex min-h-11 items-center border-b text-[11px] uppercase tracking-[0.14em] transition-colors hover:text-[var(--gold)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
+                    style={{ color: 'var(--text-2)', borderColor: 'var(--line)', outlineColor: 'var(--gold)' }}
+                  >
+                    {metric.sourceLabel} ↗
+                  </a>
                 </div>
-
-                <div className="absolute bottom-0 left-0 h-px w-0 transition-all duration-700 group-hover:w-full" style={{ background: 'linear-gradient(90deg, var(--accent), var(--accent-warm))' }} />
               </motion.div>
             );
           })}
