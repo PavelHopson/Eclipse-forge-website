@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "project": "EclipseForgeLanding",
+  "capturedAt": "2026-09-08T09:38:38.527Z",
+  "caption": "Главная страница Eclipse Forge: позиционирование и вход в продукты экосистемы.",
+  "method": "isolated-local-source-preview",
+  "context": "Local source preview, clean browser storage, reduced motion, no .env, external resources and backend APIs blocked. Repository content only, no additional fixtures or personal history; no production verification.",
+  "sourceHead": "61c9f84165f519c2fd6c6973d5960f3e526c3395",
+  "sourceWorktreeDirty": true,
+  "entryFiles": [
+    {
+      "file": "index.html",
+      "sha256": "e430349299aab7d19a678e543b7ce3b6ea41f86f7c1a3038c3d5f564c203a85b"
+    },
+    {
+      "file": "package.json",
+      "sha256": "66ae909dbe2cd101e691d7ee1db4c1224a57aa2ba2db2dd414cb255697bb7d2f"
+    },
+    {
+      "file": "src/main.tsx",
+      "sha256": "a2b5ab1b80393369506570ff395edccedc318f5cd97af0e210a918835f60e70b"
+    }
+  ],
+  "screenshots": [
+    {
+      "kind": "overview",
+      "file": "overview.png",
+      "width": 1440,
+      "height": 900,
+      "sha256": "5c4be1c0d97dea20801960eedb85f6bb8cffe8d981644ce091490cd09bcfa385",
+      "bytes": 776668
+    },
+    {
+      "kind": "mobile",
+      "file": "mobile.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "6b36e5b43d5196b5f4883ddd03ad69cb2fe1f067a8152e6300486d7524d87782",
+      "bytes": 208486
+    }
+  ],
+  "review": "Desktop and selected mobile captures visually reviewed before documentation use."
+}

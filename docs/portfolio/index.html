@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta name="color-scheme" content="dark">
+  <title>Проекты — Eclipse Forge</title>
+  <link rel="stylesheet" href="portfolio.css">
+  <script defer src="catalog.js"></script>
+  <script defer src="portfolio.js"></script>
+</head>
+<body>
+  <a class="skip" href="#projects">К проектам</a>
+  <header class="topbar"><a href="./index.html" class="wordmark">ECLIPSE<span> / </span>FORGE</a><span class="edition">ИНЖЕНЕРНОЕ ПОРТФОЛИО · 2026</span></header>
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">ПРОЕКТЫ И ИНСТРУМЕНТЫ</p>
+      <div class="intro-grid"><h1 id="page-title">От идеи<br>к работающей системе.</h1><div class="intro-note"><p>Выберите проект. Посмотрите, какую задачу он решает, как устроен и с чего начать.</p><span class="note-line">Локальный обзор репозиториев<br>Редакция 08.09.2026 · не статус production</span></div></div>
+    </section>
+    <section id="projects" aria-label="Каталог проектов" tabindex="-1">
+      <div class="toolbar"><label class="search"><span>Найти проект</span><input type="search" id="search" placeholder="Например, медиа, API или финансы" maxlength="160" disabled autocomplete="off"></label><button id="reset" class="quiet" disabled>Сбросить</button><p id="count" class="count" role="status" aria-live="polite">Загрузка каталога…</p></div>
+      <div id="filters" class="filters" aria-label="Направления"></div>
+      <p id="route-status" class="route-status" role="status" hidden></p>
+      <p id="error" class="error" role="alert" hidden>Каталог не загрузился. Сохраните рядом с этой страницей файлы catalog.js, portfolio.js и portfolio.css, затем откройте её снова. <a href="./index.html">Повторить</a></p>
+      <noscript><p class="error">Для поиска и просмотра проектов включите JavaScript. README и путеводители в репозиториях доступны без него.</p></noscript>
+      <div class="list-head" aria-hidden="true"><span>ПРОЕКТ / НАЗНАЧЕНИЕ</span><span>НАПРАВЛЕНИЕ</span><span>ОБЗОР</span></div>
+      <ul id="list" class="project-list" aria-label="Проекты"></ul>
+      <section id="empty" class="empty" hidden><h2>Совпадений нет</h2><p>Попробуйте другое слово или уберите фильтр.</p><button id="empty-reset" class="primary">Показать все проекты</button></section>
+    </section>
+  </main>
+  <footer><span>ECLIPSE FORGE / SOURCE FIRST</span><p>Описания основаны на репозиториях. Лицензии и готовность к запуску проверяются отдельно. StarCRM, StarMarket, сторонние форки и дубли рабочих копий в этот обзор не входят.</p></footer>
+  <dialog id="detail" aria-labelledby="detail-title">
+    <div class="dialog-top"><span id="detail-type" class="eyebrow"></span><button id="close" class="quiet" aria-label="Закрыть описание">Закрыть <span aria-hidden="true">×</span></button></div>
+    <div class="dialog-body"><p id="detail-group" class="muted"></p><h2 id="detail-title"></h2><p id="detail-summary" class="summary"></p><ol id="flow" class="flow" aria-label="Основной маршрут"></ol>
+      <div class="actions"><a id="repository" class="primary" target="_blank" rel="noopener noreferrer">Открыть репозиторий ↗</a><span id="local-project" class="local-tag" hidden>Локальный проект · GitHub не указан</span><button id="copy-link" class="quiet">Ссылка на проект</button><button id="copy" class="quiet">Скопировать описание</button></div><p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
+      <section class="start-plan" aria-labelledby="start-title">
+        <div class="section-label"><span class="eyebrow">ПЕРВЫЙ ШАГ</span><span id="start-kind" class="muted"></span></div>
+        <h3 id="start-title"></h3><p id="start-summary"></p>
+        <div id="start-command-block" class="start-command" hidden><div><span id="start-dir"></span><code id="start-command"></code></div><button id="copy-start" class="quiet">Копировать команду</button></div>
+        <p id="start-source" class="start-source"></p><p id="start-copy-status" class="copy-status" role="status" aria-live="polite"></p>
+      </section>
+      <section class="boundary"><h3>Что важно учитывать</h3><p id="boundary"></p></section>
+      <details><summary>Карта кода <span aria-hidden="true">+</span></summary><dl id="files" class="files"></dl></details>
+      <details><summary>Команды проекта <span aria-hidden="true">+</span></summary><p class="muted">Из текущих package.json. Здесь они не запускаются; установка и настройка среды описаны в README.</p><ul id="commands" class="commands"></ul></details>
+      <p class="doc-note">В каждой рабочей копии: <code>README.md</code> → <code>docs/repository-guide.md</code>. Новое оформление ещё не опубликовано в GitHub.</p>
+    </div>
+  </dialog>
+</body>
+</html>
