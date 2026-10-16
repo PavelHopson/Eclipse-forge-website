@@ -1,5 +1,9 @@
 # Eclipse Forge Landing
 
+<!-- project-links:start -->
+[Открыть сайт](https://eclipse-forge.ru/) · [Документация](docs/eclipse-forge-os/README.md) · [Код](https://github.com/PavelHopson/Eclipse-forge-website/tree/main) · [История изменений](https://github.com/PavelHopson/Eclipse-forge-website/commits/main/)
+<!-- project-links:end -->
+
 Премиальный статический лендинг студии Eclipse Forge на `React + Vite + Tailwind CSS + Framer Motion`.
 
 Связан с кураторской [Eclipse Library](https://library.eclipse-forge.ru/): переход доступен
@@ -12,7 +16,9 @@
 Текущий rollout по проектам ведётся в
 [`docs/eclipse-forge-visual-adoption.md`](docs/eclipse-forge-visual-adoption.md).
 
-## Ecosystem control plane
+<a id="ecosystem-control-plane"></a>
+
+## Реестр экосистемы
 
 Репозиторий публикует versioned registry экосистемы в `public/ecosystem/manifest.json`.
 Он описывает роли продуктов, владение данными и зрелость интеграций, не выдавая запланированные API за готовые.
@@ -32,7 +38,9 @@ npm run build
 
 Portfolio audit читает только Git metadata и имена файлов. Он не читает значения секретов и не изменяет соседние репозитории.
 
-## Deploy: Cloudflare Pages
+<a id="deploy-cloudflare-pages"></a>
+
+## Публикация в Cloudflare Pages
 
 Рекомендуемый хостинг: `Cloudflare Pages`.
 
@@ -53,16 +61,21 @@ Portfolio audit читает только Git metadata и имена файло�
 4. Запустить первый deploy
 5. После публикации проверить `production URL` и `branch preview`
 
-## Custom domain
+<a id="custom-domain"></a>
 
-Позже можно подключить собственный домен в настройках Cloudflare Pages:
+## Собственный домен
+
+Основной адрес сайта — [eclipse-forge.ru](https://eclipse-forge.ru/).
+Для подключения другого домена в Cloudflare Pages:
 
 1. Открыть проект в Cloudflare Pages
 2. Перейти в `Custom domains`
 3. Добавить домен или поддомен
 4. Привязать DNS внутри Cloudflare
 
-## Contact flow
+<a id="contact-flow"></a>
+
+## Связь с командой
 
 Сайт подготовлен к работе без Netlify Forms.
 
@@ -74,14 +87,18 @@ Portfolio audit читает только Git metadata и имена файло�
 
 Если позже понадобится вернуть форму, лучше подключить отдельный backend endpoint или form provider, который не зависит от Netlify.
 
-## Local development
+<a id="local-development"></a>
+
+## Локальная разработка
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Production build
+<a id="production-build"></a>
+
+## Сборка сайта
 
 Outfit и Inter self-hosted в `public/fonts/`; лицензии OFL лежат рядом. Production не зависит
 от Google Fonts и не отправляет туда запросы браузера.
