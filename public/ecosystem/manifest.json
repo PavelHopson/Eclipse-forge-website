@@ -29,7 +29,7 @@
       "status": "prototype",
       "role": "network-diagnostics-utility",
       "capabilities": ["network.diagnostics", "component.control"],
-      "ownsData": ["local-runtime-config", "diagnostic-results"]
+      "ownsData": ["network-diagnostics"]
     },
     {
       "id": "eclipse-library",
