@@ -3,6 +3,14 @@
   "ecosystem": "eclipse-forge",
   "updatedAt": "2026-10-23",
   "controlPlane": "forge-landing",
+  "interactiveExplainers": {
+    "status": "preview",
+    "galleryPath": "/anatomy/eclipse-forge/",
+    "sceneCount": 13,
+    "source": "Eclipse Library Anatomy",
+    "updatedAt": "2026-10-23",
+    "note": "Standalone HTML scenes; runtime and production routes remain documented separately."
+  },
   "projects": [
     {
       "id": "forge-landing",
@@ -10,13 +18,8 @@
       "repository": "https://github.com/PavelHopson/Eclipse-forge-website",
       "status": "live",
       "role": "discovery-control-plane",
-      "capabilities": [
-        "portfolio.discovery",
-        "ecosystem.manifest"
-      ],
-      "ownsData": [
-        "public-project-metadata"
-      ]
+      "capabilities": ["portfolio.discovery", "ecosystem.manifest"],
+      "ownsData": ["public-project-metadata"]
     },
     {
       "id": "eclipse-chat",
@@ -24,19 +27,8 @@
       "repository": "https://github.com/PavelHopson/eclipse-chat",
       "status": "live",
       "role": "collaboration-control-surface",
-      "capabilities": [
-        "communication",
-        "execution",
-        "workspace-memory",
-        "voice-video"
-      ],
-      "ownsData": [
-        "identities",
-        "workspaces",
-        "messages",
-        "tasks",
-        "decisions"
-      ]
+      "capabilities": ["communication", "execution", "workspace-memory", "voice-video"],
+      "ownsData": ["identities", "workspaces", "messages", "tasks", "decisions"]
     },
     {
       "id": "eclipse-connect",
@@ -44,13 +36,8 @@
       "repository": "https://github.com/PavelHopson/eclipse-connect",
       "status": "prototype",
       "role": "network-diagnostics-utility",
-      "capabilities": [
-        "network.diagnostics",
-        "component.control"
-      ],
-      "ownsData": [
-        "network-diagnostics"
-      ]
+      "capabilities": ["network.diagnostics", "component.control"],
+      "ownsData": ["network-diagnostics"]
     },
     {
       "id": "eclipse-library",
@@ -58,16 +45,8 @@
       "repository": "https://github.com/PavelHopson/eclipse-library",
       "status": "live",
       "role": "knowledge-registry",
-      "capabilities": [
-        "knowledge.catalog",
-        "source-verification",
-        "project-recommendations"
-      ],
-      "ownsData": [
-        "catalog-items",
-        "source-verification",
-        "recommendations"
-      ]
+      "capabilities": ["knowledge.catalog", "source-verification", "project-recommendations"],
+      "ownsData": ["catalog-items", "source-verification", "recommendations"]
     },
     {
       "id": "eclipse-ai-hub",
@@ -75,17 +54,8 @@
       "repository": "https://github.com/PavelHopson/eclipse-ai-hub",
       "status": "beta",
       "role": "intelligence-gateway",
-      "capabilities": [
-        "ai.complete",
-        "ai.embed",
-        "ai.evaluate",
-        "rag.query"
-      ],
-      "ownsData": [
-        "provider-configurations",
-        "evaluation-results",
-        "rag-indexes"
-      ]
+      "capabilities": ["ai.complete", "ai.embed", "ai.evaluate", "rag.query"],
+      "ownsData": ["provider-configurations", "evaluation-results", "rag-indexes"]
     },
     {
       "id": "hopson-sentinel",
@@ -93,16 +63,8 @@
       "repository": "https://github.com/PavelHopson/eclipse-hopson-sentinel",
       "status": "beta",
       "role": "local-execution-node",
-      "capabilities": [
-        "execution.local",
-        "runtime.doctor",
-        "voice.operator"
-      ],
-      "ownsData": [
-        "local-runtime-config",
-        "execution-approvals",
-        "local-artifacts"
-      ]
+      "capabilities": ["execution.local", "runtime.doctor", "voice.operator"],
+      "ownsData": ["local-runtime-config", "execution-approvals", "local-artifacts"]
     },
     {
       "id": "eclipse-webclaw",
@@ -110,15 +72,8 @@
       "repository": "https://github.com/PavelHopson/Eclipse-webclaw",
       "status": "beta",
       "role": "web-ingestion-layer",
-      "capabilities": [
-        "web.fetch",
-        "web.extract",
-        "mcp.tools"
-      ],
-      "ownsData": [
-        "fetch-jobs",
-        "extraction-results"
-      ]
+      "capabilities": ["web.fetch", "web.extract", "mcp.tools"],
+      "ownsData": ["fetch-jobs", "extraction-results"]
     },
     {
       "id": "eclipse-dnd-forge",
@@ -126,16 +81,8 @@
       "repository": "https://github.com/PavelHopson/eclipse-dnd-forge",
       "status": "prototype",
       "role": "vertical-runtime",
-      "capabilities": [
-        "campaign.runtime",
-        "world.memory",
-        "party.journal"
-      ],
-      "ownsData": [
-        "campaigns",
-        "characters",
-        "world-state"
-      ]
+      "capabilities": ["campaign.runtime", "world.memory", "party.journal"],
+      "ownsData": ["campaigns", "characters", "world-state"]
     },
     {
       "id": "finflow",
@@ -143,16 +90,8 @@
       "repository": "https://github.com/PavelHopson/finflow",
       "status": "beta",
       "role": "vertical-runtime",
-      "capabilities": [
-        "finance.ledger",
-        "receipt.ocr",
-        "finance.insights"
-      ],
-      "ownsData": [
-        "financial-records",
-        "receipt-documents",
-        "budgets"
-      ]
+      "capabilities": ["finance.ledger", "receipt.ocr", "finance.insights"],
+      "ownsData": ["financial-records", "receipt-documents", "budgets"]
     },
     {
       "id": "eclipse-media",
@@ -160,15 +99,8 @@
       "repository": "https://github.com/PavelHopson/eclipse-media",
       "status": "prototype",
       "role": "media-job-runtime",
-      "capabilities": [
-        "media.ingest",
-        "media.transcode",
-        "media.transcribe"
-      ],
-      "ownsData": [
-        "media-jobs",
-        "media-artifacts"
-      ]
+      "capabilities": ["media.ingest", "media.transcode", "media.transcribe"],
+      "ownsData": ["media-jobs", "media-artifacts"]
     },
     {
       "id": "shotforge",
@@ -176,14 +108,8 @@
       "repository": "https://github.com/PavelHopson/shotforge",
       "status": "prototype",
       "role": "media-client",
-      "capabilities": [
-        "storyboard.generate",
-        "shot.plan"
-      ],
-      "ownsData": [
-        "storyboards",
-        "shot-plans"
-      ]
+      "capabilities": ["storyboard.generate", "shot.plan"],
+      "ownsData": ["storyboards", "shot-plans"]
     },
     {
       "id": "text2image",
@@ -191,14 +117,8 @@
       "repository": "https://github.com/PavelHopson/Text2Image",
       "status": "prototype",
       "role": "media-client",
-      "capabilities": [
-        "image.generate",
-        "image.restore"
-      ],
-      "ownsData": [
-        "generation-presets",
-        "image-artifacts"
-      ]
+      "capabilities": ["image.generate", "image.restore"],
+      "ownsData": ["generation-presets", "image-artifacts"]
     },
     {
       "id": "educator-ai",
@@ -206,15 +126,8 @@
       "repository": "https://github.com/PavelHopson/Educator-AI",
       "status": "prototype",
       "role": "vertical-runtime",
-      "capabilities": [
-        "learning.plan",
-        "research.explain",
-        "assessment.generate"
-      ],
-      "ownsData": [
-        "learning-plans",
-        "assessments"
-      ]
+      "capabilities": ["learning.plan", "research.explain", "assessment.generate"],
+      "ownsData": ["learning-plans", "assessments"]
     },
     {
       "id": "retry-http",
@@ -222,9 +135,7 @@
       "repository": "https://github.com/PavelHopson/retry-http",
       "status": "library",
       "role": "shared-reliability-library",
-      "capabilities": [
-        "http.retry"
-      ],
+      "capabilities": ["http.retry"],
       "ownsData": []
     }
   ],
@@ -293,13 +204,5 @@
       "maturity": "planned",
       "priority": "P2"
     }
-  ],
-  "interactiveExplainers": {
-    "status": "preview",
-    "galleryPath": "/anatomy/eclipse-forge/",
-    "sceneCount": 13,
-    "source": "Eclipse Library Anatomy",
-    "updatedAt": "2026-10-23",
-    "note": "Standalone HTML scenes; runtime and production routes remain documented separately."
-  }
+  ]
 }
