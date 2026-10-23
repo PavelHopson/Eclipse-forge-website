@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "ecosystem": "eclipse-forge",
-  "updatedAt": "2026-07-30",
+  "updatedAt": "2026-10-23",
   "controlPlane": "forge-landing",
   "projects": [
     {
@@ -21,6 +21,15 @@
       "role": "collaboration-control-surface",
       "capabilities": ["communication", "execution", "workspace-memory", "voice-video"],
       "ownsData": ["identities", "workspaces", "messages", "tasks", "decisions"]
+    },
+    {
+      "id": "eclipse-connect",
+      "name": "Eclipse Connect",
+      "repository": "https://github.com/PavelHopson/eclipse-connect",
+      "status": "prototype",
+      "role": "network-diagnostics-utility",
+      "capabilities": ["network.diagnostics", "component.control"],
+      "ownsData": ["local-runtime-config", "diagnostic-results"]
     },
     {
       "id": "eclipse-library",
