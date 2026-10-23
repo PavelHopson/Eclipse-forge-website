@@ -888,7 +888,7 @@ const processStepDefinitions: LocalizedProcessStepDefinition[] = [
 
 const metricDefinitions: LocalizedMetricDefinition[] = [
   {
-    value: '13',
+    value: '14',
     label: localized('продуктов и библиотек в публичном runtime-реестре', 'products and libraries in the public runtime registry'),
     sourceLabel: localized('Открыть реестр', 'Open registry'),
     sourceHref: '/ecosystem/manifest.json',
