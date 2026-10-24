@@ -3,6 +3,14 @@
   "ecosystem": "eclipse-forge",
   "updatedAt": "2026-10-23",
   "controlPlane": "forge-landing",
+  "interactiveExplainers": {
+    "status": "preview",
+    "galleryPath": "/anatomy/eclipse-forge/",
+    "sceneCount": 13,
+    "source": "Eclipse Library Anatomy",
+    "updatedAt": "2026-10-23",
+    "note": "Standalone HTML scenes; runtime and production routes remain documented separately."
+  },
   "projects": [
     {
       "id": "forge-landing",
