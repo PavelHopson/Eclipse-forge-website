@@ -11,6 +11,15 @@ const products = [
   { id: 'eclipse-premium-rent', name: 'Eclipse Premium Rent', repo: 'Eclipse-PremiumRent', ru: 'Дизайн-кейс каталога автомобилей и сценария бронирования.', en: 'A design case for a vehicle catalog and booking flow.' },
 ];
 
+const destinations: Record<string, { url: string; ru: string; en: string; noteRu?: string; noteEn?: string }> = {
+  'eclipse-chat': { url: 'https://app.star-crm.ru/eclipse-chat/#auth-panel', ru: 'Открыть Chat', en: 'Open Chat' },
+  'eclipse-library': { url: 'https://library.eclipse-forge.ru/', ru: 'Открыть библиотеку', en: 'Open Library' },
+  'eclipse-ai-hub': { url: 'https://hub.eclipse-forge.ru/', ru: 'Открыть AI Hub', en: 'Open AI Hub', noteRu: 'Для AI-функций потребуется настроить провайдера.', noteEn: 'Configure a provider to use AI features.' },
+  'eclipse-dnd-forge': { url: 'https://dnd.eclipse-forge.ru/', ru: 'Открыть DnD Forge', en: 'Open DnD Forge', noteRu: 'Для AI-функций потребуется настроить провайдера.', noteEn: 'Configure a provider to use AI features.' },
+  'eclipse-media': { url: 'https://media.eclipse-forge.ru/', ru: 'Открыть веб-студию', en: 'Open web studio', noteRu: 'Загрузка YouTube в веб-версии ограничена; используйте приложение.', noteEn: 'YouTube downloads are limited on the web; use the desktop app.' },
+  'eclipse-premium-rent': { url: 'https://rent.eclipse-forge.ru/', ru: 'Открыть демо', en: 'Open demo' },
+};
+
 export function EcosystemRail() {
   const { locale } = useLocale();
   const ru = locale === 'ru';
@@ -21,22 +30,45 @@ export function EcosystemRail() {
         <h2 id="project-covers-title" className="font-display">{ru ? 'Проекты Eclipse Forge' : 'Eclipse Forge projects'}</h2>
         <p>{ru ? 'Концептуальные обложки проектов. Изображённые интерфейсы иллюстрируют идею и не являются снимками работающих приложений.' : 'Project concept artwork in Russian. The illustrated interfaces are not screenshots of the running applications.'}</p>
       </header>
+      <nav className="project-covers__index" aria-label={ru ? 'Выбрать проект' : 'Choose a project'}>
+        {products.map((product, index) => (
+          <a key={product.id} href={'#project-' + product.id}>
+            <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            {product.name}
+            <span aria-hidden="true">↘</span>
+          </a>
+        ))}
+      </nav>
       <div className="project-covers__list">
         {products.map((product, index) => {
           const image = `/images/projects/concept-covers/${product.id}-ru.png`;
+          const destination = destinations[product.id];
           return (
-            <article className="project-covers__item" key={product.id} aria-labelledby={`cover-${product.id}`}>
+            <article id={'project-' + product.id} tabIndex={-1} className="project-covers__item" key={product.id} aria-labelledby={`cover-${product.id}`}>
               <a className="project-covers__image" href={image} target="_blank" rel="noopener noreferrer"
                 aria-label={`${ru ? 'Открыть обложку' : 'Open artwork'}: ${product.name} (${ru ? 'новая вкладка' : 'new tab'})`}>
+                <picture>
+                  <source type="image/webp" srcSet={image.replace('.png', '.webp')} />
                 <img src={image} alt={`${product.name} — ${ru ? 'концептуальная обложка' : 'concept artwork in Russian'}`} width="1536" height="1024" loading="lazy" decoding="async" />
+                </picture>
               </a>
               <div className="project-covers__caption">
                 <span className="project-covers__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
                 <div>
                   <h3 id={`cover-${product.id}`}>{product.name}</h3>
                   <p>{product[locale]}</p>
+                  {destination?.noteRu && <p className="project-covers__note">{ru ? destination.noteRu : destination.noteEn}</p>}
                 </div>
+                <div className="project-covers__actions">
+                  {destination && (
+                    <a className="project-covers__open" href={destination.url} target="_blank" rel="noopener noreferrer"
+                      aria-label={`${destination[locale]} — ${product.name} (${ru ? 'новая вкладка' : 'new tab'})`}>
+                      {destination[locale]} <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
                 <a className="project-covers__repo" href={`https://github.com/PavelHopson/${product.repo}`} target="_blank" rel="noopener noreferrer" aria-label={`${product.name} — GitHub (${ru ? 'новая вкладка' : 'new tab'})`}>GitHub ↗</a>
+                <a className="project-covers__back" href="#cases">{ru ? 'Все проекты' : 'All projects'} <span aria-hidden="true">↑</span></a>
+                </div>
               </div>
             </article>
           );
