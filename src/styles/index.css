@@ -4936,3 +4936,32 @@ html[data-ambient-motion='paused'] .flagship-scene__media-action {
   .project-covers__caption { grid-template-columns: 1.5rem minmax(0, 1fr); gap: .75rem; }
   .project-covers__repo { grid-column: 2; justify-self: start; }
 }
+
+/* Quick navigation through the complete project artwork. */
+.project-covers__index { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-bottom: clamp(2rem, 5vw, 4rem); border-top: 1px solid var(--line); }
+.project-covers__index a { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr) auto; align-items: center; gap: .75rem; min-height: 60px; padding: .85rem 1rem; border-bottom: 1px solid var(--line); color: var(--text-2); font-size: .9rem; transition: color 160ms, background-color 160ms; }
+.project-covers__index a:nth-child(odd) { border-right: 1px solid var(--line); }
+.project-covers__index a span { color: var(--gold); font: .7rem/1 var(--font-mono); }
+.project-covers__index a:hover { color: var(--text-1); background: var(--bg-card); }
+.project-covers__item { scroll-margin-top: 7rem; }
+.project-covers__item:focus-visible { outline: 2px solid var(--gold); outline-offset: 6px; }
+.project-covers__actions { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.25rem; }
+.project-covers__back { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; color: var(--text-3); font-size: .85rem; text-underline-offset: .3em; }
+.project-covers__back:hover { color: var(--text-1); text-decoration: underline; }
+@media (max-width: 640px) {
+  .project-covers__index { grid-template-columns: minmax(0, 1fr); }
+  .project-covers__index a:nth-child(odd) { border-right: 0; }
+  .project-covers__actions { grid-column: 2; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-covers__index a { transition: none; }
+}
+.project-covers__image picture { display: block; }
+.project-covers__caption { grid-template-columns: auto minmax(0, 1fr); }
+.project-covers__actions { grid-column: 2; }
+.project-covers__open { display: inline-flex; align-items: center; justify-content: center; gap: .75rem; min-height: 44px; padding: .65rem 1rem; border: 1px solid var(--gold); color: var(--text-1); font-size: .9rem; text-underline-offset: .3em; }
+.project-covers__open:hover { background: var(--bg-card); text-decoration: underline; }
+.project-covers__caption .project-covers__note { font-size: .8rem; max-width: 65ch; }
+@media (max-width: 400px) {
+  .project-covers__open { width: 100%; }
+}
