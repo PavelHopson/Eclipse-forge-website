@@ -4916,3 +4916,23 @@ html[data-ambient-motion='paused'] .flagship-scene__media-action {
   transition: none !important;
   transform: none !important;
 }
+.project-covers { max-width: 1200px; margin-inline: auto; padding: clamp(3rem, 7vw, 6rem) clamp(1rem, 4vw, 3rem); scroll-margin-top: 6rem; }
+.project-covers__header { margin-bottom: 2.5rem; }
+.project-covers__header .type-meta { color: var(--gold); }
+.project-covers__header h2 { margin-block: .8rem 1rem; font-size: clamp(1.8rem, 4vw, 3rem); line-height: 1.15; }
+.project-covers__header > p:last-child { max-width: 65ch; color: var(--text-3); line-height: 1.65; }
+.project-covers__list { display: grid; gap: clamp(2.5rem, 6vw, 5rem); }
+.project-covers__item { min-width: 0; }
+.project-covers__image { display: block; border: 1px solid var(--line); background: #080909; }
+.project-covers__image img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: contain; }
+.project-covers__caption { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: start; gap: 1rem; padding-block: 1.25rem; border-bottom: 1px solid var(--line); }
+.project-covers__number { padding-top: .4rem; color: var(--gold); font: .75rem/1 var(--font-mono); }
+.project-covers__caption h3 { color: var(--text-1); font-family: 'Outfit', sans-serif; font-size: clamp(1.25rem, 2.5vw, 1.75rem); line-height: 1.25; overflow-wrap: anywhere; }
+.project-covers__caption p { margin-top: .5rem; color: var(--text-3); line-height: 1.6; }
+.project-covers__repo { display: inline-flex; align-items: center; min-height: 44px; color: var(--gold); text-underline-offset: .3em; }
+.project-covers__repo:hover { text-decoration: underline; }
+.project-covers a:focus-visible { outline: 2px solid var(--gold); outline-offset: 5px; }
+@media (max-width: 600px) {
+  .project-covers__caption { grid-template-columns: 1.5rem minmax(0, 1fr); gap: .75rem; }
+  .project-covers__repo { grid-column: 2; justify-self: start; }
+}
