@@ -1,6 +1,6 @@
 import { AboutSection } from '../components/sections/AboutSection';
 import { BusinessImpactSection } from '../components/sections/BusinessImpactSection';
-import { CasesSection } from '../components/sections/CasesSection';
+import { EcosystemRail } from '../components/sections/EcosystemRail';
 import { ConstructionCaseSection } from '../components/sections/ConstructionCaseSection';
 import { CtaSection } from '../components/sections/CtaSection';
 import { FounderSection } from '../components/sections/FounderSection';
@@ -17,7 +17,7 @@ export function LandingPage() {
   return (
     <main className="relative z-10">
       <HeroSection />
-      <CasesSection />
+      <EcosystemRail />
       <EclipseDivider />
       <SystemsNotSitesSection />
       <EclipseDivider />
