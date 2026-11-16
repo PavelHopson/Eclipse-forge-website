@@ -6,19 +6,13 @@
   <meta name="robots" content="noindex">
   <title>«Дюна» — гостевые домики у моря · демо Eclipse Forge</title>
   <meta name="description" content="Демо-сайт гостевого дома от Eclipse Forge: подбор домика по датам, расчёт стоимости и панель владельца с заявками.">
-  <meta name="theme-color" content="#05070a">
+  <meta name="theme-color" content="#f5f0e8">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="/demos/assets/demo.css">
-  <style>
-    .ui-scene { --scene:
-      radial-gradient(circle at 72% 30%, rgba(212, 175, 55, 0.55) 0 9%, rgba(212, 175, 55, 0.12) 10% 22%, transparent 23%),
-      linear-gradient(180deg, transparent 0 58%, rgba(212, 175, 55, 0.08) 58% 59%, transparent 59%),
-      repeating-linear-gradient(180deg, transparent 0 18px, rgba(255, 255, 255, 0.025) 18px 19px),
-      linear-gradient(180deg, #0d1522 0%, #05070a 100%); }
-    .house { position: absolute; bottom: 0; width: 22%; aspect-ratio: 1 / 1.05; background: linear-gradient(180deg, #151b25, #0b0f15); border: 1px solid rgba(212, 175, 55, 0.35); clip-path: polygon(50% 0, 100% 38%, 100% 100%, 0 100%, 0 38%); }
-    .house::after { content: ''; position: absolute; left: 38%; bottom: 0; width: 24%; height: 36%; background: rgba(212, 175, 55, 0.55); box-shadow: 0 0 30px rgba(212, 175, 55, 0.6); }
-    .house--1 { left: 8%; } .house--2 { left: 38%; width: 22%; } .house--3 { left: 66%; width: 24%; }
-  </style>
+  <link rel="stylesheet" href="/demos/guest-house/dyuna.css">
 </head>
 <body data-demo="guest-house">
   <div class="demo-ribbon">
@@ -34,6 +28,7 @@
         <span class="brand-name">Дюна<span class="brand-sub">гостевые домики у моря</span></span>
       </a>
       <nav class="site-nav" aria-label="Разделы">
+        <a href="#place">Место</a>
         <a href="#book">Даты и цены</a>
         <a href="#houses">Домики</a>
         <a href="#rules">Правила</a>
@@ -43,41 +38,39 @@
     </header>
 
     <main id="top">
-      <section class="hero">
-        <div>
-          <p class="eyebrow">5 минут пешком до пляжа</p>
-          <h1>Тихие домики <em>у моря</em> на выходные и в отпуск.</h1>
-          <p class="lead">Своя терраса, мангал и парковка у каждого домика. Выберите даты — сразу покажем, что свободно и сколько стоит.</p>
-          <div class="hero-actions">
-            <a class="btn" href="#book">Проверить даты</a>
-            <a class="btn btn--ghost" href="#houses">Смотреть домики</a>
-          </div>
-          <ul class="facts">
-            <li><b>от 4 200 ₽</b><span>за ночь</span></li>
-            <li><b>3 домика</b><span>на участке</span></li>
-            <li><b>с питомцем</b><span>по договорённости</span></li>
-          </ul>
+      <section class="d-hero" aria-label="Гостевые домики Дюна">
+        <div class="d-hero__content">
+          <p class="d-hero__eyebrow">Гостевые домики · 5 минут до пляжа</p>
+          <h1>Тихие домики <em>среди сосен</em> у моря</h1>
+          <p>Своя терраса, мангал и парковка у каждого домика. Выберите даты — сразу покажем, что свободно и сколько стоит.</p>
         </div>
-        <div class="stack" style="--stack-h:530px;--side-top:30%" role="img" aria-label="Пример интерфейса: карточка домика, календарь занятости и уведомление о брони">
-          <div class="ui ui--main" aria-hidden="true">
-            <div class="ui-scene ui-scene--photo" style="--photo:url(/demos/assets/img/dyuna-cabins.webp);--scene-h:170px"></div>
-            <div class="ui-row" style="border:0;padding-top:0"><p class="ui-title">Дом «Маяк»</p><span class="ui-pill ui-pill--ok">Свободно</span></div>
-            <p class="ui-muted" style="margin:2px 0 8px">до 6 гостей · сауна · две спальни · парковка</p>
-            <div class="ui-row"><span class="ui-muted">23–26 ноября · 3 ночи</span><b>9 500 ₽ × 3</b></div>
-            <div class="ui-row ui-row--total"><span>Итого</span><b>28 500 ₽</b></div>
-            <span class="ui-btn">Забронировать</span>
-          </div>
-          <div class="ui ui--side" aria-hidden="true">
-            <p class="ui-label">Ноябрь · занятость</p>
-            <div class="cal">
-              <span class="h">ПН</span><span class="h">ВТ</span><span class="h">СР</span><span class="h">ЧТ</span><span class="h">ПТ</span><span class="h">СБ</span><span class="h">ВС</span>
-              <span>16</span><span>17</span><span class="busy">18</span><span class="busy">19</span><span>20</span><span class="busy">21</span><span class="busy">22</span>
-              <span class="sel-a">23</span><span class="sel">24</span><span class="sel">25</span><span class="sel-b">26</span><span>27</span><span>28</span><span>29</span>
-            </div>
-          </div>
-          <div class="ui ui--toast" aria-hidden="true">
-            <div class="ui-tg-from">Telegram · бот брони</div>
-            <div class="ui-tg-text">🔔 Новая бронь: Ольга, «Залив», 3 ночи — 17 700 ₽. Перезвонить до 17:20.</div>
+        <form class="d-bookbar" data-bookbar aria-label="Быстрый подбор дат">
+          <label>Заезд<input type="date" name="bb-from"></label>
+          <label>Выезд<input type="date" name="bb-to"></label>
+          <label>Гостей<select name="bb-guests"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></label>
+          <button class="btn" type="submit">Проверить даты</button>
+        </form>
+      </section>
+
+      <ul class="d-facts">
+        <li><b>от 4 200 ₽</b><span>за ночь в домике</span></li>
+        <li><b>3 домика</b><span>на закрытом участке</span></li>
+        <li><b>5 минут</b><span>по настилу до пляжа</span></li>
+        <li><b>с питомцем</b><span>по договорённости</span></li>
+      </ul>
+
+      <section class="section" id="place">
+        <div class="d-place">
+          <img src="/demos/assets/img/dyuna-path.webp" alt="Деревянный настил через дюны к морю" width="1536" height="1024" loading="lazy">
+          <div>
+            <p class="eyebrow">Место</p>
+            <h2>Сосны, дюны и&nbsp;тишина</h2>
+            <p class="sub" style="margin-bottom:0">Участок в сосновом лесу: соседей не слышно, до моря — по деревянному настилу через дюны.</p>
+            <ul>
+              <li><b>5 мин</b><span>пешком до пляжа</span></li>
+              <li><b>3</b><span>домика на гектаре леса — никакой толпы</span></li>
+              <li><b>24/7</b><span>самостоятельный заезд по коду от калитки</span></li>
+            </ul>
           </div>
         </div>
       </section>
@@ -85,6 +78,7 @@
       <section class="section" id="book">
         <div class="lead">
           <div>
+            <p class="eyebrow">Бронирование</p>
             <h2>Даты и цены</h2>
             <p class="sub">Цена считается сразу. Домики, которые заняты или не вместят всех гостей, мы просто не даём выбрать.</p>
             <div class="widget" data-widget="stay">
@@ -140,12 +134,13 @@
       </section>
 
       <section class="section" id="houses">
-        <h2>Домики</h2>
-        <p class="sub">Все домики с кухней, душем и террасой. Постельное и полотенца включены.</p>
-        <div class="grid-3">
-          <article class="card"><h3>Домик «Сосна»</h3><p>Для двоих: двуспальная кровать, вид на сосны, гамак на террасе.</p><div class="price"><b>4 200 ₽</b><span>ночь</span></div></article>
-          <article class="card"><h3>Домик «Залив»</h3><p>До 4 гостей: спальня и диван, большая терраса с мангалом.</p><div class="price"><b>5 900 ₽</b><span>ночь</span></div></article>
-          <article class="card"><h3>Дом «Маяк»</h3><p>До 6 гостей: две спальни, сауна, отдельная парковка.</p><div class="price"><b>9 500 ₽</b><span>ночь</span></div></article>
+        <p class="eyebrow">Домики</p>
+        <h2>Выберите свой домик</h2>
+        <p class="sub">Все домики с кухней, душем и террасой. Постельное бельё и полотенца включены.</p>
+        <div class="d-houses">
+          <article class="d-house"><img src="/demos/assets/img/dyuna-room.webp" alt="Спальня с окном на сосны" width="1536" height="1024" loading="lazy"><div><h3>Домик «Сосна»</h3><p>Для двоих: большая кровать и окно во всю стену на сосны и дюны.</p><div class="price"><b>4 200 ₽</b><span>ночь</span></div></div></article>
+          <article class="d-house"><img src="/demos/assets/img/dyuna-terrace.webp" alt="Терраса с креслами и бочкой-сауной" width="1536" height="1024" loading="lazy"><div><h3>Домик «Залив»</h3><p>До 4 гостей: спальня и диван, терраса с креслами и бочка-сауна.</p><div class="price"><b>5 900 ₽</b><span>ночь</span></div></div></article>
+          <article class="d-house"><img src="/demos/assets/img/dyuna-cabins.webp" alt="Домики среди сосен вечером" width="1536" height="1024" loading="lazy"><div><h3>Дом «Маяк»</h3><p>До 6 гостей: две спальни, сауна и отдельная парковка.</p><div class="price"><b>9 500 ₽</b><span>ночь</span></div></div></article>
         </div>
       </section>
 
@@ -197,5 +192,19 @@
   }
   </script>
   <script src="/demos/assets/demo.js" defer></script>
+  <script>
+    // Строка брони в первом экране переносит даты в подбор домика ниже.
+    document.addEventListener('DOMContentLoaded', function () {
+      var bar = document.querySelector('[data-bookbar]');
+      var from = document.getElementById('from'), to = document.getElementById('to'), guests = document.getElementById('guests');
+      bar.elements['bb-from'].value = from.value; bar.elements['bb-to'].value = to.value; bar.elements['bb-from'].min = from.min;
+      bar.addEventListener('submit', function (e) {
+        e.preventDefault();
+        from.value = bar.elements['bb-from'].value; to.value = bar.elements['bb-to'].value; guests.value = bar.elements['bb-guests'].value;
+        guests.dispatchEvent(new Event('change'));
+        document.getElementById('book').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      });
+    });
+  </script>
 </body>
 </html>

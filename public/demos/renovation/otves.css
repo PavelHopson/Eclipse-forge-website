@@ -1,0 +1,143 @@
+/* «Отвес» — строительный стиль: бетон, чёрный, сигнальный оранжевый. Поверх общего demo.css. */
+:root {
+  color-scheme: light;
+  --bg: #ebe9e4;
+  --surface: #f7f6f2;
+  --surface-2: #dfdcd5;
+  --ink: #121212;
+  --ink-2: #3e3e3c;
+  --ink-3: #77756f;
+  --line: #121212;
+  --accent: #ff5a1f;
+  --accent-ink: #121212;
+  --accent-soft: rgba(255, 90, 31, 0.12);
+  --radius: 0px;
+  --font-display: 'Unbounded', 'Arial Black', sans-serif;
+  --shadow: 8px 8px 0 #121212;
+  --ok: #1d7a3a;
+  --warn: #b84a10;
+}
+html { scrollbar-color: #121212 #ebe9e4; }
+::-webkit-scrollbar-track { background: #ebe9e4; }
+::-webkit-scrollbar-thumb { border: 2px solid #ebe9e4; border-radius: 0; background: #121212; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+body {
+  background:
+    linear-gradient(90deg, rgba(18, 18, 18, 0.05) 1px, transparent 1px) 0 0 / 80px 80px,
+    var(--bg);
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.site-head { border-bottom: 2px solid var(--ink); }
+.brand-mark { border: 2px solid var(--ink); border-radius: 0; background: var(--accent); color: var(--ink); box-shadow: none; font: 800 18px/1 var(--font-display); }
+.brand-name { font: 700 19px/1 var(--font-display); text-transform: uppercase; letter-spacing: 0.02em; }
+.brand-sub { font-family: Inter, sans-serif; text-transform: none; letter-spacing: 0; }
+.site-nav a { color: var(--ink); font-weight: 600; text-transform: uppercase; font-size: 12px; letter-spacing: 0.08em; }
+.btn { border-radius: 0; border: 2px solid var(--ink); background: var(--accent); color: var(--ink); font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; font-size: 14px; box-shadow: 4px 4px 0 var(--ink); }
+.btn:hover { filter: none; transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink); }
+.btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--ink); }
+.btn--ghost { background: var(--surface); }
+
+/* Линейка-разметка */
+.o-ruler {
+  height: 18px;
+  margin: 0;
+  border-bottom: 2px solid var(--ink);
+  background:
+    repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 80px) 0 100% / 100% 18px no-repeat,
+    repeating-linear-gradient(90deg, var(--ink) 0 1px, transparent 1px 16px) 0 100% / 100% 8px no-repeat;
+}
+
+.o-hero { display: grid; gap: 40px; padding: 48px 0 72px; }
+@media (min-width: 980px) { .o-hero { grid-template-columns: 1fr 1fr; align-items: stretch; } }
+.o-tag { display: inline-block; margin: 0 0 22px; padding: 6px 12px; border: 2px solid var(--ink); background: var(--accent); font: 800 12px/1 var(--font-display); text-transform: uppercase; letter-spacing: 0.06em; }
+.o-hero h1 { margin: 0; font: 800 clamp(2.4rem, 5vw, 4.6rem)/1 var(--font-display); text-transform: uppercase; letter-spacing: -0.02em; }
+.o-hero h1 span { padding: 0 0.12em; background: var(--accent); -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.o-hero p.lead { margin: 22px 0 0; max-width: 32em; font-size: 18px; color: var(--ink-2); }
+.o-facts { display: grid; grid-template-columns: repeat(3, 1fr); margin: 34px 0 0; padding: 0; list-style: none; border: 2px solid var(--ink); background: var(--surface); }
+.o-facts li { padding: 16px; border-right: 2px solid var(--ink); }
+.o-facts li:last-child { border-right: 0; }
+.o-facts b { display: block; font: 800 24px/1 var(--font-display); }
+.o-facts span { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); }
+
+.o-visual { position: relative; min-height: 520px; }
+.o-visual img { position: absolute; inset: 0 0 60px 60px; width: calc(100% - 60px); height: calc(100% - 60px); object-fit: cover; border: 2px solid var(--ink); }
+.o-visual .o-label { position: absolute; top: 18px; right: 18px; padding: 8px 12px; background: var(--ink); color: #fff; font: 700 12px/1.2 var(--font-display); text-transform: uppercase; letter-spacing: 0.04em; }
+.o-doc {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: min(330px, 80%);
+  padding: 16px 18px;
+  border: 2px solid var(--ink);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  font-size: 14px;
+}
+.o-doc h3 { margin: 0 0 8px; font: 800 13px/1.2 var(--font-display); text-transform: uppercase; letter-spacing: 0.04em; }
+.o-doc div { display: flex; justify-content: space-between; gap: 10px; padding: 5px 0; border-bottom: 1px dashed rgba(18, 18, 18, 0.35); }
+.o-doc div b { font-variant-numeric: tabular-nums; }
+.o-doc .o-doc__total { margin-top: 6px; border-bottom: 0; border-top: 2px solid var(--ink); padding-top: 8px; font-weight: 800; }
+.o-doc .o-doc__total b { color: var(--accent); -webkit-text-stroke: 0.4px var(--ink); font: 800 18px/1 var(--font-display); }
+.o-stamp { display: inline-block; margin-top: 10px; padding: 4px 10px; border: 2px solid var(--accent); color: var(--warn); font: 800 11px/1 var(--font-display); text-transform: uppercase; transform: rotate(-3deg); }
+@media (max-width: 560px) {
+  .o-visual { min-height: 0; display: grid; gap: 14px; }
+  .o-visual img { position: static; width: 100%; height: auto; aspect-ratio: 4 / 3; }
+  .o-doc { position: static; width: auto; }
+  .o-facts { grid-template-columns: 1fr; }
+  .o-facts li { border-right: 0; border-bottom: 2px solid var(--ink); }
+  .o-facts li:last-child { border-bottom: 0; }
+}
+
+.section { border-top: 2px solid var(--ink); padding: 72px 0; }
+.section h2 { font: 800 clamp(1.8rem, 3.6vw, 2.8rem)/1.05 var(--font-display); text-transform: uppercase; letter-spacing: -0.01em; }
+.eyebrow { color: var(--ink); font-weight: 800; }
+.eyebrow::before { content: '■ '; color: var(--accent); }
+
+/* Объекты: галерея */
+.o-works { display: grid; gap: 18px; }
+@media (min-width: 860px) { .o-works { grid-template-columns: 1.3fr 1fr; grid-template-rows: auto auto; } .o-works figure:first-child { grid-row: span 2; } }
+.o-works figure { position: relative; margin: 0; border: 2px solid var(--ink); background: var(--surface); }
+.o-works img { width: 100%; height: 100%; min-height: 240px; object-fit: cover; display: block; }
+.o-works figcaption { position: absolute; left: 0; bottom: 0; padding: 10px 14px; background: var(--ink); color: #fff; font-size: 13px; }
+.o-works figcaption b { display: block; color: var(--accent); font: 700 14px/1.3 var(--font-display); text-transform: uppercase; }
+
+/* Цены — таблица */
+.o-prices { border: 2px solid var(--ink); background: var(--surface); }
+.o-prices div { display: grid; grid-template-columns: 1fr auto; gap: 6px 20px; padding: 18px 20px; border-bottom: 2px solid var(--ink); }
+.o-prices div:last-child { border-bottom: 0; }
+.o-prices h3 { margin: 0; font: 800 18px/1.2 var(--font-display); text-transform: uppercase; }
+.o-prices p { margin: 0; grid-column: 1; color: var(--ink-2); font-size: 15px; }
+.o-prices b { grid-row: 1 / span 2; grid-column: 2; align-self: center; font: 800 20px/1 var(--font-display); white-space: nowrap; }
+.o-prices b small { display: block; margin-top: 4px; font: 600 11px/1 Inter, sans-serif; text-transform: uppercase; color: var(--ink-3); text-align: right; }
+
+.widget { border: 2px solid var(--ink); border-radius: 0; background: var(--surface); box-shadow: var(--shadow); }
+.widget-title { font: 800 18px/1.2 var(--font-display); text-transform: uppercase; }
+.input, .select, .textarea { border: 2px solid var(--ink); border-radius: 0; background: #fff; }
+.segmented button, .seg { border: 2px solid var(--ink) !important; border-radius: 0 !important; background: #fff; font-weight: 700; }
+.segmented button[aria-pressed='true'], .segmented input:checked + .seg { background: var(--accent) !important; color: var(--ink) !important; border-color: var(--ink) !important; }
+.total { border: 2px solid var(--ink); border-radius: 0; background: var(--accent); }
+.total b { font-family: var(--font-display); }
+.total span { color: var(--ink); }
+.lead-summary { border-radius: 0; border: 2px dashed var(--ink); background: #fff; }
+.card { border: 2px solid var(--ink); border-radius: 0; background: var(--surface); }
+.card h3 { font: 800 16px/1.2 var(--font-display); text-transform: uppercase; }
+.steps .card::before { content: counter(step); font: 800 40px/1 var(--font-display); color: var(--accent); -webkit-text-stroke: 1px var(--ink); }
+.faq details { border-bottom: 2px solid var(--ink); }
+.faq summary::after { color: var(--ink); font-weight: 800; }
+.form-ok { border: 2px solid var(--ink); border-radius: 0; background: #e6f4ea; }
+.site-foot { border-top: 2px solid var(--ink); }
+.range { accent-color: var(--accent); }
+
+@media (max-width: 480px) {
+  .site-head .btn { min-height: 40px; padding: 0 10px; font-size: 11px; box-shadow: 3px 3px 0 var(--ink); }
+  .brand-name { font-size: 16px; }
+  .o-hero h1 { font-size: 2.1rem; }
+}
+
+@media (max-width: 560px) {
+  .o-prices div { grid-template-columns: 1fr; }
+  .o-prices b { grid-row: auto; grid-column: 1; margin-top: 6px; }
+  .o-prices b small { display: inline; margin-left: 6px; text-align: left; }
+}

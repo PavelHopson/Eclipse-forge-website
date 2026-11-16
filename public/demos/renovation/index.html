@@ -6,22 +6,13 @@
   <meta name="robots" content="noindex">
   <title>«Отвес» — ремонт квартир по смете · демо Eclipse Forge</title>
   <meta name="description" content="Демо-сайт ремонтной компании от Eclipse Forge: калькулятор стоимости, заявка на замер и панель владельца.">
-  <meta name="theme-color" content="#05070a">
+  <meta name="theme-color" content="#ebe9e4">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap">
   <link rel="stylesheet" href="/demos/assets/demo.css">
-  <style>
-    .plate { --plate:
-      linear-gradient(90deg, rgba(212, 175, 55, 0.09) 1px, transparent 1px) 0 0 / 40px 40px,
-      linear-gradient(0deg, rgba(212, 175, 55, 0.09) 1px, transparent 1px) 0 0 / 40px 40px,
-      linear-gradient(160deg, #10151e, #05070a); }
-    .plan { position: absolute; inset: 14% 12% 22% 12%; border: 2px solid rgba(212, 175, 55, 0.75); box-shadow: 0 0 40px rgba(212, 175, 55, 0.15); }
-    .plan::before { content: ''; position: absolute; left: 46%; top: 0; bottom: 34%; border-left: 2px solid rgba(212, 175, 55, 0.75); }
-    .plan::after { content: ''; position: absolute; left: 0; right: 0; top: 66%; border-top: 2px solid rgba(212, 175, 55, 0.75); }
-    .dim { position: absolute; font-size: 12px; letter-spacing: 0.08em; color: #d4af37; }
-    .dim--w { left: 12%; right: 12%; top: 8%; text-align: center; }
-    .dim--h { right: 4%; top: 45%; }
-    .range { width: 100%; accent-color: var(--accent); min-height: 44px; }
-  </style>
+  <link rel="stylesheet" href="/demos/renovation/otves.css">
 </head>
 <body data-demo="renovation">
   <div class="demo-ribbon">
@@ -38,49 +29,43 @@
       </a>
       <nav class="site-nav" aria-label="Разделы">
         <a href="#calc">Калькулятор</a>
+        <a href="#works">Объекты</a>
         <a href="#prices">Цены</a>
         <a href="#steps">Как работаем</a>
         <a href="#faq">Вопросы</a>
       </nav>
       <a class="btn btn--sm" href="#calc">Вызвать замерщика</a>
     </header>
+    <div class="o-ruler" aria-hidden="true"></div>
 
     <main id="top">
-      <section class="hero">
+      <section class="o-hero">
         <div>
-          <p class="eyebrow">Цена фиксируется в договоре</p>
-          <h1>Ремонт по смете, <em>которая не растёт.</em></h1>
+          <p class="o-tag">Цена фиксируется в договоре</p>
+          <h1>Ремонт по смете, <span>которая не растёт</span></h1>
           <p class="lead">Считаем ориентир онлайн, точную смету — после бесплатного замера. Фотоотчёт каждый день, прораб на связи.</p>
           <div class="hero-actions">
             <a class="btn" href="#calc">Посчитать стоимость</a>
-            <a class="btn btn--ghost" href="#prices">Виды ремонта</a>
+            <a class="btn btn--ghost" href="#works">Наши объекты</a>
           </div>
-          <ul class="facts">
+          <ul class="o-facts">
             <li><b>0 ₽</b><span>выезд и замер</span></li>
             <li><b>2 года</b><span>гарантия</span></li>
-            <li><b>каждый день</b><span>фотоотчёт</span></li>
+            <li><b>45 дней</b><span>двушка под ключ</span></li>
           </ul>
         </div>
-        <div class="stack" style="--stack-h:565px;--side-top:44%" role="img" aria-label="Пример интерфейса: смета, фотоотчёт прораба и сообщение в Telegram">
-          <div class="ui ui--main" aria-hidden="true">
-            <div class="ui-scene ui-scene--photo" style="--photo:url(/demos/assets/img/otves-apartment.webp);--scene-h:120px"></div>
-            <div class="ui-row" style="border:0;padding-top:0"><div><p class="ui-label">Смета № 0457 · 62 м²</p><p class="ui-title">Капитальный ремонт</p></div><span class="ui-pill">В договоре</span></div>
-            <div class="ui-row"><span>Демонтаж и вывоз</span><b>38 000 ₽</b></div>
-            <div class="ui-row"><span>Электрика, 46 точек</span><b>124 000 ₽</b></div>
-            <div class="ui-row"><span>Стяжка и выравнивание</span><b>96 000 ₽</b></div>
-            <div class="ui-row"><span>Санузел под ключ</span><b>180 000 ₽</b></div>
-            <div class="ui-row"><span>Отделка стен и потолков</span><b>169 600 ₽</b></div>
-            <div class="ui-row ui-row--total"><span>Итого работы</span><b>607 600 ₽</b></div>
-          </div>
-          <div class="ui ui--side" aria-hidden="true">
-            <p class="ui-label">Фотоотчёт · день 12</p>
-            <div class="thumbs thumbs--photo" style="--photo:url(/demos/assets/img/otves-apartment.webp)"><i></i><i></i><i></i></div>
-            <div class="ui-row" style="border:0;padding:0"><span class="ui-muted">Готово</span><b>64%</b></div>
-            <div class="bar"><i style="width:64%"></i></div>
-          </div>
-          <div class="ui ui--toast" aria-hidden="true">
-            <div class="ui-tg-from">Telegram · прораб Сергей</div>
-            <div class="ui-tg-text">Стяжка в ванной готова, фото в отчёте. Завтра начинаем плитку.</div>
+        <div class="o-visual">
+          <img src="/demos/assets/img/otves-living.webp" alt="Светлая гостиная-кухня после ремонта" width="1600" height="900">
+          <span class="o-label">Объект № 0457 · сдан 14.11</span>
+          <div class="o-doc" aria-label="Пример сметы">
+            <h3>Смета № 0457 · 62 м²</h3>
+            <div><span>Демонтаж и вывоз</span><b>38 000 ₽</b></div>
+            <div><span>Электрика, 46 точек</span><b>124 000 ₽</b></div>
+            <div><span>Стяжка и выравнивание</span><b>96 000 ₽</b></div>
+            <div><span>Санузел под ключ</span><b>180 000 ₽</b></div>
+            <div><span>Стены и потолки</span><b>169 600 ₽</b></div>
+            <div class="o-doc__total"><span>Итого работы</span><b>607 600 ₽</b></div>
+            <span class="o-stamp">Зафиксировано в договоре</span>
           </div>
         </div>
       </section>
@@ -88,6 +73,7 @@
       <section class="section" id="calc">
         <div class="lead">
           <div>
+            <p class="eyebrow">Калькулятор</p>
             <h2>Калькулятор ремонта</h2>
             <p class="sub">Работы без материалов. Ориентир сразу попадёт в заявку — замерщику не придётся спрашивать заново.</p>
             <div class="widget" data-widget="calc">
@@ -137,14 +123,26 @@
         </div>
       </section>
 
+      <section class="section" id="works">
+        <p class="eyebrow">Объекты</p>
+        <h2>Сдали — показываем</h2>
+        <p class="sub">Каждый объект — с фотоотчётом по дням. Ниже — кадры из отчётов.</p>
+        <div class="o-works">
+          <figure><img src="/demos/assets/img/otves-apartment.webp" alt="Гостиная-кухня вечером после ремонта" width="1536" height="1024" loading="lazy"><figcaption><b>Квартира 62 м²</b>капитальный ремонт · 52 дня</figcaption></figure>
+          <figure><img src="/demos/assets/img/otves-bath.webp" alt="Санузел с плиткой под бетон" width="1536" height="1024" loading="lazy"><figcaption><b>Санузел 5 м²</b>под ключ · 18 дней</figcaption></figure>
+          <figure><img src="/demos/assets/img/otves-process.webp" alt="Стены после штукатурки, нивелир и уровень" width="1536" height="1024" loading="lazy"><figcaption><b>День 12</b>штукатурка по маякам, отклонение до 1 мм</figcaption></figure>
+        </div>
+      </section>
+
       <section class="section" id="prices">
+        <p class="eyebrow">Цены</p>
         <h2>Виды ремонта</h2>
-        <p class="sub">Цены за работы. Материалы закупаем по чекам или вы покупаете сами.</p>
-        <div class="grid-4">
-          <article class="card"><h3>Косметический</h3><p>Стены, потолки, полы, двери. Без переноса сетей.</p><div class="price"><b>от 4 500 ₽</b><span>м²</span></div></article>
-          <article class="card"><h3>Капитальный</h3><p>Электрика, сантехника, стяжка, перепланировка.</p><div class="price"><b>от 9 800 ₽</b><span>м²</span></div></article>
-          <article class="card"><h3>По дизайн-проекту</h3><p>По вашему проекту или с нашим дизайнером.</p><div class="price"><b>от 14 500 ₽</b><span>м²</span></div></article>
-          <article class="card"><h3>Санузел под ключ</h3><p>Демонтаж, гидроизоляция, плитка, сантехника.</p><div class="price"><b>от 180 000 ₽</b><span>объект</span></div></article>
+        <p class="sub">Цены за работы. Материалы закупаем по чекам без наценки или вы покупаете сами по нашему списку.</p>
+        <div class="o-prices">
+          <div><h3>Косметический</h3><p>Стены, потолки, полы, двери. Без переноса сетей.</p><b>от 4 500 ₽<small>за м²</small></b></div>
+          <div><h3>Капитальный</h3><p>Электрика, сантехника, стяжка, перепланировка.</p><b>от 9 800 ₽<small>за м²</small></b></div>
+          <div><h3>По дизайн-проекту</h3><p>По вашему проекту или с нашим дизайнером.</p><b>от 14 500 ₽<small>за м²</small></b></div>
+          <div><h3>Санузел под ключ</h3><p>Демонтаж, гидроизоляция, плитка, сантехника.</p><b>от 180 000 ₽<small>за объект</small></b></div>
         </div>
       </section>
 

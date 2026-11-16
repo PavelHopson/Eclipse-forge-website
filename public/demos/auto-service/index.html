@@ -6,20 +6,13 @@
   <meta name="robots" content="noindex">
   <title>«Северный бокс» — автосервис с записью онлайн · демо Eclipse Forge</title>
   <meta name="description" content="Демо-сайт автосервиса от Eclipse Forge: онлайн-запись на свободное время, цены на услуги и панель владельца.">
-  <meta name="theme-color" content="#05070a">
+  <meta name="theme-color" content="#0d0e10">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Roboto+Condensed:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="/demos/assets/demo.css">
-  <style>
-    .plate { --plate:
-      radial-gradient(ellipse 60% 18% at 50% 88%, rgba(212, 175, 55, 0.22), transparent 70%),
-      linear-gradient(160deg, #10151e, #05070a); }
-    .wheel { position: absolute; top: 50%; width: 46%; aspect-ratio: 1; border-radius: 50%; transform: translateY(-50%);
-      background: radial-gradient(circle, #05070a 0 22%, rgba(212, 175, 55, 0.8) 22.5% 24%, #10151e 24.5% 56%, #05070a 56.5% 70%, rgba(212, 175, 55, 0.35) 70.5% 72%, #0b0f15 72.5%);
-      box-shadow: 0 0 60px rgba(212, 175, 55, 0.18); }
-    .wheel::after { content: ''; position: absolute; inset: 27%; border-radius: 50%;
-      background: repeating-conic-gradient(rgba(212, 175, 55, 0.55) 0 4deg, transparent 4deg 72deg); }
-    .wheel--a { left: 6%; } .wheel--b { right: 6%; }
-  </style>
+  <link rel="stylesheet" href="/demos/auto-service/sever.css">
 </head>
 <body data-demo="auto-service">
   <div class="demo-ribbon">
@@ -44,49 +37,41 @@
     </header>
 
     <main id="top">
-      <section class="hero">
-        <div>
-          <p class="eyebrow">Без очереди и звонков</p>
-          <h1>Запишитесь на <em>свободное время</em> за минуту.</h1>
-          <p class="lead">Видно, какие окна свободны, и сколько стоит работа. Подтвердим запись сообщением и напомним накануне.</p>
-          <div class="hero-actions">
-            <a class="btn" href="#book">Выбрать время</a>
-            <a class="btn btn--ghost" href="#services">Цены на услуги</a>
-          </div>
-          <ul class="facts">
-            <li><b>от 1 900 ₽</b><span>шиномонтаж</span></li>
-            <li><b>4 поста</b><span>без ожидания</span></li>
-            <li><b>6 месяцев</b><span>гарантия на работы</span></li>
-          </ul>
-        </div>
-        <div class="stack" style="--stack-h:540px;--side-top:42%" role="img" aria-label="Пример интерфейса: онлайн-запись, карточка автомобиля и напоминание">
-          <div class="ui ui--main" aria-hidden="true">
-            <div class="ui-scene ui-scene--photo" style="--photo:url(/demos/assets/img/sever-garage.webp);--scene-h:140px"></div>
-            <div class="ui-row" style="border:0;padding-top:0"><div><p class="ui-label">Онлайн-запись</p><p class="ui-title">Шиномонтаж · от 1 900 ₽</p></div><span class="ui-pill">4 поста</span></div>
-            <div class="day-tabs"><span>вт 17</span><span class="on">ср 18</span><span>чт 19</span></div>
-            <div class="mini-slots">
-              <span class="busy">9:00</span><span>11:00</span><span class="on">13:00</span>
-              <span>15:00</span><span class="busy">17:00</span><span>19:00</span>
+      <section class="s-hero">
+        <div class="s-hero__inner">
+          <div>
+            <p class="s-kicker">Без очереди и звонков</p>
+            <h1>Запишитесь на <em>свободное время</em> за минуту</h1>
+            <p class="lead">Видно, какие окна свободны, и сколько стоит работа. Подтвердим запись сообщением и напомним накануне.</p>
+            <div class="hero-actions">
+              <a class="btn" href="#book">Выбрать время</a>
+              <a class="btn btn--ghost" href="#services">Цены на услуги</a>
             </div>
-            <span class="ui-btn">Записаться на ср, 13:00</span>
           </div>
-          <div class="ui ui--side" aria-hidden="true">
-            <p class="ui-label">Запись подтверждена</p>
-            <p class="ui-title" style="font-size:16px">Kia Rio 2019</p>
-            <div class="ui-row"><span class="ui-muted">Когда</span><b>ср, 13:00</b></div>
-            <div class="ui-row"><span class="ui-muted">Пост</span><b>№ 2</b></div>
-            <span class="ui-pill ui-pill--ok" style="margin-top:8px">✓ Подтверждено</span>
-          </div>
-          <div class="ui ui--toast" aria-hidden="true">
-            <div class="ui-tg-from">Telegram · Северный бокс</div>
-            <div class="ui-tg-text">Напоминаем: завтра в 13:00 шиномонтаж. Ответьте «перенести», если планы поменялись.</div>
-          </div>
+          <aside class="s-quick" aria-label="Популярные услуги">
+            <h2>Сегодня свободно</h2>
+            <p>Ближайшее окно — сегодня в 17:00</p>
+            <ul>
+              <li><span>Шиномонтаж, 4 колеса</span><b>от 1 900 ₽</b></li>
+              <li><span>Замена масла</span><b>от 900 ₽</b></li>
+              <li><span>Диагностика ходовой</span><b>от 1 200 ₽</b></li>
+            </ul>
+            <a class="btn" href="#book">Записаться</a>
+          </aside>
         </div>
       </section>
+
+      <ul class="s-strip">
+        <li><b>4<span>/</span></b><small>поста без ожидания</small></li>
+        <li><b>40<span>′</span></b><small>шиномонтаж в среднем</small></li>
+        <li><b>6<span>мес</span></b><small>гарантия на работы</small></li>
+        <li><b>9–21</b><small>без выходных</small></li>
+      </ul>
 
       <section class="section" id="book">
         <div class="lead">
           <div>
+            <p class="eyebrow">Запись</p>
             <h2>Онлайн-запись</h2>
             <p class="sub">Занятые окна зачёркнуты. Выбранное время сразу попадёт в заявку.</p>
             <div class="widget" data-widget="slots">
@@ -132,13 +117,19 @@
       </section>
 
       <section class="section" id="services">
-        <h2>Услуги и цены</h2>
-        <p class="sub">Итоговую стоимость мастер называет до начала работ.</p>
-        <div class="grid-4">
-          <article class="card"><h3>Шиномонтаж</h3><p>Снятие, монтаж, балансировка, 4 колеса.</p><div class="price"><b>от 1 900 ₽</b><span>комплект</span></div></article>
-          <article class="card"><h3>Замена масла</h3><p>Масло и фильтр, проверка уровней жидкостей.</p><div class="price"><b>от 900 ₽</b><span>работа</span></div></article>
-          <article class="card"><h3>Диагностика ходовой</h3><p>Подъёмник, люфты, отчёт с фото.</p><div class="price"><b>от 1 200 ₽</b><span>30 мин</span></div></article>
-          <article class="card"><h3>Тормоза</h3><p>Замена колодок, проверка дисков.</p><div class="price"><b>от 1 500 ₽</b><span>ось</span></div></article>
+        <p class="eyebrow">Услуги</p>
+        <h2>Цены без сюрпризов</h2>
+        <p class="sub">Итоговую стоимость мастер называет до начала работ. Свои запчасти — можно.</p>
+        <div class="s-services">
+          <div class="s-photo" style="background-image:url(/demos/assets/img/sever-wheel.webp)" role="img" aria-label="Колесо на балансировочном станке"><div><h3>Шиномонтаж</h3><p>Снятие, монтаж, балансировка — около 40 минут.</p></div></div>
+          <div class="s-menu">
+            <div><div><h3>Шиномонтаж</h3><p>4 колеса, балансировка</p></div><i></i><b>от 1 900 ₽</b></div>
+            <div><div><h3>Замена масла</h3><p>Масло и фильтр, проверка жидкостей</p></div><i></i><b>от 900 ₽</b></div>
+            <div><div><h3>Диагностика ходовой</h3><p>Подъёмник, отчёт с фото</p></div><i></i><b>от 1 200 ₽</b></div>
+            <div><div><h3>Тормоза</h3><p>Колодки, проверка дисков</p></div><i></i><b>от 1 500 ₽</b></div>
+          </div>
+          <div class="s-photo" style="background-image:url(/demos/assets/img/sever-garage.webp)" role="img" aria-label="Автомобиль на подъёмнике"><div><h3>4 поста</h3><p>Подъёмники, стенд развал-схождения, своя мойка колёс.</p></div></div>
+          <div class="s-photo" style="background-image:url(/demos/assets/img/sever-lounge.webp)" role="img" aria-label="Зона ожидания с кофе"><div><h3>Зона ожидания</h3><p>Кофе, Wi-Fi и окно в бокс — видно, что делают с машиной.</p></div></div>
         </div>
       </section>
 

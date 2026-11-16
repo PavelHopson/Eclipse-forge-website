@@ -1,0 +1,132 @@
+/* «Северный бокс» — гаражный стиль: графит, чёрный, сигнальный красный. Поверх общего demo.css. */
+:root {
+  color-scheme: dark;
+  --bg: #0d0e10;
+  --surface: #16181c;
+  --surface-2: #1d2025;
+  --ink: #f3f3f1;
+  --ink-2: #b4b6ba;
+  --ink-3: #7a7d83;
+  --line: rgba(255, 255, 255, 0.1);
+  --accent: #e8302a;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(232, 48, 42, 0.14);
+  --radius: 4px;
+  --font-display: 'Oswald', 'Arial Narrow', sans-serif;
+  --shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
+  --ok: #6fd391;
+  --warn: #ffb020;
+  --cut: 14px;
+}
+html { scrollbar-color: #e8302a #0d0e10; }
+::-webkit-scrollbar-track { background: #0d0e10; }
+::-webkit-scrollbar-thumb { border-color: #0d0e10; border-radius: 0; background: #e8302a; }
+::-webkit-scrollbar-thumb:hover { background: #ff4a43; }
+
+body {
+  background:
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.018) 0 2px, transparent 2px 14px),
+    var(--bg);
+  font-family: 'Roboto Condensed', 'Arial Narrow', Inter, sans-serif;
+}
+
+.brand-mark {
+  border: 0;
+  border-radius: 0;
+  background: var(--accent);
+  color: #fff;
+  box-shadow: none;
+  clip-path: polygon(0 0, 100% 0, 100% 70%, 70% 100%, 0 100%);
+  font: 700 20px/1 var(--font-display);
+}
+.brand-name { font: 700 22px/1 var(--font-display); text-transform: uppercase; letter-spacing: 0.04em; }
+.site-nav a { font: 500 15px/1 var(--font-display); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-2); }
+.btn {
+  border-radius: 0;
+  font: 600 16px/1 var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%);
+}
+.btn--ghost { border-color: rgba(255, 255, 255, 0.3); clip-path: none; }
+
+/* Hero: фото бокса во всю ширину */
+.s-hero {
+  position: relative;
+  min-height: min(88vh, 780px);
+  display: grid;
+  align-items: center;
+  margin: 0 calc(50% - 50vw);
+  padding: 60px max(16px, calc(50vw - 580px));
+  background: #000 url('/demos/assets/img/sever-hero.webp') 70% center / cover no-repeat;
+}
+.s-hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(13, 14, 16, 0.96) 0%, rgba(13, 14, 16, 0.75) 40%, rgba(13, 14, 16, 0.1) 75%), linear-gradient(0deg, var(--bg) 0%, transparent 25%); }
+.s-hero__inner { position: relative; display: grid; gap: 40px; }
+@media (min-width: 1000px) { .s-hero__inner { grid-template-columns: 1.1fr 0.9fr; align-items: center; } }
+.s-kicker { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 18px; font: 500 15px/1 var(--font-display); letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
+.s-kicker::before { content: ''; width: 36px; height: 3px; background: var(--accent); }
+.s-hero h1 { margin: 0; font: 700 clamp(2.8rem, 5.6vw, 5rem)/0.95 var(--font-display); text-transform: uppercase; letter-spacing: 0.005em; }
+.s-hero h1 em { font-style: normal; color: var(--accent); }
+.s-hero p.lead { margin: 22px 0 0; max-width: 30em; font-size: 19px; color: var(--ink-2); }
+
+.s-quick {
+  padding: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 3px solid var(--accent);
+  background: rgba(13, 14, 16, 0.82);
+  backdrop-filter: blur(10px);
+}
+.s-quick h2 { margin: 0 0 4px; font: 600 24px/1.1 var(--font-display); text-transform: uppercase; letter-spacing: 0.04em; }
+.s-quick p { margin: 0 0 14px; color: var(--ink-3); font-size: 14px; }
+.s-quick ul { margin: 0; padding: 0; list-style: none; }
+.s-quick li { display: flex; justify-content: space-between; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 16px; }
+.s-quick li b { font: 600 18px/1 var(--font-display); }
+.s-quick .btn { width: 100%; margin-top: 16px; }
+
+.s-strip { display: grid; grid-template-columns: repeat(4, 1fr); margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.s-strip li { padding: 22px 18px; border-right: 1px solid var(--line); }
+.s-strip li:last-child { border-right: 0; }
+.s-strip b { display: block; font: 700 34px/1 var(--font-display); color: var(--ink); }
+.s-strip b span { color: var(--accent); }
+.s-strip small { font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-3); }
+@media (max-width: 760px) { .s-strip { grid-template-columns: 1fr 1fr; } .s-strip li:nth-child(2) { border-right: 0; } .s-strip li:nth-child(-n+2) { border-bottom: 1px solid var(--line); } }
+
+.section { border-top: 0; padding: 84px 0; }
+.section h2 { font: 700 clamp(2.2rem, 4.4vw, 3.6rem)/1 var(--font-display); text-transform: uppercase; }
+.eyebrow { color: var(--accent); font-family: var(--font-display); font-weight: 500; letter-spacing: 0.2em; }
+
+/* Услуги с фото */
+.s-services { display: grid; gap: 16px; }
+@media (min-width: 900px) { .s-services { grid-template-columns: 1fr 1fr; } }
+.s-photo { position: relative; min-height: 340px; overflow: hidden; background: #000 center / cover no-repeat; }
+.s-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(13, 14, 16, 0.95) 0%, rgba(13, 14, 16, 0.2) 60%); }
+.s-photo div { position: absolute; left: 22px; right: 22px; bottom: 20px; z-index: 1; }
+.s-photo h3 { margin: 0 0 6px; font: 700 28px/1 var(--font-display); text-transform: uppercase; }
+.s-photo p { margin: 0; color: var(--ink-2); }
+.s-menu { border-top: 3px solid var(--accent); background: var(--surface); }
+.s-menu > div { display: flex; align-items: baseline; gap: 12px; padding: 18px 22px; border-bottom: 1px solid var(--line); }
+.s-menu h3 { margin: 0; font: 600 20px/1.1 var(--font-display); text-transform: uppercase; letter-spacing: 0.03em; }
+.s-menu p { margin: 2px 0 0; color: var(--ink-3); font-size: 14px; }
+.s-menu i { flex: 1; border-bottom: 1px dotted rgba(255, 255, 255, 0.25); transform: translateY(-4px); }
+.s-menu b { font: 700 22px/1 var(--font-display); color: var(--accent); white-space: nowrap; }
+
+.widget { border-radius: 0; border-top: 3px solid var(--accent); background: var(--surface); }
+.widget-title { font: 600 24px/1.1 var(--font-display); text-transform: uppercase; }
+.input, .select, .textarea { border-radius: 0; background: #0f1013; }
+.slots button { border-radius: 0; font: 600 16px/1 var(--font-display); }
+.seg, .segmented button { border-radius: 0 !important; font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.06em; }
+.card { border-radius: 0; background: var(--surface); }
+.card h3 { font: 600 22px/1.1 var(--font-display); text-transform: uppercase; }
+.steps .card::before { font: 700 38px/1 var(--font-display); color: var(--accent); letter-spacing: 0; }
+.faq summary { font-family: var(--font-display); font-size: 19px; text-transform: uppercase; letter-spacing: 0.03em; font-weight: 500; }
+.lead-summary { border-radius: 0; }
+.form-ok { border-radius: 0; }
+@media (max-width: 560px) {
+  .s-hero { min-height: 0; padding-top: 40px; padding-bottom: 40px; background-position: 75% center; }
+  .site-head .btn { font-size: 13px; padding: 0 14px; }
+  .s-strip b { font-size: 26px; }
+}
+body { overflow-x: clip; }
+.s-services { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) { .s-services { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+@media (max-width: 560px) { .s-menu > div { flex-wrap: wrap; } .s-menu i { display: none; } .s-menu b { width: 100%; } }
