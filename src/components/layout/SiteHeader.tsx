@@ -22,13 +22,13 @@ const headerCopy: Record<
 > = {
   ru: {
     navItems: [
-      { label: 'Позиционирование', href: '#about' },
-      { label: 'Кейсы', href: '#cases' },
-      { label: 'Услуги', href: '#services' },
-      { label: 'Процесс', href: '#process' },
+      { label: 'Тарифы', href: '#services' },
+      { label: 'Демо', href: '#demo' },
+      { label: 'Работы', href: '#works' },
+      { label: 'Вопросы', href: '#faq' },
       { label: 'Контакт', href: '#contact' },
     ],
-    cta: 'Обсудить задачу',
+    cta: 'Обсудить проект',
     openMenu: 'Открыть меню',
     closeMenu: 'Закрыть меню',
     priceLabel: 'Прайс',
@@ -36,10 +36,10 @@ const headerCopy: Record<
   },
   en: {
     navItems: [
-      { label: 'Positioning', href: '#about' },
-      { label: 'Cases', href: '#cases' },
-      { label: 'Services', href: '#services' },
-      { label: 'Process', href: '#process' },
+      { label: 'Packages', href: '#services' },
+      { label: 'Demo', href: '#demo' },
+      { label: 'Work', href: '#works' },
+      { label: 'FAQ', href: '#faq' },
       { label: 'Contact', href: '#contact' },
     ],
     cta: 'Open a request',

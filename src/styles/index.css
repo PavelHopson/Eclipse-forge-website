@@ -2386,6 +2386,198 @@ html[data-ambient-motion='paused'] .hero-editorial-rays {
   box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
 }
 
+/* ── Packages / lead demo / FAQ (systems-turnkey offer) ── */
+.package-card--featured {
+  border-color: rgba(212, 175, 55, 0.42);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.34), 0 0 0 1px rgba(212, 175, 55, 0.12) inset;
+}
+
+.package-card__badge {
+  position: absolute;
+  top: 0;
+  right: 1.5rem;
+  transform: translateY(-50%);
+  padding: 0.3rem 0.75rem;
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  border-radius: 999px;
+  color: #0a0a0f;
+  background: var(--gold);
+}
+
+.package-card__list {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.package-card__list li {
+  position: relative;
+  padding-left: 1.4rem;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.package-card__list li::before {
+  content: '';
+  position: absolute;
+  left: 0.15rem;
+  top: 0.55em;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  border: 1px solid var(--gold);
+}
+
+.package-inline-link {
+  color: var(--gold);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.4);
+  white-space: nowrap;
+}
+
+.package-inline-link:hover {
+  border-bottom-color: var(--gold);
+}
+
+.lead-demo-chip {
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-2);
+  background: rgba(255, 255, 255, 0.02);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.lead-demo-chip:hover,
+.lead-demo-chip[aria-pressed='true'] {
+  border-color: rgba(212, 175, 55, 0.5);
+  color: var(--gold);
+}
+
+.lead-demo-status {
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.lead-demo-status--ready {
+  border-color: rgba(120, 200, 150, 0.45);
+  color: #8fd6a8;
+}
+
+.lead-demo-fields {
+  display: grid;
+  gap: 0;
+}
+
+.lead-demo-field {
+  display: grid;
+  grid-template-columns: minmax(7.5rem, 0.8fr) 1.6fr;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.lead-demo-field dt {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-4);
+}
+
+.lead-demo-field dd {
+  font-size: 15px;
+  color: var(--text-1);
+  overflow-wrap: anywhere;
+}
+
+.lead-demo-field__empty {
+  color: var(--text-4) !important;
+}
+
+.faq-list {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.faq-item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 3.5rem;
+  padding: 1rem 0;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-display, inherit);
+  font-size: 1.05rem;
+  color: var(--text-1);
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::after {
+  content: '+';
+  flex-shrink: 0;
+  color: var(--gold);
+  font-size: 1.3rem;
+  transition: transform 0.2s ease;
+}
+
+.faq-item[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.faq-item summary:focus-visible,
+.lead-demo-chip:focus-visible,
+.package-inline-link:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.faq-item p {
+  padding: 0 0 1.25rem;
+  max-width: 62ch;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--text-3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-item summary::after,
+  .lead-demo-chip {
+    transition: none;
+  }
+}
+
+[data-theme='light'] .lead-demo-status--ready {
+  border-color: rgba(47, 122, 74, 0.45);
+  color: #2f7a4a;
+}
+
+[data-theme='light'] .lead-demo-field,
+[data-theme='light'] .faq-item,
+[data-theme='light'] .faq-list {
+  border-color: rgba(7, 7, 10, 0.1);
+}
+
+[data-theme='light'] .lead-demo-chip {
+  border-color: rgba(7, 7, 10, 0.14);
+}
+
+@media (max-width: 480px) {
+  .lead-demo-field {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+}
+
 .contact-copy-link {
   border-color: rgba(255, 255, 255, 0.08);
   color: var(--text-3);

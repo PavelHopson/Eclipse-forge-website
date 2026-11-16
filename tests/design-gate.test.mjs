@@ -42,8 +42,8 @@ test('homepage metrics are derived from the public registry and expose their sou
   assert.doesNotMatch(metricDefinitions, /production-систем в работе 24\/7|958\+ тестов|958\+.*автоматических проверок/);
   assert.match(metrics, /metric\.sourceHref/);
   assert.match(metrics, /metric\.sourceLabel/);
-  assert.match(hero, /metric\.sourceHref/);
-  assert.match(hero, /metric\.sourceLabel/);
+  // Hero shows offer facts (prices, estimate, ownership), not registry counters without a source.
+  assert.doesNotMatch(hero, /\{metric\.value\}/);
 });
 
 test('non-interactive overview surfaces do not simulate clickable elevation', async () => {

@@ -31,24 +31,24 @@ type Copy = {
 
 const COPY: Record<Locale, Copy> = {
   ru: {
-    eyebrow: 'Позиционирование',
-    title: 'Не сайт.',
-    titleAccent: 'Система.',
+    eyebrow: 'В чём разница',
+    title: 'Не просто сайт.',
+    titleAccent: 'Система заявок.',
     description:
       'Обычный сайт показывает информацию и собирает заявки. Eclipse Forge строит систему, которая доводит заявку до результата без ручного управления через мессенджеры и таблицы.',
     leftHeading: 'Обычный сайт',
-    leftSub: 'Витрина — front layer без исполнения',
-    rightHeading: 'Eclipse Forge система',
-    rightSub: 'Execution layer — сайт + AI + dashboard + automation',
+    leftSub: 'Витрина: заявка пришла — дальше всё вручную',
+    rightHeading: 'Сайт + система',
+    rightSub: 'Сайт, AI-разбор заявок, кабинет менеджера и автоматизация',
     comparisonHeader: { surface: 'Что делает витрина', system: 'Что делает система' },
     rows: [
       {
         surface: 'Показывает информацию о компании',
-        system: 'Принимает заявку и сразу запускает workflow исполнения',
+        system: 'Принимает заявку и сразу запускает работу по ней',
       },
       {
         surface: 'Собирает заявку в email или Telegram',
-        system: 'Структурирует данные через AI и кладёт в operator dashboard',
+        system: 'AI раскладывает заявку по полям и кладёт в кабинет менеджера',
       },
       {
         surface: 'Заявка попадает менеджеру вручную',
@@ -72,12 +72,12 @@ const COPY: Record<Locale, Copy> = {
     loopEyebrow: 'Как работает процесс',
     loop: [
       { label: 'Заявка', hint: 'клиент оставляет данные на сайте' },
-      { label: 'AI quality', hint: 'модель уточняет и структурирует' },
-      { label: 'Operator dashboard', hint: 'менеджер видит готовую карточку' },
-      { label: 'Workflow', hint: 'логистика, документы, уведомления' },
-      { label: 'Execution', hint: 'заказ доведён до результата' },
+      { label: 'AI-разбор', hint: 'уточняет и раскладывает по полям' },
+      { label: 'Кабинет менеджера', hint: 'готовая карточка заявки' },
+      { label: 'Работа', hint: 'логистика, документы, уведомления' },
+      { label: 'Результат', hint: 'заказ доведён до конца' },
     ],
-    loopFooter: 'Каждый шаг наблюдаем. Каждое действие фиксируется. Цикл закрыт.',
+    loopFooter: 'Каждый шаг виден. Каждое действие записано.',
   },
   en: {
     eyebrow: 'Positioning',
@@ -88,7 +88,7 @@ const COPY: Record<Locale, Copy> = {
     leftHeading: 'A regular website',
     leftSub: 'A storefront — front layer without execution',
     rightHeading: 'Eclipse Forge system',
-    rightSub: 'Execution layer — site + AI + dashboard + automation',
+    rightSub: 'Site, AI lead parsing, manager workspace and automation',
     comparisonHeader: { surface: 'What a storefront does', system: 'What a system does' },
     rows: [
       {

@@ -1,6 +1,6 @@
 import { motion, useMotionValue, useSpring, useTransform, type Variants } from 'framer-motion';
 import { useEffect, useRef, type RefObject } from 'react';
-import { contactDetails, useSiteContent } from '../../data/content';
+import { contactDetails } from '../../data/content';
 import { useLocale, type Locale } from '../../lib/locale';
 import { useMotionPreference } from '../../lib/motionPreference';
 import { ConstellationField, OrbitalRing, ParticleField } from '../ui/EclipseVisuals';
@@ -79,37 +79,48 @@ const heroCopy: Record<
     edition: string;
     systemLabel: string;
     scrollLabel: string;
+    proof: { label: string; value: string }[];
   }
 > = {
   ru: {
-    eyebrow: 'AI systems engineering / Eclipse Forge',
-    titleLead: 'Системы, которые',
-    titleAccent: 'работают',
-    titleEnd: 'сами.',
+    eyebrow: 'Eclipse Forge / сайты и системы для бизнеса',
+    titleLead: 'Сайт, который',
+    titleAccent: 'доводит заявку',
+    titleEnd: 'до сделки.',
     description:
-      'Проектирую AI-операторов, SaaS и автоматизацию для процессов, где ручной контроль уже стал узким местом.',
-    primaryCta: 'Обсудить задачу',
-    secondaryCta: 'Смотреть системы',
+      'Делаю сайты с системой заявок под ключ: клиент пишет — менеджер получает готовую карточку, руководитель видит, что происходит. Без Excel и потерянных сообщений.',
+    primaryCta: 'Обсудить проект',
+    secondaryCta: 'Тарифы и цены',
     availability: 'Принимаю новые проекты',
-    location: 'Работаю по всему миру',
+    location: 'Работаю удалённо',
     edition: 'Избранные проекты / 2026',
     systemLabel: 'Системы работают и измеряются',
-    scrollLabel: 'Листайте, чтобы посмотреть проекты',
+    scrollLabel: 'Листайте вниз',
+    proof: [
+      { label: 'Цены', value: 'Открыто, от 100 000 ₽' },
+      { label: 'Смета', value: 'Фиксируем до старта' },
+      { label: 'Сайт и данные', value: 'Принадлежат вам' },
+    ],
   },
   en: {
-    eyebrow: 'AI systems engineering / Eclipse Forge',
-    titleLead: 'Systems that',
-    titleAccent: 'run',
-    titleEnd: 'themselves.',
+    eyebrow: 'Eclipse Forge / sites and systems for business',
+    titleLead: 'A site that',
+    titleAccent: 'turns leads',
+    titleEnd: 'into deals.',
     description:
-      'I design AI operators, SaaS and automation for processes where manual control has already become the bottleneck.',
-    primaryCta: 'Discuss your task',
-    secondaryCta: 'Explore systems',
+      'Turnkey sites with a lead system: the client writes, the manager gets a ready card, the owner sees what is happening. No spreadsheets, no lost messages.',
+    primaryCta: 'Discuss a project',
+    secondaryCta: 'Packages and prices',
     availability: 'Accepting new projects',
-    location: 'Available worldwide',
+    location: 'Working remotely',
     edition: 'Selected projects / 2026',
     systemLabel: 'Systems are monitored',
-    scrollLabel: 'Scroll to explore projects',
+    scrollLabel: 'Scroll down',
+    proof: [
+      { label: 'Pricing', value: 'Open, from 100 000 ₽' },
+      { label: 'Estimate', value: 'Fixed before start' },
+      { label: 'Site and data', value: 'Owned by you' },
+    ],
   },
 };
 
@@ -132,7 +143,6 @@ export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const { locale } = useLocale();
   const { ambientMotionEnabled } = useMotionPreference();
-  const { metrics } = useSiteContent();
   const copy = heroCopy[locale];
   const reveal = createReveal(ambientMotionEnabled);
   const pointer = useEditorialParallax(sectionRef);
@@ -247,7 +257,7 @@ export function HeroSection() {
                       <span aria-hidden>↗</span>
                     </a>
                   </MagneticButton>
-                  <a href="#cases" className="hero-editorial-cta hero-editorial-cta--secondary">
+                  <a href="#services" className="hero-editorial-cta hero-editorial-cta--secondary">
                     <span>{copy.secondaryCta}</span>
                     <span aria-hidden>↓</span>
                   </a>
@@ -293,22 +303,13 @@ export function HeroSection() {
             {copy.scrollLabel} ↓
           </p>
           <dl className="hero-editorial-metrics">
-            {metrics.map((metric, index) => (
-              <div key={metric.label} className="hero-editorial-metric">
+            {copy.proof.map((item, index) => (
+              <div key={item.label} className="hero-editorial-metric">
                 <dt className="text-[10px] uppercase tracking-[0.16em]" style={{ color: 'var(--text-4)' }}>
-                  0{index + 1} / {metric.label}
+                  0{index + 1} / {item.label}
                 </dt>
-                <dd className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
-                  <span className="font-display text-xl font-medium tracking-tight sm:text-2xl" style={{ color: 'var(--text-1)' }}>
-                    {metric.value}
-                  </span>
-                  <a
-                    href={metric.sourceHref}
-                    className="inline-flex min-h-11 items-center border-b text-[9px] uppercase tracking-[0.14em] transition-colors hover:text-[var(--gold)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                    style={{ color: 'var(--text-4)', borderColor: 'var(--line)', outlineColor: 'var(--gold)' }}
-                  >
-                    {metric.sourceLabel} ↗
-                  </a>
+                <dd className="mt-1 font-display text-lg font-medium tracking-tight sm:text-xl" style={{ color: 'var(--text-1)' }}>
+                  {item.value}
                 </dd>
               </div>
             ))}
