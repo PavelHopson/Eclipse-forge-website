@@ -564,3 +564,31 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .ribbon-short { display: inline; }
   .demo-ribbon button { min-height: 30px; padding: 0 10px; }
 }
+
+/* Generated photos (ChatGPT Images, see assets/img/PROVENANCE.md) */
+.ui-scene--photo {
+  height: var(--scene-h, 150px);
+  background: var(--photo) center / cover no-repeat;
+}
+.ui-scene--photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(14, 19, 27, 0.85));
+}
+.thumbs--photo i:nth-child(n) {
+  background: var(--photo) no-repeat;
+  background-size: 300% auto;
+  background-position: var(--x, 0%) 55%;
+}
+.thumbs--photo i:nth-child(1) { --x: 0%; }
+.thumbs--photo i:nth-child(2) { --x: 50%; }
+.thumbs--photo i:nth-child(3) { --x: 100%; }
+
+@media (max-width: 560px) {
+  .hero { padding-top: 24px; gap: 28px; }
+  .hero p.lead { font-size: 16px; }
+  .facts { gap: 14px; margin-top: 24px; flex-wrap: nowrap; }
+  .facts b { font-size: 18px; }
+  .facts span { font-size: 10px; }
+}
