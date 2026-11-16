@@ -18,35 +18,36 @@ const headerCopy: Record<
     closeMenu: string;
     priceLabel: string;
     libraryLabel: string;
+    motionHint: string;
   }
 > = {
   ru: {
     navItems: [
+      { label: 'Работы', href: '#works' },
       { label: 'Тарифы', href: '#services' },
       { label: 'Демо', href: '#demo' },
-      { label: 'Работы', href: '#works' },
       { label: 'Вопросы', href: '#faq' },
-      { label: 'Контакт', href: '#contact' },
     ],
     cta: 'Обсудить проект',
     openMenu: 'Открыть меню',
     closeMenu: 'Закрыть меню',
     priceLabel: 'Прайс',
     libraryLabel: 'Библиотека',
+    motionHint: 'Анимация фона',
   },
   en: {
     navItems: [
+      { label: 'Work', href: '#works' },
       { label: 'Packages', href: '#services' },
       { label: 'Demo', href: '#demo' },
-      { label: 'Work', href: '#works' },
       { label: 'FAQ', href: '#faq' },
-      { label: 'Contact', href: '#contact' },
     ],
-    cta: 'Open a request',
+    cta: 'Discuss a project',
     openMenu: 'Open menu',
     closeMenu: 'Close menu',
     priceLabel: 'Pricing',
     libraryLabel: 'Library',
+    motionHint: 'Background motion',
   },
 };
 
@@ -121,7 +122,7 @@ export function SiteHeader() {
             </span>
           </a>
 
-          <nav className="site-command-nav relative z-[1] hidden items-center gap-6 text-sm min-[1360px]:flex" style={{ color: 'var(--text-3)' }}>
+          <nav className="site-command-nav relative z-[1] hidden items-center gap-7 text-sm lg:flex" style={{ color: 'var(--text-3)' }}>
             {copy.navItems.map((item) => (
               <a
                 key={item.href}
@@ -135,37 +136,11 @@ export function SiteHeader() {
                 />
               </a>
             ))}
-            <a
-              href="https://library.eclipse-forge.ru/"
-              target="_blank"
-              rel="noreferrer"
-              className="group relative inline-flex min-h-11 items-center transition-colors duration-300 hover:!text-[var(--text-1)]"
-              style={{ color: 'var(--gold)' }}
-            >
-              {copy.libraryLabel} ↗
-              <span
-                className="pointer-events-none absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 transition-transform duration-400 group-hover:scale-x-100"
-                style={{ background: 'linear-gradient(90deg, rgba(212,175,55,0.9), rgba(212,175,55,0.4))' }}
-              />
-            </a>
-            <button
-              type="button"
-              onClick={() => setPriceOpen(true)}
-              className="group relative inline-flex min-h-11 items-center transition-colors duration-300 hover:!text-[var(--text-1)]"
-              style={{ color: 'var(--gold)' }}
-            >
-              {copy.priceLabel}
-              <span
-                className="pointer-events-none absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
-                style={{ background: 'linear-gradient(90deg, rgba(212,175,55,0.9), rgba(212,175,55,0.4))' }}
-              />
-            </button>
           </nav>
 
           <div className="relative z-[1] flex items-center gap-2 sm:gap-3">
             <LanguageToggle compact />
             <div className="flex items-center gap-2 sm:hidden">
-              <MotionToggle />
               <ThemeToggle compact />
             </div>
             <div className="hidden items-center gap-2 sm:flex">
@@ -185,7 +160,7 @@ export function SiteHeader() {
               aria-expanded={isMenuOpen}
               aria-controls="mobile-navigation"
               onClick={() => setIsMenuOpen((open) => !open)}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border min-[1360px]:hidden"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border lg:hidden"
               style={{ borderColor: 'var(--line)', color: 'var(--text-2)' }}
             >
               <span className="relative h-4 w-4">
@@ -206,7 +181,7 @@ export function SiteHeader() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.18 }}
-            className="fixed inset-0 z-30 px-4 pb-6 pt-24 backdrop-blur-md min-[1360px]:hidden"
+            className="fixed inset-0 z-30 px-4 pb-6 pt-24 backdrop-blur-md lg:hidden"
             style={{ background: isLight ? 'rgba(245, 242, 235, 0.85)' : 'rgba(5,7,10,0.7)' }}
           >
             <motion.div
@@ -251,6 +226,10 @@ export function SiteHeader() {
                   {copy.libraryLabel} ↗
                 </a>
               </nav>
+              <div className="mt-4 flex items-center gap-3 border-t pt-4 sm:hidden" style={{ borderColor: 'var(--line)' }}>
+                <MotionToggle />
+                <span className="text-[12px]" style={{ color: 'var(--text-4)' }}>{copy.motionHint}</span>
+              </div>
               <div className="mt-4 border-t pt-4" style={{ borderColor: 'var(--line)' }}>
                 <GlowButton href="#contact" onClick={closeMenu} className="w-full justify-center">
                   {copy.cta}

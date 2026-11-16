@@ -34,6 +34,9 @@ type CtaCopy = {
   filledLabel: string;
   fieldsCountLabel: string;
   signalCopiedLabel: string;
+  copyLabel: string;
+  nextLabel: string;
+  nextSteps: string[];
   emailCardLabel: string;
   channelCardLabel: string;
   githubCardLabel: string;
@@ -60,6 +63,13 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     filledLabel: 'заполнено',
     fieldsCountLabel: 'из 5 полей',
     signalCopiedLabel: 'Скопировано',
+    copyLabel: 'Скопировать',
+    nextLabel: 'Что будет дальше',
+    nextSteps: [
+      'Отвечаю в течение суток: подходит ли задача и какой тариф ближе.',
+      'Созвон на 30 минут — смотрим, откуда приходят заявки и где теряются.',
+      'Присылаю смету и срок. Работа начинается только после вашего «да».',
+    ],
     emailCardLabel: 'Email',
     channelCardLabel: 'Telegram-канал',
     githubCardLabel: 'GitHub',
@@ -109,6 +119,13 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     filledLabel: 'filled',
     fieldsCountLabel: 'of 5 fields',
     signalCopiedLabel: 'Copied',
+    copyLabel: 'Copy',
+    nextLabel: 'What happens next',
+    nextSteps: [
+      'I reply within a day: whether the task fits and which package is closer.',
+      'A 30-minute call — where your leads come from and where they get lost.',
+      'You get an estimate and a timeline. Work starts only after your yes.',
+    ],
     emailCardLabel: 'Email',
     channelCardLabel: 'Channel',
     githubCardLabel: 'GitHub',
@@ -305,7 +322,7 @@ export function CtaSection() {
                 {copy.telegramHint}
               </p>
 
-              <div className="mt-6 grid grid-cols-2 gap-2">
+              <div className="mt-6 grid gap-2 sm:grid-cols-2">
                 {socialLinks.map((item) => (
                   <a
                     key={item.label}
@@ -341,6 +358,20 @@ export function CtaSection() {
                   {copy.responseTime}
                 </span>
               </div>
+            </div>
+
+            <div className="rounded-[1.85rem] border p-6 sm:p-7 contact-panel">
+              <p className="type-meta mb-5" style={{ color: 'rgba(212,175,55,0.85)' }}>
+                {copy.nextLabel}
+              </p>
+              <ol className="contact-next">
+                {copy.nextSteps.map((step, index) => (
+                  <li key={step}>
+                    <span aria-hidden>{String(index + 1).padStart(2, '0')}</span>
+                    <p>{step}</p>
+                  </li>
+                ))}
+              </ol>
             </div>
           </motion.div>
 
@@ -426,7 +457,7 @@ export function CtaSection() {
                   className="inline-flex items-center justify-center gap-2 rounded-full border px-4 py-3.5 text-[11px] uppercase tracking-[0.18em] transition-all duration-300 contact-copy-link"
                   aria-live="polite"
                 >
-                  {copied ? copy.signalCopiedLabel : 'Copy'}
+                  {copied ? copy.signalCopiedLabel : copy.copyLabel}
                 </motion.button>
               </div>
               <p className="mt-4 text-[12px] leading-relaxed" style={{ color: 'var(--text-4)' }}>
