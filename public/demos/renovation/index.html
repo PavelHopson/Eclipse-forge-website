@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>«Отвес» — ремонт квартир по смете · демо Eclipse Forge</title>
+  <meta name="description" content="Демо-сайт ремонтной компании от Eclipse Forge: калькулятор стоимости, заявка на замер и панель владельца.">
+  <meta name="theme-color" content="#05070a">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/demos/assets/demo.css">
+  <style>
+    .plate { --plate:
+      linear-gradient(90deg, rgba(212, 175, 55, 0.09) 1px, transparent 1px) 0 0 / 40px 40px,
+      linear-gradient(0deg, rgba(212, 175, 55, 0.09) 1px, transparent 1px) 0 0 / 40px 40px,
+      linear-gradient(160deg, #10151e, #05070a); }
+    .plan { position: absolute; inset: 14% 12% 22% 12%; border: 2px solid rgba(212, 175, 55, 0.75); box-shadow: 0 0 40px rgba(212, 175, 55, 0.15); }
+    .plan::before { content: ''; position: absolute; left: 46%; top: 0; bottom: 34%; border-left: 2px solid rgba(212, 175, 55, 0.75); }
+    .plan::after { content: ''; position: absolute; left: 0; right: 0; top: 66%; border-top: 2px solid rgba(212, 175, 55, 0.75); }
+    .dim { position: absolute; font-size: 12px; letter-spacing: 0.08em; color: #d4af37; }
+    .dim--w { left: 12%; right: 12%; top: 8%; text-align: center; }
+    .dim--h { right: 4%; top: 45%; }
+    .range { width: 100%; accent-color: var(--accent); min-height: 44px; }
+  </style>
+</head>
+<body data-demo="renovation">
+  <div class="demo-ribbon">
+    <span><b>Демо Eclipse Forge.</b> Компания вымышленная, заявки никуда не отправляются.</span>
+    <button type="button" data-open-owner>Панель владельца</button>
+    <a href="/#works">← Все работы</a>
+  </div>
+
+  <div class="wrap">
+    <header class="site-head">
+      <a class="brand" href="#top" aria-label="Отвес — на главную">
+        <span class="brand-mark" aria-hidden="true">О</span>
+        <span class="brand-name">Отвес<span class="brand-sub">ремонт квартир по смете</span></span>
+      </a>
+      <nav class="site-nav" aria-label="Разделы">
+        <a href="#calc">Калькулятор</a>
+        <a href="#prices">Цены</a>
+        <a href="#steps">Как работаем</a>
+        <a href="#faq">Вопросы</a>
+      </nav>
+      <a class="btn btn--sm" href="#calc">Вызвать замерщика</a>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Цена фиксируется в договоре</p>
+          <h1>Ремонт по смете, <em>которая не растёт.</em></h1>
+          <p class="lead">Считаем ориентир онлайн, точную смету — после бесплатного замера. Фотоотчёт каждый день, прораб на связи.</p>
+          <div class="hero-actions">
+            <a class="btn" href="#calc">Посчитать стоимость</a>
+            <a class="btn btn--ghost" href="#prices">Виды ремонта</a>
+          </div>
+          <ul class="facts">
+            <li><b>0 ₽</b><span>выезд и замер</span></li>
+            <li><b>2 года</b><span>гарантия</span></li>
+            <li><b>каждый день</b><span>фотоотчёт</span></li>
+          </ul>
+        </div>
+        <div class="plate" role="img" aria-label="Иллюстрация: план квартиры с размерами">
+          <span class="dim dim--w">7 200 мм</span><span class="dim dim--h">4 800</span>
+          <span class="plan"></span>
+          <span class="plate-caption">Смета через 2 дня после замера</span>
+        </div>
+      </section>
+
+      <section class="section" id="calc">
+        <div class="lead">
+          <div>
+            <h2>Калькулятор ремонта</h2>
+            <p class="sub">Работы без материалов. Ориентир сразу попадёт в заявку — замерщику не придётся спрашивать заново.</p>
+            <div class="widget" data-widget="calc">
+              <p class="widget-title">Сколько стоит ремонт</p>
+              <p class="widget-note">Ставки демо-компании.</p>
+              <div class="field"><span>Вид ремонта</span><div class="segmented" data-types></div></div>
+              <div class="field" style="margin-top:18px">
+                <label for="area">Площадь — <output data-area-out for="area">54 м²</output></label>
+                <input class="range" id="area" name="area" type="range" min="10" max="200" step="1" value="54">
+              </div>
+              <div class="total" data-total aria-live="polite"></div>
+            </div>
+          </div>
+
+          <div>
+            <h2>Заявка на замер</h2>
+            <p class="sub">Перезвоним в течение 15 минут в рабочее время и согласуем время выезда.</p>
+            <div class="widget">
+              <form data-lead-form novalidate>
+                <div class="row">
+                  <p class="lead-summary" data-lead-summary aria-live="polite"></p>
+                  <div class="row row--2">
+                    <div class="field"><label for="name">Ваше имя</label><input class="input" id="name" name="name" autocomplete="name" required></div>
+                    <div class="field"><label for="phone">Телефон</label><input class="input" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 900 000-00-00" required></div>
+                  </div>
+                  <fieldset class="contact-set">
+                    <legend class="contact-legend">Как удобнее связаться</legend>
+                    <div class="segmented">
+                      <label><input type="radio" name="contact" value="Звонок" checked><span class="seg">Звонок</span></label>
+                      <label><input type="radio" name="contact" value="Telegram"><span class="seg">Telegram</span></label>
+                      <label><input type="radio" name="contact" value="MAX"><span class="seg">MAX</span></label>
+                      <label><input type="radio" name="contact" value="WhatsApp"><span class="seg">WhatsApp</span></label>
+                    </div>
+                  </fieldset>
+                  <div class="field"><label for="comment">Комментарий</label><textarea class="textarea" id="comment" name="comment" placeholder="Например: новостройка, нужен ещё санузел"></textarea></div>
+                  <label class="consent"><input type="checkbox" name="consent"> Согласен на обработку персональных данных для ответа на заявку</label>
+                  <p class="form-error" data-form-error role="alert"></p>
+                  <button class="btn" type="submit">Вызвать замерщика</button>
+                </div>
+              </form>
+              <div class="form-ok" data-form-ok hidden tabindex="-1">
+                <b>Заявка принята.</b>
+                Так это увидит владелец — панель уже открылась. <button type="button" class="btn btn--sm btn--ghost" data-form-again>Отправить ещё одну</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="prices">
+        <h2>Виды ремонта</h2>
+        <p class="sub">Цены за работы. Материалы закупаем по чекам или вы покупаете сами.</p>
+        <div class="grid-4">
+          <article class="card"><h3>Косметический</h3><p>Стены, потолки, полы, двери. Без переноса сетей.</p><div class="price"><b>от 4 500 ₽</b><span>м²</span></div></article>
+          <article class="card"><h3>Капитальный</h3><p>Электрика, сантехника, стяжка, перепланировка.</p><div class="price"><b>от 9 800 ₽</b><span>м²</span></div></article>
+          <article class="card"><h3>По дизайн-проекту</h3><p>По вашему проекту или с нашим дизайнером.</p><div class="price"><b>от 14 500 ₽</b><span>м²</span></div></article>
+          <article class="card"><h3>Санузел под ключ</h3><p>Демонтаж, гидроизоляция, плитка, сантехника.</p><div class="price"><b>от 180 000 ₽</b><span>объект</span></div></article>
+        </div>
+      </section>
+
+      <section class="section" id="steps">
+        <h2>Как работаем</h2>
+        <div class="grid-4 steps">
+          <div class="card"><h3>Замер</h3><p>Бесплатно, в удобное для вас время.</p></div>
+          <div class="card"><h3>Смета</h3><p>Через 2 дня. Цена фиксируется в договоре.</p></div>
+          <div class="card"><h3>Ремонт</h3><p>Фотоотчёт каждый день, прораб на связи.</p></div>
+          <div class="card"><h3>Сдача</h3><p>Принимаете по чек-листу, подписываем акт.</p></div>
+        </div>
+      </section>
+
+      <section class="section faq" id="faq">
+        <h2>Вопросы</h2>
+        <details><summary>Кто закупает материалы?</summary><p>Можем мы — по чекам без наценки, можете вы — по нашему списку.</p></details>
+        <details><summary>Можно жить в квартире во время ремонта?</summary><p>При косметическом — да, работаем по комнатам. При капитальном — не советуем.</p></details>
+        <details><summary>Как платить?</summary><p>Поэтапно: после каждого этапа и подписанного акта.</p></details>
+      </section>
+    </main>
+
+    <footer class="site-foot">
+      «Отвес» — вымышленная компания. Демо-сайт сделан в <a href="/">Eclipse Forge</a>: сайт, заявки и панель владельца в одной системе.
+    </footer>
+  </div>
+
+  <dialog class="owner" id="owner" aria-labelledby="owner-title">
+    <div class="owner-head">
+      <div><h2 id="owner-title">Панель владельца · Отвес</h2><p>Так заявки видит владелец. Данные хранятся только в этом браузере.</p></div>
+      <button type="button" class="owner-close" data-owner-close aria-label="Закрыть панель">×</button>
+    </div>
+    <div class="owner-body" data-owner-body></div>
+    <div class="owner-foot">Хотите так же для своего бизнеса? <a href="/#contact">Обсудить проект в Eclipse Forge</a> · <button type="button" class="btn btn--sm btn--ghost" data-owner-reset>Сбросить демо</button></div>
+  </dialog>
+
+  <script type="application/json" id="demo-config">
+  {
+    "slug": "renovation",
+    "brand": "Отвес",
+    "types": [
+      { "id": "cosmetic", "name": "Косметический", "rate": 4500 },
+      { "id": "capital", "name": "Капитальный", "rate": 9800 },
+      { "id": "design", "name": "По дизайн-проекту", "rate": 14500 }
+    ],
+    "seedLeads": [
+      { "name": "Ирина", "phone": "+7 900 222-33-44", "contact": "WhatsApp", "status": "work", "details": { "Ремонт": "Капитальный", "Площадь": "62 м²", "Ориентир": "≈ 607 600 ₽" } },
+      { "name": "Алексей", "phone": "+7 900 555-66-77", "contact": "Звонок", "status": "done", "details": { "Ремонт": "Косметический", "Площадь": "38 м²", "Ориентир": "≈ 171 000 ₽" } }
+    ]
+  }
+  </script>
+  <script src="/demos/assets/demo.js" defer></script>
+</body>
+</html>

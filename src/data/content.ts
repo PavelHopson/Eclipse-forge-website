@@ -908,12 +908,12 @@ const metricDefinitions: LocalizedMetricDefinition[] = [
 ];
 
 const founderProfileDefinition: LocalizedFounderProfileDefinition = {
-  eyebrow: localized('Профиль оператора', 'Operator profile'),
-  title: localized('Кто стоит за системой', 'Who stands behind the system'),
+  eyebrow: localized('Кто делает', 'Operator profile'),
+  title: localized('Работаете напрямую со мной', 'Who stands behind the system'),
   summary: localized(
     [
-      'Павел Хопсон — основатель Eclipse Forge. Я не делаю интерфейсы ради интерфейсов. Я собираю системы, которые забирают ручную рутину, фиксируют процесс и становятся рабочей частью бизнеса.',
-      'Если задача живёт между чатами, таблицами, людьми и постоянным ручным контролем, я превращаю её в управляемую систему: что она видит, как принимает решение и как доводит действие до результата.',
+      'Павел Хопсон, основатель Eclipse Forge. Сам проектирую, пишу код и запускаю — без менеджеров-посредников и передачи задач по цепочке.',
+      'Делаю не просто красивый сайт, а то, что за ним: куда падает заявка, кто её берёт, что напоминает менеджеру и что видит владелец.',
     ],
     [
       'Pavel Hopson is the founder of Eclipse Forge. I do not build interfaces for the sake of interfaces. I build systems that remove manual routine, fix the process and become a working part of the business.',
@@ -922,10 +922,10 @@ const founderProfileDefinition: LocalizedFounderProfileDefinition = {
   ),
   pillars: localized(
     [
-      'AI-системы и operator flows, где модель не отвечает в чате, а реально исполняет работу',
-      'Системы автоматизации, которые убирают ручное распределение задач, напоминания и повторяющиеся проверки',
-      'SaaS MVP и внутренние платформы, где за UI уже есть состояние, правила и рабочая логика',
-      'Продукты, в которых интерфейс не украшение, а управляемая поверхность для дорогого процесса',
+      'Сайты с онлайн-записью, бронированием и калькуляторами — заявка приходит уже с деталями',
+      'Кабинет менеджера: каждая заявка — карточка со статусом и напоминанием',
+      'AI-разбор сообщений клиентов там, где это экономит время, с проверкой человеком',
+      'Отчёт владельцу: сколько заявок пришло, сколько в работе, сколько закрыто',
     ],
     [
       'AI systems and operator flows where the model does not just chat, but actually executes work',
@@ -936,9 +936,9 @@ const founderProfileDefinition: LocalizedFounderProfileDefinition = {
   ),
   stats: localized(
     [
-      { value: 'AI + automation + SaaS', label: 'одна связная система' },
-      { value: 'UI + runtime + data', label: 'не только фронтовый слой' },
-      { value: 'Процесс -> система', label: 'главная логика работы' },
+      { value: 'Напрямую', label: 'без посредников' },
+      { value: 'Код ваш', label: 'передаю доступы' },
+      { value: 'Смета', label: 'до начала работ' },
     ],
     [
       { value: 'AI + automation + SaaS', label: 'one system contour' },

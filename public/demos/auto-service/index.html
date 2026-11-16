@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>«Северный бокс» — автосервис с записью онлайн · демо Eclipse Forge</title>
+  <meta name="description" content="Демо-сайт автосервиса от Eclipse Forge: онлайн-запись на свободное время, цены на услуги и панель владельца.">
+  <meta name="theme-color" content="#05070a">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/demos/assets/demo.css">
+  <style>
+    .plate { --plate:
+      radial-gradient(ellipse 60% 18% at 50% 88%, rgba(212, 175, 55, 0.22), transparent 70%),
+      linear-gradient(160deg, #10151e, #05070a); }
+    .wheel { position: absolute; top: 50%; width: 46%; aspect-ratio: 1; border-radius: 50%; transform: translateY(-50%);
+      background: radial-gradient(circle, #05070a 0 22%, rgba(212, 175, 55, 0.8) 22.5% 24%, #10151e 24.5% 56%, #05070a 56.5% 70%, rgba(212, 175, 55, 0.35) 70.5% 72%, #0b0f15 72.5%);
+      box-shadow: 0 0 60px rgba(212, 175, 55, 0.18); }
+    .wheel::after { content: ''; position: absolute; inset: 27%; border-radius: 50%;
+      background: repeating-conic-gradient(rgba(212, 175, 55, 0.55) 0 4deg, transparent 4deg 72deg); }
+    .wheel--a { left: 6%; } .wheel--b { right: 6%; }
+  </style>
+</head>
+<body data-demo="auto-service">
+  <div class="demo-ribbon">
+    <span><b>Демо Eclipse Forge.</b> Компания вымышленная, заявки никуда не отправляются.</span>
+    <button type="button" data-open-owner>Панель владельца</button>
+    <a href="/#works">← Все работы</a>
+  </div>
+
+  <div class="wrap">
+    <header class="site-head">
+      <a class="brand" href="#top" aria-label="Северный бокс — на главную">
+        <span class="brand-mark" aria-hidden="true">С</span>
+        <span class="brand-name">Северный бокс<span class="brand-sub">автосервис и шиномонтаж</span></span>
+      </a>
+      <nav class="site-nav" aria-label="Разделы">
+        <a href="#book">Запись</a>
+        <a href="#services">Услуги</a>
+        <a href="#steps">Как проходит</a>
+        <a href="#faq">Вопросы</a>
+      </nav>
+      <a class="btn btn--sm" href="#book">Записаться</a>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Без очереди и звонков</p>
+          <h1>Запишитесь на <em>свободное время</em> за минуту.</h1>
+          <p class="lead">Видно, какие окна свободны, и сколько стоит работа. Подтвердим запись сообщением и напомним накануне.</p>
+          <div class="hero-actions">
+            <a class="btn" href="#book">Выбрать время</a>
+            <a class="btn btn--ghost" href="#services">Цены на услуги</a>
+          </div>
+          <ul class="facts">
+            <li><b>от 1 900 ₽</b><span>шиномонтаж</span></li>
+            <li><b>4 поста</b><span>без ожидания</span></li>
+            <li><b>6 месяцев</b><span>гарантия на работы</span></li>
+          </ul>
+        </div>
+        <div class="plate" role="img" aria-label="Иллюстрация: два колеса">
+          <span class="wheel wheel--a"></span><span class="wheel wheel--b"></span>
+          <span class="plate-caption">Ежедневно 9:00–21:00</span>
+        </div>
+      </section>
+
+      <section class="section" id="book">
+        <div class="lead">
+          <div>
+            <h2>Онлайн-запись</h2>
+            <p class="sub">Занятые окна зачёркнуты. Выбранное время сразу попадёт в заявку.</p>
+            <div class="widget" data-widget="slots">
+              <p class="widget-title">Услуга и время</p>
+              <p class="widget-note">Расписание в демо условное.</p>
+              <div class="field"><label for="service">Услуга</label><select class="select" id="service" name="service"></select></div>
+              <div data-days aria-label="Свободное время"></div>
+            </div>
+          </div>
+
+          <div>
+            <h2>Подтвердить запись</h2>
+            <p class="sub">Пришлём подтверждение в выбранный мессенджер и напомним за день.</p>
+            <div class="widget">
+              <form data-lead-form novalidate>
+                <div class="row">
+                  <p class="lead-summary" data-lead-summary aria-live="polite"></p>
+                  <div class="row row--2">
+                    <div class="field"><label for="name">Ваше имя</label><input class="input" id="name" name="name" autocomplete="name" required></div>
+                    <div class="field"><label for="phone">Телефон</label><input class="input" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 900 000-00-00" required></div>
+                  </div>
+                  <fieldset class="contact-set">
+                    <legend class="contact-legend">Куда прислать подтверждение</legend>
+                    <div class="segmented">
+                      <label><input type="radio" name="contact" value="Telegram" checked><span class="seg">Telegram</span></label>
+                      <label><input type="radio" name="contact" value="MAX"><span class="seg">MAX</span></label>
+                      <label><input type="radio" name="contact" value="СМС"><span class="seg">СМС</span></label>
+                    </div>
+                  </fieldset>
+                  <div class="field"><label for="comment">Марка и модель</label><textarea class="textarea" id="comment" name="comment" placeholder="Например: Kia Rio 2019, стучит спереди справа"></textarea></div>
+                  <label class="consent"><input type="checkbox" name="consent"> Согласен на обработку персональных данных для ответа на заявку</label>
+                  <p class="form-error" data-form-error role="alert"></p>
+                  <button class="btn" type="submit">Записаться</button>
+                </div>
+              </form>
+              <div class="form-ok" data-form-ok hidden tabindex="-1">
+                <b>Запись принята.</b>
+                Так это увидит владелец — панель уже открылась. <button type="button" class="btn btn--sm btn--ghost" data-form-again>Записать ещё одну машину</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="services">
+        <h2>Услуги и цены</h2>
+        <p class="sub">Итоговую стоимость мастер называет до начала работ.</p>
+        <div class="grid-4">
+          <article class="card"><h3>Шиномонтаж</h3><p>Снятие, монтаж, балансировка, 4 колеса.</p><div class="price"><b>от 1 900 ₽</b><span>комплект</span></div></article>
+          <article class="card"><h3>Замена масла</h3><p>Масло и фильтр, проверка уровней жидкостей.</p><div class="price"><b>от 900 ₽</b><span>работа</span></div></article>
+          <article class="card"><h3>Диагностика ходовой</h3><p>Подъёмник, люфты, отчёт с фото.</p><div class="price"><b>от 1 200 ₽</b><span>30 мин</span></div></article>
+          <article class="card"><h3>Тормоза</h3><p>Замена колодок, проверка дисков.</p><div class="price"><b>от 1 500 ₽</b><span>ось</span></div></article>
+        </div>
+      </section>
+
+      <section class="section" id="steps">
+        <h2>Как проходит визит</h2>
+        <div class="grid-4 steps">
+          <div class="card"><h3>Запись</h3><p>Выбираете услугу и свободное время.</p></div>
+          <div class="card"><h3>Напоминание</h3><p>Накануне присылаем сообщение с адресом.</p></div>
+          <div class="card"><h3>Работа</h3><p>Мастер согласует цену до начала работ.</p></div>
+          <div class="card"><h3>Отчёт</h3><p>Фото заменённых деталей и гарантия в чате.</p></div>
+        </div>
+      </section>
+
+      <section class="section faq" id="faq">
+        <h2>Вопросы</h2>
+        <details><summary>Можно со своими запчастями?</summary><p>Да, гарантия в этом случае — только на работу.</p></details>
+        <details><summary>Сколько ждать на месте?</summary><p>Шиномонтаж — около 40 минут. Есть зона ожидания с кофе.</p></details>
+        <details><summary>Как перенести запись?</summary><p>Ответьте на сообщение-подтверждение — предложим другое время.</p></details>
+      </section>
+    </main>
+
+    <footer class="site-foot">
+      «Северный бокс» — вымышленная компания. Демо-сайт сделан в <a href="/">Eclipse Forge</a>: сайт, заявки и панель владельца в одной системе.
+    </footer>
+  </div>
+
+  <dialog class="owner" id="owner" aria-labelledby="owner-title">
+    <div class="owner-head">
+      <div><h2 id="owner-title">Панель владельца · Северный бокс</h2><p>Так заявки видит владелец. Данные хранятся только в этом браузере.</p></div>
+      <button type="button" class="owner-close" data-owner-close aria-label="Закрыть панель">×</button>
+    </div>
+    <div class="owner-body" data-owner-body></div>
+    <div class="owner-foot">Хотите так же для своего бизнеса? <a href="/#contact">Обсудить проект в Eclipse Forge</a> · <button type="button" class="btn btn--sm btn--ghost" data-owner-reset>Сбросить демо</button></div>
+  </dialog>
+
+  <script type="application/json" id="demo-config">
+  {
+    "slug": "auto-service",
+    "brand": "Северный бокс",
+    "services": [
+      { "id": "tires", "name": "Шиномонтаж", "price": 1900 },
+      { "id": "oil", "name": "Замена масла", "price": 900 },
+      { "id": "diag", "name": "Диагностика ходовой", "price": 1200 },
+      { "id": "brakes", "name": "Тормоза", "price": 1500 }
+    ],
+    "hours": ["9:00", "11:00", "13:00", "15:00", "17:00", "19:00"],
+    "seedLeads": [
+      { "name": "Марина", "phone": "+7 900 333-44-55", "contact": "Telegram", "status": "work", "details": { "Услуга": "Шиномонтаж", "Ориентир": "от 1 900 ₽" } },
+      { "name": "Сергей", "phone": "+7 900 666-77-88", "contact": "MAX", "status": "done", "details": { "Услуга": "Замена масла", "Ориентир": "от 900 ₽" } }
+    ]
+  }
+  </script>
+  <script src="/demos/assets/demo.js" defer></script>
+</body>
+</html>

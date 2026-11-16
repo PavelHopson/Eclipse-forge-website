@@ -1,4 +1,3 @@
-import { EcosystemRail } from '../components/sections/EcosystemRail';
 import { CtaSection } from '../components/sections/CtaSection';
 import { FaqSection } from '../components/sections/FaqSection';
 import { FounderSection } from '../components/sections/FounderSection';
@@ -9,10 +8,12 @@ import { ProcessSection } from '../components/sections/ProcessSection';
 import { SystemsNotSitesSection } from '../components/sections/SystemsNotSitesSection';
 import { WorksSection } from '../components/sections/WorksSection';
 import { EclipseDivider } from '../components/ui/EclipseVisuals';
+import { MobileCta } from '../components/ui/MobileCta';
 
-// Порядок «оффер → цена → доказательство → кто делает → как → вопросы → заявка».
-// Секции About / BusinessImpact / HowItWorks / ProductionReadiness / Metrics / Services /
-// ConstructionCase сняты со страницы (повторяли тезис «не сайт — система»), файлы оставлены.
+// Порядок «оффер → цена → живые демо → кто делает → как → вопросы → заявка».
+// Сняты со страницы (файлы оставлены): About, BusinessImpact, HowItWorks, ProductionReadiness,
+// Metrics, Services, ConstructionCase — повторяли тезис «не сайт — система»;
+// EcosystemRail — внутренние продукты Eclipse Forge, клиенту-бизнесу не нужны.
 export function LandingPage() {
   return (
     <main className="relative z-10">
@@ -20,14 +21,14 @@ export function LandingPage() {
       <SystemsNotSitesSection />
       <PackagesSection />
       <EclipseDivider />
-      <LeadDemoSection />
       <WorksSection />
+      <LeadDemoSection />
       <EclipseDivider />
       <FounderSection />
       <ProcessSection />
-      <EcosystemRail />
       <FaqSection />
       <CtaSection />
+      <MobileCta />
     </main>
   );
 }

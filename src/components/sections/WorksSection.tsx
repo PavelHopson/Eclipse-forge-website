@@ -2,35 +2,74 @@ import { motion } from 'framer-motion';
 import { revealUp, stagger, viewport } from '../../lib/animation';
 import { useLocale, type Locale } from '../../lib/locale';
 
-type Work = { kind: 'real' | 'concept'; name: string; text: string; tags: string[]; href: string };
+type Kind = 'demo' | 'real' | 'concept';
+type Work = { kind: Kind; name: string; niche: string; text: string; tags: string[]; href: string };
 
-const COPY: Record<Locale, { eyebrow: string; title: string; description: string; real: string; concept: string; open: string; works: Work[] }> = {
+type Copy = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  kinds: Record<Kind, string>;
+  openDemo: string;
+  openSite: string;
+  works: Work[];
+};
+
+const COPY: Record<Locale, Copy> = {
   ru: {
     eyebrow: 'Работы',
-    title: 'Сайты, которые можно открыть.',
-    description: 'Один настоящий бизнес и концепты. В концептах заказы не принимаются — это демонстрация уровня.',
-    real: 'Настоящий бизнес',
-    concept: 'Концепт',
-    open: 'Открыть сайт',
+    title: 'Откройте и попробуйте.',
+    description:
+      'Живые демо: оставьте заявку как клиент — и сразу увидите панель владельца, куда она пришла. Компании в демо вымышленные. Ниже — настоящий проект и концепты.',
+    kinds: { demo: 'Живое демо', real: 'Настоящий бизнес', concept: 'Концепт' },
+    openDemo: 'Открыть демо',
+    openSite: 'Открыть сайт',
     works: [
+      {
+        kind: 'demo',
+        name: 'Дюна',
+        niche: 'Гостевые домики',
+        text: 'Подбор домика по датам и гостям, цена считается сразу, занятые даты выбрать нельзя.',
+        tags: ['Бронь по датам', 'Расчёт цены', 'Панель владельца'],
+        href: '/demos/guest-house/',
+      },
+      {
+        kind: 'demo',
+        name: 'Отвес',
+        niche: 'Ремонт квартир',
+        text: 'Калькулятор ремонта по площади и виду работ; ориентир попадает в заявку на замер.',
+        tags: ['Калькулятор', 'Заявка на замер', 'Панель владельца'],
+        href: '/demos/renovation/',
+      },
+      {
+        kind: 'demo',
+        name: 'Северный бокс',
+        niche: 'Автосервис',
+        text: 'Онлайн-запись на свободное время, цены на услуги, подтверждение в мессенджер.',
+        tags: ['Онлайн-запись', 'Свободные окна', 'Панель владельца'],
+        href: '/demos/auto-service/',
+      },
       {
         kind: 'real',
         name: 'Вся в Зефире',
-        text: 'Домашняя кондитерская: каталог, торты, сезонные коллекции и заказ в Telegram.',
+        niche: 'Кондитерская',
+        text: 'Каталог, торты, сезонные коллекции и заказ в Telegram.',
         tags: ['Каталог', 'Заказ в Telegram', 'Карта доставки'],
         href: 'https://zefir.eclipse-forge.ru/',
       },
       {
         kind: 'concept',
         name: 'Eclipse Premium Rent',
-        text: 'Прокат премиальных автомобилей: 27 машин с фото салона и пошаговое бронирование.',
+        niche: 'Прокат автомобилей',
+        text: '27 машин с фото салона и пошаговое бронирование.',
         tags: ['Автопарк', 'Бронирование'],
         href: 'https://rent.eclipse-forge.ru/',
       },
       {
         kind: 'concept',
         name: 'Dark Roast',
-        text: 'Кофейня: атмосферная главная, меню с демо-корзиной и бронь столика.',
+        niche: 'Кофейня',
+        text: 'Атмосферная главная, меню с демо-корзиной и бронь столика.',
         tags: ['Меню', 'Бронь столика'],
         href: 'https://coffee.eclipse-forge.ru/',
       },
@@ -38,30 +77,58 @@ const COPY: Record<Locale, { eyebrow: string; title: string; description: string
   },
   en: {
     eyebrow: 'Work',
-    title: 'Sites you can open.',
-    description: 'One real business and concepts. Concepts do not accept orders — they show the level of work.',
-    real: 'Real business',
-    concept: 'Concept',
-    open: 'Open site',
+    title: 'Open it and try it.',
+    description:
+      'Live demos: submit a request as a client and instantly see the owner panel it lands in. Demo companies are fictional. Below — a real project and concepts.',
+    kinds: { demo: 'Live demo', real: 'Real business', concept: 'Concept' },
+    openDemo: 'Open demo',
+    openSite: 'Open site',
     works: [
+      {
+        kind: 'demo',
+        name: 'Dyuna',
+        niche: 'Guest cabins',
+        text: 'Pick a cabin by dates and guests, price is calculated instantly, booked dates are blocked.',
+        tags: ['Date booking', 'Price calc', 'Owner panel'],
+        href: '/demos/guest-house/',
+      },
+      {
+        kind: 'demo',
+        name: 'Otves',
+        niche: 'Apartment renovation',
+        text: 'Renovation calculator by area and type; the estimate goes straight into the request.',
+        tags: ['Calculator', 'Survey request', 'Owner panel'],
+        href: '/demos/renovation/',
+      },
+      {
+        kind: 'demo',
+        name: 'Northern Box',
+        niche: 'Car service',
+        text: 'Online booking of free slots, service prices, confirmation via messenger.',
+        tags: ['Online booking', 'Free slots', 'Owner panel'],
+        href: '/demos/auto-service/',
+      },
       {
         kind: 'real',
         name: 'Vsya v Zefire',
-        text: 'Home confectionery: catalog, cakes, seasonal collections and Telegram ordering.',
+        niche: 'Confectionery',
+        text: 'Catalog, cakes, seasonal collections and Telegram ordering.',
         tags: ['Catalog', 'Telegram orders', 'Delivery map'],
         href: 'https://zefir.eclipse-forge.ru/',
       },
       {
         kind: 'concept',
         name: 'Eclipse Premium Rent',
-        text: 'Premium car rental: 27 cars with interior photos and step-by-step booking.',
+        niche: 'Car rental',
+        text: '27 cars with interior photos and step-by-step booking.',
         tags: ['Fleet', 'Booking'],
         href: 'https://rent.eclipse-forge.ru/',
       },
       {
         kind: 'concept',
         name: 'Dark Roast',
-        text: 'Coffee shop: atmospheric home page, menu with demo cart and table booking.',
+        niche: 'Coffee shop',
+        text: 'Atmospheric home page, menu with demo cart and table booking.',
         tags: ['Menu', 'Table booking'],
         href: 'https://coffee.eclipse-forge.ru/',
       },
@@ -93,33 +160,43 @@ export function WorksSection() {
         <motion.p variants={revealUp} className="mt-5 max-w-2xl type-body text-[15px] leading-relaxed" style={{ color: 'var(--text-3)' }}>
           {copy.description}
         </motion.p>
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
-          {copy.works.map((work) => (
-            <motion.article key={work.name} variants={revealUp} className="flex flex-col rounded-[1.6rem] border p-6 services-card">
-              <p className="type-meta" style={{ color: work.kind === 'real' ? 'var(--gold)' : 'var(--text-4)' }}>
-                {work.kind === 'real' ? copy.real : copy.concept}
-              </p>
-              <h3 className="mt-3 font-display text-[1.3rem] font-medium tracking-tight" style={{ color: 'var(--text-1)' }}>
-                {work.name}
-              </h3>
-              <p className="mt-3 flex-1 text-[14px] leading-relaxed" style={{ color: 'var(--text-2)' }}>
-                {work.text}
-              </p>
-              <ul className="mt-4 flex flex-wrap gap-2">
-                {work.tags.map((tag) => (
-                  <li key={tag} className="rounded-full border px-3 py-1 text-[11px] services-chip">{tag}</li>
-                ))}
-              </ul>
-              <a
-                href={work.href}
-                target="_blank"
-                rel="noreferrer"
-                className="case-link-secondary mt-6 inline-flex min-h-11 items-center justify-center gap-2 rounded-full border px-5 py-2.5 text-[12px] font-display tracking-[0.04em]"
+        <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {copy.works.map((work) => {
+            const external = work.href.startsWith('http');
+            return (
+              <motion.article
+                key={work.href}
+                variants={revealUp}
+                className={`work-card flex flex-col rounded-[1.6rem] border p-6 services-card${work.kind === 'demo' ? ' work-card--demo' : ''}`}
               >
-                {copy.open} <span aria-hidden>↗</span>
-              </a>
-            </motion.article>
-          ))}
+                <div className="flex items-center justify-between gap-3">
+                  <p className="type-meta" style={{ color: work.kind === 'concept' ? 'var(--text-4)' : 'var(--gold)' }}>
+                    {copy.kinds[work.kind]}
+                  </p>
+                  <p className="text-[12px]" style={{ color: 'var(--text-4)' }}>{work.niche}</p>
+                </div>
+                <h3 className="mt-3 font-display text-[1.3rem] font-medium tracking-tight" style={{ color: 'var(--text-1)' }}>
+                  {work.name}
+                </h3>
+                <p className="mt-3 flex-1 text-[14px] leading-relaxed" style={{ color: 'var(--text-2)' }}>
+                  {work.text}
+                </p>
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {work.tags.map((tag) => (
+                    <li key={tag} className="rounded-full border px-3 py-1 text-[11px] services-chip">{tag}</li>
+                  ))}
+                </ul>
+                <a
+                  href={work.href}
+                  target={external ? '_blank' : undefined}
+                  rel={external ? 'noreferrer' : undefined}
+                  className={`${work.kind === 'demo' ? 'case-link-primary' : 'case-link-secondary'} mt-6 inline-flex min-h-11 items-center justify-center gap-2 rounded-full border px-5 py-2.5 text-[12px] font-display tracking-[0.04em]`}
+                >
+                  {work.kind === 'demo' ? copy.openDemo : copy.openSite} <span aria-hidden>{external ? '↗' : '→'}</span>
+                </a>
+              </motion.article>
+            );
+          })}
         </div>
       </div>
     </motion.section>
