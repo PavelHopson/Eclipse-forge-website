@@ -27,7 +27,7 @@ export function MobileCta() {
 
   return (
     <div className="mobile-cta" data-visible={visible} aria-hidden={!visible}>
-      <span>{locale === 'ru' ? 'Сайт + заявки от 100 000 ₽' : 'Site + leads from 100 000 ₽'}</span>
+      <span>{locale === 'ru' ? 'Сайт + заявки от 30 000 ₽' : 'Site + leads from 30 000 ₽'}</span>
       <a href="#contact" tabIndex={visible ? 0 : -1}>{locale === 'ru' ? 'Обсудить' : 'Discuss'}</a>
     </div>
   );

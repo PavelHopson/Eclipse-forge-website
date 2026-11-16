@@ -41,7 +41,7 @@ const COPY: Record<Locale, Copy> = {
     featuredLabel: 'Чаще выбирают',
     supportTitle: 'Сопровождение',
     supportText: 'Хостинг, правки, проверка заявок и отчёт раз в месяц.',
-    supportPrice: 'от 30 000 ₽ / мес',
+    supportPrice: 'от 3 000 ₽ / мес',
     smallTitle: 'Нужен только простой лендинг?',
     smallText: 'Готовые лендинги от 9 900 ₽ за 1–3 дня делает наша студия Romark.',
     smallLink: 'Открыть Romark',
@@ -51,7 +51,7 @@ const COPY: Record<Locale, Copy> = {
       {
         id: 'site',
         name: 'Сайт с заявками',
-        price: 'от 100 000 ₽',
+        price: 'от 30 000 ₽',
         forWhom: 'Вам нужен сайт, которому доверяют, и заявки без потерь.',
         includes: [
           'Дизайн под ваш бренд, без шаблона',
@@ -59,12 +59,13 @@ const COPY: Record<Locale, Copy> = {
           'Заявки в Telegram, MAX или на почту',
           'Яндекс Метрика и цели на заявки',
           'Домен оформляем на вас',
+          'Сопровождение — 3 000 ₽/мес: хостинг, правки, заявки',
         ],
       },
       {
         id: 'crm',
         name: 'Сайт + система заявок',
-        price: 'от 180 000 ₽',
+        price: 'от 70 000 ₽',
         forWhom: 'Заявок много, и они теряются между мессенджерами и таблицами.',
         includes: [
           'Всё из «Сайта с заявками»',
@@ -78,7 +79,7 @@ const COPY: Record<Locale, Copy> = {
       {
         id: 'ai',
         name: 'AI-обработка заявок',
-        price: 'от 120 000 ₽',
+        price: 'от 50 000 ₽',
         forWhom: 'Клиенты пишут как придётся, а менеджер тратит время на переспрашивание.',
         includes: [
           'AI разбирает сообщение клиента в готовую карточку',
@@ -100,7 +101,7 @@ const COPY: Record<Locale, Copy> = {
     featuredLabel: 'Most chosen',
     supportTitle: 'Ongoing support',
     supportText: 'Hosting, edits, lead checks and a monthly report.',
-    supportPrice: 'from 30 000 ₽ / mo',
+    supportPrice: 'from 3 000 ₽ / mo',
     smallTitle: 'Need just a simple landing page?',
     smallText: 'Ready-made landings from 9 900 ₽ in 1–3 days are made by our Romark studio.',
     smallLink: 'Open Romark',
@@ -110,7 +111,7 @@ const COPY: Record<Locale, Copy> = {
       {
         id: 'site',
         name: 'Site with leads',
-        price: 'from 100 000 ₽',
+        price: 'from 30 000 ₽',
         forWhom: 'You need a site people trust and leads that never get lost.',
         includes: [
           'Custom design for your brand, no template',
@@ -118,12 +119,13 @@ const COPY: Record<Locale, Copy> = {
           'Leads to Telegram, MAX or email',
           'Yandex Metrica with lead goals',
           'Domain registered to you',
+          'Support — 3 000 ₽/mo: hosting, edits, leads',
         ],
       },
       {
         id: 'crm',
         name: 'Site + lead system',
-        price: 'from 180 000 ₽',
+        price: 'from 70 000 ₽',
         forWhom: 'Plenty of leads, and they get lost between messengers and spreadsheets.',
         includes: [
           'Everything in «Site with leads»',
@@ -137,7 +139,7 @@ const COPY: Record<Locale, Copy> = {
       {
         id: 'ai',
         name: 'AI lead processing',
-        price: 'from 120 000 ₽',
+        price: 'from 50 000 ₽',
         forWhom: 'Clients write however they like, and managers waste time asking again.',
         includes: [
           'AI turns a client message into a ready card',
