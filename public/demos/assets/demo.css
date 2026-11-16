@@ -465,3 +465,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 @media (max-width: 640px) {
   .demo-ribbon { position: static; }
 }
+
+@media (max-width: 480px) {
+  .site-head .btn { white-space: nowrap; padding: 0 14px; }
+  .brand-sub { display: none; }
+}

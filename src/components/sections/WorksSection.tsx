@@ -3,7 +3,7 @@ import { revealUp, stagger, viewport } from '../../lib/animation';
 import { useLocale, type Locale } from '../../lib/locale';
 
 type Kind = 'demo' | 'real' | 'concept';
-type Work = { kind: Kind; name: string; niche: string; text: string; tags: string[]; href: string };
+type Work = { kind: Kind; name: string; niche: string; text: string; tags: string[]; href: string; shot: string };
 
 type Copy = {
   eyebrow: string;
@@ -32,6 +32,7 @@ const COPY: Record<Locale, Copy> = {
         text: 'Подбор домика по датам и гостям, цена считается сразу, занятые даты выбрать нельзя.',
         tags: ['Бронь по датам', 'Расчёт цены', 'Панель владельца'],
         href: '/demos/guest-house/',
+        shot: 'guest-house',
       },
       {
         kind: 'demo',
@@ -40,6 +41,7 @@ const COPY: Record<Locale, Copy> = {
         text: 'Калькулятор ремонта по площади и виду работ; ориентир попадает в заявку на замер.',
         tags: ['Калькулятор', 'Заявка на замер', 'Панель владельца'],
         href: '/demos/renovation/',
+        shot: 'renovation',
       },
       {
         kind: 'demo',
@@ -48,6 +50,7 @@ const COPY: Record<Locale, Copy> = {
         text: 'Онлайн-запись на свободное время, цены на услуги, подтверждение в мессенджер.',
         tags: ['Онлайн-запись', 'Свободные окна', 'Панель владельца'],
         href: '/demos/auto-service/',
+        shot: 'auto-service',
       },
       {
         kind: 'real',
@@ -56,6 +59,7 @@ const COPY: Record<Locale, Copy> = {
         text: 'Каталог, торты, сезонные коллекции и заказ в Telegram.',
         tags: ['Каталог', 'Заказ в Telegram', 'Карта доставки'],
         href: 'https://zefir.eclipse-forge.ru/',
+        shot: 'zefir',
       },
       {
         kind: 'concept',
@@ -64,6 +68,7 @@ const COPY: Record<Locale, Copy> = {
         text: '27 машин с фото салона и пошаговое бронирование.',
         tags: ['Автопарк', 'Бронирование'],
         href: 'https://rent.eclipse-forge.ru/',
+        shot: 'rent',
       },
       {
         kind: 'concept',
@@ -72,6 +77,7 @@ const COPY: Record<Locale, Copy> = {
         text: 'Атмосферная главная, меню с демо-корзиной и бронь столика.',
         tags: ['Меню', 'Бронь столика'],
         href: 'https://coffee.eclipse-forge.ru/',
+        shot: 'coffee',
       },
     ],
   },
@@ -91,6 +97,7 @@ const COPY: Record<Locale, Copy> = {
         text: 'Pick a cabin by dates and guests, price is calculated instantly, booked dates are blocked.',
         tags: ['Date booking', 'Price calc', 'Owner panel'],
         href: '/demos/guest-house/',
+        shot: 'guest-house',
       },
       {
         kind: 'demo',
@@ -99,6 +106,7 @@ const COPY: Record<Locale, Copy> = {
         text: 'Renovation calculator by area and type; the estimate goes straight into the request.',
         tags: ['Calculator', 'Survey request', 'Owner panel'],
         href: '/demos/renovation/',
+        shot: 'renovation',
       },
       {
         kind: 'demo',
@@ -107,6 +115,7 @@ const COPY: Record<Locale, Copy> = {
         text: 'Online booking of free slots, service prices, confirmation via messenger.',
         tags: ['Online booking', 'Free slots', 'Owner panel'],
         href: '/demos/auto-service/',
+        shot: 'auto-service',
       },
       {
         kind: 'real',
@@ -115,6 +124,7 @@ const COPY: Record<Locale, Copy> = {
         text: 'Catalog, cakes, seasonal collections and Telegram ordering.',
         tags: ['Catalog', 'Telegram orders', 'Delivery map'],
         href: 'https://zefir.eclipse-forge.ru/',
+        shot: 'zefir',
       },
       {
         kind: 'concept',
@@ -123,6 +133,7 @@ const COPY: Record<Locale, Copy> = {
         text: '27 cars with interior photos and step-by-step booking.',
         tags: ['Fleet', 'Booking'],
         href: 'https://rent.eclipse-forge.ru/',
+        shot: 'rent',
       },
       {
         kind: 'concept',
@@ -131,6 +142,7 @@ const COPY: Record<Locale, Copy> = {
         text: 'Atmospheric home page, menu with demo cart and table booking.',
         tags: ['Menu', 'Table booking'],
         href: 'https://coffee.eclipse-forge.ru/',
+        shot: 'coffee',
       },
     ],
   },
@@ -160,15 +172,34 @@ export function WorksSection() {
         <motion.p variants={revealUp} className="mt-5 max-w-2xl type-body text-[15px] leading-relaxed" style={{ color: 'var(--text-3)' }}>
           {copy.description}
         </motion.p>
-        <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {copy.works.map((work) => {
             const external = work.href.startsWith('http');
             return (
               <motion.article
                 key={work.href}
                 variants={revealUp}
-                className={`work-card flex flex-col rounded-[1.6rem] border p-6 services-card${work.kind === 'demo' ? ' work-card--demo' : ''}`}
+                className={`work-card flex flex-col overflow-hidden rounded-[1.6rem] border services-card${work.kind === 'demo' ? ' work-card--demo' : ''}`}
               >
+                <a
+                  href={work.href}
+                  target={external ? '_blank' : undefined}
+                  rel={external ? 'noreferrer' : undefined}
+                  className="device-stage"
+                  tabIndex={-1}
+                  aria-hidden="true"
+                >
+                  <span className="device-laptop">
+                    <span className="device-laptop__screen">
+                      <img src={`/images/works/${work.shot}-desktop.webp`} alt="" width={1200} height={750} loading="lazy" decoding="async" />
+                    </span>
+                    <span className="device-laptop__base" />
+                  </span>
+                  <span className="device-phone">
+                    <img src={`/images/works/${work.shot}-mobile.webp`} alt="" width={390} height={844} loading="lazy" decoding="async" />
+                  </span>
+                </a>
+                <div className="flex flex-1 flex-col p-6 pt-5">
                 <div className="flex items-center justify-between gap-3">
                   <p className="type-meta" style={{ color: work.kind === 'concept' ? 'var(--text-4)' : 'var(--gold)' }}>
                     {copy.kinds[work.kind]}
@@ -194,6 +225,7 @@ export function WorksSection() {
                 >
                   {work.kind === 'demo' ? copy.openDemo : copy.openSite} <span aria-hidden>{external ? '↗' : '→'}</span>
                 </a>
+                </div>
               </motion.article>
             );
           })}
