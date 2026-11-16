@@ -17,17 +17,17 @@ const processCopy: Record<
 > = {
   ru: {
     eyebrow: 'Процесс',
-    titleTop: 'От запроса',
-    titleBottom: 'к операционной форме.',
-    inputLabel: 'вход',
-    resultLabel: 'контролируемый результат',
+    titleTop: 'От первого разговора',
+    titleBottom: 'до работающего сайта.',
+    inputLabel: 'ваша задача',
+    resultLabel: 'сайт принимает заявки',
   },
   en: {
     eyebrow: 'Process',
-    titleTop: 'From request',
-    titleBottom: 'to operational shape.',
-    inputLabel: 'input',
-    resultLabel: 'controlled result',
+    titleTop: 'From the first call',
+    titleBottom: 'to a working site.',
+    inputLabel: 'your task',
+    resultLabel: 'the site takes leads',
   },
 };
 

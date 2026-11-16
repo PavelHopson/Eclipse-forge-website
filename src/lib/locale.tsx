@@ -16,19 +16,19 @@ type LocaleMeta = {
 const META_BY_LOCALE: Record<Locale, LocaleMeta> = {
   ru: {
     lang: 'ru',
-    title: 'Eclipse Forge — системы, контроль, AI-операторы',
-    description: 'Eclipse Forge создаёт ИИ-помощников, системы автоматизации, SaaS-продукты и понятные панели управления сложными процессами.',
+    title: 'Eclipse Forge — сайты с системой заявок под ключ',
+    description: 'Делаю сайты с системой заявок под ключ: клиент пишет — менеджер получает готовую карточку, владелец видит, что происходит. Цены открыто, смета до начала работ.',
     ogLocale: 'ru_RU',
-    twitterTitle: 'Eclipse Forge — системы, контроль, AI-операторы',
-    twitterDescription: 'ИИ-помощники, автоматизация, продуктовые системы и понятное управление сложными процессами.',
+    twitterTitle: 'Eclipse Forge — сайты с системой заявок под ключ',
+    twitterDescription: 'Сайты с системой заявок под ключ. Живые демо, открытые цены, смета до начала работ.',
   },
   en: {
     lang: 'en',
-    title: 'Eclipse Forge — Systems, Control, AI Operators',
-    description: 'Eclipse Forge builds AI operators, automation systems, SaaS products and control surfaces for complex workflows.',
+    title: 'Eclipse Forge — turnkey sites with a lead system',
+    description: 'Turnkey sites with a lead system: the client writes, the manager gets a ready card, the owner sees what is happening. Open pricing, estimate fixed before start.',
     ogLocale: 'en_US',
-    twitterTitle: 'Eclipse Forge — Systems, Control, AI Operators',
-    twitterDescription: 'AI operators, automation systems, product surfaces and control layers for complex workflows.',
+    twitterTitle: 'Eclipse Forge — turnkey sites with a lead system',
+    twitterDescription: 'Turnkey sites with a lead system. Live demos, open pricing, estimate fixed before start.',
   },
 };
 

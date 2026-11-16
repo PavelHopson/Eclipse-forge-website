@@ -10,7 +10,8 @@ import { WorksSection } from '../components/sections/WorksSection';
 import { EclipseDivider } from '../components/ui/EclipseVisuals';
 import { MobileCta } from '../components/ui/MobileCta';
 
-// Порядок «оффер → цена → живые демо → кто делает → как → вопросы → заявка».
+// Порядок «оффер → работы → чем отличается → цена → демо заявки → кто делает → как → вопросы → заявка».
+// Работы стоят сразу после первого экрана: заказчик сначала смотрит примеры, потом читает цены.
 // Сняты со страницы (файлы оставлены): About, BusinessImpact, HowItWorks, ProductionReadiness,
 // Metrics, Services, ConstructionCase — повторяли тезис «не сайт — система»;
 // EcosystemRail — внутренние продукты Eclipse Forge, клиенту-бизнесу не нужны.
@@ -18,10 +19,10 @@ export function LandingPage() {
   return (
     <main className="relative z-10">
       <HeroSection />
+      <WorksSection />
+      <EclipseDivider />
       <SystemsNotSitesSection />
       <PackagesSection />
-      <EclipseDivider />
-      <WorksSection />
       <LeadDemoSection />
       <EclipseDivider />
       <FounderSection />

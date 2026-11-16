@@ -93,8 +93,8 @@ const heroCopy: Record<
     secondaryCta: 'Тарифы и цены',
     availability: 'Принимаю новые проекты',
     location: 'Работаю удалённо',
-    edition: 'Избранные проекты / 2026',
-    systemLabel: 'Системы работают и измеряются',
+    edition: 'Напрямую, без посредников',
+    systemLabel: 'Заявка → карточка → сделка',
     scrollLabel: 'Листайте вниз',
     proof: [
       { label: 'Цены', value: 'Открыто, от 100 000 ₽' },
@@ -113,8 +113,8 @@ const heroCopy: Record<
     secondaryCta: 'Packages and prices',
     availability: 'Accepting new projects',
     location: 'Working remotely',
-    edition: 'Selected projects / 2026',
-    systemLabel: 'Systems are monitored',
+    edition: 'Direct, no middlemen',
+    systemLabel: 'Lead → card → deal',
     scrollLabel: 'Scroll down',
     proof: [
       { label: 'Pricing', value: 'Open, from 100 000 ₽' },

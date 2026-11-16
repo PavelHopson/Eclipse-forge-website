@@ -46,8 +46,8 @@ const founderCopy: Record<
 
 function FounderBrandLockup({ locale }: { locale: Locale }) {
   const descriptor = locale === 'ru'
-    ? 'Инженерия автономных систем'
-    : 'Autonomous systems engineering';
+    ? 'Сайты и системы заявок'
+    : 'Sites and lead systems';
 
   return (
     <div
@@ -58,7 +58,7 @@ function FounderBrandLockup({ locale }: { locale: Locale }) {
       <div aria-hidden="true" className="founder-brand-lockup__visual">
         <span className="founder-brand-lockup__grid" />
         <span className="founder-brand-lockup__scan" />
-        <span className="founder-brand-lockup__index">EF / SIGNAL 01</span>
+        <span className="founder-brand-lockup__index">EF / 01</span>
 
         <span className="founder-brand-lockup__mark">
           <span className="founder-brand-lockup__rays" />
@@ -75,7 +75,7 @@ function FounderBrandLockup({ locale }: { locale: Locale }) {
         <span className="founder-brand-lockup__descriptor">{descriptor}</span>
 
         <span className="founder-brand-lockup__footer">
-          <span>AI · PRODUCT · AUTOMATION</span>
+          <span>{locale === 'ru' ? 'САЙТ · ЗАЯВКИ · ОТЧЁТ' : 'SITE · LEADS · REPORT'}</span>
           <span>2026</span>
         </span>
       </div>

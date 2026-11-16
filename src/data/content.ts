@@ -854,34 +854,34 @@ const serviceEntryPointDefinitions: LocalizedServiceEntryPointDefinition[] = [
 const processStepDefinitions: LocalizedProcessStepDefinition[] = [
   {
     index: '01',
-    title: localized('Разобрать реальную систему', 'Map the real system'),
+    title: localized('Разбираемся, как у вас идут заявки', 'We map how your leads arrive'),
     text: localized(
-      'Мы начинаем с анатомии процесса: что система видит, какое состояние хранит, где принимаются решения и где сейчас утекает контроль.',
-      'We start from process anatomy: what the system sees, what state it keeps, where decisions happen and where control currently leaks.',
+      'Созваниваемся на 30 минут: откуда приходят клиенты, кто им отвечает и где заявки теряются. После разговора присылаю смету и срок.',
+      'A 30-minute call: where clients come from, who answers them and where leads get lost. After the call I send an estimate and a timeline.',
     ),
   },
   {
     index: '02',
-    title: localized('Спроектировать цикл исполнения', 'Design the execution loop'),
+    title: localized('Показываю, как это будет выглядеть', 'I show how it will look'),
     text: localized(
-      'AI, автоматизация, dashboard-ы и уведомления собираются вокруг одного цикла: обнаружить, решить, выполнить, проверить и зафиксировать.',
-      'AI, automation, dashboards and notifications are assembled around one loop: detect, decide, act, verify and record.',
+      'Собираю макет главной страницы и путь заявки: что видит клиент, что получает менеджер, что видит владелец. Правим, пока не станет понятно и удобно.',
+      'I build a home page mockup and the lead path: what the client sees, what the manager gets, what the owner sees. We revise until it is clear and convenient.',
     ),
   },
   {
     index: '03',
-    title: localized('Выпустить с инженерной дисциплиной', 'Ship with engineering discipline'),
+    title: localized('Собираю и проверяю', 'I build and test'),
     text: localized(
-      'Сборки, тесты, проверки деплоя и наблюдаемые логи входят в поставку. Цель не в демо, а в системе, которая продолжает работать.',
-      'Builds, tests, deploy checks and observable logs are part of the delivery. The goal is not a demo but a system that keeps working.',
+      'Делаю сайт и систему заявок, проверяю на телефоне и компьютере, сам прохожу путь клиента от первого экрана до карточки заявки.',
+      'I build the site and the lead system, test on phone and desktop, and walk the client path myself from the first screen to the lead card.',
     ),
   },
   {
     index: '04',
-    title: localized('Переиспользовать паттерны между продуктами', 'Reuse patterns across products'),
+    title: localized('Запускаю и передаю вам', 'I launch and hand it over'),
     text: localized(
-      'Когда паттерн контроля доказывает свою ценность, мы упаковываем его и переносим между проектами: адаптеры, retries, operator panels, parsing-слои и AI-маршруты.',
-      'Once a control pattern proves itself, we package it and reuse it across projects: adapters, retries, operator panels, parsing layers and AI routes.',
+      'Ставлю сайт на ваш домен, передаю доступы и показываю, как пользоваться. Дальше — сопровождение, если оно вам нужно.',
+      'I put the site on your domain, hand over access and show how to use it. After that — ongoing support if you need it.',
     ),
   },
 ];
