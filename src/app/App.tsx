@@ -10,7 +10,6 @@ import {
 } from '../components/ui/EclipseVisuals';
 import { PriceListModal } from '../components/ui/PriceListModal';
 import { BroadcastIcon, GitHubIcon, InstagramIcon, TelegramIcon } from '../components/ui/SocialIcons';
-import { GlowButton } from '../components/ui/GlowButton';
 import { contactDetails } from '../data/content';
 import { useLocale, type Locale } from '../lib/locale';
 import { MotionPreferenceProvider, useMotionPreference } from '../lib/motionPreference';
@@ -31,25 +30,15 @@ function RouteLoading() {
 const footerCopy: Record<
   Locale,
   {
-    eyebrow: string;
-    title: string;
-    description: string;
     location: string;
     status: string;
-    primaryCta: string;
-    secondaryCta: string;
     socialLabels: { telegram: string; channel: string; github: string; instagram: string };
     libraryLabel: string;
   }
 > = {
   ru: {
-    eyebrow: 'Eclipse Forge / сайты и системы для бизнеса',
-    title: 'Заявки теряются в мессенджерах?',
-    description: 'Сделаю сайт и систему, где каждая заявка — карточка со статусом, а владелец видит, что происходит.',
     location: 'Работаю удалённо',
     status: 'Принимаю новые проекты',
-    primaryCta: 'Написать в Telegram',
-    secondaryCta: 'Смотреть демо',
     socialLabels: {
       telegram: 'Telegram',
       channel: 'Канал',
@@ -59,13 +48,8 @@ const footerCopy: Record<
     libraryLabel: 'Библиотека инструментов',
   },
   en: {
-    eyebrow: 'Final orbit / next launch',
-    title: 'Have a process that should run itself?',
-    description: 'Systems for control, automation and AI execution. Built for products that need more than a front layer.',
-    location: 'Worldwide',
-    status: 'Signal channel open',
-    primaryCta: 'Discuss the system',
-    secondaryCta: 'See demos',
+    location: 'Working remotely',
+    status: 'Taking new projects',
     socialLabels: {
       telegram: 'Telegram',
       channel: 'Channel',
@@ -128,7 +112,7 @@ function AppSurface() {
         </Suspense>
       ) : <LandingPage />}
 
-      <footer className="event-horizon-footer relative z-10 overflow-hidden border-t" style={{ borderColor: 'var(--line)' }} aria-labelledby="footer-title">
+      <footer className="event-horizon-footer relative z-10 overflow-hidden border-t" style={{ borderColor: 'var(--line)' }} aria-label={locale === 'ru' ? 'Подвал сайта' : 'Site footer'}>
         <div aria-hidden className="event-horizon-footer__grid" />
         <motion.div
           aria-hidden
@@ -146,32 +130,7 @@ function AppSurface() {
 
         <div aria-hidden className="event-horizon-footer__wordmark">ECLIPSE FORGE</div>
 
-        <div className="event-horizon-footer__shell relative mx-auto max-w-[1400px] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
-          <motion.div
-            className="relative z-[2] max-w-[760px]"
-            initial={ambientMotionEnabled ? { opacity: 0, y: 18 } : false}
-            whileInView={ambientMotionEnabled ? { opacity: 1, y: 0 } : undefined}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="event-horizon-footer__eyebrow">
-              <span aria-hidden />
-              {copy.eyebrow}
-            </div>
-            <h2 id="footer-title" className="event-horizon-footer__title font-display">
-              {copy.title}
-            </h2>
-            <p className="event-horizon-footer__description">{copy.description}</p>
-            <div className="event-horizon-footer__actions">
-              <GlowButton href={contactDetails.telegramDmUrl} target="_blank" rel="noreferrer">
-                {copy.primaryCta}
-              </GlowButton>
-              <a className="event-horizon-footer__secondary" href="#works">
-                {copy.secondaryCta} <span aria-hidden>↑</span>
-              </a>
-            </div>
-          </motion.div>
-
+        <div className="event-horizon-footer__shell event-horizon-footer__shell--compact relative mx-auto max-w-[1400px] px-5 py-10 sm:px-8 sm:py-12 lg:px-12">
           <div className="event-horizon-footer__dock relative z-[2]">
             <div className="event-horizon-footer__identity">
               <span className="event-horizon-footer__status-dot" aria-hidden />

@@ -5286,3 +5286,51 @@ html[data-ambient-motion='paused'] .flagship-scene__media-action {
 @media (max-width: 400px) {
   .project-covers__open { width: 100%; }
 }
+/* Contact: what happens next */
+.contact-next {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.contact-next li {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  gap: 0.85rem;
+  align-items: baseline;
+}
+
+.contact-next span {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+}
+
+.contact-next p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+/* Compact footer: the CTA lives in #contact right above */
+.event-horizon-footer:has(.event-horizon-footer__shell--compact),
+.event-horizon-footer__shell.event-horizon-footer__shell--compact {
+  min-height: 0;
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+.event-horizon-footer__shell--compact .event-horizon-footer__dock {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.event-horizon-footer:has(.event-horizon-footer__shell--compact) .event-horizon-footer__eclipse,
+.event-horizon-footer:has(.event-horizon-footer__shell--compact) .event-horizon-footer__wordmark {
+  display: none;
+}
