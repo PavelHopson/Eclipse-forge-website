@@ -31,7 +31,7 @@ const COPY: Record<Locale, Copy> = {
         niche: 'Гостевые домики',
         text: 'Подбор домика по датам и гостям, цена считается сразу, занятые даты выбрать нельзя.',
         tags: ['Бронь по датам', 'Расчёт цены', 'Панель владельца'],
-        href: '/demos/guest-house/',
+        href: '/demos/guest-house/index.html',
         shot: 'guest-house',
       },
       {
@@ -40,7 +40,7 @@ const COPY: Record<Locale, Copy> = {
         niche: 'Ремонт квартир',
         text: 'Калькулятор ремонта по площади и виду работ; ориентир попадает в заявку на замер.',
         tags: ['Калькулятор', 'Заявка на замер', 'Панель владельца'],
-        href: '/demos/renovation/',
+        href: '/demos/renovation/index.html',
         shot: 'renovation',
       },
       {
@@ -49,7 +49,7 @@ const COPY: Record<Locale, Copy> = {
         niche: 'Автосервис',
         text: 'Онлайн-запись на свободное время, цены на услуги, подтверждение в мессенджер.',
         tags: ['Онлайн-запись', 'Свободные окна', 'Панель владельца'],
-        href: '/demos/auto-service/',
+        href: '/demos/auto-service/index.html',
         shot: 'auto-service',
       },
       {
@@ -96,7 +96,7 @@ const COPY: Record<Locale, Copy> = {
         niche: 'Guest cabins',
         text: 'Pick a cabin by dates and guests, price is calculated instantly, booked dates are blocked.',
         tags: ['Date booking', 'Price calc', 'Owner panel'],
-        href: '/demos/guest-house/',
+        href: '/demos/guest-house/index.html',
         shot: 'guest-house',
       },
       {
@@ -105,7 +105,7 @@ const COPY: Record<Locale, Copy> = {
         niche: 'Apartment renovation',
         text: 'Renovation calculator by area and type; the estimate goes straight into the request.',
         tags: ['Calculator', 'Survey request', 'Owner panel'],
-        href: '/demos/renovation/',
+        href: '/demos/renovation/index.html',
         shot: 'renovation',
       },
       {
@@ -114,7 +114,7 @@ const COPY: Record<Locale, Copy> = {
         niche: 'Car service',
         text: 'Online booking of free slots, service prices, confirmation via messenger.',
         tags: ['Online booking', 'Free slots', 'Owner panel'],
-        href: '/demos/auto-service/',
+        href: '/demos/auto-service/index.html',
         shot: 'auto-service',
       },
       {
