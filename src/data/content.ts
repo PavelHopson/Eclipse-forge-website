@@ -854,34 +854,34 @@ const serviceEntryPointDefinitions: LocalizedServiceEntryPointDefinition[] = [
 const processStepDefinitions: LocalizedProcessStepDefinition[] = [
   {
     index: '01',
-    title: localized('Разобрать реальную систему', 'Map the real system'),
+    title: localized('Разбираемся, как у вас идут заявки', 'We map how your leads arrive'),
     text: localized(
-      'Мы начинаем с анатомии процесса: что система видит, какое состояние хранит, где принимаются решения и где сейчас утекает контроль.',
-      'We start from process anatomy: what the system sees, what state it keeps, where decisions happen and where control currently leaks.',
+      'Созваниваемся на 30 минут: откуда приходят клиенты, кто им отвечает и где заявки теряются. После разговора присылаю смету и срок.',
+      'A 30-minute call: where clients come from, who answers them and where leads get lost. After the call I send an estimate and a timeline.',
     ),
   },
   {
     index: '02',
-    title: localized('Спроектировать цикл исполнения', 'Design the execution loop'),
+    title: localized('Показываю, как это будет выглядеть', 'I show how it will look'),
     text: localized(
-      'AI, автоматизация, dashboard-ы и уведомления собираются вокруг одного цикла: обнаружить, решить, выполнить, проверить и зафиксировать.',
-      'AI, automation, dashboards and notifications are assembled around one loop: detect, decide, act, verify and record.',
+      'Собираю макет главной страницы и путь заявки: что видит клиент, что получает менеджер, что видит владелец. Правим, пока не станет понятно и удобно.',
+      'I build a home page mockup and the lead path: what the client sees, what the manager gets, what the owner sees. We revise until it is clear and convenient.',
     ),
   },
   {
     index: '03',
-    title: localized('Выпустить с инженерной дисциплиной', 'Ship with engineering discipline'),
+    title: localized('Собираю и проверяю', 'I build and test'),
     text: localized(
-      'Сборки, тесты, проверки деплоя и наблюдаемые логи входят в поставку. Цель не в демо, а в системе, которая продолжает работать.',
-      'Builds, tests, deploy checks and observable logs are part of the delivery. The goal is not a demo but a system that keeps working.',
+      'Делаю сайт и систему заявок, проверяю на телефоне и компьютере, сам прохожу путь клиента от первого экрана до карточки заявки.',
+      'I build the site and the lead system, test on phone and desktop, and walk the client path myself from the first screen to the lead card.',
     ),
   },
   {
     index: '04',
-    title: localized('Переиспользовать паттерны между продуктами', 'Reuse patterns across products'),
+    title: localized('Запускаю и передаю вам', 'I launch and hand it over'),
     text: localized(
-      'Когда паттерн контроля доказывает свою ценность, мы упаковываем его и переносим между проектами: адаптеры, retries, operator panels, parsing-слои и AI-маршруты.',
-      'Once a control pattern proves itself, we package it and reuse it across projects: adapters, retries, operator panels, parsing layers and AI routes.',
+      'Ставлю сайт на ваш домен, передаю доступы и показываю, как пользоваться. Дальше — сопровождение, если оно вам нужно.',
+      'I put the site on your domain, hand over access and show how to use it. After that — ongoing support if you need it.',
     ),
   },
 ];
@@ -908,12 +908,12 @@ const metricDefinitions: LocalizedMetricDefinition[] = [
 ];
 
 const founderProfileDefinition: LocalizedFounderProfileDefinition = {
-  eyebrow: localized('Профиль оператора', 'Operator profile'),
-  title: localized('Кто стоит за системой', 'Who stands behind the system'),
+  eyebrow: localized('Кто делает', 'Operator profile'),
+  title: localized('Работаете напрямую со мной', 'Who stands behind the system'),
   summary: localized(
     [
-      'Павел Хопсон — основатель Eclipse Forge. Я не делаю интерфейсы ради интерфейсов. Я собираю системы, которые забирают ручную рутину, фиксируют процесс и становятся рабочей частью бизнеса.',
-      'Если задача живёт между чатами, таблицами, людьми и постоянным ручным контролем, я превращаю её в управляемую систему: что она видит, как принимает решение и как доводит действие до результата.',
+      'Павел Хопсон, основатель Eclipse Forge. Сам проектирую, пишу код и запускаю — без менеджеров-посредников и передачи задач по цепочке.',
+      'Делаю не просто красивый сайт, а то, что за ним: куда падает заявка, кто её берёт, что напоминает менеджеру и что видит владелец.',
     ],
     [
       'Pavel Hopson is the founder of Eclipse Forge. I do not build interfaces for the sake of interfaces. I build systems that remove manual routine, fix the process and become a working part of the business.',
@@ -922,10 +922,10 @@ const founderProfileDefinition: LocalizedFounderProfileDefinition = {
   ),
   pillars: localized(
     [
-      'AI-системы и operator flows, где модель не отвечает в чате, а реально исполняет работу',
-      'Системы автоматизации, которые убирают ручное распределение задач, напоминания и повторяющиеся проверки',
-      'SaaS MVP и внутренние платформы, где за UI уже есть состояние, правила и рабочая логика',
-      'Продукты, в которых интерфейс не украшение, а управляемая поверхность для дорогого процесса',
+      'Сайты с онлайн-записью, бронированием и калькуляторами — заявка приходит уже с деталями',
+      'Кабинет менеджера: каждая заявка — карточка со статусом и напоминанием',
+      'AI-разбор сообщений клиентов там, где это экономит время, с проверкой человеком',
+      'Отчёт владельцу: сколько заявок пришло, сколько в работе, сколько закрыто',
     ],
     [
       'AI systems and operator flows where the model does not just chat, but actually executes work',
@@ -936,9 +936,9 @@ const founderProfileDefinition: LocalizedFounderProfileDefinition = {
   ),
   stats: localized(
     [
-      { value: 'AI + automation + SaaS', label: 'одна связная система' },
-      { value: 'UI + runtime + data', label: 'не только фронтовый слой' },
-      { value: 'Процесс -> система', label: 'главная логика работы' },
+      { value: 'Напрямую', label: 'без посредников' },
+      { value: 'Код ваш', label: 'передаю доступы' },
+      { value: 'Смета', label: 'до начала работ' },
     ],
     [
       { value: 'AI + automation + SaaS', label: 'one system contour' },
@@ -1009,28 +1009,28 @@ const priceListDefinition: {
         items: [
           {
             title: 'SaaS-разработка',
-            price: 'от 350 000 ₽',
+            price: 'от 150 000 ₽',
             description:
               'Полный SaaS-продукт: фронт + бэкенд + auth + биллинг + админка. Multi-tenant, role-based access, recurring подписки.',
             highlight: true,
           },
           {
             title: 'AI-операторы и автоматизация',
-            price: 'от 120 000 ₽',
+            price: 'от 50 000 ₽',
             description:
               'AI-агент, который реально исполняет работу: function calling, retry-safe запросы, разрешения, инструменты, логирование.',
             highlight: true,
           },
           {
             title: 'CRM / Dashboard-системы',
-            price: 'от 180 000 ₽',
+            price: 'от 70 000 ₽',
             description:
               'Внутренние платформы: метрики, операторские панели, ETL и observability stack — Grafana / Prometheus / Loki.',
             highlight: true,
           },
           {
             title: 'Создание скриптов',
-            price: 'от 50 000 ₽',
+            price: 'от 15 000 ₽',
             description:
               'Парсеры, Telegram-боты, integration между API, ETL-задачи, CI/CD-сценарии. Python / Node.js / Rust.',
           },
@@ -1041,44 +1041,44 @@ const priceListDefinition: {
         items: [
           {
             title: 'Разработка сайта под ключ',
-            price: 'от 250 000 ₽',
+            price: 'от 60 000 ₽',
             description:
               'Полный цикл: исследование → дизайн → разработка → деплой → 30 дней сопровождения. Стек React 19 + TypeScript + FastAPI / Express.',
             highlight: true,
           },
           {
             title: 'Корпоративный сайт',
-            price: 'от 250 000 ₽',
+            price: 'от 60 000 ₽',
             description:
               'Многостраничник с продуктовой логикой: каталог услуг, блог, кейсы, форма заявки в CRM / Telegram, админка.',
           },
           {
             title: 'Интернет-магазин',
-            price: 'от 350 000 ₽',
+            price: 'от 120 000 ₽',
             description:
               'Каталог + корзина + оплата (ЮKassa / Stripe) + личный кабинет + админка. Интеграция со складом и доставкой.',
           },
           {
             title: 'Сайт-каталог',
-            price: 'от 180 000 ₽',
+            price: 'от 50 000 ₽',
             description:
               'Каталог товаров / услуг / специалистов с поиском, фильтрами, сортировкой и детальными карточками.',
           },
           {
             title: 'Информационный сайт',
-            price: 'от 150 000 ₽',
+            price: 'от 40 000 ₽',
             description:
               'Блог, медиа, справочник. Headless CMS, удобный редактор без HTML, RSS, оптимизация под чтение.',
           },
           {
             title: 'Одностраничный сайт / landing',
-            price: 'от 150 000 ₽',
+            price: 'от 30 000 ₽',
             description:
               'Конверсионный landing для запуска продукта: hero, ценность, кейсы, прайс, FAQ, форма с аналитикой.',
           },
           {
             title: 'Сайт-визитка',
-            price: 'от 100 000 ₽',
+            price: 'от 30 000 ₽',
             description:
               'Премиум-визитка для эксперта или частной практики. Один экран, портрет, кейсы, форма заявки.',
           },
@@ -1089,25 +1089,25 @@ const priceListDefinition: {
         items: [
           {
             title: 'Редизайн сайта',
-            price: 'от 150 000 ₽',
+            price: 'от 40 000 ₽',
             description:
               'Перерисовка в современном стеке с сохранением URL и SEO. Дизайн в Figma, миграция на React 19, ускорение Core Web Vitals.',
           },
           {
             title: 'Дизайн в Figma',
-            price: 'от 100 000 ₽',
+            price: 'от 25 000 ₽',
             description:
               'Только дизайн без кода. Бренд, типографика, design system, все экраны с компонентами и auto-layout.',
           },
           {
             title: 'Доработка сайта',
-            price: 'от 5 000 ₽ / час',
+            price: 'от 2 000 ₽ / час',
             description:
-              'Точечные правки: новые секции, баги, ускорение, миграции, интеграции. Минимальный заказ — 30 000 ₽.',
+              'Точечные правки: новые секции, баги, ускорение, миграции, интеграции. Минимальный заказ — 5 000 ₽.',
           },
           {
             title: 'Сопровождение сайта',
-            price: 'от 30 000 ₽ / мес',
+            price: 'от 3 000 ₽ / мес',
             description:
               'Бэкапы, monitoring, обновления безопасности, до N часов работ в месяц. Гарантированный ответ в 24 часа.',
           },
@@ -1120,28 +1120,28 @@ const priceListDefinition: {
         items: [
           {
             title: 'SaaS development',
-            price: 'from 350 000 ₽',
+            price: 'from 150 000 ₽',
             description:
               'Full SaaS product: front + back + auth + billing + admin. Multi-tenant, RBAC, recurring subscriptions.',
             highlight: true,
           },
           {
             title: 'AI operators & automation',
-            price: 'from 120 000 ₽',
+            price: 'from 50 000 ₽',
             description:
               'An AI agent that actually executes work: function calling, retry-safe requests, permissions, tools, logging.',
             highlight: true,
           },
           {
             title: 'CRM / Dashboard systems',
-            price: 'from 180 000 ₽',
+            price: 'from 70 000 ₽',
             description:
               'Internal platforms: metrics, operator panels, ETL and observability stack — Grafana / Prometheus / Loki.',
             highlight: true,
           },
           {
             title: 'Custom scripts',
-            price: 'from 50 000 ₽',
+            price: 'from 15 000 ₽',
             description:
               'Parsers, Telegram bots, API integrations, ETL pipelines, CI/CD scripts. Python / Node.js / Rust.',
           },
@@ -1152,44 +1152,44 @@ const priceListDefinition: {
         items: [
           {
             title: 'Turnkey website',
-            price: 'from 250 000 ₽',
+            price: 'from 60 000 ₽',
             description:
               'Full cycle: research → design → development → deploy → 30 days of support. Stack: React 19 + TypeScript + FastAPI / Express.',
             highlight: true,
           },
           {
             title: 'Corporate website',
-            price: 'from 250 000 ₽',
+            price: 'from 60 000 ₽',
             description:
               'Multi-page site with product logic: services catalog, blog, cases, lead form to CRM / Telegram, content admin.',
           },
           {
             title: 'E-commerce',
-            price: 'from 350 000 ₽',
+            price: 'from 120 000 ₽',
             description:
               'Catalog + cart + payments (ЮKassa / Stripe) + customer account + admin. Inventory and shipping integrations.',
           },
           {
             title: 'Catalog website',
-            price: 'from 180 000 ₽',
+            price: 'from 50 000 ₽',
             description:
               'Catalog of products / services / specialists with search, filters, sorting and detail pages.',
           },
           {
             title: 'Content website',
-            price: 'from 150 000 ₽',
+            price: 'from 40 000 ₽',
             description:
               'Blog, media, reference site. Headless CMS, comfortable editor without HTML, RSS, reading-optimized.',
           },
           {
             title: 'Single-page landing',
-            price: 'from 150 000 ₽',
+            price: 'from 30 000 ₽',
             description:
               'Conversion-focused landing for product launch: hero, value, cases, pricing, FAQ, form with analytics.',
           },
           {
             title: 'Personal site',
-            price: 'from 100 000 ₽',
+            price: 'from 30 000 ₽',
             description:
               'Premium business card for an expert or private practice. One screen, portrait, cases, lead form.',
           },
@@ -1200,25 +1200,25 @@ const priceListDefinition: {
         items: [
           {
             title: 'Redesign',
-            price: 'from 150 000 ₽',
+            price: 'from 40 000 ₽',
             description:
               'Redrawing on a modern stack with URL/SEO preservation. Figma design, migration to React 19, Core Web Vitals tune-up.',
           },
           {
             title: 'Figma design only',
-            price: 'from 100 000 ₽',
+            price: 'from 25 000 ₽',
             description:
               'Design without code. Brand, typography, design system, all screens with components and auto-layout.',
           },
           {
             title: 'Site fixes & improvements',
-            price: 'from 5 000 ₽ / hour',
+            price: 'from 2 000 ₽ / hour',
             description:
-              'Point fixes: new sections, bugs, performance, migrations, integrations. Min order — 30 000 ₽.',
+              'Point fixes: new sections, bugs, performance, migrations, integrations. Min order — 5 000 ₽.',
           },
           {
             title: 'Maintenance',
-            price: 'from 30 000 ₽ / mo',
+            price: 'from 3 000 ₽ / mo',
             description:
               'Backups, uptime monitoring, security updates, up to N hours of work per month. 24-hour response guarantee.',
           },

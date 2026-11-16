@@ -43,13 +43,13 @@ const footerCopy: Record<
   }
 > = {
   ru: {
-    eyebrow: 'Финальная орбита / следующий запуск',
-    title: 'Есть процесс, который должен работать сам?',
-    description: 'Системы для контроля, автоматизации и AI-исполнения. Для продуктов, которым нужен не только фронтовый слой.',
-    location: 'По всему миру',
-    status: 'Канал связи открыт',
-    primaryCta: 'Обсудить систему',
-    secondaryCta: 'Вернуться к проектам',
+    eyebrow: 'Eclipse Forge / сайты и системы для бизнеса',
+    title: 'Заявки теряются в мессенджерах?',
+    description: 'Сделаю сайт и систему, где каждая заявка — карточка со статусом, а владелец видит, что происходит.',
+    location: 'Работаю удалённо',
+    status: 'Принимаю новые проекты',
+    primaryCta: 'Написать в Telegram',
+    secondaryCta: 'Смотреть демо',
     socialLabels: {
       telegram: 'Telegram',
       channel: 'Канал',
@@ -65,7 +65,7 @@ const footerCopy: Record<
     location: 'Worldwide',
     status: 'Signal channel open',
     primaryCta: 'Discuss the system',
-    secondaryCta: 'Return to projects',
+    secondaryCta: 'See demos',
     socialLabels: {
       telegram: 'Telegram',
       channel: 'Channel',
@@ -166,7 +166,7 @@ function AppSurface() {
               <GlowButton href={contactDetails.telegramDmUrl} target="_blank" rel="noreferrer">
                 {copy.primaryCta}
               </GlowButton>
-              <a className="event-horizon-footer__secondary" href="#cases">
+              <a className="event-horizon-footer__secondary" href="#works">
                 {copy.secondaryCta} <span aria-hidden>↑</span>
               </a>
             </div>

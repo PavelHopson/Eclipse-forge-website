@@ -78,7 +78,7 @@ test('editorial hero keeps the Eclipse anchor and accessible primary paths', asy
   assert.match(hero, /hero-editorial-wordmark/);
   assert.match(hero, /hero-editorial-reflection/);
   assert.match(hero, /href="#contact"/);
-  assert.match(hero, /href="#cases"/);
+  assert.match(hero, /href="#services"/);
   assert.match(hero, /useMotionPreference/);
   assert.match(styles, /\.hero-editorial-cta\s*\{[\s\S]*min-height:\s*52px/);
   assert.match(styles, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.hero-editorial-corona/);

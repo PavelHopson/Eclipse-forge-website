@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { PACKAGE_EVENT } from './PackagesSection';
 import { contactDetails } from '../../data/content';
 import { revealUp, stagger, staggerFast, viewport } from '../../lib/animation';
 import { useLocale, type Locale } from '../../lib/locale';
@@ -48,9 +49,9 @@ type CtaCopy = {
 const ctaCopy: Record<Locale, CtaCopy> = {
   ru: {
     eyebrow: 'Обсудить проект',
-    title: 'Опишите задачу.',
-    titleAccent: 'Разберём и превратим в систему.',
-    description: 'Опишите ручной процесс — быстро скажу, как превратить его в систему.',
+    title: 'Расскажите о бизнесе.',
+    titleAccent: 'Отвечу, что подойдёт и сколько стоит.',
+    description: 'Несколько коротких ответов — и в течение суток пришлю, какой тариф подойдёт, и предложу время созвона на 30 минут.',
     telegramHint: 'Быстрее всего отвечаю в Telegram.',
     responseTime: 'Ответ в течение 24 часов · UTC+2',
     cityTimezone: 'UTC+2',
@@ -67,25 +68,25 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     emptyAnswer: 'не заполнено',
     telegramLabel: 'Написать в Telegram',
     emailLabel: 'Открыть email',
-    bottomNote: 'Что заполните — то автоматически уйдёт мне в Telegram, когда нажмёте кнопку.',
+    bottomNote: 'Кнопка Telegram скопирует ответы и откроет чат — останется вставить текст и отправить.',
     fields: [
       { key: 'name', label: 'Имя', placeholder: 'Имя или компания' },
       {
         key: 'manual',
-        label: 'Что делаете вручную',
-        placeholder: 'Какой процесс уже тормозит работу?',
+        label: 'Чем занимаетесь',
+        placeholder: 'Например: гостевой дом в Зеленоградске, ремонт квартир',
         multiline: true,
       },
       {
         key: 'loss',
-        label: 'Где теряется контроль',
-        placeholder: 'Где уходят время, деньги или точность?',
+        label: 'Что сейчас мешает',
+        placeholder: 'Нет сайта, мало заявок, заявки теряются в мессенджерах…',
         multiline: true,
       },
       {
         key: 'result',
-        label: 'Какой нужен результат',
-        placeholder: 'Что система должна начать делать сама?',
+        label: 'Что нужно',
+        placeholder: 'Сайт, система заявок, AI-разбор — или пока не знаете',
         multiline: true,
       },
       {
@@ -97,9 +98,9 @@ const ctaCopy: Record<Locale, CtaCopy> = {
   },
   en: {
     eyebrow: 'Open the channel',
-    title: 'Describe the task.',
-    titleAccent: "We'll turn it into a system.",
-    description: 'Describe the manual process — I will quickly show how to turn it into a system.',
+    title: 'Tell me about your business.',
+    titleAccent: "I'll reply with what fits and what it costs.",
+    description: 'A few short answers — within a day I will suggest a package and a time for a 30-minute call.',
     telegramHint: 'Fastest replies happen in Telegram.',
     responseTime: 'Reply within 24 hours · UTC+2',
     cityTimezone: 'UTC+2',
@@ -116,25 +117,25 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     emptyAnswer: 'not filled',
     telegramLabel: 'Message on Telegram',
     emailLabel: 'Open email',
-    bottomNote: 'Whatever you fill in goes straight to my Telegram when you press the button.',
+    bottomNote: 'The Telegram button copies your answers and opens the chat — just paste and send.',
     fields: [
       { key: 'name', label: 'Name', placeholder: 'Name or company' },
       {
         key: 'manual',
-        label: 'What is manual',
-        placeholder: 'Which process is already slowing the work down?',
+        label: 'What you do',
+        placeholder: 'E.g. a guest house, apartment renovation',
         multiline: true,
       },
       {
         key: 'loss',
-        label: 'Where control is lost',
-        placeholder: 'Where do time, money or precision leak?',
+        label: 'What gets in the way',
+        placeholder: 'No site, few leads, leads lost in messengers…',
         multiline: true,
       },
       {
         key: 'result',
-        label: 'What outcome is needed',
-        placeholder: 'What should the system start doing on its own?',
+        label: 'What you need',
+        placeholder: 'Site, lead system, AI parsing — or not sure yet',
         multiline: true,
       },
       {
@@ -169,7 +170,21 @@ export function CtaSection() {
   const [form, setForm] = useState<FormState>(emptyForm);
   const [copied, setCopied] = useState(false);
 
-  const filledCount = Object.values(form).filter((value) => value.trim().length > 0).length;
+  useEffect(() => {
+    const names: Record<Locale, Record<string, string>> = {
+      ru: { site: 'Тариф «Сайт с заявками»', crm: 'Тариф «Сайт + система заявок»', ai: 'Тариф «AI-обработка заявок»' },
+      en: { site: 'Package «Site with leads»', crm: 'Package «Site + lead system»', ai: 'Package «AI lead processing»' },
+    };
+    const onChoose = (event: Event) => {
+      const id = (event as CustomEvent<string>).detail;
+      const value = names[locale][id];
+      if (value) setForm((current) => ({ ...current, result: value }));
+    };
+    window.addEventListener(PACKAGE_EVENT, onChoose);
+    return () => window.removeEventListener(PACKAGE_EVENT, onChoose);
+  }, [locale]);
+
+  const filledCount =Object.values(form).filter((value) => value.trim().length > 0).length;
 
   const signalPacket = useMemo(() => {
     return [

@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>«Дюна» — гостевые домики у моря · демо Eclipse Forge</title>
+  <meta name="description" content="Демо-сайт гостевого дома от Eclipse Forge: подбор домика по датам, расчёт стоимости и панель владельца с заявками.">
+  <meta name="theme-color" content="#f5f0e8">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/demos/assets/demo.css">
+  <link rel="stylesheet" href="/demos/guest-house/dyuna.css">
+</head>
+<body data-demo="guest-house">
+  <div class="demo-ribbon">
+    <span><b>Демо Eclipse Forge.</b><span class="ribbon-long"> Компания вымышленная, заявки никуда не отправляются.</span><span class="ribbon-short"> Компания вымышленная.</span></span>
+    <button type="button" data-open-owner>Панель владельца</button>
+    <a href="/#works">← Все работы</a>
+  </div>
+
+  <div class="wrap">
+    <header class="site-head">
+      <a class="brand" href="#top" aria-label="Дюна — на главную">
+        <span class="brand-mark" aria-hidden="true">Д</span>
+        <span class="brand-name">Дюна<span class="brand-sub">гостевые домики у моря</span></span>
+      </a>
+      <nav class="site-nav" aria-label="Разделы">
+        <a href="#place">Место</a>
+        <a href="#book">Даты и цены</a>
+        <a href="#houses">Домики</a>
+        <a href="#rules">Правила</a>
+        <a href="#faq">Вопросы</a>
+      </nav>
+      <a class="btn btn--sm" href="#book">Забронировать</a>
+    </header>
+
+    <main id="top">
+      <section class="d-hero" aria-label="Гостевые домики Дюна">
+        <div class="d-hero__content">
+          <p class="d-hero__eyebrow">Гостевые домики · 5 минут до пляжа</p>
+          <h1>Тихие домики <em>среди сосен</em> у моря</h1>
+          <p>Своя терраса, мангал и парковка у каждого домика. Выберите даты — сразу покажем, что свободно и сколько стоит.</p>
+        </div>
+        <form class="d-bookbar" data-bookbar aria-label="Быстрый подбор дат">
+          <label>Заезд<input type="date" name="bb-from"></label>
+          <label>Выезд<input type="date" name="bb-to"></label>
+          <label>Гостей<select name="bb-guests"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></label>
+          <button class="btn" type="submit">Проверить даты</button>
+        </form>
+      </section>
+
+      <ul class="d-facts">
+        <li><b>от 4 200 ₽</b><span>за ночь в домике</span></li>
+        <li><b>3 домика</b><span>на закрытом участке</span></li>
+        <li><b>5 минут</b><span>по настилу до пляжа</span></li>
+        <li><b>с питомцем</b><span>по договорённости</span></li>
+      </ul>
+
+      <section class="section" id="place">
+        <div class="d-place">
+          <img src="/demos/assets/img/dyuna-path.webp" alt="Деревянный настил через дюны к морю" width="1536" height="1024" loading="lazy">
+          <div>
+            <p class="eyebrow">Место</p>
+            <h2>Сосны, дюны и&nbsp;тишина</h2>
+            <p class="sub" style="margin-bottom:0">Участок в сосновом лесу: соседей не слышно, до моря — по деревянному настилу через дюны.</p>
+            <ul>
+              <li><b>5 мин</b><span>пешком до пляжа</span></li>
+              <li><b>3</b><span>домика на гектаре леса — никакой толпы</span></li>
+              <li><b>24/7</b><span>самостоятельный заезд по коду от калитки</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="book">
+        <div class="lead">
+          <div>
+            <p class="eyebrow">Бронирование</p>
+            <h2>Даты и цены</h2>
+            <p class="sub">Цена считается сразу. Домики, которые заняты или не вместят всех гостей, мы просто не даём выбрать.</p>
+            <div class="widget" data-widget="stay">
+              <p class="widget-title">Подбор домика</p>
+              <p class="widget-note">Наличие в демо условное.</p>
+              <div class="row row--3">
+                <div class="field"><label for="from">Заезд</label><input class="input" id="from" name="from" type="date"></div>
+                <div class="field"><label for="to">Выезд</label><input class="input" id="to" name="to" type="date"></div>
+                <div class="field"><label for="guests">Гостей</label>
+                  <select class="select" id="guests" name="guests">
+                    <option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
+                  </select>
+                </div>
+              </div>
+              <div class="choice-list" data-rooms aria-label="Домики"></div>
+              <div class="total" data-total aria-live="polite"></div>
+            </div>
+          </div>
+
+          <div>
+            <h2>Заявка на бронь</h2>
+            <p class="sub">Подтвердим бронь звонком или в мессенджере в течение 15 минут в рабочее время.</p>
+            <div class="widget">
+              <form data-lead-form novalidate>
+                <div class="row">
+                  <p class="lead-summary" data-lead-summary aria-live="polite"></p>
+                  <div class="row row--2">
+                    <div class="field"><label for="name">Ваше имя</label><input class="input" id="name" name="name" autocomplete="name" required></div>
+                    <div class="field"><label for="phone">Телефон</label><input class="input" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 900 000-00-00" required></div>
+                  </div>
+                  <fieldset class="contact-set">
+                    <legend class="contact-legend">Как удобнее связаться</legend>
+                    <div class="segmented">
+                      <label><input type="radio" name="contact" value="Звонок" checked><span class="seg">Звонок</span></label>
+                      <label><input type="radio" name="contact" value="Telegram"><span class="seg">Telegram</span></label>
+                      <label><input type="radio" name="contact" value="MAX"><span class="seg">MAX</span></label>
+                      <label><input type="radio" name="contact" value="WhatsApp"><span class="seg">WhatsApp</span></label>
+                    </div>
+                  </fieldset>
+                  <div class="field"><label for="comment">Комментарий</label><textarea class="textarea" id="comment" name="comment" placeholder="Например: будем с собакой, приедем поздно"></textarea></div>
+                  <label class="consent"><input type="checkbox" name="consent"> Согласен на обработку персональных данных для ответа на заявку</label>
+                  <p class="form-error" data-form-error role="alert"></p>
+                  <button class="btn" type="submit">Отправить заявку</button>
+                </div>
+              </form>
+              <div class="form-ok" data-form-ok hidden tabindex="-1">
+                <b>Заявка принята.</b>
+                Так это увидит владелец — панель уже открылась. <button type="button" class="btn btn--sm btn--ghost" data-form-again>Отправить ещё одну</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="houses">
+        <p class="eyebrow">Домики</p>
+        <h2>Выберите свой домик</h2>
+        <p class="sub">Все домики с кухней, душем и террасой. Постельное бельё и полотенца включены.</p>
+        <div class="d-houses">
+          <article class="d-house"><img src="/demos/assets/img/dyuna-room.webp" alt="Спальня с окном на сосны" width="1536" height="1024" loading="lazy"><div><h3>Домик «Сосна»</h3><p>Для двоих: большая кровать и окно во всю стену на сосны и дюны.</p><div class="price"><b>4 200 ₽</b><span>ночь</span></div></div></article>
+          <article class="d-house"><img src="/demos/assets/img/dyuna-terrace.webp" alt="Терраса с креслами и бочкой-сауной" width="1536" height="1024" loading="lazy"><div><h3>Домик «Залив»</h3><p>До 4 гостей: спальня и диван, терраса с креслами и бочка-сауна.</p><div class="price"><b>5 900 ₽</b><span>ночь</span></div></div></article>
+          <article class="d-house"><img src="/demos/assets/img/dyuna-cabins.webp" alt="Домики среди сосен вечером" width="1536" height="1024" loading="lazy"><div><h3>Дом «Маяк»</h3><p>До 6 гостей: две спальни, сауна и отдельная парковка.</p><div class="price"><b>9 500 ₽</b><span>ночь</span></div></div></article>
+        </div>
+      </section>
+
+      <section class="section" id="rules">
+        <h2>Как заселиться</h2>
+        <div class="grid-4 steps">
+          <div class="card"><h3>Заявка</h3><p>Выбираете даты и домик, оставляете телефон.</p></div>
+          <div class="card"><h3>Подтверждение</h3><p>Перезваниваем за 15 минут и фиксируем бронь.</p></div>
+          <div class="card"><h3>Предоплата</h3><p>30% по ссылке, остальное при заезде.</p></div>
+          <div class="card"><h3>Заезд</h3><p>Накануне присылаем код от калитки и схему проезда.</p></div>
+        </div>
+      </section>
+
+      <section class="section faq" id="faq">
+        <h2>Вопросы</h2>
+        <details><summary>Можно с собакой?</summary><p>Да, в «Сосну» и «Маяк» — предупредите в комментарии к заявке.</p></details>
+        <details><summary>Как отменить бронь?</summary><p>Бесплатно за 7 дней до заезда. Позже — удерживаем стоимость первой ночи.</p></details>
+        <details><summary>Есть ли парковка?</summary><p>Да, у каждого домика своё место, бесплатно.</p></details>
+      </section>
+    </main>
+
+    <footer class="site-foot">
+      «Дюна» — вымышленная компания. Демо-сайт сделан в <a href="/">Eclipse Forge</a>: сайт, заявки и панель владельца в одной системе.
+    </footer>
+  </div>
+
+  <dialog class="owner" id="owner" aria-labelledby="owner-title">
+    <div class="owner-head">
+      <div><h2 id="owner-title">Панель владельца · Дюна</h2><p>Так заявки видит владелец. Данные хранятся только в этом браузере.</p></div>
+      <button type="button" class="owner-close" data-owner-close aria-label="Закрыть панель">×</button>
+    </div>
+    <div class="owner-body" data-owner-body></div>
+    <div class="owner-foot">Хотите так же для своего бизнеса? <a href="/#contact">Обсудить проект в Eclipse Forge</a> · <button type="button" class="btn btn--sm btn--ghost" data-owner-reset>Сбросить демо</button></div>
+  </dialog>
+
+  <script type="application/json" id="demo-config">
+  {
+    "slug": "guest-house",
+    "brand": "Дюна",
+    "rooms": [
+      { "id": "pine", "name": "Домик «Сосна»", "price": 4200, "capacity": 2, "note": "для двоих" },
+      { "id": "bay", "name": "Домик «Залив»", "price": 5900, "capacity": 4, "note": "терраса с мангалом" },
+      { "id": "light", "name": "Дом «Маяк»", "price": 9500, "capacity": 6, "note": "сауна, две спальни" }
+    ],
+    "seedLeads": [
+      { "name": "Ольга", "phone": "+7 900 111-22-33", "contact": "Telegram", "status": "work", "details": { "Номер": "Домик «Залив»", "Гости": "3", "Сумма": "17 700 ₽" } },
+      { "name": "Дмитрий", "phone": "+7 900 444-55-66", "contact": "Звонок", "status": "done", "details": { "Номер": "Дом «Маяк»", "Гости": "6", "Сумма": "28 500 ₽" } }
+    ]
+  }
+  </script>
+  <script src="/demos/assets/demo.js" defer></script>
+  <script>
+    // Строка брони в первом экране переносит даты в подбор домика ниже.
+    document.addEventListener('DOMContentLoaded', function () {
+      var bar = document.querySelector('[data-bookbar]');
+      var from = document.getElementById('from'), to = document.getElementById('to'), guests = document.getElementById('guests');
+      bar.elements['bb-from'].value = from.value; bar.elements['bb-to'].value = to.value; bar.elements['bb-from'].min = from.min;
+      bar.addEventListener('submit', function (e) {
+        e.preventDefault();
+        from.value = bar.elements['bb-from'].value; to.value = bar.elements['bb-to'].value; guests.value = bar.elements['bb-guests'].value;
+        guests.dispatchEvent(new Event('change'));
+        document.getElementById('book').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
