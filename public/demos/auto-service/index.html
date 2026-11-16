@@ -23,7 +23,7 @@
 </head>
 <body data-demo="auto-service">
   <div class="demo-ribbon">
-    <span><b>Демо Eclipse Forge.</b> Компания вымышленная, заявки никуда не отправляются.</span>
+    <span><b>Демо Eclipse Forge.</b><span class="ribbon-long"> Компания вымышленная, заявки никуда не отправляются.</span><span class="ribbon-short"> Компания вымышленная.</span></span>
     <button type="button" data-open-owner>Панель владельца</button>
     <a href="/#works">← Все работы</a>
   </div>
@@ -59,9 +59,27 @@
             <li><b>6 месяцев</b><span>гарантия на работы</span></li>
           </ul>
         </div>
-        <div class="plate" role="img" aria-label="Иллюстрация: два колеса">
-          <span class="wheel wheel--a"></span><span class="wheel wheel--b"></span>
-          <span class="plate-caption">Ежедневно 9:00–21:00</span>
+        <div class="stack" style="--stack-h:420px;--side-top:34%" role="img" aria-label="Пример интерфейса: онлайн-запись, карточка автомобиля и напоминание">
+          <div class="ui ui--main" aria-hidden="true">
+            <div class="ui-row" style="border:0;padding-top:0"><div><p class="ui-label">Онлайн-запись</p><p class="ui-title">Шиномонтаж · от 1 900 ₽</p></div><span class="ui-pill">4 поста</span></div>
+            <div class="day-tabs"><span>вт 17</span><span class="on">ср 18</span><span>чт 19</span></div>
+            <div class="mini-slots">
+              <span class="busy">9:00</span><span>11:00</span><span class="on">13:00</span>
+              <span>15:00</span><span class="busy">17:00</span><span>19:00</span>
+            </div>
+            <span class="ui-btn">Записаться на ср, 13:00</span>
+          </div>
+          <div class="ui ui--side" aria-hidden="true">
+            <p class="ui-label">Запись подтверждена</p>
+            <p class="ui-title" style="font-size:16px">Kia Rio 2019</p>
+            <div class="ui-row"><span class="ui-muted">Когда</span><b>ср, 13:00</b></div>
+            <div class="ui-row"><span class="ui-muted">Пост</span><b>№ 2</b></div>
+            <span class="ui-pill ui-pill--ok" style="margin-top:8px">✓ Подтверждено</span>
+          </div>
+          <div class="ui ui--toast" aria-hidden="true">
+            <div class="ui-tg-from">Telegram · Северный бокс</div>
+            <div class="ui-tg-text">Напоминаем: завтра в 13:00 шиномонтаж. Ответьте «перенести», если планы поменялись.</div>
+          </div>
         </div>
       </section>
 

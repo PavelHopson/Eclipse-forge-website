@@ -10,19 +10,19 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/demos/assets/demo.css">
   <style>
-    .plate { --plate:
+    .ui-scene { --scene:
       radial-gradient(circle at 72% 30%, rgba(212, 175, 55, 0.55) 0 9%, rgba(212, 175, 55, 0.12) 10% 22%, transparent 23%),
       linear-gradient(180deg, transparent 0 58%, rgba(212, 175, 55, 0.08) 58% 59%, transparent 59%),
       repeating-linear-gradient(180deg, transparent 0 18px, rgba(255, 255, 255, 0.025) 18px 19px),
       linear-gradient(180deg, #0d1522 0%, #05070a 100%); }
-    .house { position: absolute; bottom: 0; width: 26%; aspect-ratio: 1 / 1.05; background: linear-gradient(180deg, #151b25, #0b0f15); border: 1px solid rgba(212, 175, 55, 0.35); clip-path: polygon(50% 0, 100% 38%, 100% 100%, 0 100%, 0 38%); }
+    .house { position: absolute; bottom: 0; width: 22%; aspect-ratio: 1 / 1.05; background: linear-gradient(180deg, #151b25, #0b0f15); border: 1px solid rgba(212, 175, 55, 0.35); clip-path: polygon(50% 0, 100% 38%, 100% 100%, 0 100%, 0 38%); }
     .house::after { content: ''; position: absolute; left: 38%; bottom: 0; width: 24%; height: 36%; background: rgba(212, 175, 55, 0.55); box-shadow: 0 0 30px rgba(212, 175, 55, 0.6); }
     .house--1 { left: 8%; } .house--2 { left: 38%; width: 22%; } .house--3 { left: 66%; width: 24%; }
   </style>
 </head>
 <body data-demo="guest-house">
   <div class="demo-ribbon">
-    <span><b>Демо Eclipse Forge.</b> Компания вымышленная, заявки никуда не отправляются.</span>
+    <span><b>Демо Eclipse Forge.</b><span class="ribbon-long"> Компания вымышленная, заявки никуда не отправляются.</span><span class="ribbon-short"> Компания вымышленная.</span></span>
     <button type="button" data-open-owner>Панель владельца</button>
     <a href="/#works">← Все работы</a>
   </div>
@@ -58,9 +58,27 @@
             <li><b>с питомцем</b><span>по договорённости</span></li>
           </ul>
         </div>
-        <div class="plate" role="img" aria-label="Иллюстрация: три домика на закате">
-          <span class="house house--1"></span><span class="house house--2"></span><span class="house house--3"></span>
-          <span class="plate-caption">Заезд с 14:00 · выезд до 12:00</span>
+        <div class="stack" style="--stack-h:510px;--side-top:30%" role="img" aria-label="Пример интерфейса: карточка домика, календарь занятости и уведомление о брони">
+          <div class="ui ui--main" aria-hidden="true">
+            <div class="ui-scene"><span class="house house--1"></span><span class="house house--2"></span><span class="house house--3"></span></div>
+            <div class="ui-row" style="border:0;padding-top:0"><p class="ui-title">Дом «Маяк»</p><span class="ui-pill ui-pill--ok">Свободно</span></div>
+            <p class="ui-muted" style="margin:2px 0 8px">до 6 гостей · сауна · две спальни · парковка</p>
+            <div class="ui-row"><span class="ui-muted">23–26 ноября · 3 ночи</span><b>9 500 ₽ × 3</b></div>
+            <div class="ui-row ui-row--total"><span>Итого</span><b>28 500 ₽</b></div>
+            <span class="ui-btn">Забронировать</span>
+          </div>
+          <div class="ui ui--side" aria-hidden="true">
+            <p class="ui-label">Ноябрь · занятость</p>
+            <div class="cal">
+              <span class="h">ПН</span><span class="h">ВТ</span><span class="h">СР</span><span class="h">ЧТ</span><span class="h">ПТ</span><span class="h">СБ</span><span class="h">ВС</span>
+              <span>16</span><span>17</span><span class="busy">18</span><span class="busy">19</span><span>20</span><span class="busy">21</span><span class="busy">22</span>
+              <span class="sel-a">23</span><span class="sel">24</span><span class="sel">25</span><span class="sel-b">26</span><span>27</span><span>28</span><span>29</span>
+            </div>
+          </div>
+          <div class="ui ui--toast" aria-hidden="true">
+            <div class="ui-tg-from">Telegram · бот брони</div>
+            <div class="ui-tg-text">🔔 Новая бронь: Ольга, «Залив», 3 ночи — 17 700 ₽. Перезвонить до 17:20.</div>
+          </div>
         </div>
       </section>
 

@@ -25,7 +25,7 @@
 </head>
 <body data-demo="renovation">
   <div class="demo-ribbon">
-    <span><b>Демо Eclipse Forge.</b> Компания вымышленная, заявки никуда не отправляются.</span>
+    <span><b>Демо Eclipse Forge.</b><span class="ribbon-long"> Компания вымышленная, заявки никуда не отправляются.</span><span class="ribbon-short"> Компания вымышленная.</span></span>
     <button type="button" data-open-owner>Панель владельца</button>
     <a href="/#works">← Все работы</a>
   </div>
@@ -61,10 +61,26 @@
             <li><b>каждый день</b><span>фотоотчёт</span></li>
           </ul>
         </div>
-        <div class="plate" role="img" aria-label="Иллюстрация: план квартиры с размерами">
-          <span class="dim dim--w">7 200 мм</span><span class="dim dim--h">4 800</span>
-          <span class="plan"></span>
-          <span class="plate-caption">Смета через 2 дня после замера</span>
+        <div class="stack" style="--stack-h:480px;--side-top:40%" role="img" aria-label="Пример интерфейса: смета, фотоотчёт прораба и сообщение в Telegram">
+          <div class="ui ui--main" aria-hidden="true">
+            <div class="ui-row" style="border:0;padding-top:0"><div><p class="ui-label">Смета № 0457 · 62 м²</p><p class="ui-title">Капитальный ремонт</p></div><span class="ui-pill">В договоре</span></div>
+            <div class="ui-row"><span>Демонтаж и вывоз</span><b>38 000 ₽</b></div>
+            <div class="ui-row"><span>Электрика, 46 точек</span><b>124 000 ₽</b></div>
+            <div class="ui-row"><span>Стяжка и выравнивание</span><b>96 000 ₽</b></div>
+            <div class="ui-row"><span>Санузел под ключ</span><b>180 000 ₽</b></div>
+            <div class="ui-row"><span>Отделка стен и потолков</span><b>169 600 ₽</b></div>
+            <div class="ui-row ui-row--total"><span>Итого работы</span><b>607 600 ₽</b></div>
+          </div>
+          <div class="ui ui--side" aria-hidden="true">
+            <p class="ui-label">Фотоотчёт · день 12</p>
+            <div class="thumbs"><i></i><i></i><i></i></div>
+            <div class="ui-row" style="border:0;padding:0"><span class="ui-muted">Готово</span><b>64%</b></div>
+            <div class="bar"><i style="width:64%"></i></div>
+          </div>
+          <div class="ui ui--toast" aria-hidden="true">
+            <div class="ui-tg-from">Telegram · прораб Сергей</div>
+            <div class="ui-tg-text">Стяжка в ванной готова, фото в отчёте. Завтра начинаем плитку.</div>
+          </div>
         </div>
       </section>
 
