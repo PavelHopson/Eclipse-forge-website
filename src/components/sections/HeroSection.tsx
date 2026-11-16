@@ -97,7 +97,7 @@ const heroCopy: Record<
     systemLabel: 'Заявка → карточка → сделка',
     scrollLabel: 'Листайте вниз',
     proof: [
-      { label: 'Цены', value: 'Открыто, от 100 000 ₽' },
+      { label: 'Цены', value: 'Открыто, от 40 000 ₽' },
       { label: 'Смета', value: 'Фиксируем до старта' },
       { label: 'Сайт и данные', value: 'Принадлежат вам' },
     ],
@@ -117,7 +117,7 @@ const heroCopy: Record<
     systemLabel: 'Lead → card → deal',
     scrollLabel: 'Scroll down',
     proof: [
-      { label: 'Pricing', value: 'Open, from 100 000 ₽' },
+      { label: 'Pricing', value: 'Open, from 40 000 ₽' },
       { label: 'Estimate', value: 'Fixed before start' },
       { label: 'Site and data', value: 'Owned by you' },
     ],
