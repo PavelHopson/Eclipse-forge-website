@@ -160,6 +160,11 @@ Quality and safety guardrails:
 Content volume, impressions without a target audience and raw AI output are not success
 metrics.
 
+## Campaigns
+
+- [2026-11-16 — «Где теряются заявки»: лид-магнит + 2 шорта](campaigns/2026-11-16-lead-magnet-shorts.md)
+- [Бэклог доработок лендинга](landing-backlog.md)
+
 ## Weekly review
 
 Every review answers five questions:
