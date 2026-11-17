@@ -163,6 +163,7 @@ metrics.
 ## Campaigns
 
 - [2026-11-16 — «Где теряются заявки»: лид-магнит + 2 шорта](campaigns/2026-11-16-lead-magnet-shorts.md)
+- [Бэклог доработок лендинга](landing-backlog.md)
 
 ## Weekly review
 
