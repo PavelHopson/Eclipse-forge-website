@@ -5,6 +5,7 @@ import { contactDetails } from '../../data/content';
 import { revealUp, stagger, staggerFast, viewport } from '../../lib/animation';
 import { useLocale, type Locale } from '../../lib/locale';
 import { ConstellationField, EclipseSilhouette, OrbitalRing, ParticleField } from '../ui/EclipseVisuals';
+import { LeadSubmitPanel } from '../ui/LeadSubmitPanel';
 import {
   ArrowUpRightIcon,
   BroadcastIcon,
@@ -394,6 +395,7 @@ export function CtaSection() {
             </motion.div>
 
             <div className="border-t px-6 py-6 sm:px-7" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+              <LeadSubmitPanel form={form} locale={locale} />
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                 <motion.button
                   type="button"
