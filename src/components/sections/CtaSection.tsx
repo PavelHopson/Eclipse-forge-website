@@ -49,16 +49,16 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     titleAccent: 'Отвечу, что подойдёт и сколько стоит.',
     description: 'Оставьте имя и контакт — в течение суток напишу, какой тариф подойдёт, и предложу время созвона на 30 минут.',
     telegramHint: 'Быстрее всего отвечаю в Telegram.',
-    responseTime: 'Ответ в течение 24 часов · UTC+2',
+    responseTime: 'Отвечаю в течение 24 часов',
     channelsLabel: 'Контакты',
     formLabel: 'Заявка',
-    formHint: 'Три поля, минута времени',
+    formHint: 'Минута времени',
     emailCardLabel: 'Email',
     channelCardLabel: 'Telegram-канал',
     telegramLabel: 'Написать в Telegram',
     fields: {
       name: { label: 'Как к вам обращаться', placeholder: 'Имя или компания' },
-      contact: { label: 'Как с вами связаться', placeholder: 'Телефон, @telegram или почта' },
+      contact: { label: 'Как с вами связаться', placeholder: 'Телефон, Telegram, почта' },
       message: { label: 'Что нужно', placeholder: 'Например: сайт для гостевого дома с бронированием' },
     },
     optional: 'необязательно',
@@ -75,10 +75,10 @@ const ctaCopy: Record<Locale, CtaCopy> = {
       name: 'Напишите, как к вам обращаться',
       contact: 'Оставьте телефон, Telegram или почту',
       consent: 'Без согласия отправить заявку нельзя',
-      rate: 'Слишком много заявок подряд. Попробуйте через 10 минут или напишите в Telegram.',
-      generic: 'Не получилось отправить. Проверьте связь и попробуйте ещё раз — или напишите в Telegram.',
+      rate: 'Слишком много заявок подряд. Попробуйте через 10 минут или напишите мне напрямую:',
+      generic: 'Не получилось отправить. Проверьте связь и попробуйте ещё раз или напишите мне напрямую:',
     },
-    fallback: 'Написать в Telegram',
+    fallback: 'Telegram',
   },
   en: {
     eyebrow: 'Open the channel',
@@ -86,10 +86,10 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     titleAccent: "I'll reply with what fits and what it costs.",
     description: 'Leave your name and a contact — within a day I will suggest a package and a time for a 30-minute call.',
     telegramHint: 'Fastest replies happen in Telegram.',
-    responseTime: 'Reply within 24 hours · UTC+2',
+    responseTime: 'I reply within 24 hours',
     channelsLabel: 'Channels',
     formLabel: 'Request',
-    formHint: 'Three fields, one minute',
+    formHint: 'One minute',
     emailCardLabel: 'Email',
     channelCardLabel: 'Channel',
     telegramLabel: 'Message on Telegram',
@@ -112,10 +112,10 @@ const ctaCopy: Record<Locale, CtaCopy> = {
       name: 'Tell me how to address you',
       contact: 'Leave a phone, Telegram or email',
       consent: 'The request cannot be sent without consent',
-      rate: 'Too many requests in a row. Try again in 10 minutes or message me on Telegram.',
-      generic: 'Could not send. Check your connection and try again — or message me on Telegram.',
+      rate: 'Too many requests in a row. Try again in 10 minutes or message me directly:',
+      generic: 'Could not send. Check your connection and try again, or message me directly:',
     },
-    fallback: 'Message on Telegram',
+    fallback: 'Telegram',
   },
 };
 
@@ -133,12 +133,11 @@ export function CtaSection() {
   const [form, setForm] = useState(emptyForm);
   const [pkg, setPkg] = useState('');
   const [consent, setConsent] = useState(false);
-  const [website, setWebsite] = useState(''); // поле-ловушка для ботов, человеку не видно
+  const [trap, setTrap] = useState(''); // поле-ловушка для ботов, человеку не видно
   const [status, setStatus] = useState<Status>('idle');
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [formError, setFormError] = useState('');
   const successRef = useRef<HTMLDivElement>(null);
-  const errorRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
     const onChoose = (event: Event) => {
@@ -151,7 +150,6 @@ export function CtaSection() {
 
   useEffect(() => {
     if (status === 'success') successRef.current?.focus();
-    if (status === 'error') errorRef.current?.focus();
   }, [status]);
 
   const emailHref = `mailto:${contactDetails.email}?subject=${encodeURIComponent(
@@ -176,6 +174,7 @@ export function CtaSection() {
 
     const firstInvalid = (['name', 'contact', 'consent'] as const).find((key) => errors[key]);
     if (firstInvalid) {
+      setStatus('idle');
       document.getElementById(`cta-${firstInvalid}`)?.focus();
       return;
     }
@@ -191,7 +190,7 @@ export function CtaSection() {
           message: form.message,
           pkg: pkg ? packageNames.ru[pkg] : '',
           consent: true,
-          website,
+          ef_hp: trap,
           locale,
         }),
       });
@@ -215,7 +214,8 @@ export function CtaSection() {
     { label: copy.channelCardLabel, value: contactDetails.telegramChannel, href: contactDetails.telegramChannelUrl, external: true, Icon: BroadcastIcon },
   ];
 
-  const fieldClass = 'contact-field w-full rounded-[0.95rem] border px-4 py-3 text-[16px] outline-none transition-colors duration-300 sm:text-[14px]';
+  const fieldClass = 'contact-field w-full rounded-[0.95rem] border px-4 py-3 text-[16px] transition-colors duration-300 sm:text-[14px]';
+  const focusName = () => window.setTimeout(() => document.getElementById('cta-name')?.focus(), 0);
   const labelClass = 'flex items-baseline justify-between gap-3 text-[11px] uppercase tracking-[0.22em]';
 
   return (
@@ -255,7 +255,7 @@ export function CtaSection() {
 
         <div className="grid gap-6 lg:grid-cols-[1fr_0.8fr] lg:gap-8">
           {/* Форма — первой: это главное действие раздела. */}
-          <motion.div variants={revealUp} className="overflow-hidden rounded-[1.85rem] border contact-panel">
+          <motion.div id="lead-form" variants={revealUp} className="min-w-0 scroll-mt-28 overflow-hidden rounded-[1.85rem] border contact-panel">
             <div className="flex items-center justify-between gap-4 border-b px-6 py-4 sm:px-7" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
               <p className="type-meta" style={{ color: 'rgba(212,175,55,0.85)' }}>
                 {copy.formLabel}
@@ -280,7 +280,10 @@ export function CtaSection() {
                 </p>
                 <button
                   type="button"
-                  onClick={() => setStatus('idle')}
+                  onClick={() => {
+                    setStatus('idle');
+                    focusName();
+                  }}
                   className="case-link-secondary mt-7 inline-flex min-h-11 items-center justify-center rounded-full border px-5 py-2.5 text-[12px] font-display tracking-[0.04em]"
                 >
                   {copy.sendAnother}
@@ -288,6 +291,28 @@ export function CtaSection() {
               </div>
             ) : (
               <form noValidate onSubmit={handleSubmit} className="grid gap-5 px-6 py-6 sm:px-7 sm:py-7">
+                <div role="status" className={pkg ? 'flex items-center gap-1 text-[13px]' : 'sr-only'} style={{ color: 'var(--text-2)' }}>
+                  {pkg ? (
+                    <>
+                      <span className="min-w-0 flex-1">
+                        <span style={{ color: 'var(--text-3)' }}>{copy.packageLabel}: </span>
+                        <span style={{ color: 'var(--text-1)' }}>{packageNames[locale][pkg]}</span>
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setPkg('');
+                          focusName();
+                        }}
+                        aria-label={copy.packageRemove}
+                        className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-[18px]"
+                        style={{ color: 'var(--text-2)' }}
+                      >
+                        <span aria-hidden>×</span>
+                      </button>
+                    </>
+                  ) : null}
+                </div>
                 {(['name', 'contact'] as const).map((key) => (
                   <div key={key} className="flex flex-col gap-2">
                     <label htmlFor={`cta-${key}`} className={labelClass} style={{ color: 'var(--text-3)' }}>
@@ -299,7 +324,7 @@ export function CtaSection() {
                       value={form[key]}
                       onChange={(event) => handleChange(key, event.target.value)}
                       placeholder={copy.fields[key].placeholder}
-                      autoComplete={key === 'name' ? 'name' : 'off'}
+                      autoComplete={key === 'name' ? 'name' : undefined}
                       maxLength={key === 'name' ? 80 : 120}
                       required
                       aria-invalid={fieldErrors[key] ? true : undefined}
@@ -317,7 +342,7 @@ export function CtaSection() {
                 <div className="flex flex-col gap-2">
                   <label htmlFor="cta-message" className={labelClass} style={{ color: 'var(--text-3)' }}>
                     {copy.fields.message.label}
-                    <span className="normal-case tracking-normal" style={{ color: 'var(--text-4)' }}>{copy.optional}</span>
+                    <span className="normal-case tracking-normal" style={{ color: 'var(--text-3)' }}>{copy.optional}</span>
                   </label>
                   <textarea
                     id="cta-message"
@@ -329,33 +354,21 @@ export function CtaSection() {
                     placeholder={copy.fields.message.placeholder}
                     className={`${fieldClass} min-h-[96px] resize-none`}
                   />
-                  {pkg ? (
-                    <p className="flex flex-wrap items-center gap-2 text-[13px]" style={{ color: 'var(--text-2)' }}>
-                      <span style={{ color: 'var(--text-4)' }}>{copy.packageLabel}:</span>
-                      <span className="rounded-full border px-3 py-1 services-chip">{packageNames[locale][pkg]}</span>
-                      <button
-                        type="button"
-                        onClick={() => setPkg('')}
-                        aria-label={copy.packageRemove}
-                        className="inline-flex h-11 w-11 items-center justify-center rounded-full text-[16px]"
-                        style={{ color: 'var(--text-3)' }}
-                      >
-                        <span aria-hidden>×</span>
-                      </button>
-                    </p>
-                  ) : null}
                 </div>
 
                 {/* Ловушка для ботов: скрыта от людей и скринридеров, в Tab не попадает. */}
                 <div aria-hidden className="absolute left-[-9999px] h-px w-px overflow-hidden">
-                  <label htmlFor="cta-website">Website</label>
                   <input
-                    id="cta-website"
-                    name="website"
+                    name="ef_hp"
+                    type="text"
                     tabIndex={-1}
                     autoComplete="off"
-                    value={website}
-                    onChange={(event) => setWebsite(event.target.value)}
+                    data-1p-ignore
+                    data-lpignore="true"
+                    data-bwignore
+                    data-form-type="other"
+                    value={trap}
+                    onChange={(event) => setTrap(event.target.value)}
                   />
                 </div>
 
@@ -376,7 +389,7 @@ export function CtaSection() {
                     />
                     <span>
                       {copy.consentBefore}{' '}
-                      <a href={PRIVACY_URL} target="_blank" rel="noreferrer" className="package-inline-link">
+                      <a href={PRIVACY_URL} target="_blank" rel="noreferrer" className="package-inline-link !whitespace-normal">
                         {copy.consentLink}
                       </a>
                     </span>
@@ -389,9 +402,9 @@ export function CtaSection() {
                 </div>
 
                 {status === 'error' ? (
-                  <p ref={errorRef} tabIndex={-1} role="alert" className="contact-field-error text-[14px] leading-relaxed outline-none">
+                  <p role="alert" className="contact-field-error text-[14px] leading-relaxed">
                     {formError}{' '}
-                    <a href={contactDetails.telegramDmUrl} target="_blank" rel="noopener noreferrer" className="package-inline-link">
+                    <a href={contactDetails.telegramDmUrl} target="_blank" rel="noopener noreferrer" className="package-inline-link !whitespace-normal">
                       {copy.fallback} {contactDetails.telegramDm}
                     </a>
                   </p>
@@ -411,7 +424,7 @@ export function CtaSection() {
           </motion.div>
 
           {/* Контакты — для тех, кому удобнее написать самому. */}
-          <motion.div variants={revealUp} className="flex flex-col gap-4">
+          <motion.div variants={revealUp} className="flex min-w-0 flex-col gap-4">
             <div className="rounded-[1.85rem] border p-6 sm:p-7 contact-panel">
               <p className="type-meta mb-5" style={{ color: 'rgba(212,175,55,0.85)' }}>
                 {copy.channelsLabel}
@@ -447,7 +460,7 @@ export function CtaSection() {
                 </span>
               </a>
 
-              <p className="mt-4 text-[12px] leading-relaxed" style={{ color: 'var(--text-4)' }}>
+              <p className="mt-4 text-[12px] leading-relaxed" style={{ color: 'var(--text-3)' }}>
                 {copy.telegramHint}
               </p>
 

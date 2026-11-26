@@ -11,19 +11,38 @@ EnvironmentFile=/etc/ef-lead-api.env
 Environment=NODE_ENV=production PORT=8790 LEADS_FILE=/var/lib/ef-lead-api/leads.jsonl
 StateDirectory=ef-lead-api
 StateDirectoryMode=0700
+UMask=0077
 Restart=always
 RestartSec=3
 
 # Сервису нужны только свой каталог данных и сеть до локального прокси.
 NoNewPrivileges=true
+CapabilityBoundingSet=
 ProtectSystem=strict
 ProtectHome=true
+ProtectProc=invisible
 PrivateTmp=true
 PrivateDevices=true
+PrivateUsers=true
 ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
 ProtectControlGroups=true
+ProtectClock=true
+ProtectHostname=true
 RestrictAddressFamilies=AF_INET AF_INET6
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+LockPersonality=true
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+# Наружу сервис ходит только через локальный прокси, входящие принимает только от Caddy на этом же сервере.
+IPAddressDeny=any
+IPAddressAllow=localhost
 MemoryMax=96M
+LimitNOFILE=1024
+TasksMax=64
 
 [Install]
 WantedBy=multi-user.target

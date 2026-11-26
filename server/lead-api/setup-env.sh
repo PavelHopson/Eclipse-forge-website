@@ -8,7 +8,6 @@ ENV_FILE=/etc/ef-lead-api.env
 PROXY="${TELEGRAM_PROXY:-socks5h://127.0.0.1:10808}"
 
 echo "1) В Telegram откройте @BotFather → /newbot → получите ключ бота."
-echo "2) Откройте своего нового бота и нажмите «Start» (отправьте ему /start)."
 echo
 read -r -s -p "Вставьте ключ бота (ввод скрыт): " TOKEN
 echo
@@ -19,17 +18,37 @@ fi
 
 # Ключ передаём curl через stdin, чтобы он не попал в список процессов.
 api() {
-  printf 'url = "https://api.telegram.org/bot%s/%s"\n' "$TOKEN" "$1" | curl -sS -m 15 -x "$PROXY" -K - "${@:2}"
+  printf 'url = "https://api.telegram.org/bot%s/%s"\n' "$TOKEN" "$1" | curl -sS --fail -m 20 -x "$PROXY" -K - "${@:2}"
 }
 
-CHAT_ID=$(api getUpdates | python3 -c '
-import json, sys
+if ! api getMe >/dev/null; then
+  echo "Telegram не принял ключ (или недоступен прокси $PROXY). Ничего не записано." >&2
+  exit 1
+fi
+
+# Адресат заявок — только тот, кто пришлёт боту этот одноразовый код:
+# посторонний, написавший боту раньше, заявки не получит.
+CODE="ef-$(od -An -N4 -tu4 /dev/urandom | tr -d ' ')"
+echo "2) Откройте своего бота, нажмите «Start» и отправьте ему этот код:"
+echo
+echo "      $CODE"
+echo
+read -r -p "Когда отправите, нажмите Enter… " _
+
+CHAT_ID=$(api getUpdates | EF_CODE="$CODE" python3 -c '
+import json, os, sys
+code = os.environ["EF_CODE"]
 data = json.load(sys.stdin)
-chats = [u["message"]["chat"] for u in data.get("result", []) if "message" in u and u["message"]["chat"]["type"] == "private"]
-print(chats[-1]["id"] if chats else "")
+found = ""
+for update in data.get("result", []):
+    message = update.get("message") or {}
+    chat = message.get("chat") or {}
+    if chat.get("type") == "private" and (message.get("text") or "").strip() == code:
+        found = str(chat["id"])
+print(found)
 ')
 if [[ -z "$CHAT_ID" ]]; then
-  echo "Бот не видит вашего сообщения. Нажмите у бота «Start» и запустите команду ещё раз." >&2
+  echo "Бот не получил сообщение с кодом. Запустите команду ещё раз и отправьте новый код." >&2
   exit 1
 fi
 
@@ -41,5 +60,9 @@ chmod 600 "$ENV_FILE"
 
 systemctl restart ef-lead-api
 sleep 1
-api sendMessage --data-urlencode "chat_id=$CHAT_ID" --data-urlencode "text=Форма заявки eclipse-forge.ru подключена. Сюда будут приходить заявки." >/dev/null
-echo "Готово: бот написал вам проверочное сообщение. Сервис: $(systemctl is-active ef-lead-api)."
+if api sendMessage --data-urlencode "chat_id=$CHAT_ID" --data-urlencode "text=Форма заявки eclipse-forge.ru подключена. Сюда будут приходить заявки." >/dev/null; then
+  echo "Готово: бот написал вам проверочное сообщение. Сервис: $(systemctl is-active ef-lead-api)."
+else
+  echo "Настройки записаны, но проверочное сообщение не ушло. Сервис: $(systemctl is-active ef-lead-api)." >&2
+  exit 1
+fi

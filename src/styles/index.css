@@ -2386,6 +2386,16 @@ html[data-ambient-motion='paused'] .hero-editorial-rays {
   box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
 }
 
+/* Кольцо фокуса в полях должно быть видно в обеих темах, одной тонкой рамки мало. */
+.contact-field:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--gold) 74%, white);
+  outline-offset: 2px;
+}
+
+[data-theme='light'] .contact-field:focus-visible {
+  outline-color: #7a5a08;
+}
+
 /* Форма заявки: ошибка поля заметна не только цветом рамки, но и текстом под полем. */
 .contact-field[aria-invalid='true'] {
   border-color: #f0907f;
