@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { PACKAGE_EVENT } from './PackagesSection';
-import { contactDetails } from '../../data/content';
+import { contactDetails, directContacts } from '../../data/content';
 import { revealUp, stagger, viewport } from '../../lib/animation';
 import { useLocale, type Locale } from '../../lib/locale';
+import { reachGoal, type MetrikaGoal } from '../../lib/metrika';
 import { ConstellationField, EclipseSilhouette, OrbitalRing, ParticleField } from '../ui/EclipseVisuals';
 import { ArrowUpRightIcon, BroadcastIcon, MailIcon, TelegramIcon } from '../ui/SocialIcons';
 
@@ -26,6 +27,11 @@ type CtaCopy = {
   formHint: string;
   emailCardLabel: string;
   channelCardLabel: string;
+  phoneCardLabel: string;
+  whatsappCardLabel: string;
+  whatsappCardValue: string;
+  maxCardLabel: string;
+  maxCardValue: string;
   telegramLabel: string;
   fields: Record<FieldKey, { label: string; placeholder: string }>;
   optional: string;
@@ -55,6 +61,11 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     formHint: 'Минута времени',
     emailCardLabel: 'Email',
     channelCardLabel: 'Telegram-канал',
+    phoneCardLabel: 'Позвонить',
+    whatsappCardLabel: 'WhatsApp',
+    whatsappCardValue: 'Написать',
+    maxCardLabel: 'MAX',
+    maxCardValue: 'Написать',
     telegramLabel: 'Написать в Telegram',
     fields: {
       name: { label: 'Как к вам обращаться', placeholder: 'Имя или компания' },
@@ -92,6 +103,11 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     formHint: 'One minute',
     emailCardLabel: 'Email',
     channelCardLabel: 'Channel',
+    phoneCardLabel: 'Call',
+    whatsappCardLabel: 'WhatsApp',
+    whatsappCardValue: 'Message',
+    maxCardLabel: 'MAX',
+    maxCardValue: 'Message',
     telegramLabel: 'Message on Telegram',
     fields: {
       name: { label: 'Your name', placeholder: 'Name or company' },
@@ -125,6 +141,22 @@ const packageNames: Record<Locale, Record<string, string>> = {
 };
 
 const emptyForm: Record<FieldKey, string> = { name: '', contact: '', message: '' };
+
+function PhoneGlyph({ size = 16 }: { size?: number }) {
+  return (
+    <svg aria-hidden width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z" />
+    </svg>
+  );
+}
+
+function ChatGlyph({ size = 16 }: { size?: number }) {
+  return (
+    <svg aria-hidden width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.4L3 21l2.1-5.7A8.4 8.4 0 1 1 21 11.5z" />
+    </svg>
+  );
+}
 
 export function CtaSection() {
   const { locale } = useLocale();
@@ -195,6 +227,7 @@ export function CtaSection() {
         }),
       });
       if (response.ok) {
+        reachGoal('lead_sent');
         setStatus('success');
         setForm(emptyForm);
         setPkg('');
@@ -209,8 +242,19 @@ export function CtaSection() {
     }
   };
 
-  const socialLinks = [
-    { label: copy.emailCardLabel, value: contactDetails.email, href: emailHref, external: false, Icon: MailIcon },
+  type ContactLink = { label: string; value: string; href: string; external: boolean; goal?: MetrikaGoal; Icon: typeof MailIcon };
+  const socialLinks: ContactLink[] = [
+    // Телефон и мессенджеры показываются, только если заданы в directContacts.
+    ...(directContacts.phoneHref
+      ? [{ label: copy.phoneCardLabel, value: directContacts.phone, href: directContacts.phoneHref, external: false, goal: 'click_phone' as const, Icon: PhoneGlyph }]
+      : []),
+    ...(directContacts.whatsappUrl
+      ? [{ label: copy.whatsappCardLabel, value: copy.whatsappCardValue, href: directContacts.whatsappUrl, external: true, goal: 'click_whatsapp' as const, Icon: ChatGlyph }]
+      : []),
+    ...(directContacts.maxUrl
+      ? [{ label: copy.maxCardLabel, value: copy.maxCardValue, href: directContacts.maxUrl, external: true, goal: 'click_max' as const, Icon: ChatGlyph }]
+      : []),
+    { label: copy.emailCardLabel, value: contactDetails.email, href: emailHref, external: false, goal: 'click_email', Icon: MailIcon },
     { label: copy.channelCardLabel, value: contactDetails.telegramChannel, href: contactDetails.telegramChannelUrl, external: true, Icon: BroadcastIcon },
   ];
 
@@ -434,6 +478,7 @@ export function CtaSection() {
                 href={contactDetails.telegramDmUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => reachGoal('click_telegram')}
                 className="group block w-full rounded-[1.4rem] border px-5 py-5 text-left transition-colors duration-400 contact-telegram-cta"
               >
                 <span className="flex items-center gap-4">
@@ -471,6 +516,7 @@ export function CtaSection() {
                     href={item.href}
                     target={item.external ? '_blank' : undefined}
                     rel={item.external ? 'noreferrer' : undefined}
+                    onClick={item.goal ? () => reachGoal(item.goal as MetrikaGoal) : undefined}
                     className="flex min-h-11 items-center gap-3 rounded-[1rem] border px-3 py-2.5 transition-colors duration-300 contact-link-card"
                   >
                     <span
