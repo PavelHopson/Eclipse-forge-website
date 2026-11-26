@@ -1,7 +1,6 @@
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { useLocale, type Locale } from '../../lib/locale';
-import { usePriceModal } from '../../lib/priceModal';
 import { useTheme } from '../../lib/theme';
 import { GlowButton } from '../ui/GlowButton';
 import { LanguageToggle } from '../ui/LanguageToggle';
@@ -16,49 +15,51 @@ const headerCopy: Record<
     cta: string;
     openMenu: string;
     closeMenu: string;
-    priceLabel: string;
-    libraryLabel: string;
+    navLabel: string;
+    settingsLabel: string;
   }
 > = {
   ru: {
     navItems: [
-      { label: 'Тарифы', href: '#services' },
-      { label: 'Демо', href: '#demo' },
       { label: 'Работы', href: '#works' },
+      { label: 'Цены', href: '#services' },
+      { label: 'Демо заявки', href: '#demo' },
+      { label: 'Как работаю', href: '#process' },
       { label: 'Вопросы', href: '#faq' },
-      { label: 'Контакт', href: '#contact' },
+      { label: 'Контакты', href: '#contact' },
     ],
     cta: 'Обсудить проект',
     openMenu: 'Открыть меню',
     closeMenu: 'Закрыть меню',
-    priceLabel: 'Прайс',
-    libraryLabel: 'Библиотека',
+    navLabel: 'Разделы страницы',
+    settingsLabel: 'Язык и оформление',
   },
   en: {
     navItems: [
-      { label: 'Packages', href: '#services' },
-      { label: 'Demo', href: '#demo' },
       { label: 'Work', href: '#works' },
+      { label: 'Pricing', href: '#services' },
+      { label: 'Lead demo', href: '#demo' },
+      { label: 'Process', href: '#process' },
       { label: 'FAQ', href: '#faq' },
       { label: 'Contact', href: '#contact' },
     ],
     cta: 'Open a request',
     openMenu: 'Open menu',
     closeMenu: 'Close menu',
-    priceLabel: 'Pricing',
-    libraryLabel: 'Library',
+    navLabel: 'Page sections',
+    settingsLabel: 'Language and appearance',
   },
 };
 
 export function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeHref, setActiveHref] = useState('');
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const reduceMotion = useReducedMotion();
   const { scrollY, scrollYProgress } = useScroll();
   const { theme } = useTheme();
   const { locale } = useLocale();
-  const { setOpen: setPriceOpen } = usePriceModal();
   const copy = headerCopy[locale];
   const isLight = theme === 'light';
   const { ambientMotionEnabled } = useMotionPreference();
@@ -66,6 +67,41 @@ export function SiteHeader() {
 
   useMotionValueEvent(scrollY, 'change', (latest) => setIsScrolled(latest > 20));
   const closeMenu = () => setIsMenuOpen(false);
+
+  // Подсветка раздела, в котором сейчас находится посетитель.
+  useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') return;
+    const ids = ['hero', ...headerCopy.ru.navItems.map((item) => item.href.slice(1))];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActiveHref(`#${entry.target.id}`);
+        }
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
+    );
+
+    // Страница подгружается отдельным куском, поэтому разделы могут появиться позже шапки.
+    let attempts = 0;
+    let timer: number | undefined;
+    const attach = () => {
+      const sections = ids
+        .map((id) => document.getElementById(id))
+        .filter((element): element is HTMLElement => element !== null);
+      if (sections.length < ids.length && attempts < 20) {
+        attempts += 1;
+        timer = window.setTimeout(attach, 250);
+        return;
+      }
+      sections.forEach((section) => observer.observe(section));
+    };
+    attach();
+
+    return () => {
+      if (timer !== undefined) window.clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     if (!isMenuOpen) return;
@@ -121,56 +157,43 @@ export function SiteHeader() {
             </span>
           </a>
 
-          <nav className="site-command-nav relative z-[1] hidden items-center gap-6 text-sm min-[1360px]:flex" style={{ color: 'var(--text-3)' }}>
-            {copy.navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="group relative inline-flex min-h-11 items-center transition-colors duration-300 hover:!text-[var(--text-1)]"
-              >
-                {item.label}
-                <span
-                  className="pointer-events-none absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
-                  style={{ background: 'linear-gradient(90deg, rgba(212,175,55,0.7), rgba(107,163,255,0.5))' }}
-                />
-              </a>
-            ))}
-            <a
-              href="https://library.eclipse-forge.ru/"
-              target="_blank"
-              rel="noreferrer"
-              className="group relative inline-flex min-h-11 items-center transition-colors duration-300 hover:!text-[var(--text-1)]"
-              style={{ color: 'var(--gold)' }}
-            >
-              {copy.libraryLabel} ↗
-              <span
-                className="pointer-events-none absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 transition-transform duration-400 group-hover:scale-x-100"
-                style={{ background: 'linear-gradient(90deg, rgba(212,175,55,0.9), rgba(212,175,55,0.4))' }}
-              />
-            </a>
-            <button
-              type="button"
-              onClick={() => setPriceOpen(true)}
-              className="group relative inline-flex min-h-11 items-center transition-colors duration-300 hover:!text-[var(--text-1)]"
-              style={{ color: 'var(--gold)' }}
-            >
-              {copy.priceLabel}
-              <span
-                className="pointer-events-none absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
-                style={{ background: 'linear-gradient(90deg, rgba(212,175,55,0.9), rgba(212,175,55,0.4))' }}
-              />
-            </button>
+          {/* Разделы видны на ноутбуках от 1200px; ниже — в меню под кнопкой. */}
+          <nav
+            aria-label={copy.navLabel}
+            className="site-command-nav relative z-[1] hidden items-center gap-5 text-sm min-[1200px]:flex min-[1360px]:gap-6"
+            style={{ color: 'var(--text-3)' }}
+          >
+            {copy.navItems.map((item) => {
+              const isActive = activeHref === item.href;
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  aria-current={isActive ? 'location' : undefined}
+                  className="group relative inline-flex min-h-11 items-center whitespace-nowrap transition-colors duration-300 hover:!text-[var(--text-1)]"
+                  style={isActive ? { color: 'var(--text-1)' } : undefined}
+                >
+                  {item.label}
+                  <span
+                    className={`pointer-events-none absolute -bottom-1 left-0 h-px w-full origin-left transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100 ${isActive ? 'scale-x-100' : 'scale-x-0'}`}
+                    style={{ background: 'linear-gradient(90deg, rgba(212,175,55,0.9), rgba(212,175,55,0.4))' }}
+                  />
+                </a>
+              );
+            })}
           </nav>
 
           <div className="relative z-[1] flex items-center gap-2 sm:gap-3">
-            <LanguageToggle compact />
-            <div className="flex items-center gap-2 sm:hidden">
+            {/* Язык, пауза анимации и тема — в шапке только там, где есть место; иначе в меню. */}
+            <div className="hidden items-center gap-2 min-[1200px]:flex">
+              <LanguageToggle compact />
               <MotionToggle />
-              <ThemeToggle compact />
-            </div>
-            <div className="hidden items-center gap-2 sm:flex">
-              <MotionToggle />
-              <ThemeToggle />
+              <div className="min-[1360px]:hidden">
+                <ThemeToggle compact />
+              </div>
+              <div className="hidden min-[1360px]:block">
+                <ThemeToggle />
+              </div>
             </div>
             <div className="hidden sm:block">
               <GlowButton href="#contact" className="px-5 py-2.5 text-[0.78rem]">
@@ -185,7 +208,7 @@ export function SiteHeader() {
               aria-expanded={isMenuOpen}
               aria-controls="mobile-navigation"
               onClick={() => setIsMenuOpen((open) => !open)}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border min-[1360px]:hidden"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border min-[1200px]:hidden"
               style={{ borderColor: 'var(--line)', color: 'var(--text-2)' }}
             >
               <span className="relative h-4 w-4">
@@ -206,8 +229,11 @@ export function SiteHeader() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.18 }}
-            className="fixed inset-0 z-30 px-4 pb-6 pt-24 backdrop-blur-md min-[1360px]:hidden"
-            style={{ background: isLight ? 'rgba(245, 242, 235, 0.85)' : 'rgba(5,7,10,0.7)' }}
+            className="fixed inset-0 z-30 overflow-y-auto px-4 pb-6 pt-24 backdrop-blur-md min-[1200px]:hidden"
+            style={{ background: isLight ? 'rgba(245, 242, 235, 0.97)' : 'rgba(5,7,10,0.96)' }}
+            onClick={(event) => {
+              if (event.target === event.currentTarget) closeMenu();
+            }}
           >
             <motion.div
               initial={{ opacity: 0, y: -14 }}
@@ -217,44 +243,40 @@ export function SiteHeader() {
               className="mx-auto max-w-[1400px] rounded-2xl border p-5"
               style={{ borderColor: 'var(--line)', background: 'var(--bg-card)' }}
             >
-              <nav className="grid gap-1">
-                <button
-                  type="button"
-                  onClick={() => {
-                    closeMenu();
-                    setPriceOpen(true);
-                  }}
-                  className="rounded-xl px-4 py-4 text-left text-sm uppercase tracking-[0.15em] transition-colors hover:bg-white/[0.03]"
-                  style={{ color: 'var(--gold)' }}
-                >
-                  {copy.priceLabel} →
-                </button>
-                {copy.navItems.map((item) => (
-                  <a
-                    key={item.href}
-                    href={item.href}
-                    onClick={closeMenu}
-                    className="rounded-xl px-4 py-4 text-sm uppercase tracking-[0.15em] transition-colors hover:bg-white/[0.03]"
-                    style={{ color: 'var(--text-2)' }}
-                  >
-                    {item.label}
-                  </a>
-                ))}
-                <a
-                  href="https://library.eclipse-forge.ru/"
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={closeMenu}
-                  className="rounded-xl px-4 py-4 text-sm uppercase tracking-[0.15em] transition-colors hover:bg-white/[0.03]"
-                  style={{ color: 'var(--gold)' }}
-                >
-                  {copy.libraryLabel} ↗
-                </a>
+              <nav aria-label={copy.navLabel} className="grid gap-1">
+                {copy.navItems.map((item, index) => {
+                  const isActive = activeHref === item.href;
+                  return (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      onClick={closeMenu}
+                      aria-current={isActive ? 'location' : undefined}
+                      className="flex min-h-12 items-center gap-4 rounded-xl px-4 py-3 font-display text-[1.05rem] tracking-tight transition-colors hover:bg-white/[0.03]"
+                      style={{ color: isActive ? 'var(--gold)' : 'var(--text-1)' }}
+                    >
+                      <span aria-hidden className="w-5 text-[11px] tabular-nums" style={{ color: 'var(--text-4)' }}>
+                        0{index + 1}
+                      </span>
+                      {item.label}
+                    </a>
+                  );
+                })}
               </nav>
               <div className="mt-4 border-t pt-4" style={{ borderColor: 'var(--line)' }}>
                 <GlowButton href="#contact" onClick={closeMenu} className="w-full justify-center">
                   {copy.cta}
                 </GlowButton>
+              </div>
+              <div
+                role="group"
+                aria-label={copy.settingsLabel}
+                className="mt-4 flex flex-wrap items-center gap-2 border-t pt-4"
+                style={{ borderColor: 'var(--line)' }}
+              >
+                <LanguageToggle compact />
+                <MotionToggle />
+                <ThemeToggle compact />
               </div>
             </motion.div>
           </motion.div>

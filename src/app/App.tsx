@@ -172,6 +172,40 @@ function AppSurface() {
             </div>
           </motion.div>
 
+          <nav
+            aria-label={locale === 'ru' ? 'Разделы страницы' : 'Page sections'}
+            className="relative z-[2] mb-8 flex flex-wrap gap-x-7 gap-y-1 border-t pt-6 text-[14px]"
+            style={{ borderColor: 'var(--line)' }}
+          >
+            {(locale === 'ru'
+              ? [
+                  ['Работы', '#works'],
+                  ['Цены', '#services'],
+                  ['Демо заявки', '#demo'],
+                  ['Как работаю', '#process'],
+                  ['Вопросы', '#faq'],
+                  ['Контакты', '#contact'],
+                ]
+              : [
+                  ['Work', '#works'],
+                  ['Pricing', '#services'],
+                  ['Lead demo', '#demo'],
+                  ['Process', '#process'],
+                  ['FAQ', '#faq'],
+                  ['Contact', '#contact'],
+                ]
+            ).map(([label, href]) => (
+              <a
+                key={href}
+                href={href}
+                className="inline-flex min-h-11 items-center transition-colors hover:text-[var(--gold)]"
+                style={{ color: 'var(--text-2)' }}
+              >
+                {label}
+              </a>
+            ))}
+          </nav>
+
           <div className="event-horizon-footer__dock relative z-[2]">
             <div className="event-horizon-footer__identity">
               <span className="event-horizon-footer__status-dot" aria-hidden />
