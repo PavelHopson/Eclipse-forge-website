@@ -36,7 +36,7 @@ RestrictRealtime=true
 RestrictSUIDSGID=true
 LockPersonality=true
 SystemCallArchitectures=native
-SystemCallFilter=@system-service
+# SystemCallFilter=@system-service не ставим: с ним Node 20 на этом сервере убивается при старте (SIGSYS).
 # Наружу сервис ходит только через локальный прокси, входящие принимает только от Caddy на этом же сервере.
 IPAddressDeny=any
 IPAddressAllow=localhost
