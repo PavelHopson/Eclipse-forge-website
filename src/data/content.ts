@@ -282,6 +282,20 @@ export const contactDetails = {
   instagramHandle: '@PavelHopson',
 } as const;
 
+// Прямые контакты для клиентов. Пустая строка = канал не показывается на сайте.
+// phone — как показать («+7 900 000-00-00»), phoneHref — «tel:+79000000000».
+export const directContacts: { phone: string; phoneHref: string; whatsappUrl: string; maxUrl: string } = {
+  phone: '',
+  phoneHref: '',
+  whatsappUrl: '',
+  maxUrl: '',
+};
+
+// Номер счётчика Яндекс Метрики. 0 = счётчик и уведомление о нём выключены.
+export const analytics: { yandexMetrikaId: number } = {
+  yandexMetrikaId: 0,
+};
+
 function materializeProject(locale: Locale, definition: LocalizedProjectDefinition): Project {
   return {
     title: definition.title,

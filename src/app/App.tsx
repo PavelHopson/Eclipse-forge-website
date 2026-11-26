@@ -8,6 +8,7 @@ import {
   InteractiveGalaxyLayer,
   ParticleField,
 } from '../components/ui/EclipseVisuals';
+import { AnalyticsNotice } from '../components/ui/AnalyticsNotice';
 import { PriceListModal } from '../components/ui/PriceListModal';
 import { BroadcastIcon, GitHubIcon, InstagramIcon, TelegramIcon } from '../components/ui/SocialIcons';
 import { GlowButton } from '../components/ui/GlowButton';
@@ -119,6 +120,7 @@ function AppSurface() {
       <InteractiveGalaxyLayer className="z-[1]" />
 
       <PriceListModal />
+      <AnalyticsNotice />
 
       <SiteHeader />
 
