@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Запись демо — Eclipse Forge</title>
+<style>
+  :root { --bg:#000; --panel:#0c0c0b; --gold:#D4AF37; --gold-2:#C9A96E; --text:#F5F5F0; --muted:#a8a69d; --line:rgba(212,175,55,.22); --danger:#e5484d; }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; background:var(--bg); color:var(--text); font:16px/1.5 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width:880px; margin:0 auto; padding:32px 16px 64px; }
+  .brand { font:500 12px/1 "JetBrains Mono", ui-monospace, monospace; letter-spacing:.18em; text-transform:uppercase; color:var(--gold-2); }
+  h1 { font:italic 600 clamp(26px,4vw,36px)/1.15 Outfit, Georgia, serif; color:var(--gold); margin:10px 0 24px; }
+  h2 { font-size:18px; margin:40px 0 12px; }
+  section { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:20px; }
+  label { display:block; font-size:14px; color:var(--muted); margin-bottom:6px; }
+  input[type=text], input[type=password] { width:100%; min-height:44px; padding:0 12px; border-radius:8px; border:1px solid #333; background:#000; color:var(--text); font:inherit; }
+  input:focus-visible, button:focus-visible, a:focus-visible { outline:2px solid var(--gold); outline-offset:2px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:640px) { .grid { grid-template-columns:1fr; } }
+  .checks { display:flex; flex-wrap:wrap; gap:20px; margin:16px 0 4px; }
+  .checks label { display:flex; gap:8px; align-items:center; color:var(--text); margin:0; font-size:15px; }
+  .checks input { width:18px; height:18px; accent-color:var(--gold); }
+  .hint { color:var(--muted); font-size:13px; margin:6px 0 0; }
+  button { min-height:44px; padding:0 18px; border-radius:10px; border:1px solid var(--line); background:transparent; color:var(--text); font:inherit; cursor:pointer; }
+  button:disabled { opacity:.5; cursor:not-allowed; }
+  .primary { background:var(--gold); color:#000; border-color:var(--gold); font-weight:600; min-height:52px; padding:0 28px; font-size:17px; }
+  .primary:hover:not(:disabled) { background:#e2c25a; }
+  .stop { background:var(--danger); border-color:var(--danger); color:#fff; font-weight:600; min-height:52px; padding:0 28px; }
+  .row { display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-top:20px; }
+  .rec { display:inline-flex; gap:8px; align-items:center; font:500 15px "JetBrains Mono", ui-monospace, monospace; }
+  .dot { width:10px; height:10px; border-radius:50%; background:var(--danger); animation:pulse 1.2s ease-in-out infinite; }
+  @keyframes pulse { 50% { opacity:.3; } }
+  @media (prefers-reduced-motion: reduce) { .dot { animation:none; } }
+  video.preview { width:100%; margin-top:16px; border-radius:10px; border:1px solid var(--line); background:#000; }
+  .link { display:flex; gap:8px; margin-top:16px; }
+  .link input { flex:1; }
+  .msg { margin-top:14px; min-height:1.5em; }
+  .msg.error { color:#ff8b8e; }
+  progress { width:100%; height:8px; margin-top:14px; accent-color:var(--gold); }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th, td { text-align:left; padding:10px 8px; border-bottom:1px solid #222; vertical-align:top; }
+  th { color:var(--muted); font-weight:500; }
+  td a { color:var(--gold-2); }
+  .empty { color:var(--muted); }
+  [hidden] { display:none !important; }
+</style>
+</head>
+<body>
+<main>
+  <div class="brand">Eclipse Forge · студия</div>
+  <h1>Записать демо для клиента</h1>
+
+  <section id="gate" hidden>
+    <label for="token">Ключ студии</label>
+    <input id="token" type="password" autocomplete="off">
+    <p class="hint">Вводится один раз на этом компьютере.</p>
+    <div class="row"><button class="primary" id="saveToken">Войти</button></div>
+    <p class="msg error" id="gateMsg" role="alert"></p>
+  </section>
+
+  <section id="unsupported" hidden>
+    <p>Запись экрана работает в Chrome, Edge или Яндекс Браузере на компьютере. На телефоне записать не получится.</p>
+  </section>
+
+  <section id="studio" hidden>
+    <div id="setup">
+      <div class="grid">
+        <div><label for="client">Для кого</label><input id="client" type="text" maxlength="80" placeholder="Например: Гостевой дом «Дюна»"></div>
+        <div><label for="title">Название ролика</label><input id="title" type="text" maxlength="120" placeholder="Ваш сайт сейчас и после редизайна"></div>
+      </div>
+      <div class="checks">
+        <label><input type="checkbox" id="useMic" checked> Мой голос</label>
+        <label><input type="checkbox" id="useCam"> Моё лицо в углу</label>
+      </div>
+      <p class="hint" id="camHint">Камера откроется маленьким окном поверх всех окон. В запись она попадёт, если выбрать «Весь экран».</p>
+      <div class="row"><button class="primary" id="start">Начать запись</button></div>
+    </div>
+
+    <div id="recording" hidden>
+      <div class="row">
+        <span class="rec"><span class="dot" aria-hidden="true"></span><span id="timer">00:00</span></span>
+        <button class="stop" id="stop">Остановить</button>
+      </div>
+      <p class="hint">Запись идёт. Остановить можно здесь или кнопкой браузера «Закрыть доступ».</p>
+    </div>
+
+    <div id="review" hidden>
+      <video class="preview" id="preview" controls playsinline></video>
+      <div class="row">
+        <button class="primary" id="upload">Получить ссылку для клиента</button>
+        <button id="again">Записать заново</button>
+      </div>
+      <progress id="progress" max="100" value="0" hidden></progress>
+    </div>
+
+    <div id="done" hidden>
+      <p>Готово. Отправьте ссылку клиенту, когда он откроет ролик, придёт уведомление.</p>
+      <div class="link">
+        <input id="shareUrl" type="text" readonly aria-label="Ссылка для клиента">
+        <button id="copy">Скопировать</button>
+      </div>
+      <div class="row"><a id="openLink" href="#" target="_blank" rel="noopener">Открыть как клиент</a><button id="next">Новая запись</button></div>
+    </div>
+
+    <p class="msg" id="msg" role="status" aria-live="polite"></p>
+  </section>
+
+  <div id="listWrap" hidden>
+    <h2>Мои ролики</h2>
+    <div id="list"></div>
+  </div>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var KEY = 'ef-demo-token';
+  var token = '';
+  try { token = localStorage.getItem(KEY) || ''; } catch (e) {}
+
+  var supported = !!(navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia && window.MediaRecorder);
+  var state = { recorder: null, chunks: [], streams: [], blob: null, mime: '', timer: null, camVideo: null, audioCtx: null };
+
+  function show(id, on) { $(id).hidden = !on; }
+  function say(text, isError) { var m = $('msg'); m.textContent = text || ''; m.className = 'msg' + (isError ? ' error' : ''); }
+  function api(method, path, body, headers) {
+    return fetch(path, { method: method, body: body, headers: Object.assign({ Authorization: 'Bearer ' + token }, headers || {}) });
+  }
+
+  function pickMime() {
+    var list = ['video/mp4;codecs=avc1.640028,mp4a.40.2', 'video/mp4;codecs=avc1,opus', 'video/mp4', 'video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8,opus', 'video/webm'];
+    for (var i = 0; i < list.length; i++) if (MediaRecorder.isTypeSupported(list[i])) return list[i];
+    return '';
+  }
+
+  function init() {
+    if (!supported) { show('unsupported', true); return; }
+    if (!token) { show('gate', true); return; }
+    show('studio', true);
+    loadList();
+  }
+
+  $('saveToken').onclick = function () {
+    token = $('token').value.trim();
+    api('GET', '/api/videos').then(function (r) {
+      if (r.status === 401) { $('gateMsg').textContent = 'Ключ не подошёл.'; return; }
+      try { localStorage.setItem(KEY, token); } catch (e) {}
+      show('gate', false); init();
+    }).catch(function () { $('gateMsg').textContent = 'Сервер не отвечает. Попробуйте ещё раз.'; });
+  };
+
+  function stopAll() {
+    state.streams.forEach(function (s) { s.getTracks().forEach(function (t) { t.stop(); }); });
+    state.streams = [];
+    if (state.audioCtx) { state.audioCtx.close().catch(function () {}); state.audioCtx = null; }
+    if (document.pictureInPictureElement) document.exitPictureInPicture().catch(function () {});
+    clearInterval(state.timer);
+  }
+
+  async function openCamera() {
+    var cam = await navigator.mediaDevices.getUserMedia({ video: { width: 480, height: 480, facingMode: 'user' }, audio: false });
+    state.streams.push(cam);
+    var v = document.createElement('video');
+    v.muted = true; v.playsInline = true; v.srcObject = cam;
+    v.style.cssText = 'position:fixed;width:1px;height:1px;opacity:0;pointer-events:none';
+    document.body.appendChild(v);
+    state.camVideo = v;
+    await v.play();
+    if (document.pictureInPictureEnabled) await v.requestPictureInPicture();
+  }
+
+  $('start').onclick = async function () {
+    say('');
+    var mime = pickMime();
+    if (!mime) { say('Браузер не умеет записывать видео. Откройте страницу в Chrome или Edge.', true); return; }
+    try {
+      if ($('useCam').checked) await openCamera();
+      var screen = await navigator.mediaDevices.getDisplayMedia({ video: { frameRate: 30 }, audio: true });
+      state.streams.push(screen);
+      var tracks = screen.getVideoTracks();
+      var audioSources = [];
+      if (screen.getAudioTracks().length) audioSources.push(screen);
+      if ($('useMic').checked) {
+        try {
+          var mic = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true } });
+          state.streams.push(mic); audioSources.push(mic);
+        } catch (e) { say('Микрофон недоступен, пишем без голоса.', true); }
+      }
+      if (audioSources.length === 1) tracks = tracks.concat(audioSources[0].getAudioTracks());
+      if (audioSources.length > 1) {
+        var ctx = new AudioContext(); state.audioCtx = ctx;
+        var dest = ctx.createMediaStreamDestination();
+        audioSources.forEach(function (s) { ctx.createMediaStreamSource(s).connect(dest); });
+        tracks = tracks.concat(dest.stream.getAudioTracks());
+      }
+      var rec = new MediaRecorder(new MediaStream(tracks), { mimeType: mime, videoBitsPerSecond: 4000000 });
+      state.recorder = rec; state.chunks = []; state.mime = mime;
+      rec.ondataavailable = function (e) { if (e.data && e.data.size) state.chunks.push(e.data); };
+      rec.onstop = finish;
+      screen.getVideoTracks()[0].addEventListener('ended', function () { if (rec.state !== 'inactive') rec.stop(); });
+      rec.start(1000);
+      var t0 = Date.now();
+      $('timer').textContent = '00:00';
+      state.timer = setInterval(function () {
+        var s = Math.floor((Date.now() - t0) / 1000);
+        $('timer').textContent = String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+      }, 500);
+      show('setup', false); show('recording', true);
+    } catch (e) {
+      stopAll();
+      if (e && e.name === 'NotAllowedError') say('Запись отменена: нет доступа к экрану или камере.', true);
+      else say('Не удалось начать запись: ' + (e && e.message ? e.message : e), true);
+    }
+  };
+
+  $('stop').onclick = function () { if (state.recorder && state.recorder.state !== 'inactive') state.recorder.stop(); };
+
+  function finish() {
+    stopAll();
+    var type = state.mime.split(';')[0];
+    state.blob = new Blob(state.chunks, { type: type });
+    state.chunks = [];
+    var p = $('preview');
+    if (p.src) URL.revokeObjectURL(p.src);
+    p.src = URL.createObjectURL(state.blob);
+    show('recording', false); show('review', true);
+    say('Посмотрите запись. Если всё хорошо, получите ссылку.');
+  }
+
+  $('again').onclick = function () { reset(); };
+  $('next').onclick = function () { $('client').value = ''; $('title').value = ''; reset(); };
+  function reset() {
+    state.blob = null; $('preview').removeAttribute('src');
+    show('review', false); show('done', false); show('setup', true); say('');
+  }
+
+  $('upload').onclick = function () {
+    if (!state.blob) return;
+    var btn = $('upload'); btn.disabled = true; $('again').disabled = true;
+    var bar = $('progress'); bar.hidden = false; bar.value = 0;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/api/videos');
+    xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+    xhr.setRequestHeader('Content-Type', state.blob.type);
+    xhr.setRequestHeader('X-Demo-Title', encodeURIComponent($('title').value.trim()));
+    xhr.setRequestHeader('X-Demo-Client', encodeURIComponent($('client').value.trim()));
+    xhr.upload.onprogress = function (e) { if (e.lengthComputable) { bar.value = Math.round(e.loaded / e.total * 100); say('Загружаем… ' + bar.value + '%'); } };
+    xhr.onload = function () {
+      btn.disabled = false; $('again').disabled = false; bar.hidden = true;
+      var data = {}; try { data = JSON.parse(xhr.responseText); } catch (e) {}
+      if (xhr.status === 201) {
+        $('shareUrl').value = data.url; $('openLink').href = data.url;
+        show('review', false); show('done', true); say('');
+        loadList();
+      } else if (xhr.status === 401) {
+        try { localStorage.removeItem(KEY); } catch (e) {}
+        say('Ключ студии больше не действует. Обновите страницу и войдите заново.', true);
+      } else say((data.error || 'Не удалось загрузить') + '. Запись осталась здесь, попробуйте ещё раз.', true);
+    };
+    xhr.onerror = function () { btn.disabled = false; $('again').disabled = false; bar.hidden = true; say('Связь прервалась. Запись осталась здесь, попробуйте ещё раз.', true); };
+    xhr.send(state.blob);
+  };
+
+  $('copy').onclick = function () {
+    var v = $('shareUrl').value;
+    (navigator.clipboard ? navigator.clipboard.writeText(v) : Promise.reject()).then(function () { say('Ссылка скопирована.'); }, function () { $('shareUrl').select(); say('Выделите ссылку и скопируйте вручную.'); });
+  };
+
+  function fmt(iso) { return iso ? new Date(iso).toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '—'; }
+  function text(el, s) { el.textContent = s; return el; }
+
+  function loadList() {
+    api('GET', '/api/videos').then(function (r) { return r.ok ? r.json() : { items: [] }; }).then(function (data) {
+      var box = $('list'); box.textContent = '';
+      show('listWrap', true);
+      if (!data.items.length) { box.appendChild(text(document.createElement('p'), 'Пока нет роликов.')).className = 'empty'; return; }
+      var table = document.createElement('table');
+      var head = table.createTHead().insertRow();
+      ['Ролик', 'Создан', 'Просмотры', ''].forEach(function (h) { head.appendChild(text(document.createElement('th'), h)); });
+      var body = table.createTBody();
+      data.items.forEach(function (it) {
+        var row = body.insertRow();
+        var c = row.insertCell();
+        var a = document.createElement('a'); a.href = it.url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = it.title;
+        c.appendChild(a);
+        if (it.client) { c.appendChild(document.createElement('br')); c.appendChild(text(document.createElement('span'), it.client)).className = 'hint'; }
+        text(row.insertCell(), fmt(it.createdAt));
+        text(row.insertCell(), it.views ? it.views + ' · последний ' + fmt(it.lastViewAt) : 'не открывали');
+        var del = document.createElement('button'); del.textContent = 'Удалить';
+        del.setAttribute('aria-label', 'Удалить ролик «' + it.title + '»');
+        del.onclick = function () {
+          if (!confirm('Удалить ролик «' + it.title + '»? Ссылка у клиента перестанет работать.')) return;
+          api('DELETE', '/api/videos/' + it.id).then(loadList);
+        };
+        row.insertCell().appendChild(del);
+      });
+      box.appendChild(table);
+    }).catch(function () {});
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>

@@ -8,3 +8,6 @@ vite.config.d.ts
 .vite-preview.err.log
 design-backups/
 docs/portfolio-status.generated.md
+
+# demo-video: локальные записи
+server/demo-video/.data/
