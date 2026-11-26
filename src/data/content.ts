@@ -293,7 +293,7 @@ export const directContacts: { phone: string; phoneHref: string; whatsappUrl: st
 
 // Номер счётчика Яндекс Метрики. 0 = счётчик и уведомление о нём выключены.
 export const analytics: { yandexMetrikaId: number } = {
-  yandexMetrikaId: 0,
+  yandexMetrikaId: 114706562,
 };
 
 function materializeProject(locale: Locale, definition: LocalizedProjectDefinition): Project {

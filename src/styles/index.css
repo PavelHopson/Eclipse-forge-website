@@ -2630,7 +2630,8 @@ html[data-ambient-motion='paused'] .work-card:hover .device-phone { transform: n
 /* Уведомление о счётчике посещений: небольшая карточка, страницу не перекрывает. */
 .analytics-notice {
   position: fixed;
-  left: 12px;
+  /* Справа: слева внизу на первом экране стоят кнопки «Обсудить проект» и «Тарифы и цены». */
+  right: 12px;
   bottom: max(12px, env(safe-area-inset-bottom));
   z-index: 45;
   display: grid;
@@ -2680,12 +2681,18 @@ html[data-ambient-motion='paused'] .work-card:hover .device-phone { transform: n
   box-shadow: 0 18px 50px rgba(7, 7, 10, 0.16);
 }
 [data-theme='light'] .analytics-notice a { color: #7a5a08; }
-/* На телефоне уведомление стоит над нижней панелью с кнопкой «Обсудить». */
+/* На телефоне уведомление стоит под шапкой, в пустой полосе над заголовком:
+   внизу оно закрывало бы кнопку «Обсудить проект» и нижнюю панель. */
 @media (max-width: 767px) {
   .analytics-notice {
+    top: calc(env(safe-area-inset-top) + 100px);
+    left: 12px;
     right: 12px;
+    bottom: auto;
+    gap: 10px;
     width: auto;
-    bottom: calc(max(12px, env(safe-area-inset-bottom)) + 76px);
+    padding: 12px 14px;
+    font-size: 12.5px;
   }
 }
 .package-card--featured {
