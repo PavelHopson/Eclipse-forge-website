@@ -221,6 +221,7 @@ export function WorksSection() {
                   href={work.href}
                   target={external ? '_blank' : undefined}
                   rel={external ? 'noreferrer' : undefined}
+                  aria-label={`${work.kind === 'demo' ? copy.openDemo : copy.openSite}: ${work.name}`}
                   className={`${work.kind === 'demo' ? 'case-link-primary' : 'case-link-secondary'} work-card__link mt-4 inline-flex min-h-11 items-center justify-center gap-2 rounded-full border px-5 py-2.5 text-[12px] font-display tracking-[0.04em] sm:mt-6`}
                 >
                   {work.kind === 'demo' ? copy.openDemo : copy.openSite} <span aria-hidden>{external ? '↗' : '→'}</span>

@@ -54,7 +54,7 @@ const COPY: Record<Locale, Copy> = {
         surface: 'Заявка попадает менеджеру вручную',
         system: 'Менеджер получает готовую карточку без переноса из мессенджера',
       },
-     {
+      {
         surface: 'Нет картины: где заявка, что с заказом',
         system: 'Статус исполнения виден в реальном времени, руководитель получает отчёт',
       },
@@ -95,7 +95,7 @@ const COPY: Record<Locale, Copy> = {
         surface: 'Manager re-types data from messengers',
         system: 'Manager receives a ready-made order card without re-entry',
       },
-     {
+      {
         surface: 'No picture: where is the order, what is the status',
         system: 'Execution status is visible in real-time, owner gets a report',
       },
