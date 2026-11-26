@@ -155,7 +155,7 @@ export function WorksSection() {
   return (
     <motion.section
       id="works"
-      className="section-shell relative py-16 sm:py-24 lg:py-28"
+      className="section-shell relative py-12 sm:py-24 lg:py-28"
       variants={stagger}
       initial="hidden"
       whileInView="visible"
@@ -172,14 +172,14 @@ export function WorksSection() {
         <motion.p variants={revealUp} className="mt-5 max-w-2xl type-body text-[15px] leading-relaxed" style={{ color: 'var(--text-3)' }}>
           {copy.description}
         </motion.p>
-        <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-8 grid gap-4 sm:mt-10 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
           {copy.works.map((work) => {
             const external = work.href.startsWith('http');
             return (
               <motion.article
                 key={work.href}
                 variants={revealUp}
-                className={`work-card flex flex-col overflow-hidden rounded-[1.6rem] border services-card${work.kind === 'demo' ? ' work-card--demo' : ''}`}
+                className={`work-card flex flex-col overflow-hidden rounded-[1.6rem] border services-card${work.kind === 'demo' ? ' work-card--demo' : ' work-card--compact'}`}
               >
                 <a
                   href={work.href}
@@ -199,7 +199,7 @@ export function WorksSection() {
                     <img src={`/images/works/${work.shot}-mobile.webp`} alt="" width={390} height={844} loading="lazy" decoding="async" />
                   </span>
                 </a>
-                <div className="flex flex-1 flex-col p-6 pt-5">
+                <div className="work-card__body flex flex-1 flex-col p-5 pt-4 sm:p-6 sm:pt-5">
                 <div className="flex items-center justify-between gap-3">
                   <p className="type-meta" style={{ color: work.kind === 'concept' ? 'var(--text-4)' : 'var(--gold)' }}>
                     {copy.kinds[work.kind]}
@@ -209,10 +209,10 @@ export function WorksSection() {
                 <h3 className="mt-3 font-display text-[1.3rem] font-medium tracking-tight" style={{ color: 'var(--text-1)' }}>
                   {work.name}
                 </h3>
-                <p className="mt-3 flex-1 text-[14px] leading-relaxed" style={{ color: 'var(--text-2)' }}>
+                <p className="work-card__text mt-2 flex-1 text-[14px] leading-relaxed sm:mt-3" style={{ color: 'var(--text-2)' }}>
                   {work.text}
                 </p>
-                <ul className="mt-4 flex flex-wrap gap-2">
+                <ul className="mt-4 hidden flex-wrap gap-2 sm:flex">
                   {work.tags.map((tag) => (
                     <li key={tag} className="rounded-full border px-3 py-1 text-[11px] services-chip">{tag}</li>
                   ))}
@@ -221,7 +221,8 @@ export function WorksSection() {
                   href={work.href}
                   target={external ? '_blank' : undefined}
                   rel={external ? 'noreferrer' : undefined}
-                  className={`${work.kind === 'demo' ? 'case-link-primary' : 'case-link-secondary'} mt-6 inline-flex min-h-11 items-center justify-center gap-2 rounded-full border px-5 py-2.5 text-[12px] font-display tracking-[0.04em]`}
+                  aria-label={`${work.kind === 'demo' ? copy.openDemo : copy.openSite}: ${work.name}`}
+                  className={`${work.kind === 'demo' ? 'case-link-primary' : 'case-link-secondary'} work-card__link mt-4 inline-flex min-h-11 items-center justify-center gap-2 rounded-full border px-5 py-2.5 text-[12px] font-display tracking-[0.04em] sm:mt-6`}
                 >
                   {work.kind === 'demo' ? copy.openDemo : copy.openSite} <span aria-hidden>{external ? '↗' : '→'}</span>
                 </a>

@@ -2478,6 +2478,59 @@ html[data-ambient-motion='paused'] .work-card:hover .device-laptop,
 html[data-ambient-motion='paused'] .work-card:hover .device-phone { transform: none; }
 [data-theme='light'] .device-stage { border-bottom-color: rgba(7, 7, 10, 0.08); }
 
+/* Телефон: настоящий проект и концепты — короткой строкой (снимок слева, название и ссылка справа),
+   чтобы раздел работ не занимал пять экранов. Живые демо остаются большими карточками. */
+@media (max-width: 639px) {
+  .work-card--compact {
+    flex-direction: row;
+    align-items: stretch;
+  }
+  .work-card--compact .device-stage {
+    flex: 0 0 42%;
+    aspect-ratio: auto;
+    min-height: 8.25rem;
+    border-bottom: 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  /* Ширина ноутбука ограничена, чтобы на 570–639px он не вырастал выше сцены.
+     Правило повторено для hover и для паузы анимаций: иначе общий сброс transform сдвигает снимок. */
+  .work-card--compact .device-laptop,
+  .work-card--compact:hover .device-laptop,
+  html[data-ambient-motion='paused'] .work-card--compact:hover .device-laptop {
+    top: 50%;
+    right: auto;
+    left: 50%;
+    width: min(84%, 10rem);
+    transform: translate(-50%, -50%);
+  }
+  .work-card--compact .device-phone,
+  .work-card--compact .work-card__text {
+    display: none;
+  }
+  .work-card--compact .work-card__body {
+    justify-content: center;
+    min-width: 0;
+    padding: 0.875rem 1rem;
+  }
+  .work-card--compact .work-card__body > div:first-child {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.125rem;
+  }
+  .work-card--compact h3 {
+    margin-top: 0.375rem;
+    font-size: 1.05rem;
+  }
+  .work-card--compact .work-card__link {
+    align-self: flex-start;
+    margin-top: 0.625rem;
+    padding-inline: 0.875rem;
+  }
+  [data-theme='light'] .work-card--compact .device-stage {
+    border-right-color: rgba(7, 7, 10, 0.08);
+  }
+}
+
 /* Mobile sticky CTA (shown after the hero, hidden near the contact form) */
 .mobile-cta {
   position: fixed;

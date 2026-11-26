@@ -200,7 +200,7 @@ export function LeadDemoSection() {
   return (
     <motion.section
       id="demo"
-      className="section-shell relative overflow-hidden py-16 sm:py-24 lg:py-32"
+      className="section-shell relative overflow-hidden py-12 sm:py-24 lg:py-28"
       variants={stagger}
       initial="hidden"
       whileInView="visible"

@@ -8,8 +8,6 @@ import { ConstellationField, EclipseSilhouette, OrbitalRing, ParticleField } fro
 import {
   ArrowUpRightIcon,
   BroadcastIcon,
-  GitHubIcon,
-  InstagramIcon,
   MailIcon,
   TelegramIcon,
 } from '../ui/SocialIcons';
@@ -223,14 +221,12 @@ export function CtaSection() {
   const socialLinks = [
     { label: copy.emailCardLabel, value: contactDetails.email, href: emailHref, external: false, Icon: MailIcon },
     { label: copy.channelCardLabel, value: contactDetails.telegramChannel, href: contactDetails.telegramChannelUrl, external: true, Icon: BroadcastIcon },
-    { label: copy.githubCardLabel, value: contactDetails.githubHandle, href: contactDetails.githubUrl, external: true, Icon: GitHubIcon },
-    { label: copy.instagramCardLabel, value: contactDetails.instagramHandle, href: contactDetails.instagramUrl, external: true, Icon: InstagramIcon },
   ];
 
   return (
     <motion.section
       id="contact"
-      className="section-shell relative overflow-hidden py-16 sm:py-24 lg:py-36"
+      className="section-shell relative overflow-hidden py-12 sm:py-24 lg:py-28"
       variants={stagger}
       initial="hidden"
       whileInView="visible"
@@ -249,7 +245,7 @@ export function CtaSection() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-[1180px] px-5 sm:px-8 lg:px-12">
-        <motion.div variants={revealUp} className="mb-12 max-w-2xl">
+        <motion.div variants={revealUp} className="mb-8 max-w-2xl sm:mb-12">
           <p className="type-meta mb-5" style={{ color: 'rgba(212,175,55,0.95)' }}>
             {copy.eyebrow}
           </p>
