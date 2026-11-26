@@ -1,0 +1,29 @@
+[Unit]
+Description=Eclipse Forge lead API (форма заявки eclipse-forge.ru)
+After=network.target
+
+[Service]
+User=ef-lead
+Group=ef-lead
+WorkingDirectory=/opt/ef-lead-api
+ExecStart=/usr/bin/node /opt/ef-lead-api/server.mjs
+EnvironmentFile=/etc/ef-lead-api.env
+Environment=NODE_ENV=production PORT=8790 LEADS_FILE=/var/lib/ef-lead-api/leads.jsonl
+StateDirectory=ef-lead-api
+StateDirectoryMode=0700
+Restart=always
+RestartSec=3
+
+# Сервису нужны только свой каталог данных и сеть до локального прокси.
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6
+MemoryMax=96M
+
+[Install]
+WantedBy=multi-user.target
