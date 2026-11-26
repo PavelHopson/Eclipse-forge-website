@@ -285,8 +285,8 @@ export const contactDetails = {
 // Прямые контакты для клиентов. Пустая строка = канал не показывается на сайте.
 // phone — как показать («+7 900 000-00-00»), phoneHref — «tel:+79000000000».
 export const directContacts: { phone: string; phoneHref: string; whatsappUrl: string; maxUrl: string } = {
-  phone: '',
-  phoneHref: '',
+  phone: '+7 993 734-49-34',
+  phoneHref: 'tel:+79937344934',
   whatsappUrl: '',
   maxUrl: '',
 };
