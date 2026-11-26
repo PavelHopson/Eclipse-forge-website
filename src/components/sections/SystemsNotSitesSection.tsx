@@ -54,15 +54,7 @@ const COPY: Record<Locale, Copy> = {
         surface: 'Заявка попадает менеджеру вручную',
         system: 'Менеджер получает готовую карточку без переноса из мессенджера',
       },
-      {
-        surface: 'Логистика и адреса уходят в WhatsApp / звонки',
-        system: 'Маршрут, объект и комментарии — в единой системе у исполнителя',
-      },
-      {
-        surface: 'Договор собирается руками в Word',
-        system: 'Документ генерируется автоматически и подписывается онлайн',
-      },
-      {
+     {
         surface: 'Нет картины: где заявка, что с заказом',
         system: 'Статус исполнения виден в реальном времени, руководитель получает отчёт',
       },
@@ -103,15 +95,7 @@ const COPY: Record<Locale, Copy> = {
         surface: 'Manager re-types data from messengers',
         system: 'Manager receives a ready-made order card without re-entry',
       },
-      {
-        surface: 'Logistics and addresses live in WhatsApp / calls',
-        system: 'Route, site and notes live in one operator system',
-      },
-      {
-        surface: 'Contracts are stitched together by hand',
-        system: 'Documents are generated automatically and signed online',
-      },
-      {
+     {
         surface: 'No picture: where is the order, what is the status',
         system: 'Execution status is visible in real-time, owner gets a report',
       },
@@ -189,7 +173,7 @@ export function SystemsNotSitesSection() {
   return (
     <motion.section
       id="not-sites"
-      className="section-shell relative overflow-hidden py-16 sm:py-24 lg:py-32"
+      className="section-shell relative overflow-hidden py-12 sm:py-24 lg:py-28"
       variants={stagger}
       initial="hidden"
       whileInView="visible"
@@ -203,7 +187,7 @@ export function SystemsNotSitesSection() {
       </div>
 
       <div className="relative mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
-        <div className="mb-12 max-w-3xl lg:mb-16">
+        <div className="mb-8 max-w-3xl sm:mb-12 lg:mb-16">
           <motion.p variants={revealUp} className="type-meta mb-5" style={{ color: 'var(--gold)' }}>
             {copy.eyebrow}
           </motion.p>
@@ -333,7 +317,8 @@ export function SystemsNotSitesSection() {
           {copy.closing}
         </motion.p>
 
-        <motion.div variants={revealUp} className="mt-14 lg:mt-20">
+        {/* Пять шагов повторяют блок «Как работаю» — на телефоне не показываем. */}
+        <motion.div variants={revealUp} className="mt-14 hidden sm:block lg:mt-20">
           <p className="mb-6 text-center type-meta" style={{ color: 'var(--gold)' }}>
             {copy.loopEyebrow}
           </p>

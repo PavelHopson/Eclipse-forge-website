@@ -74,7 +74,7 @@ export function FaqSection() {
   return (
     <motion.section
       id="faq"
-      className="section-shell relative py-16 sm:py-24 lg:py-28"
+      className="section-shell relative py-12 sm:py-24 lg:py-28"
       variants={stagger}
       initial="hidden"
       whileInView="visible"

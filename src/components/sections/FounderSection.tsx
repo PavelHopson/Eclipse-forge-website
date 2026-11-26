@@ -114,7 +114,7 @@ export function FounderSection() {
     <motion.section
       ref={ref}
       id="founder"
-      className="section-shell relative overflow-hidden py-16 sm:py-24 lg:py-36"
+      className="section-shell relative overflow-hidden py-12 sm:py-24 lg:py-28"
       variants={stagger}
       initial="hidden"
       whileInView="visible"
@@ -163,7 +163,8 @@ export function FounderSection() {
               ))}
             </div>
 
-            <div className="mt-8 grid gap-3">
+            {/* Список повторяет тарифы — на телефоне не показываем. */}
+            <div className="mt-8 hidden gap-3 sm:grid">
               {founderProfile.pillars.map((pillar, index) => (
                 <motion.div
                   key={pillar}
@@ -192,7 +193,7 @@ export function FounderSection() {
                   alt={founderProfile.portrait.alt}
                   sources={founderProfile.portrait.sources}
                   loading="lazy"
-                  className="h-full min-h-[420px] w-full rounded-[1.6rem] object-cover"
+                  className="h-full min-h-[300px] w-full rounded-[1.6rem] object-cover sm:min-h-[420px]"
                   style={{ objectPosition: founderProfile.portrait.objectPosition }}
                   fallback={<PortraitFallback title={copy.fallbackTitle} text={copy.fallbackText} />}
                 />
@@ -208,7 +209,7 @@ export function FounderSection() {
             </motion.div>
 
             <div className="grid gap-4 sm:grid-cols-[1.05fr_0.95fr]">
-              <div className="founder-brand-card rounded-[1.7rem] border">
+              <div className="founder-brand-card hidden rounded-[1.7rem] border sm:block">
                 <FounderBrandLockup locale={locale} />
               </div>
 
