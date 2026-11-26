@@ -68,38 +68,39 @@ export function SiteHeader() {
   useMotionValueEvent(scrollY, 'change', (latest) => setIsScrolled(latest > 20));
   const closeMenu = () => setIsMenuOpen(false);
 
-  // Подсветка раздела, в котором сейчас находится посетитель.
+  // Подсветка раздела, в котором сейчас находится посетитель: считаем по положению страницы,
+  // а не по событию «вошёл в экран», чтобы прокрутка вверх и вниз давала один и тот же ответ.
+  // Разделы без пункта меню (сравнение, «Кто делает») ничего не подсвечивают.
   useEffect(() => {
-    if (typeof IntersectionObserver === 'undefined') return;
-    const ids = ['hero', ...headerCopy.ru.navItems.map((item) => item.href.slice(1))];
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) setActiveHref(`#${entry.target.id}`);
-        }
-      },
-      { rootMargin: '-45% 0px -50% 0px' },
-    );
+    const navHrefs = new Set(headerCopy.ru.navItems.map((item) => item.href));
+    const update = () => {
+      const sections = Array.from(document.querySelectorAll<HTMLElement>('main section[id]'));
+      if (sections.length === 0) return;
 
-    // Страница подгружается отдельным куском, поэтому разделы могут появиться позже шапки.
-    let attempts = 0;
-    let timer: number | undefined;
-    const attach = () => {
-      const sections = ids
-        .map((id) => document.getElementById(id))
-        .filter((element): element is HTMLElement => element !== null);
-      if (sections.length < ids.length && attempts < 20) {
-        attempts += 1;
-        timer = window.setTimeout(attach, 250);
-        return;
+      const line = window.innerHeight * 0.4;
+      let current = sections[0];
+      for (const section of sections) {
+        if (section.getBoundingClientRect().top <= line) current = section;
       }
-      sections.forEach((section) => observer.observe(section));
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+      if (atBottom) current = sections[sections.length - 1];
+
+      const href = `#${current.id}`;
+      const next = navHrefs.has(href) ? href : '';
+      // Расчёт дешёвый (девять замеров), а состояние меняется только при смене раздела.
+      setActiveHref((previous) => (previous === next ? previous : next));
     };
-    attach();
+
+    // Страница подгружается отдельным куском, поэтому первый расчёт повторяем чуть позже.
+    update();
+    const retry = window.setTimeout(update, 800);
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
 
     return () => {
-      if (timer !== undefined) window.clearTimeout(timer);
-      observer.disconnect();
+      window.clearTimeout(retry);
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
     };
   }, []);
 
@@ -113,9 +114,14 @@ export function SiteHeader() {
       menuButtonRef.current?.focus();
     };
 
+    // Пока меню открыто, страница под ним недоступна с клавиатуры и для скринридера.
+    const background = Array.from(document.querySelectorAll<HTMLElement>('main, footer'));
+    background.forEach((element) => element.setAttribute('inert', ''));
+
     document.body.style.overflow = 'hidden';
     window.addEventListener('keydown', handleKeyDown);
     return () => {
+      background.forEach((element) => element.removeAttribute('inert'));
       document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', handleKeyDown);
     };
@@ -160,7 +166,7 @@ export function SiteHeader() {
           {/* Разделы видны на ноутбуках от 1200px; ниже — в меню под кнопкой. */}
           <nav
             aria-label={copy.navLabel}
-            className="site-command-nav relative z-[1] hidden items-center gap-5 text-sm min-[1200px]:flex min-[1360px]:gap-6"
+            className="site-command-nav relative z-[1] ml-5 hidden items-center gap-4 text-sm min-[1200px]:flex min-[1360px]:ml-0 min-[1360px]:gap-6"
             style={{ color: 'var(--text-3)' }}
           >
             {copy.navItems.map((item) => {
@@ -195,7 +201,7 @@ export function SiteHeader() {
                 <ThemeToggle />
               </div>
             </div>
-            <div className="hidden sm:block">
+            <div className={isMenuOpen ? 'hidden min-[1200px]:block' : 'hidden sm:block'}>
               <GlowButton href="#contact" className="px-5 py-2.5 text-[0.78rem]">
                 {copy.cta}
               </GlowButton>
@@ -252,10 +258,10 @@ export function SiteHeader() {
                       href={item.href}
                       onClick={closeMenu}
                       aria-current={isActive ? 'location' : undefined}
-                      className="flex min-h-12 items-center gap-4 rounded-xl px-4 py-3 font-display text-[1.05rem] tracking-tight transition-colors hover:bg-white/[0.03]"
-                      style={{ color: isActive ? 'var(--gold)' : 'var(--text-1)' }}
+                      className={`site-menu-link flex min-h-12 items-center gap-4 rounded-xl border-l-2 px-4 py-3 font-display text-[1.05rem] tracking-tight transition-colors hover:bg-white/[0.03] ${isActive ? 'border-[var(--gold)] font-semibold' : 'border-transparent'}`}
+                      style={{ color: 'var(--text-1)' }}
                     >
-                      <span aria-hidden className="w-5 text-[11px] tabular-nums" style={{ color: 'var(--text-4)' }}>
+                      <span aria-hidden className="w-5 text-[11px] tabular-nums" style={{ color: isActive ? 'var(--gold)' : 'var(--text-3)' }}>
                         0{index + 1}
                       </span>
                       {item.label}

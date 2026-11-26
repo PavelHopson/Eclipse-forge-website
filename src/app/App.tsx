@@ -174,7 +174,7 @@ function AppSurface() {
 
           <nav
             aria-label={locale === 'ru' ? 'Разделы страницы' : 'Page sections'}
-            className="relative z-[2] mb-8 flex flex-wrap gap-x-7 gap-y-1 border-t pt-6 text-[14px]"
+            className="site-footer-nav relative z-[2] mb-8 flex flex-wrap gap-x-7 gap-y-1 border-t pt-6 text-[14px]"
             style={{ borderColor: 'var(--line)' }}
           >
             {(locale === 'ru'
