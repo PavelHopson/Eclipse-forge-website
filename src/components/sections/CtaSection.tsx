@@ -1,23 +1,18 @@
 import { motion } from 'framer-motion';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { PACKAGE_EVENT } from './PackagesSection';
 import { contactDetails } from '../../data/content';
-import { revealUp, stagger, staggerFast, viewport } from '../../lib/animation';
+import { revealUp, stagger, viewport } from '../../lib/animation';
 import { useLocale, type Locale } from '../../lib/locale';
 import { ConstellationField, EclipseSilhouette, OrbitalRing, ParticleField } from '../ui/EclipseVisuals';
-import {
-  ArrowUpRightIcon,
-  BroadcastIcon,
-  MailIcon,
-  TelegramIcon,
-} from '../ui/SocialIcons';
+import { ArrowUpRightIcon, BroadcastIcon, MailIcon, TelegramIcon } from '../ui/SocialIcons';
 
-type FormField = {
-  key: 'name' | 'manual' | 'loss' | 'result' | 'contact';
-  label: string;
-  placeholder: string;
-  multiline?: boolean;
-};
+const LEAD_ENDPOINT = '/api/lead';
+const PRIVACY_URL = '/privacy/';
+
+type FieldKey = 'name' | 'contact' | 'message';
+type Status = 'idle' | 'sending' | 'success' | 'error';
+type FieldErrors = Partial<Record<FieldKey | 'consent', string>>;
 
 type CtaCopy = {
   eyebrow: string;
@@ -26,22 +21,25 @@ type CtaCopy = {
   description: string;
   telegramHint: string;
   responseTime: string;
-  cityTimezone: string;
   channelsLabel: string;
   formLabel: string;
-  filledLabel: string;
-  fieldsCountLabel: string;
-  signalCopiedLabel: string;
+  formHint: string;
   emailCardLabel: string;
   channelCardLabel: string;
-  githubCardLabel: string;
-  instagramCardLabel: string;
-  packetHeader: string;
-  emptyAnswer: string;
   telegramLabel: string;
-  emailLabel: string;
-  bottomNote: string;
-  fields: FormField[];
+  fields: Record<FieldKey, { label: string; placeholder: string }>;
+  optional: string;
+  packageLabel: string;
+  packageRemove: string;
+  consentBefore: string;
+  consentLink: string;
+  submit: string;
+  sending: string;
+  successTitle: string;
+  successText: string;
+  sendAnother: string;
+  errors: { name: string; contact: string; consent: string; rate: string; generic: string };
+  fallback: string;
 };
 
 const ctaCopy: Record<Locale, CtaCopy> = {
@@ -49,179 +47,176 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     eyebrow: 'Обсудить проект',
     title: 'Расскажите о бизнесе.',
     titleAccent: 'Отвечу, что подойдёт и сколько стоит.',
-    description: 'Несколько коротких ответов — и в течение суток пришлю, какой тариф подойдёт, и предложу время созвона на 30 минут.',
+    description: 'Оставьте имя и контакт — в течение суток напишу, какой тариф подойдёт, и предложу время созвона на 30 минут.',
     telegramHint: 'Быстрее всего отвечаю в Telegram.',
-    responseTime: 'Ответ в течение 24 часов · UTC+2',
-    cityTimezone: 'UTC+2',
+    responseTime: 'Отвечаю в течение 24 часов',
     channelsLabel: 'Контакты',
-    formLabel: 'Бриф',
-    filledLabel: 'заполнено',
-    fieldsCountLabel: 'из 5 полей',
-    signalCopiedLabel: 'Скопировано',
+    formLabel: 'Заявка',
+    formHint: 'Минута времени',
     emailCardLabel: 'Email',
     channelCardLabel: 'Telegram-канал',
-    githubCardLabel: 'GitHub',
-    instagramCardLabel: 'Instagram',
-    packetHeader: 'Eclipse Forge / Запрос',
-    emptyAnswer: 'не заполнено',
     telegramLabel: 'Написать в Telegram',
-    emailLabel: 'Открыть email',
-    bottomNote: 'Кнопка Telegram скопирует ответы и откроет чат — останется вставить текст и отправить.',
-    fields: [
-      { key: 'name', label: 'Имя', placeholder: 'Имя или компания' },
-      {
-        key: 'manual',
-        label: 'Чем занимаетесь',
-        placeholder: 'Например: гостевой дом в Зеленоградске, ремонт квартир',
-        multiline: true,
-      },
-      {
-        key: 'loss',
-        label: 'Что сейчас мешает',
-        placeholder: 'Нет сайта, мало заявок, заявки теряются в мессенджерах…',
-        multiline: true,
-      },
-      {
-        key: 'result',
-        label: 'Что нужно',
-        placeholder: 'Сайт, система заявок, AI-разбор — или пока не знаете',
-        multiline: true,
-      },
-      {
-        key: 'contact',
-        label: 'Telegram или email',
-        placeholder: '@username или email',
-      },
-    ],
+    fields: {
+      name: { label: 'Как к вам обращаться', placeholder: 'Имя или компания' },
+      contact: { label: 'Как с вами связаться', placeholder: 'Телефон, Telegram, почта' },
+      message: { label: 'Что нужно', placeholder: 'Например: сайт для гостевого дома с бронированием' },
+    },
+    optional: 'необязательно',
+    packageLabel: 'Тариф',
+    packageRemove: 'Убрать тариф из заявки',
+    consentBefore: 'Согласен на обработку персональных данных по',
+    consentLink: 'политике конфиденциальности',
+    submit: 'Отправить заявку',
+    sending: 'Отправляю…',
+    successTitle: 'Заявка отправлена',
+    successText: 'Отвечу в течение суток по контакту, который вы оставили.',
+    sendAnother: 'Отправить ещё одну',
+    errors: {
+      name: 'Напишите, как к вам обращаться',
+      contact: 'Оставьте телефон, Telegram или почту',
+      consent: 'Без согласия отправить заявку нельзя',
+      rate: 'Слишком много заявок подряд. Попробуйте через 10 минут или напишите мне напрямую:',
+      generic: 'Не получилось отправить. Проверьте связь и попробуйте ещё раз или напишите мне напрямую:',
+    },
+    fallback: 'Telegram',
   },
   en: {
     eyebrow: 'Open the channel',
     title: 'Tell me about your business.',
     titleAccent: "I'll reply with what fits and what it costs.",
-    description: 'A few short answers — within a day I will suggest a package and a time for a 30-minute call.',
+    description: 'Leave your name and a contact — within a day I will suggest a package and a time for a 30-minute call.',
     telegramHint: 'Fastest replies happen in Telegram.',
-    responseTime: 'Reply within 24 hours · UTC+2',
-    cityTimezone: 'UTC+2',
+    responseTime: 'I reply within 24 hours',
     channelsLabel: 'Channels',
-    formLabel: 'Brief',
-    filledLabel: 'filled',
-    fieldsCountLabel: 'of 5 fields',
-    signalCopiedLabel: 'Copied',
+    formLabel: 'Request',
+    formHint: 'One minute',
     emailCardLabel: 'Email',
     channelCardLabel: 'Channel',
-    githubCardLabel: 'GitHub',
-    instagramCardLabel: 'Instagram',
-    packetHeader: 'Eclipse Forge / Request',
-    emptyAnswer: 'not filled',
     telegramLabel: 'Message on Telegram',
-    emailLabel: 'Open email',
-    bottomNote: 'The Telegram button copies your answers and opens the chat — just paste and send.',
-    fields: [
-      { key: 'name', label: 'Name', placeholder: 'Name or company' },
-      {
-        key: 'manual',
-        label: 'What you do',
-        placeholder: 'E.g. a guest house, apartment renovation',
-        multiline: true,
-      },
-      {
-        key: 'loss',
-        label: 'What gets in the way',
-        placeholder: 'No site, few leads, leads lost in messengers…',
-        multiline: true,
-      },
-      {
-        key: 'result',
-        label: 'What you need',
-        placeholder: 'Site, lead system, AI parsing — or not sure yet',
-        multiline: true,
-      },
-      {
-        key: 'contact',
-        label: 'Telegram or email',
-        placeholder: '@username or email',
-      },
-    ],
+    fields: {
+      name: { label: 'Your name', placeholder: 'Name or company' },
+      contact: { label: 'How to reach you', placeholder: 'Phone, @telegram or email' },
+      message: { label: 'What you need', placeholder: 'E.g. a guest house site with booking' },
+    },
+    optional: 'optional',
+    packageLabel: 'Package',
+    packageRemove: 'Remove the package from the request',
+    consentBefore: 'I agree to the processing of personal data under the',
+    consentLink: 'privacy policy',
+    submit: 'Send request',
+    sending: 'Sending…',
+    successTitle: 'Request sent',
+    successText: 'I will reply within a day using the contact you left.',
+    sendAnother: 'Send another',
+    errors: {
+      name: 'Tell me how to address you',
+      contact: 'Leave a phone, Telegram or email',
+      consent: 'The request cannot be sent without consent',
+      rate: 'Too many requests in a row. Try again in 10 minutes or message me directly:',
+      generic: 'Could not send. Check your connection and try again, or message me directly:',
+    },
+    fallback: 'Telegram',
   },
 };
 
-type FormState = {
-  name: string;
-  manual: string;
-  loss: string;
-  result: string;
-  contact: string;
+const packageNames: Record<Locale, Record<string, string>> = {
+  ru: { site: 'Сайт с заявками', crm: 'Сайт + система заявок', ai: 'AI-обработка заявок' },
+  en: { site: 'Site with leads', crm: 'Site + lead system', ai: 'AI lead processing' },
 };
 
-const emptyForm: FormState = {
-  name: '',
-  manual: '',
-  loss: '',
-  result: '',
-  contact: '',
-};
+const emptyForm: Record<FieldKey, string> = { name: '', contact: '', message: '' };
 
 export function CtaSection() {
   const { locale } = useLocale();
   const copy = ctaCopy[locale];
 
-  const [form, setForm] = useState<FormState>(emptyForm);
-  const [copied, setCopied] = useState(false);
+  const [form, setForm] = useState(emptyForm);
+  const [pkg, setPkg] = useState('');
+  const [consent, setConsent] = useState(false);
+  const [trap, setTrap] = useState(''); // поле-ловушка для ботов, человеку не видно
+  const [status, setStatus] = useState<Status>('idle');
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+  const [formError, setFormError] = useState('');
+  const successRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const names: Record<Locale, Record<string, string>> = {
-      ru: { site: 'Тариф «Сайт с заявками»', crm: 'Тариф «Сайт + система заявок»', ai: 'Тариф «AI-обработка заявок»' },
-      en: { site: 'Package «Site with leads»', crm: 'Package «Site + lead system»', ai: 'Package «AI lead processing»' },
-    };
     const onChoose = (event: Event) => {
       const id = (event as CustomEvent<string>).detail;
-      const value = names[locale][id];
-      if (value) setForm((current) => ({ ...current, result: value }));
+      if (packageNames[locale][id]) setPkg(id);
     };
     window.addEventListener(PACKAGE_EVENT, onChoose);
     return () => window.removeEventListener(PACKAGE_EVENT, onChoose);
   }, [locale]);
 
-  const filledCount =Object.values(form).filter((value) => value.trim().length > 0).length;
-
-  const signalPacket = useMemo(() => {
-    return [
-      copy.packetHeader,
-      '',
-      ...copy.fields.map((field, index) => `${index + 1}. ${field.label}\n${form[field.key].trim() || copy.emptyAnswer}`),
-    ].join('\n\n');
-  }, [copy.emptyAnswer, copy.fields, copy.packetHeader, form]);
+  useEffect(() => {
+    if (status === 'success') successRef.current?.focus();
+  }, [status]);
 
   const emailHref = `mailto:${contactDetails.email}?subject=${encodeURIComponent(
     locale === 'ru' ? 'Запрос в Eclipse Forge' : 'Eclipse Forge request',
-  )}&body=${encodeURIComponent(signalPacket)}`;
+  )}`;
 
-  const handleChange = (key: keyof FormState, value: string) => {
+  const handleChange = (key: FieldKey, value: string) => {
     setForm((current) => ({ ...current, [key]: value }));
+    if (fieldErrors[key]) setFieldErrors((current) => ({ ...current, [key]: undefined }));
   };
 
-  const handleCopy = async () => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (status === 'sending') return;
+
+    const errors: FieldErrors = {};
+    if (form.name.trim().length < 2) errors.name = copy.errors.name;
+    if (form.contact.trim().length < 5) errors.contact = copy.errors.contact;
+    if (!consent) errors.consent = copy.errors.consent;
+    setFieldErrors(errors);
+    setFormError('');
+
+    const firstInvalid = (['name', 'contact', 'consent'] as const).find((key) => errors[key]);
+    if (firstInvalid) {
+      setStatus('idle');
+      document.getElementById(`cta-${firstInvalid}`)?.focus();
+      return;
+    }
+
+    setStatus('sending');
     try {
-      await navigator.clipboard.writeText(signalPacket);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1600);
+      const response = await fetch(LEAD_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          contact: form.contact,
+          message: form.message,
+          pkg: pkg ? packageNames.ru[pkg] : '',
+          consent: true,
+          ef_hp: trap,
+          locale,
+        }),
+      });
+      if (response.ok) {
+        setStatus('success');
+        setForm(emptyForm);
+        setPkg('');
+        setConsent(false);
+        return;
+      }
+      setFormError(response.status === 429 ? copy.errors.rate : copy.errors.generic);
+      setStatus('error');
     } catch {
-      setCopied(false);
+      setFormError(copy.errors.generic);
+      setStatus('error');
     }
-  };
-
-  const handleTelegramOpen = async () => {
-    if (filledCount > 0) {
-      await handleCopy();
-    }
-
-    window.open(contactDetails.telegramDmUrl, '_blank', 'noopener,noreferrer');
   };
 
   const socialLinks = [
     { label: copy.emailCardLabel, value: contactDetails.email, href: emailHref, external: false, Icon: MailIcon },
     { label: copy.channelCardLabel, value: contactDetails.telegramChannel, href: contactDetails.telegramChannelUrl, external: true, Icon: BroadcastIcon },
   ];
+
+  const fieldClass = 'contact-field w-full rounded-[0.95rem] border px-4 py-3 text-[16px] transition-colors duration-300 sm:text-[14px]';
+  const focusName = () => window.setTimeout(() => document.getElementById('cta-name')?.focus(), 0);
+  const labelClass = 'flex items-baseline justify-between gap-3 text-[11px] uppercase tracking-[0.22em]';
 
   return (
     <motion.section
@@ -258,20 +253,188 @@ export function CtaSection() {
           </p>
         </motion.div>
 
-        <div className="grid gap-6 lg:grid-cols-[0.8fr_1fr] lg:gap-8">
-          {/* LEFT: channels */}
-          <motion.div variants={revealUp} className="flex flex-col gap-4">
+        <div className="grid gap-6 lg:grid-cols-[1fr_0.8fr] lg:gap-8">
+          {/* Форма — первой: это главное действие раздела. */}
+          <motion.div id="lead-form" variants={revealUp} className="min-w-0 scroll-mt-28 overflow-hidden rounded-[1.85rem] border contact-panel">
+            <div className="flex items-center justify-between gap-4 border-b px-6 py-4 sm:px-7" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+              <p className="type-meta" style={{ color: 'rgba(212,175,55,0.85)' }}>
+                {copy.formLabel}
+              </p>
+              <span className="hidden text-[11px] uppercase tracking-[0.18em] sm:inline" style={{ color: 'var(--text-4)' }}>
+                {copy.formHint}
+              </span>
+            </div>
+
+            {status === 'success' ? (
+              <div
+                ref={successRef}
+                tabIndex={-1}
+                role="status"
+                className="px-6 py-10 outline-none sm:px-7 sm:py-12"
+              >
+                <p className="font-display text-[1.5rem] tracking-tight" style={{ color: 'var(--gold)' }}>
+                  {copy.successTitle}
+                </p>
+                <p className="mt-3 max-w-md text-[15px] leading-relaxed" style={{ color: 'var(--text-2)' }}>
+                  {copy.successText}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setStatus('idle');
+                    focusName();
+                  }}
+                  className="case-link-secondary mt-7 inline-flex min-h-11 items-center justify-center rounded-full border px-5 py-2.5 text-[12px] font-display tracking-[0.04em]"
+                >
+                  {copy.sendAnother}
+                </button>
+              </div>
+            ) : (
+              <form noValidate onSubmit={handleSubmit} className="grid gap-5 px-6 py-6 sm:px-7 sm:py-7">
+                <div role="status" className={pkg ? 'flex items-center gap-1 text-[13px]' : 'sr-only'} style={{ color: 'var(--text-2)' }}>
+                  {pkg ? (
+                    <>
+                      <span className="min-w-0 flex-1">
+                        <span style={{ color: 'var(--text-3)' }}>{copy.packageLabel}: </span>
+                        <span style={{ color: 'var(--text-1)' }}>{packageNames[locale][pkg]}</span>
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setPkg('');
+                          focusName();
+                        }}
+                        aria-label={copy.packageRemove}
+                        className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-[18px]"
+                        style={{ color: 'var(--text-2)' }}
+                      >
+                        <span aria-hidden>×</span>
+                      </button>
+                    </>
+                  ) : null}
+                </div>
+                {(['name', 'contact'] as const).map((key) => (
+                  <div key={key} className="flex flex-col gap-2">
+                    <label htmlFor={`cta-${key}`} className={labelClass} style={{ color: 'var(--text-3)' }}>
+                      {copy.fields[key].label}
+                    </label>
+                    <input
+                      id={`cta-${key}`}
+                      name={key}
+                      value={form[key]}
+                      onChange={(event) => handleChange(key, event.target.value)}
+                      placeholder={copy.fields[key].placeholder}
+                      autoComplete={key === 'name' ? 'name' : undefined}
+                      maxLength={key === 'name' ? 80 : 120}
+                      required
+                      aria-invalid={fieldErrors[key] ? true : undefined}
+                      aria-describedby={fieldErrors[key] ? `cta-${key}-error` : undefined}
+                      className={fieldClass}
+                    />
+                    {fieldErrors[key] ? (
+                      <p id={`cta-${key}-error`} className="contact-field-error text-[13px]">
+                        {fieldErrors[key]}
+                      </p>
+                    ) : null}
+                  </div>
+                ))}
+
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="cta-message" className={labelClass} style={{ color: 'var(--text-3)' }}>
+                    {copy.fields.message.label}
+                    <span className="normal-case tracking-normal" style={{ color: 'var(--text-3)' }}>{copy.optional}</span>
+                  </label>
+                  <textarea
+                    id="cta-message"
+                    name="message"
+                    value={form.message}
+                    onChange={(event) => handleChange('message', event.target.value)}
+                    rows={3}
+                    maxLength={1500}
+                    placeholder={copy.fields.message.placeholder}
+                    className={`${fieldClass} min-h-[96px] resize-none`}
+                  />
+                </div>
+
+                {/* Ловушка для ботов: скрыта от людей и скринридеров, в Tab не попадает. */}
+                <div aria-hidden className="absolute left-[-9999px] h-px w-px overflow-hidden">
+                  <input
+                    name="ef_hp"
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    data-1p-ignore
+                    data-lpignore="true"
+                    data-bwignore
+                    data-form-type="other"
+                    value={trap}
+                    onChange={(event) => setTrap(event.target.value)}
+                  />
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="cta-consent" className="flex min-h-11 cursor-pointer items-start gap-3 text-[13px] leading-relaxed" style={{ color: 'var(--text-3)' }}>
+                    <input
+                      id="cta-consent"
+                      type="checkbox"
+                      checked={consent}
+                      onChange={(event) => {
+                        setConsent(event.target.checked);
+                        if (fieldErrors.consent) setFieldErrors((current) => ({ ...current, consent: undefined }));
+                      }}
+                      required
+                      aria-invalid={fieldErrors.consent ? true : undefined}
+                      aria-describedby={fieldErrors.consent ? 'cta-consent-error' : undefined}
+                      className="contact-consent mt-0.5 h-5 w-5 shrink-0"
+                    />
+                    <span>
+                      {copy.consentBefore}{' '}
+                      <a href={PRIVACY_URL} target="_blank" rel="noreferrer" className="package-inline-link !whitespace-normal">
+                        {copy.consentLink}
+                      </a>
+                    </span>
+                  </label>
+                  {fieldErrors.consent ? (
+                    <p id="cta-consent-error" className="contact-field-error text-[13px]">
+                      {fieldErrors.consent}
+                    </p>
+                  ) : null}
+                </div>
+
+                {status === 'error' ? (
+                  <p role="alert" className="contact-field-error text-[14px] leading-relaxed">
+                    {formError}{' '}
+                    <a href={contactDetails.telegramDmUrl} target="_blank" rel="noopener noreferrer" className="package-inline-link !whitespace-normal">
+                      {copy.fallback} {contactDetails.telegramDm}
+                    </a>
+                  </p>
+                ) : null}
+
+                <button
+                  type="submit"
+                  disabled={status === 'sending'}
+                  aria-busy={status === 'sending'}
+                  className="case-link-primary inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full border px-6 py-3.5 text-[14px] font-display tracking-[0.04em] transition-colors duration-300 disabled:cursor-wait disabled:opacity-70"
+                >
+                  {status === 'sending' ? copy.sending : copy.submit}
+                  {status === 'sending' ? null : <span aria-hidden>→</span>}
+                </button>
+              </form>
+            )}
+          </motion.div>
+
+          {/* Контакты — для тех, кому удобнее написать самому. */}
+          <motion.div variants={revealUp} className="flex min-w-0 flex-col gap-4">
             <div className="rounded-[1.85rem] border p-6 sm:p-7 contact-panel">
               <p className="type-meta mb-5" style={{ color: 'rgba(212,175,55,0.85)' }}>
                 {copy.channelsLabel}
               </p>
 
-              <motion.button
-                type="button"
-                onClick={handleTelegramOpen}
-                whileTap={{ scale: 0.985 }}
-                transition={{ type: 'spring', stiffness: 380, damping: 24 }}
-                className="group block w-full rounded-[1.4rem] border px-5 py-5 text-left transition-all duration-400 contact-telegram-cta"
+              <a
+                href={contactDetails.telegramDmUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block w-full rounded-[1.4rem] border px-5 py-5 text-left transition-colors duration-400 contact-telegram-cta"
               >
                 <span className="flex items-center gap-4">
                   <span
@@ -295,20 +458,20 @@ export function CtaSection() {
                     <ArrowUpRightIcon size={14} />
                   </span>
                 </span>
-              </motion.button>
+              </a>
 
-              <p className="mt-4 text-[12px] leading-relaxed" style={{ color: 'var(--text-4)' }}>
+              <p className="mt-4 text-[12px] leading-relaxed" style={{ color: 'var(--text-3)' }}>
                 {copy.telegramHint}
               </p>
 
-              <div className="mt-6 grid grid-cols-2 gap-2">
+              <div className="mt-6 grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
                 {socialLinks.map((item) => (
                   <a
                     key={item.label}
                     href={item.href}
                     target={item.external ? '_blank' : undefined}
                     rel={item.external ? 'noreferrer' : undefined}
-                    className="flex items-center gap-3 rounded-[1rem] border px-3 py-2.5 transition-all duration-300 contact-link-card"
+                    className="flex min-h-11 items-center gap-3 rounded-[1rem] border px-3 py-2.5 transition-colors duration-300 contact-link-card"
                   >
                     <span
                       className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border"
@@ -337,97 +500,6 @@ export function CtaSection() {
                   {copy.responseTime}
                 </span>
               </div>
-            </div>
-          </motion.div>
-
-          {/* RIGHT: form */}
-          <motion.div variants={revealUp} className="overflow-hidden rounded-[1.85rem] border contact-panel">
-            <div className="flex items-center justify-between gap-4 border-b px-6 py-4 sm:px-7" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
-              <p className="type-meta" style={{ color: 'rgba(212,175,55,0.85)' }}>
-                {copy.formLabel}
-              </p>
-              <span className="text-[11px] uppercase tracking-[0.18em]" style={{ color: 'var(--text-4)' }}>
-                {filledCount}/{copy.fields.length} {copy.filledLabel}
-              </span>
-            </div>
-
-            <motion.div
-              variants={staggerFast}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              className="grid gap-5 px-6 py-6 sm:px-7 sm:py-7"
-            >
-              {copy.fields.map((field) => (
-                <motion.div key={field.key} variants={revealUp} className="flex flex-col gap-2">
-                  <label
-                    htmlFor={`cta-${field.key}`}
-                    className="text-[11px] uppercase tracking-[0.22em]"
-                    style={{ color: 'var(--text-3)' }}
-                  >
-                    {field.label}
-                  </label>
-                  {field.multiline ? (
-                    <textarea
-                      id={`cta-${field.key}`}
-                      value={form[field.key]}
-                      onChange={(event) => handleChange(field.key, event.target.value)}
-                      rows={field.key === 'manual' ? 3 : 2}
-                      placeholder={field.placeholder}
-                      className="contact-field min-h-[88px] w-full resize-none rounded-[0.95rem] border px-4 py-3 text-[14px] outline-none transition-all duration-300"
-                    />
-                  ) : (
-                    <input
-                      id={`cta-${field.key}`}
-                      value={form[field.key]}
-                      onChange={(event) => handleChange(field.key, event.target.value)}
-                      placeholder={field.placeholder}
-                      className="contact-field w-full rounded-[0.95rem] border px-4 py-3 text-[14px] outline-none transition-all duration-300"
-                    />
-                  )}
-                </motion.div>
-              ))}
-            </motion.div>
-
-            <div className="border-t px-6 py-6 sm:px-7" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                <motion.button
-                  type="button"
-                  onClick={handleTelegramOpen}
-                  whileTap={{ scale: 0.97 }}
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ type: 'spring', stiffness: 380, damping: 22 }}
-                  className="case-link-primary inline-flex flex-1 items-center justify-center gap-2 rounded-full border px-6 py-3.5 text-[13px] font-display tracking-[0.04em] transition-all duration-400"
-                >
-                  <TelegramIcon size={14} />
-                  {copy.telegramLabel}
-                  <span aria-hidden>→</span>
-                </motion.button>
-                <motion.a
-                  href={emailHref}
-                  whileTap={{ scale: 0.97 }}
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ type: 'spring', stiffness: 380, damping: 22 }}
-                  className="case-link-secondary inline-flex items-center justify-center gap-2 rounded-full border px-6 py-3.5 text-[13px] font-display tracking-[0.04em] transition-all duration-400"
-                >
-                  <MailIcon size={14} />
-                  {copy.emailLabel}
-                </motion.a>
-                <motion.button
-                  type="button"
-                  onClick={handleCopy}
-                  whileTap={{ scale: 0.95 }}
-                  whileHover={{ scale: 1.04 }}
-                  transition={{ type: 'spring', stiffness: 380, damping: 22 }}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border px-4 py-3.5 text-[11px] uppercase tracking-[0.18em] transition-all duration-300 contact-copy-link"
-                  aria-live="polite"
-                >
-                  {copied ? copy.signalCopiedLabel : 'Copy'}
-                </motion.button>
-              </div>
-              <p className="mt-4 text-[12px] leading-relaxed" style={{ color: 'var(--text-4)' }}>
-                {copy.bottomNote}
-              </p>
             </div>
           </motion.div>
         </div>

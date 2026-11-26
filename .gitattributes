@@ -1,0 +1,3 @@
+# Файлы сервиса заявок уходят на Linux-сервер: перевод строки всегда LF,
+# иначе bash-скрипт и systemd-юнит после checkout на Windows не запустятся.
+server/lead-api/* text eol=lf

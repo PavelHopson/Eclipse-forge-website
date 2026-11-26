@@ -159,7 +159,8 @@ function choosePackage(id: Package['id']) {
   window.dispatchEvent(new CustomEvent(PACKAGE_EVENT, { detail: id }));
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     || document.documentElement.dataset.ambientMotion === 'paused';
-  document.getElementById('contact')?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+  // Прокручиваем к самой форме, а не к заголовку раздела: на телефоне поле имени и выбранный тариф должны быть видны сразу.
+  (document.getElementById('lead-form') ?? document.getElementById('contact'))?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
   window.setTimeout(() => document.getElementById('cta-name')?.focus({ preventScroll: true }), reduced ? 0 : 700);
 }
 
