@@ -3191,15 +3191,9 @@ html[data-ambient-motion='paused'] .work-card:hover .device-phone { transform: n
 /* Mobile: reduce hero top padding on very small screens */
 @media (max-width: 480px) {
   html { scroll-padding-top: 4rem; }
+  /* Название в шапке на телефоне показываем полностью: служебные кнопки переехали в меню. */
   .site-brand-label {
-    overflow: visible;
-    font-size: 0;
-    letter-spacing: 0;
-  }
-  .site-brand-label::after {
-    content: 'EF';
-    font-size: 0.72rem;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.22em;
   }
 
   /* Tighten large typography on narrow viewports */
@@ -4040,6 +4034,12 @@ html[data-ambient-motion='paused'] .event-horizon-footer__status-dot::after {
   outline: 2px solid color-mix(in srgb, var(--gold) 74%, white);
   outline-offset: 5px;
   border-radius: 0.35rem;
+}
+
+.site-menu-link:focus-visible,
+.site-footer-nav a:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--gold) 74%, white);
+  outline-offset: 2px;
 }
 
 .site-command-mark {
