@@ -36,9 +36,6 @@
     <span class="note">Ответим в течение дня.</span>
   </div>
 </main>
-<script>
-  // Просмотр считаем из браузера: превью ссылок в мессенджерах скрипты не запускают.
-  fetch('/api/videos/{{ID}}/view', { method: 'POST', keepalive: true }).catch(function () {});
-</script>
+<script src="/assets/watch.js" data-id="{{ID}}"></script>
 </body>
 </html>

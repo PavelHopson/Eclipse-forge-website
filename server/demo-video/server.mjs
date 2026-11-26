@@ -12,6 +12,10 @@ const HERE = fileURLToPath(new URL('.', import.meta.url));
 const ID_RE = /^[A-Za-z0-9]{12}$/;
 const TYPES = { 'video/mp4': 'mp4', 'video/webm': 'webm' };
 const VIEW_WINDOW_MS = 30 * 60_000;
+const NOTIFY_WINDOW_MS = 15 * 60_000;
+const MAX_TRACKED = 10_000;
+const ASSETS = { 'record.js': 'record.js', 'watch.js': 'watch.js' };
+const BASE_CSP = "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; img-src 'self' data:; frame-ancestors 'none'; base-uri 'none'; form-action 'none'";
 
 export function readConfig(env = process.env) {
   const token = env.DEMO_ADMIN_TOKEN ?? '';
@@ -40,6 +44,21 @@ const decodeHeader = (v) => { try { return decodeURIComponent(v ?? ''); } catch 
 export function createApp(config, { notify = defaultNotify(config), now = () => Date.now() } = {}) {
   const videosDir = join(config.dataDir, 'videos');
   const recentViews = new Map();
+  const lastNotified = new Map();
+  const queues = new Map();
+  // Записи метаданных одного ролика идут строго по очереди: параллельные просмотры не теряют счёт.
+  const serial = (id, fn) => {
+    const prev = queues.get(id) ?? Promise.resolve();
+    const next = prev.then(fn, fn);
+    const tail = next.catch(() => {});
+    queues.set(id, tail);
+    tail.then(() => { if (queues.get(id) === tail) queues.delete(id); });
+    return next;
+  };
+  const prune = (map, windowMs, t) => {
+    for (const [k, at] of map) { if (t - at > windowMs) map.delete(k); else break; }
+    while (map.size >= MAX_TRACKED) map.delete(map.keys().next().value);
+  };
   const pages = {};
   const page = async (name) => (pages[name] ??= await readFile(join(HERE, name), 'utf8'));
 
@@ -56,7 +75,7 @@ export function createApp(config, { notify = defaultNotify(config), now = () => 
     try { return JSON.parse(await readFile(metaPath(id), 'utf8')); } catch { return null; }
   };
   const writeMeta = async (meta) => {
-    const tmp = `${metaPath(meta.id)}.tmp`;
+    const tmp = `${metaPath(meta.id)}.${randomBytes(4).toString('hex')}.tmp`;
     await writeFile(tmp, JSON.stringify(meta, null, 2));
     await rename(tmp, metaPath(meta.id));
   };
@@ -69,6 +88,7 @@ export function createApp(config, { notify = defaultNotify(config), now = () => 
       'X-Content-Type-Options': 'nosniff',
       'Referrer-Policy': 'no-referrer',
       'X-Robots-Tag': 'noindex, nofollow',
+      'Strict-Transport-Security': 'max-age=31536000',
       ...headers,
     });
     res.end(isJson ? JSON.stringify(body) : body);
@@ -146,43 +166,68 @@ export function createApp(config, { notify = defaultNotify(config), now = () => 
     return pipeline(createReadStream(file), res).catch(() => {});
   }
 
+  // Адрес клиента: X-Forwarded-For доверяем только от локального прокси (Caddy на том же сервере).
+  const clientIp = (req) => {
+    const peer = req.socket.remoteAddress ?? '';
+    const fromProxy = peer === '127.0.0.1' || peer === '::1' || peer === '::ffff:127.0.0.1';
+    const fwd = fromProxy ? String(req.headers['x-forwarded-for'] ?? '').split(',').pop().trim() : '';
+    return fwd || peer;
+  };
+
   async function view(id, req, res) {
-    const m = await readMeta(id);
-    if (!m) return send(res, 404, { error: 'Не найдено' });
-    const ip = (req.headers['x-forwarded-for'] ?? '').split(',')[0].trim() || req.socket.remoteAddress || '';
-    const key = createHash('sha256').update(`${id}|${ip}|${req.headers['user-agent'] ?? ''}`).digest('hex');
+    if (!ID_RE.test(id)) return send(res, 404, { error: 'Не найдено' });
     const t = now();
-    for (const [k, at] of recentViews) if (t - at > VIEW_WINDOW_MS) recentViews.delete(k);
+    const key = createHash('sha256').update(`${id}|${clientIp(req)}`).digest('hex');
+    prune(recentViews, VIEW_WINDOW_MS, t);
     if (recentViews.has(key)) return send(res, 200, { ok: true, counted: false });
-    recentViews.set(key, t);
-    m.views += 1;
-    m.lastViewAt = new Date(t).toISOString();
-    await writeMeta(m);
-    const who = m.client ? `${m.client}: ` : '';
-    notify(`${who}открыли демо «${m.title}» (просмотр №${m.views})\n${publicUrl(id)}`).catch(() => {});
+    recentViews.set(key, t); // занимаем сразу, чтобы параллельные запросы не прошли проверку
+    const m = await serial(id, async () => {
+      const cur = await readMeta(id);
+      if (!cur) return null;
+      cur.views += 1;
+      cur.lastViewAt = new Date(t).toISOString();
+      await writeMeta(cur);
+      return cur;
+    });
+    if (!m) { recentViews.delete(key); return send(res, 404, { error: 'Не найдено' }); }
+    // В Telegram — не чаще раза в 15 минут на ролик, со сводным счётчиком.
+    prune(lastNotified, NOTIFY_WINDOW_MS, t);
+    if (!lastNotified.has(id)) {
+      lastNotified.set(id, t);
+      const who = m.client ? `${m.client}: ` : '';
+      notify(`${who}открыли демо «${m.title}» (всего просмотров: ${m.views})\n${publicUrl(id)}`).catch(() => {});
+    }
     return send(res, 200, { ok: true, counted: true });
   }
 
   async function watchPage(id, res) {
     const m = await readMeta(id);
     if (!m) return send(res, 404, '<!doctype html><meta charset="utf-8"><title>Не найдено</title><p style="font-family:sans-serif">Ролик не найден или удалён.</p>');
-    const html = (await page('watch.html'))
-      .replaceAll('{{TITLE}}', esc(m.title))
-      .replaceAll('{{CLIENT}}', esc(m.client))
-      .replaceAll('{{HAS_CLIENT}}', m.client ? '' : 'hidden')
-      .replaceAll('{{ID}}', m.id)
-      .replaceAll('{{TYPE}}', m.type)
-      .replaceAll('{{CONTACT}}', esc(config.contactUrl));
-    return send(res, 200, html, { 'Content-Security-Policy': "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; media-src 'self'; img-src 'self' data:; frame-ancestors 'none'" });
+    const vals = { TITLE: esc(m.title), CLIENT: esc(m.client), HAS_CLIENT: m.client ? '' : 'hidden', ID: m.id, TYPE: m.type, CONTACT: esc(config.contactUrl) };
+    const html = (await page('watch.html')).replace(/\{\{([A-Z_]+)\}\}/g, (all, k) => (k in vals ? vals[k] : all));
+    return send(res, 200, html, {
+      'Content-Security-Policy': `${BASE_CSP}; media-src 'self'`,
+      'Permissions-Policy': 'camera=(), microphone=(), display-capture=(), geolocation=()',
+    });
+  }
+
+  async function asset(name, res) {
+    const body = await page(ASSETS[name]);
+    res.writeHead(200, { 'Content-Type': 'text/javascript; charset=utf-8', 'Cache-Control': 'no-cache', 'X-Content-Type-Options': 'nosniff' });
+    res.end(body);
   }
 
   return async function handler(req, res) {
     const url = new URL(req.url, 'http://x');
     const p = url.pathname;
     try {
-      if (req.method === 'GET' && (p === '/' || p === '/record')) return send(res, 200, await page('record.html'), { 'Content-Security-Policy': "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; media-src 'self' blob: mediastream:; img-src 'self' data:; frame-ancestors 'none'" });
+      if (req.method === 'GET' && (p === '/' || p === '/record')) return send(res, 200, await page('record.html'), {
+        'Content-Security-Policy': `${BASE_CSP}; media-src 'self' blob: mediastream:`,
+        'Permissions-Policy': 'camera=(self), microphone=(self), display-capture=(self), geolocation=()',
+      });
       if (req.method === 'GET' && p === '/healthz') return send(res, 200, { ok: true });
       let mm;
+      if ((mm = /^\/assets\/([a-z]+\.js)$/.exec(p)) && req.method === 'GET' && ASSETS[mm[1]]) return asset(mm[1], res);
       if ((mm = /^\/v\/([^/]+)$/.exec(p)) && req.method === 'GET') return watchPage(mm[1], res);
       if ((mm = /^\/media\/([^/]+)$/.exec(p)) && (req.method === 'GET' || req.method === 'HEAD')) return media(mm[1], req, res);
       if ((mm = /^\/api\/videos\/([^/]+)\/view$/.exec(p)) && req.method === 'POST') return view(mm[1], req, res);

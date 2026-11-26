@@ -69,7 +69,7 @@ test('загрузка, страница клиента, отдача с Range �
     assert.equal(v3.counted, true);
     await new Promise((r) => setImmediate(r));
     assert.equal(s.sent.length, 2);
-    assert.match(s.sent[0], /Дюна: открыли демо «Ваш сайт <сейчас>» \(просмотр №1\)/);
+    assert.match(s.sent[0], /Дюна: открыли демо «Ваш сайт <сейчас>» \(всего просмотров: 1\)/);
 
     const list = await (await fetch(`${s.base}/api/videos`, { headers: auth })).json();
     assert.equal(list.items.length, 1);
@@ -112,7 +112,43 @@ test('страница записи открывается и не индекс�
   try {
     const r = await fetch(`${s.base}/record`);
     assert.equal(r.status, 200);
-    assert.match(r.headers.get('content-security-policy'), /frame-ancestors 'none'/);
+    const csp = r.headers.get('content-security-policy');
+    assert.match(csp, /frame-ancestors 'none'/);
+    assert.match(csp, /script-src 'self';/);
+    assert.doesNotMatch(csp, /script-src[^;]*unsafe-inline/);
     assert.match(await r.text(), /Записать демо для клиента/);
+    const js = await fetch(`${s.base}/assets/record.js`);
+    assert.equal(js.status, 200);
+    assert.match(js.headers.get('content-type'), /javascript/);
+    assert.equal((await fetch(`${s.base}/assets/server.mjs`)).status, 404);
+  } finally { await s.close(); }
+});
+
+test('спам просмотрами: смена User-Agent, подмена XFF и параллельные запросы', async () => {
+  const s = await start();
+  try {
+    const { id } = await (await upload(s.base, Buffer.alloc(100, 1))).json();
+    const hit = (i) => fetch(`${s.base}/api/videos/${id}/view`, {
+      method: 'POST',
+      // Caddy дописывает настоящий адрес последним; подделанное начало заголовка не учитывается.
+      headers: { 'User-Agent': `bot-${i}`, 'X-Forwarded-For': `1.2.3.${i}, 9.9.9.9` },
+    });
+    const res = await Promise.all(Array.from({ length: 20 }, (_, i) => hit(i)));
+    assert.equal(res.every((r) => r.status === 200), true);
+    const list = await (await fetch(`${s.base}/api/videos`, { headers: auth })).json();
+    assert.equal(list.items[0].views, 1, 'один адрес — один просмотр');
+    await new Promise((r) => setImmediate(r));
+    assert.equal(s.sent.length, 1, 'в Telegram одно сообщение');
+  } finally { await s.close(); }
+});
+
+test('спецсимволы $ в названии не ломают страницу', async () => {
+  const s = await start();
+  try {
+    const title = "Цена $' и $& $`";
+    const r = await upload(s.base, Buffer.alloc(10, 1), { 'X-Demo-Title': encodeURIComponent(title) });
+    const { url } = await r.json();
+    const html = await (await fetch(url)).text();
+    assert.ok(html.includes('<h1>Цена $&#39; и $&amp; $`</h1>'));
   } finally { await s.close(); }
 });
