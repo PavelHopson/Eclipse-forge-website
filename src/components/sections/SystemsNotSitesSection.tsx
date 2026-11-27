@@ -257,12 +257,7 @@ export function SystemsNotSitesSection() {
 
           <motion.article
             variants={revealRight}
-            className="relative overflow-hidden rounded-[1.75rem] border p-7 sm:p-8 lg:p-9"
-            style={{
-              borderColor: 'rgba(212,175,55,0.28)',
-              background:
-                'linear-gradient(180deg, rgba(212,175,55,0.04) 0%, rgba(12,17,23,0.6) 60%)',
-            }}
+            className="not-sites-system-card relative overflow-hidden rounded-[1.75rem] border p-7 sm:p-8 lg:p-9"
           >
             <div
               className="pointer-events-none absolute -right-12 -top-12 h-44 w-44 rounded-full blur-[80px] opacity-40"
@@ -330,14 +325,7 @@ export function SystemsNotSitesSection() {
               {copy.loop.map((step, idx) => (
                 <div key={step.label} className="flex flex-1 items-stretch gap-2">
                   <div
-                    className="flex flex-1 flex-col items-start rounded-2xl border px-4 py-4 sm:px-5 sm:py-5"
-                    style={{
-                      borderColor: idx === copy.loop.length - 1 ? 'rgba(212,175,55,0.28)' : 'var(--line-subtle)',
-                      background:
-                        idx === copy.loop.length - 1
-                          ? 'rgba(212,175,55,0.04)'
-                          : 'rgba(15,18,24,0.4)',
-                    }}
+                    className={`not-sites-loop-step flex flex-1 flex-col items-start rounded-2xl border px-4 py-4 sm:px-5 sm:py-5${idx === copy.loop.length - 1 ? ' not-sites-loop-step--last' : ''}`}
                   >
                     <span
                       className="text-[10px] uppercase tracking-[0.22em]"

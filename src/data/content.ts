@@ -287,7 +287,7 @@ export const contactDetails = {
 export const directContacts: { phone: string; phoneHref: string; whatsappUrl: string; maxUrl: string } = {
   phone: '+7 993 734-49-34',
   phoneHref: 'tel:+79937344934',
-  whatsappUrl: '',
+  whatsappUrl: 'https://wa.me/79937344934',
   maxUrl: '',
 };
 

@@ -32,6 +32,7 @@ type CtaCopy = {
   whatsappCardValue: string;
   maxCardLabel: string;
   maxCardValue: string;
+  messengersNote: string;
   telegramLabel: string;
   fields: Record<FieldKey, { label: string; placeholder: string }>;
   optional: string;
@@ -66,6 +67,7 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     whatsappCardValue: 'Написать',
     maxCardLabel: 'MAX',
     maxCardValue: 'Написать',
+    messengersNote: 'По этому же номеру — WhatsApp и MAX.',
     telegramLabel: 'Написать в Telegram',
     fields: {
       name: { label: 'Как к вам обращаться', placeholder: 'Имя или компания' },
@@ -108,6 +110,7 @@ const ctaCopy: Record<Locale, CtaCopy> = {
     whatsappCardValue: 'Message',
     maxCardLabel: 'MAX',
     maxCardValue: 'Message',
+    messengersNote: 'WhatsApp and MAX are on the same number.',
     telegramLabel: 'Message on Telegram',
     fields: {
       name: { label: 'Your name', placeholder: 'Name or company' },
@@ -537,7 +540,13 @@ export function CtaSection() {
                 ))}
               </div>
 
-              <div className="mt-6 flex items-center gap-3 border-t pt-5" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+              {directContacts.phone ? (
+                <p className="mt-3 text-[12px] leading-relaxed" style={{ color: 'var(--text-3)' }}>
+                  {copy.messengersNote}
+                </p>
+              ) : null}
+
+              <div className="contact-response mt-6 flex items-center gap-3 border-t pt-5">
                 <span
                   className="h-2 w-2 shrink-0 rounded-full"
                   style={{ background: 'rgba(212,175,55,0.85)', boxShadow: '0 0 12px rgba(212,175,55,0.45)' }}

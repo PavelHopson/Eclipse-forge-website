@@ -221,7 +221,7 @@ export function FounderSection() {
                   {copy.noteText}
                 </p>
                 <div className="mt-5 space-y-2">
-                  <div className="flex items-center justify-between rounded-full border px-3 py-2 founder-chip">
+                  <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 rounded-2xl border px-4 py-2 founder-chip">
                     <span className="text-[10px] uppercase tracking-[0.18em]" style={{ color: 'var(--text-4)' }}>
                       {copy.modeLabel}
                     </span>
@@ -229,7 +229,7 @@ export function FounderSection() {
                       {copy.modeValue}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between rounded-full border px-3 py-2 founder-chip">
+                  <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 rounded-2xl border px-4 py-2 founder-chip">
                     <span className="text-[10px] uppercase tracking-[0.18em]" style={{ color: 'var(--text-4)' }}>
                       {copy.surfaceLabel}
                     </span>
