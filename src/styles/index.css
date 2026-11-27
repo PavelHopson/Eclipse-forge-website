@@ -2396,6 +2396,56 @@ html[data-ambient-motion='paused'] .hero-editorial-rays {
   outline-color: #7a5a08;
 }
 
+/* Общая кнопка «Обсудить проект»: цвет подписи задан здесь, чтобы у светлой темы был свой. */
+.glow-button__label {
+  color: rgba(245, 233, 196, 0.95);
+}
+[data-theme='light'] .glow-button {
+  border-color: rgba(122, 90, 8, 0.55);
+  background: rgba(184, 138, 24, 0.14);
+  box-shadow: 0 10px 24px rgba(120, 90, 30, 0.14);
+}
+[data-theme='light'] .glow-button:hover {
+  border-color: rgba(122, 90, 8, 0.8);
+  background: rgba(184, 138, 24, 0.22);
+}
+[data-theme='light'] .glow-button__label {
+  color: #3d2c03;
+}
+
+/* Сравнение «Сайт + система» и шаги процесса: фон вынесен из разметки, чтобы светлая тема его заменяла. */
+.not-sites-system-card {
+  border-color: rgba(212, 175, 55, 0.28);
+  background: linear-gradient(180deg, rgba(212, 175, 55, 0.04) 0%, rgba(12, 17, 23, 0.6) 60%);
+}
+.not-sites-loop-step {
+  border-color: var(--line-subtle);
+  background: rgba(15, 18, 24, 0.4);
+}
+.not-sites-loop-step--last {
+  border-color: rgba(212, 175, 55, 0.28);
+  background: rgba(212, 175, 55, 0.04);
+}
+[data-theme='light'] .not-sites-system-card {
+  border-color: rgba(122, 90, 8, 0.35);
+  background: linear-gradient(180deg, rgba(184, 138, 24, 0.1) 0%, rgba(255, 255, 255, 0.82) 60%);
+}
+[data-theme='light'] .not-sites-loop-step {
+  border-color: rgba(7, 7, 10, 0.1);
+  background: rgba(255, 255, 255, 0.74);
+}
+[data-theme='light'] .not-sites-loop-step--last {
+  border-color: rgba(122, 90, 8, 0.4);
+  background: rgba(184, 138, 24, 0.12);
+}
+
+.contact-response {
+  border-color: rgba(255, 255, 255, 0.06);
+}
+[data-theme='light'] .contact-response {
+  border-color: rgba(7, 7, 10, 0.1);
+}
+
 /* Форма заявки: ошибка поля заметна не только цветом рамки, но и текстом под полем. */
 .contact-field[aria-invalid='true'] {
   border-color: #f0907f;

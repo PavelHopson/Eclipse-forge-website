@@ -11,7 +11,7 @@ function isAnchorGlowButton(props: GlowButtonProps): props is AnchorGlowButtonPr
 }
 
 const cls = [
-  'relative isolate inline-flex items-center justify-center rounded-full overflow-hidden',
+  'glow-button relative isolate inline-flex items-center justify-center rounded-full overflow-hidden',
   'border border-[rgba(212,175,55,0.28)] bg-[rgba(212,175,55,0.05)]',
   'px-7 py-3.5 text-[13px] font-medium tracking-[0.01em]',
   'font-display',
@@ -52,7 +52,7 @@ export function GlowButton(props: GlowButtonProps) {
         className="relative z-10 mr-3 h-1.5 w-1.5 rounded-full transition-colors duration-500"
         style={{ background: 'rgba(212,175,55,0.85)', boxShadow: '0 0 10px rgba(212,175,55,0.45)' }}
       />
-      <span className="relative z-10" style={{ color: 'rgba(245,233,196,0.95)' }}>
+      <span className="glow-button__label relative z-10">
         {children}
       </span>
     </>
